@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   AdaptiveDpr,
@@ -85,6 +85,7 @@ export function Hero3DScene() {
     <SceneStateProvider stateRef={sceneStateRef}>
       <Canvas
         className="!absolute inset-0"
+        style={{ background: "#050614" }}
         gl={{
           antialias: true,
           alpha: false,
@@ -193,4 +194,3 @@ export function Hero3DScene() {
 
 // Unused imports kept referenced to avoid tree-shaking surprises during dev
 void GodRays;
-void useRef;

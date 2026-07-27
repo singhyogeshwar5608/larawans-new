@@ -44,11 +44,11 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-20 sm:px-6"
+      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-32 pb-20 sm:px-6"
     >
       {/* 3D WebGL scene — real-time AI neural network + particles + glass + grid.
           Wrapped in WebGLBoundary so we gracefully fall back to a 2D canvas
-          particle network if WebGL is unavailable (rare / sandboxed envs). */}
+          particle network if the R3F scene throws. */}
       <div className="absolute inset-0">
         <WebGLBoundary>
           <Hero3DScene />
