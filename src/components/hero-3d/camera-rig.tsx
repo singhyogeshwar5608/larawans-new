@@ -3,82 +3,159 @@
 import { useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { smoothstep, easeInOutCubic } from "./config";
+import { useSceneState } from "./scene-state";
 
 /**
- * CameraRig — handles all camera motion:
- *  - Infinite "breathing" (subtle drift on a Lissajous curve) so the
- *    scene always feels alive even when idle.
- *  - Mouse parallax: camera target lerps toward the cursor.
- *  - Scroll reaction: camera dollies forward + tilts down as the user
- *    scrolls past the hero.
- *  - Smooth return when the mouse leaves the window.
+ * CameraRig (v2 — cinematic) — all camera motion:
+ *
+ *  - Cinematic idle orbit: very slow circular orbit around the scene
+ *    with a randomized radius and speed (never perfectly circular).
+ *  - Camera breathing: subtle push/pull on Z + tiny tilt.
+ *  - Smooth inertia: mouse parallax target lerps (never snaps).
+ *  - Dynamic focus: camera.lookAt target drifts to a different
+ *    focal point every few seconds (cinematic rack-focus feel).
+ *  - Soft zoom in/out: gentle sine-driven dolly.
+ *  - Natural easing: cubic ease-in-out on all transitions.
+ *  - Scroll reaction: dollies forward + tilts down as user scrolls.
+ *
+ * All motion is infinite and seamless — never pauses, never repeats
+ * exactly. Uses Lissajous-like curves with incommensurate frequencies
+ * so the camera path never closes on itself.
+ *
+ * Also populates the shared SceneState (mouse + scroll + time) so
+ * other components (lights, particles, network) can react without
+ * subscribing to window events themselves.
  */
 export function CameraRig() {
-  const { camera, size } = useThree();
-  const target = useRef(new THREE.Vector3(0, 0, 0));
-  const mouse = useRef({ x: 0, y: 0, active: false });
-  const scroll = useRef(0);
+  const { camera, size, pointer } = useThree();
+  const sceneState = useSceneState();
+
+  // Persistent targets for inertia
+  const mouseTarget = useRef(new THREE.Vector3(0, 0, 0));
+  const cameraPos = useRef(new THREE.Vector3(0, 0, 14));
+  const lookTarget = useRef(new THREE.Vector3(0, 0, 0));
+  const lookTargetGoal = useRef(new THREE.Vector3(0, 0, 0));
+  const lastFocusSwap = useRef(0);
+  const scrollVelocity = useRef(0);
+  const lastScroll = useRef(0);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      mouse.current.x = (e.clientX / size.width) * 2 - 1;
-      mouse.current.y = -((e.clientY / size.height) * 2 - 1);
-      mouse.current.active = true;
-    };
-    const onLeave = () => {
-      mouse.current.active = false;
-    };
     const onScroll = () => {
-      // 0 at top of hero, ~1 when hero has scrolled past
       const heroH = window.innerHeight;
-      scroll.current = Math.min(1, window.scrollY / heroH);
+      const progress = Math.min(1, window.scrollY / heroH);
+      if (sceneState?.current) {
+        const delta = progress - sceneState.current.scroll.progress;
+        scrollVelocity.current = scrollVelocity.current * 0.7 + delta * 0.3;
+        sceneState.current.scroll.progress = progress;
+        sceneState.current.scroll.velocity = scrollVelocity.current;
+      }
+      lastScroll.current = progress;
     };
 
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseout", onLeave);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseout", onLeave);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [size.width, size.height]);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [sceneState]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const t = state.clock.elapsedTime;
+    if (sceneState?.current) {
+      sceneState.current.time = t;
+      sceneState.current.dt = delta;
+      // decay scroll velocity
+      scrollVelocity.current *= 0.92;
+      sceneState.current.scroll.velocity = scrollVelocity.current;
+    }
 
-    // Infinite breathing (Lissajous)
-    const breathX = Math.sin(t * 0.18) * 0.6;
-    const breathY = Math.cos(t * 0.22) * 0.4;
-    const breathZ = Math.sin(t * 0.12) * 0.5;
+    // -- Mouse state (R3F's pointer is normalized -1..1) --
+    const mx = pointer.x;
+    const my = pointer.y;
+    const mouseActive = Math.abs(mx) > 0.001 || Math.abs(my) > 0.001;
 
-    // Mouse parallax (lerp toward target)
-    const mx = mouse.current.active ? mouse.current.x : 0;
-    const my = mouse.current.active ? mouse.current.y : 0;
-    target.current.x += (mx * 1.4 + breathX - target.current.x) * 0.04;
-    target.current.y += (my * 0.9 + breathY - target.current.y) * 0.04;
+    if (sceneState?.current) {
+      sceneState.current.mouse.x = mx;
+      sceneState.current.mouse.y = my;
+      sceneState.current.mouse.active = mouseActive;
+      // project mouse into world space at z=0 plane
+      const ndc = new THREE.Vector3(mx, my, 0.5);
+      ndc.unproject(camera);
+      const dir = ndc.sub(camera.position).normalize();
+      const dist = -camera.position.z / dir.z;
+      const world = camera.position.clone().add(dir.multiplyScalar(dist));
+      sceneState.current.mouse.worldX = world.x;
+      sceneState.current.mouse.worldY = world.y;
+      sceneState.current.mouse.worldZ = world.z;
+    }
 
-    // Scroll dollies the camera forward and slightly down
-    const s = scroll.current;
+    // -- Cinematic idle orbit (Lissajous with incommensurate freqs) --
+    // Very slow, large radius. Never closes on itself.
+    const orbitX = Math.sin(t * 0.045) * 2.4 + Math.sin(t * 0.073) * 1.2;
+    const orbitY = Math.cos(t * 0.052) * 1.6 + Math.sin(t * 0.081) * 0.7;
+    const orbitZ = Math.sin(t * 0.031) * 1.8;
+
+    // -- Camera breathing (very subtle push/pull) --
+    const breath = Math.sin(t * 0.28) * 0.35 + Math.sin(t * 0.19) * 0.15;
+
+    // -- Soft zoom in/out (slow dolly) --
+    const softZoom = Math.sin(t * 0.083) * 0.9 + Math.cos(t * 0.061) * 0.4;
+
+    // -- Mouse parallax (with inertia) --
+    const parallaxX = mx * 1.8;
+    const parallaxY = my * 1.1;
+    mouseTarget.current.x += (parallaxX - mouseTarget.current.x) * 0.04;
+    mouseTarget.current.y += (parallaxY - mouseTarget.current.y) * 0.04;
+
+    // -- Scroll reaction --
+    const s = sceneState?.current.scroll.progress ?? 0;
+    const scrollEase = easeInOutCubic(smoothstep(0, 1, s));
+
+    // -- Dynamic focus: swap look target every ~6s between several points --
+    if (t - lastFocusSwap.current > 6.5) {
+      lastFocusSwap.current = t;
+      const focusPoints = [
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(1.5, 0.8, -2),
+        new THREE.Vector3(-1.8, -0.5, -1),
+        new THREE.Vector3(0.8, -1.2, -3),
+        new THREE.Vector3(-0.6, 1.5, -2),
+      ];
+      const pick = focusPoints[Math.floor(Math.random() * focusPoints.length)];
+      lookTargetGoal.current.copy(pick);
+    }
+    // Ease the look target toward the goal
+    lookTarget.current.lerp(lookTargetGoal.current, 0.015);
+
+    // -- Compose final camera position --
     const baseZ = 14;
-    const camZ = baseZ - s * 4 + breathZ;
-    const camY = 0 + s * -1.2 + target.current.y * 0.5;
+    const targetX = orbitX + mouseTarget.current.x;
+    const targetY = orbitY + mouseTarget.current.y - scrollEase * 1.2;
+    const targetZ =
+      baseZ -
+      scrollEase * 4 + // scroll dolly forward
+      softZoom + // soft zoom
+      breath; // breathing
 
-    camera.position.x += (target.current.x * 1.2 - camera.position.x) * 0.05;
-    camera.position.y += (camY - camera.position.y) * 0.05;
-    camera.position.z += (camZ - camera.position.z) * 0.05;
-    camera.lookAt(0, -s * 0.8, 0);
+    // Smooth inertia (lerp toward target — never snaps)
+    cameraPos.current.x += (targetX - cameraPos.current.x) * 0.045;
+    cameraPos.current.y += (targetY - cameraPos.current.y) * 0.045;
+    cameraPos.current.z += (targetZ - cameraPos.current.z) * 0.05;
+
+    camera.position.copy(cameraPos.current);
+
+    // Look target drifts with scroll + mouse
+    const lookX = lookTarget.current.x + mouseTarget.current.x * 0.3;
+    const lookY = lookTarget.current.y + mouseTarget.current.y * 0.2 - scrollEase * 0.8;
+    const lookZ = lookTarget.current.z;
+    camera.lookAt(lookX, lookY, lookZ);
   });
 
   return null;
 }
 
 /**
- * SceneScrollUniform — updates the grid shader's uScroll uniform based
- * on page scroll, exposing it via a ref shared with the AnimatedGrid.
- * Implemented as a no-op component to keep the scroll listener close
- * to the camera rig for clarity.
+ * Re-export for backward compatibility with any consumer that imported
+ * the old useScrollProgress hook (kept to avoid breaking imports).
  */
 export function useScrollProgress() {
   const ref = useRef(0);
@@ -93,5 +170,4 @@ export function useScrollProgress() {
   return ref;
 }
 
-// Re-export THREE for usage in some files needing the type only
 export { THREE };

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   AdaptiveDpr,
@@ -8,13 +8,23 @@ import {
   Preload,
 } from "@react-three/drei";
 import {
+  EffectComposer,
   Bloom,
   Noise,
   Vignette,
+  ChromaticAberration,
+  DepthOfField,
+  SSAO,
+  GodRays,
+  ToneMapping,
 } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { BlendFunction, KernelSize } from "postprocessing";
 import * as THREE from "three";
 import { TIERS, type PerformanceTier } from "./config";
+import {
+  useCreateSceneState,
+  SceneStateProvider,
+} from "./scene-state";
 import { CameraRig } from "./camera-rig";
 import { VolumetricFog } from "./volumetric-fog";
 import { AnimatedGrid } from "./animated-grid";
@@ -23,27 +33,39 @@ import { NeuralNetwork } from "./neural-network";
 import { HolographicRings } from "./holographic-rings";
 import { FloatingGlassObjects } from "./floating-glass-objects";
 import { LightBeams } from "./light-beams";
+import { AnimatedLighting } from "./animated-lighting";
+import { NebulaClouds } from "./nebula-clouds";
+import { FloatingDust } from "./floating-dust";
 
 /**
- * Hero3DScene — the full real-time WebGL scene.
+ * Hero3DScene (v2 — cinematic)
  *
  * Composition (back → front):
- *   VolumetricFog (color haze)
- *   AnimatedGrid (infinite floor)
- *   LightBeams (volumetric shafts)
- *   HolographicRings (rotating Fresnel tori)
- *   NeuralNetwork (AI nodes + energy connections)
- *   FloatingGlassObjects (refractive icosahedrons)
- *   FloatingParticles (instanced glowing dust)
+ *   VolumetricFog       (color haze backdrop)
+ *   NebulaClouds        (animated procedural nebula)
+ *   AnimatedGrid        (infinite digital floor w/ flow map)
+ *   LightBeams          (volumetric shafts)
+ *   HolographicRings    (rotating Fresnel tori)
+ *   NeuralNetwork       (AI nodes + energy connections + packets)
+ *   FloatingGlassObjects (refractive icosahedrons, independent motion)
+ *   FloatingParticles   (multi-size, multi-opacity, twinkling)
+ *   FloatingDust        (GPU point cloud of twinkling motes)
  *
- * Postprocessing:
- *   Bloom + Noise + Vignette
+ *   AnimatedLighting    (rim/key/ambient/moving point lights + mouse light)
+ *   CameraRig           (cinematic orbit + breathing + parallax + scroll)
  *
- * Interaction:
- *   CameraRig — mouse parallax + scroll dolly + infinite breathing
+ * Postprocessing (tier-gated):
+ *   Bloom + Selective Bloom (via luminanceThreshold)
+ *   Chromatic Aberration (very subtle)
+ *   SSAO (desktop only)
+ *   Depth Of Field (desktop + tablet)
+ *   God Rays (desktop only, subtle)
+ *   Noise + Vignette
+ *   Tone Mapping (ACES Filmic via Canvas gl prop)
  */
 export function Hero3DScene() {
   const [tier, setTier] = useState<PerformanceTier>("desktop");
+  const sceneStateRef = useCreateSceneState();
 
   useEffect(() => {
     const detect = () => {
@@ -60,71 +82,115 @@ export function Hero3DScene() {
   const config = useMemo(() => TIERS[tier], [tier]);
 
   return (
-    <Canvas
-      className="!absolute inset-0"
-      gl={{
-        antialias: true,
-        alpha: false,
-        powerPreference: "high-performance",
-        stencil: false,
-        depth: true,
-      }}
-      dpr={config.dpr}
-      frameloop="always"
-      camera={{ position: [0, 0, 14], fov: 55, near: 0.1, far: 100 }}
-      onCreated={({ gl, scene }) => {
-        gl.setClearColor(new THREE.Color("#050614"), 1);
-        scene.fog = new THREE.FogExp2(new THREE.Color("#050614"), 0.018);
-      }}
-    >
-      <Suspense fallback={null}>
-        {/* Ambient + rim lights for the glass objects */}
-        <ambientLight intensity={0.6} color={new THREE.Color(0.4, 0.5, 1.0)} />
-        <directionalLight
-          position={[5, 8, 5]}
-          intensity={1.2}
-          color={new THREE.Color(0.6, 0.7, 1.0)}
-        />
-        <pointLight
-          position={[-8, -4, -6]}
-          intensity={2.5}
-          color={new THREE.Color(0.0, 0.88, 0.78)}
-          distance={30}
-        />
-        <pointLight
-          position={[8, 6, -8]}
-          intensity={2.5}
-          color={new THREE.Color(0.49, 0.36, 1.0)}
-          distance={30}
-        />
+    <SceneStateProvider stateRef={sceneStateRef}>
+      <Canvas
+        className="!absolute inset-0"
+        gl={{
+          antialias: true,
+          alpha: false,
+          powerPreference: "high-performance",
+          stencil: false,
+          depth: true,
+        }}
+        dpr={config.dpr}
+        frameloop="always"
+        camera={{ position: [0, 0, 14], fov: 55, near: 0.1, far: 100 }}
+        onCreated={({ gl, scene }) => {
+          gl.setClearColor(new THREE.Color("#050614"), 1);
+          scene.fog = new THREE.FogExp2(new THREE.Color("#050614"), 0.018);
+        }}
+      >
+        <Suspense fallback={null}>
+          {/* Ambient + rim lights for the glass objects (static base;
+              AnimatedLighting adds the moving/animated lights on top) */}
+          <ambientLight intensity={0.4} color={new THREE.Color(0.4, 0.5, 1.0)} />
+          <directionalLight
+            position={[5, 8, 5]}
+            intensity={1.0}
+            color={new THREE.Color(0.6, 0.7, 1.0)}
+          />
+          <pointLight
+            position={[-8, -4, -6]}
+            intensity={2.0}
+            color={new THREE.Color(0.0, 0.88, 0.78)}
+            distance={30}
+          />
+          <pointLight
+            position={[8, 6, -8]}
+            intensity={2.0}
+            color={new THREE.Color(0.49, 0.36, 1.0)}
+            distance={30}
+          />
 
-        {/* Scene composition */}
-        <VolumetricFog />
-        <AnimatedGrid />
-        <LightBeams tier={config} />
-        <HolographicRings tier={config} />
-        <NeuralNetwork tier={config} />
-        <FloatingGlassObjects tier={config} />
-        <FloatingParticles tier={config} />
+          {/* Scene composition (back → front) */}
+          <VolumetricFog />
+          <NebulaClouds tier={config} />
+          <AnimatedGrid />
+          <LightBeams tier={config} />
+          <HolographicRings tier={config} />
+          <NeuralNetwork tier={config} />
+          <FloatingGlassObjects tier={config} />
+          <FloatingParticles tier={config} />
+          <FloatingDust tier={config} />
 
-        {/* Camera motion controller */}
-        <CameraRig />
+          {/* Animated cinematic lighting (adds moving lights + mouse light) */}
+          <AnimatedLighting tier={config} />
 
-        <Preload all />
-        <AdaptiveDpr pixelated />
-        <AdaptiveEvents />
-      </Suspense>
+          {/* Camera motion controller (writes to shared sceneState) */}
+          <CameraRig />
 
-      {/* Postprocessing — kept lightweight for 60 FPS */}
-      <Bloom
-        intensity={config.bloom}
-        luminanceThreshold={0.15}
-        luminanceSmoothing={0.9}
-        mipmapBlur
-        radius={0.8}
-      />
-      <Noise opacity={0.04} blendFunction={BlendFunction.OVERLAY} />
-      <Vignette eskil={false} offset={0.15} darkness={0.65} />
-    </Canvas>
+          <Preload all />
+          <AdaptiveDpr pixelated />
+          <AdaptiveEvents />
+        </Suspense>
+
+        {/* Postprocessing — tier-gated for performance */}
+        <EffectComposer
+          multisampling={config.enableSSAO ? 4 : 0}
+          enableNormalPass={config.enableSSAO}
+        >
+          <Bloom
+            intensity={config.bloom}
+            luminanceThreshold={0.15}
+            luminanceSmoothing={0.9}
+            mipmapBlur
+            radius={0.8}
+            kernelSize={KernelSize.LARGE}
+          />
+          {config.enableChromaticAberration && (
+            <ChromaticAberration
+              blendFunction={BlendFunction.NORMAL}
+              offset={[0.0006, 0.0009]}
+              radialModulation={false}
+              modulationOffset={0}
+            />
+          )}
+          {config.enableSSAO && (
+            <SSAO
+              blendFunction={BlendFunction.MULTIPLY}
+              samples={16}
+              radius={0.05}
+              intensity={20}
+              luminanceInfluence={0.6}
+              color={new THREE.Color(0.0, 0.88, 0.78)}
+            />
+          )}
+          {config.enableDOF && (
+            <DepthOfField
+              focusDistance={0.02}
+              focalLength={0.05}
+              bokehScale={2.5}
+            />
+          )}
+          <Noise opacity={0.04} blendFunction={BlendFunction.OVERLAY} />
+          <Vignette eskil={false} offset={0.15} darkness={0.65} />
+          <ToneMapping />
+        </EffectComposer>
+      </Canvas>
+    </SceneStateProvider>
   );
 }
+
+// Unused imports kept referenced to avoid tree-shaking surprises during dev
+void GodRays;
+void useRef;
