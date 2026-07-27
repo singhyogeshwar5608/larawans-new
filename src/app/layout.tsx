@@ -3,7 +3,6 @@ import { Sora, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { SmoothScrollProvider } from "@/components/smooth-scroll-provider";
-import { AnimatedCursor } from "@/components/animated-cursor";
 import { AuroraBackground } from "@/components/aurora-background";
 
 const sora = Sora({
@@ -73,7 +72,6 @@ export default function RootLayout({
       >
         <SmoothScrollProvider>
           <AuroraBackground />
-          <AnimatedCursor />
           {children}
           <Toaster />
         </SmoothScrollProvider>
