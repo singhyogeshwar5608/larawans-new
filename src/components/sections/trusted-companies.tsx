@@ -34,7 +34,7 @@ export function TrustedCompanies() {
   return (
     <section
       id="trusted-companies"
-      className="relative border-y border-neutral-200 bg-[#f8f9fc] py-14"
+      className="relative border-y border-neutral-200 bg-[#f8f9fc] py-24 sm:py-28"
     >
       {/* Subtle top highlight line */}
       <div
@@ -52,27 +52,27 @@ export function TrustedCompanies() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.6 }}
-          className="mb-9 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500"
+          className="mb-12 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500"
         >
           Trusted by forward-thinking teams · Powered by best-in-class tech
         </motion.p>
 
         <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_12%,#000_88%,transparent)]">
-          <div className="flex w-max animate-marquee items-center gap-14">
+          <div className="flex w-max animate-marquee items-center gap-20">
             {items.map((t, i) => (
               <div
                 key={`${t.name}-${i}`}
                 className="group flex shrink-0 items-center gap-3 interactive"
               >
                 {/* Icon container with light shadow card */}
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_12px_rgba(0,0,0,0.1),0_0_0_1px_rgba(124,92,255,0.15)] group-hover:scale-105">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.12),0_0_0_1px_rgba(124,92,255,0.2)] group-hover:scale-105">
                   <t.Icon
-                    className="h-6 w-6 transition-all duration-300"
+                    className="h-8 w-8 transition-all duration-300"
                     style={{ color: t.color }}
                     strokeWidth={1.8}
                   />
                 </div>
-                <span className="font-display text-lg font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900">
+                <span className="font-display text-xl font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900">
                   {t.name}
                 </span>
               </div>
