@@ -1,11 +1,47 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useCallback, useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
 import { ParticleNetwork } from "../particle-network";
 
+/** Services ke naam jo hero heading mein rotate honge */
+const ROTATING_WORDS = [
+  "Modern Businesses",
+  "Web Development",
+  "Mobile Apps",
+  "AI Agents",
+  "Cloud Solutions",
+  "SaaS Platforms",
+  "E-Commerce",
+  "Digital Marketing",
+  "UI/UX Design",
+];
+
+/** Kitni der har word rahega (ms) */
+const WORD_DURATION = 2500;
+/** Fade out/in transition duration (ms) */
+const TRANSITION_DURATION = 500;
+
 export function Hero() {
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState<"in" | "out">("in");
+
+  // Cycle: show word → fade out → change word → fade in → repeat
+  const cycle = useCallback(() => {
+    setPhase("out");
+    setTimeout(() => {
+      setIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+      setPhase("in");
+    }, TRANSITION_DURATION);
+  }, []);
+
+  useEffect(() => {
+    const id = setInterval(cycle, WORD_DURATION);
+    return () => clearInterval(id);
+  }, [cycle]);
+
   return (
     <section
       id="hero"
@@ -64,7 +100,24 @@ export function Hero() {
           <span className="text-gradient-neon">AI-First Software</span>
           <br />
           <span className="text-foreground">Development Company for </span>
-          <span className="text-gradient-aurora">Modern Businesses</span>
+          {/* Rotating word */}
+          <span className="relative inline-block min-w-[2ch] text-left">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={ROTATING_WORDS[index]}
+                initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
+                animate={{
+                  opacity: phase === "in" ? 1 : 0,
+                  y: phase === "in" ? 0 : -18,
+                  filter: phase === "in" ? "blur(0px)" : "blur(8px)",
+                }}
+                transition={{ duration: TRANSITION_DURATION / 1000, ease: [0.22, 1, 0.36, 1] }}
+                className="inline-block text-gradient-aurora"
+              >
+                {ROTATING_WORDS[index]}
+              </motion.span>
+            </AnimatePresence>
+          </span>
         </motion.h1>
 
         {/* Subheading */}
