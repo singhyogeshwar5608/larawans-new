@@ -10,7 +10,6 @@ import {
 import {
   EffectComposer,
   Bloom,
-  Noise,
   Vignette,
   ChromaticAberration,
   DepthOfField,
@@ -145,23 +144,24 @@ export function Hero3DScene() {
           <AdaptiveEvents />
         </Suspense>
 
-        {/* Postprocessing — tier-gated for performance */}
+        {/* Postprocessing — tier-gated for performance.
+            Tuned to keep the dark background dark (no white washout). */}
         <EffectComposer
           multisampling={config.enableSSAO ? 4 : 0}
           enableNormalPass={config.enableSSAO}
         >
           <Bloom
             intensity={config.bloom}
-            luminanceThreshold={0.15}
+            luminanceThreshold={0.55}
             luminanceSmoothing={0.9}
             mipmapBlur
-            radius={0.8}
+            radius={0.6}
             kernelSize={KernelSize.LARGE}
           />
           {config.enableChromaticAberration && (
             <ChromaticAberration
               blendFunction={BlendFunction.NORMAL}
-              offset={[0.0006, 0.0009]}
+              offset={[0.0004, 0.0006]}
               radialModulation={false}
               modulationOffset={0}
             />
@@ -183,8 +183,7 @@ export function Hero3DScene() {
               bokehScale={2.5}
             />
           )}
-          <Noise opacity={0.04} blendFunction={BlendFunction.OVERLAY} />
-          <Vignette eskil={false} offset={0.15} darkness={0.65} />
+          <Vignette eskil={false} offset={0.15} darkness={0.7} />
           <ToneMapping />
         </EffectComposer>
       </Canvas>
