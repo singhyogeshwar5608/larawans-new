@@ -4,15 +4,13 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import dynamic from "next/dynamic";
 import { MagneticButton } from "../magnetic-button";
+import { ParticleNetwork } from "../particle-network";
 
 // Dynamically import the WebGL scene so it only loads on the client.
 // SSR is skipped because Three.js touches WebGL/DOM APIs at module load.
 const Hero3DScene = dynamic(
   () => import("../hero-3d/hero-3d-scene").then((m) => m.Hero3DScene),
-  {
-    ssr: false,
-    loading: () => <HeroFallback />,
-  }
+  { ssr: false }
 );
 
 const WebGLBoundary = dynamic(
@@ -20,50 +18,40 @@ const WebGLBoundary = dynamic(
   { ssr: false }
 );
 
-/**
- * Lightweight CSS-only fallback shown while the WebGL bundle loads
- * (and on extremely old browsers). Mirrors the aurora look so there's
- * no jarring flash.
- */
-function HeroFallback() {
-  return (
-    <div aria-hidden className="absolute inset-0">
-      <div
-        className="absolute left-1/2 top-1/3 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[120px]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(124,92,255,0.55), rgba(0,224,198,0.25) 40%, transparent 70%)",
-        }}
-      />
-      <div className="absolute inset-0 grid-pattern opacity-60" />
-    </div>
-  );
-}
-
 export function Hero() {
   return (
     <section
       id="hero"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* 3D WebGL scene — real-time AI neural network + particles + glass + grid.
-          Wrapped in WebGLBoundary so we gracefully fall back to a 2D canvas
-          particle network if the R3F scene throws. */}
-      <div className="absolute inset-0">
+      {/* ── Layer 1 (base): 3D WebGL scene or dark background ──
+          On real GPUs: full 3D neural network, particles, rings, bloom.
+          On no-WebGL: WebGLBoundary renders null → section bg-[#050614] shows.
+          NEVER produces a white overlay. */}
+      <div className="absolute inset-0 z-[1]">
         <WebGLBoundary>
           <Hero3DScene />
         </WebGLBoundary>
       </div>
 
-      {/* Gradient mask so the WebGL scene fades smoothly into the rest of the page */}
+      {/* ── Layer 2 (enhancement): Canvas ParticleNetwork ──
+          ALWAYS renders. Transparent canvas with glowing particles.
+          On real GPUs: particles float on top of the 3D scene for extra depth.
+          On no-WebGL: particles float over the dark bg-[#050614] section.
+          No white overlay possible because this canvas is transparent. */}
+      <div className="pointer-events-none absolute inset-0 z-[2]">
+        <ParticleNetwork />
+      </div>
+
+      {/* Gradient mask — fades scene into the next section */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#050614]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-40 bg-gradient-to-b from-transparent to-[#050614]"
       />
       {/* Top vignette for navbar legibility */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
       />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
@@ -153,7 +141,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2"
+        className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2"
       >
         <div className="flex h-9 w-6 items-start justify-center rounded-full border border-white/15 p-1.5 backdrop-blur">
           <motion.span

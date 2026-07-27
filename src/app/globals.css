@@ -358,3 +358,10 @@ body {
 
 /* Avoid horizontal scroll from animations */
 section { position: relative; }
+
+/* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
+   R3F's Canvas component can default to white on non-WebGL devices.
+   This rule prevents any white flash regardless of WebGL availability. */
+#hero canvas {
+  background: transparent !important;
+}
