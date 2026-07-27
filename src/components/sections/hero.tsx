@@ -2,8 +2,43 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
-import { ParticleNetwork } from "../particle-network";
+import dynamic from "next/dynamic";
 import { MagneticButton } from "../magnetic-button";
+
+// Dynamically import the WebGL scene so it only loads on the client.
+// SSR is skipped because Three.js touches WebGL/DOM APIs at module load.
+const Hero3DScene = dynamic(
+  () => import("../hero-3d/hero-3d-scene").then((m) => m.Hero3DScene),
+  {
+    ssr: false,
+    loading: () => <HeroFallback />,
+  }
+);
+
+const WebGLBoundary = dynamic(
+  () => import("../hero-3d/webgl-boundary").then((m) => m.WebGLBoundary),
+  { ssr: false }
+);
+
+/**
+ * Lightweight CSS-only fallback shown while the WebGL bundle loads
+ * (and on extremely old browsers). Mirrors the aurora look so there's
+ * no jarring flash.
+ */
+function HeroFallback() {
+  return (
+    <div aria-hidden className="absolute inset-0">
+      <div
+        className="absolute left-1/2 top-1/3 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[120px]"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(124,92,255,0.55), rgba(0,224,198,0.25) 40%, transparent 70%)",
+        }}
+      />
+      <div className="absolute inset-0 grid-pattern opacity-60" />
+    </div>
+  );
+}
 
 export function Hero() {
   return (
@@ -11,17 +46,24 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* 3D AI network particle canvas */}
-      <ParticleNetwork className="opacity-90" />
+      {/* 3D WebGL scene — real-time AI neural network + particles + glass + grid.
+          Wrapped in WebGLBoundary so we gracefully fall back to a 2D canvas
+          particle network if WebGL is unavailable (rare / sandboxed envs). */}
+      <div className="absolute inset-0">
+        <WebGLBoundary>
+          <Hero3DScene />
+        </WebGLBoundary>
+      </div>
 
-      {/* Extra aurora glow concentrated on hero */}
+      {/* Gradient mask so the WebGL scene fades smoothly into the rest of the page */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/3 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[120px]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(124,92,255,0.55), rgba(0,224,198,0.25) 40%, transparent 70%)",
-        }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#050614]"
+      />
+      {/* Top vignette for navbar legibility */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
       />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
@@ -46,7 +88,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 26, filter: "blur(10px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          className="font-display text-[2.6rem] font-extrabold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.5rem]"
+          className="font-display text-[2.6rem] font-extrabold leading-[1.04] tracking-tight sm:text-6xl lg:text-[4.5rem] [text-shadow:0_2px_40px_rgba(5,6,20,0.6)]"
         >
           <span className="text-gradient-neon">AI-First Software</span>
           <br />
@@ -59,7 +101,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.28 }}
-          className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl"
+          className="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-xl [text-shadow:0_2px_20px_rgba(5,6,20,0.8)]"
         >
           Build Websites, Mobile Apps, ERP Software, AI Agents &amp; Digital Solutions
           that accelerate business growth — engineered with cutting-edge tech and an
@@ -88,7 +130,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.58 }}
-          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-xs text-muted-foreground sm:text-sm"
+          className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-xs text-muted-foreground sm:text-sm [text-shadow:0_2px_16px_rgba(5,6,20,0.9)]"
         >
           {[
             ["250+", "Clients"],
@@ -113,7 +155,7 @@ export function Hero() {
         transition={{ delay: 1.1, duration: 0.8 }}
         className="absolute bottom-7 left-1/2 -translate-x-1/2"
       >
-        <div className="flex h-9 w-6 items-start justify-center rounded-full border border-white/15 p-1.5">
+        <div className="flex h-9 w-6 items-start justify-center rounded-full border border-white/15 p-1.5 backdrop-blur">
           <motion.span
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
