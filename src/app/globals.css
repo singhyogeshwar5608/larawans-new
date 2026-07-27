@@ -343,6 +343,22 @@ body {
 /* Avoid horizontal scroll from animations */
 section { position: relative; }
 
+/* ── Typewriter blinking cursor ── */
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.85em;
+  margin-left: 3px;
+  background: currentColor;
+  animation: blink-cursor 0.75s step-end infinite;
+  vertical-align: text-bottom;
+  border-radius: 1px;
+}
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
    R3F's Canvas component can default to white on non-WebGL devices.
    This rule prevents any white flash regardless of WebGL availability. */

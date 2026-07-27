@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
 import { ParticleNetwork } from "../particle-network";
 
-/** Services ke naam jo hero heading mein rotate honge */
+/** Services ke naam jo hero heading mein typewrite honge */
 const ROTATING_WORDS = [
   "Modern Businesses",
   "Web Development",
@@ -19,28 +19,54 @@ const ROTATING_WORDS = [
   "UI/UX Design",
 ];
 
-/** Kitni der har word rahega (ms) */
-const WORD_DURATION = 2500;
-/** Fade out/in transition duration (ms) */
-const TRANSITION_DURATION = 500;
+/** Typing speed per character (ms) */
+const TYPING_SPEED = 80;
+/** Deleting speed per character (ms) */
+const DELETING_SPEED = 45;
+/** Pause after full word is typed (ms) */
+const PAUSE_AFTER_TYPE = 1800;
+/** Pause after full word is deleted (ms) */
+const PAUSE_AFTER_DELETE = 400;
 
 export function Hero() {
-  const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<"in" | "out">("in");
-
-  // Cycle: show word → fade out → change word → fade in → repeat
-  const cycle = useCallback(() => {
-    setPhase("out");
-    setTimeout(() => {
-      setIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-      setPhase("in");
-    }, TRANSITION_DURATION);
-  }, []);
+  const [displayedText, setDisplayedText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const id = setInterval(cycle, WORD_DURATION);
-    return () => clearInterval(id);
-  }, [cycle]);
+    const currentWord = ROTATING_WORDS[wordIndex];
+
+    const tick = () => {
+      if (!isDeleting) {
+        // Typing phase
+        if (displayedText.length < currentWord.length) {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+          timeoutRef.current = setTimeout(tick, TYPING_SPEED + Math.random() * 40);
+        } else {
+          // Word fully typed — pause, then start deleting
+          timeoutRef.current = setTimeout(() => setIsDeleting(true), PAUSE_AFTER_TYPE);
+        }
+      } else {
+        // Deleting phase
+        if (displayedText.length > 0) {
+          setDisplayedText(displayedText.slice(0, -1));
+          timeoutRef.current = setTimeout(tick, DELETING_SPEED);
+        } else {
+          // Word fully deleted — move to next word
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+          timeoutRef.current = setTimeout(tick, PAUSE_AFTER_DELETE);
+        }
+      }
+    };
+
+    timeoutRef.current = setTimeout(tick, isDeleting ? DELETING_SPEED : TYPING_SPEED);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [displayedText, wordIndex, isDeleting]);
 
   return (
     <section
@@ -100,23 +126,10 @@ export function Hero() {
           <span className="text-gradient-neon">AI-First Software</span>
           <br />
           <span className="text-foreground">Development Company for </span>
-          {/* Rotating word */}
-          <span className="relative inline-block min-w-[2ch] text-left">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={ROTATING_WORDS[index]}
-                initial={{ opacity: 0, y: 18, filter: "blur(8px)" }}
-                animate={{
-                  opacity: phase === "in" ? 1 : 0,
-                  y: phase === "in" ? 0 : -18,
-                  filter: phase === "in" ? "blur(0px)" : "blur(8px)",
-                }}
-                transition={{ duration: TRANSITION_DURATION / 1000, ease: [0.22, 1, 0.36, 1] }}
-                className="inline-block text-gradient-aurora"
-              >
-                {ROTATING_WORDS[index]}
-              </motion.span>
-            </AnimatePresence>
+          {/* Typewriter rotating word */}
+          <span className="relative inline-block text-left">
+            <span className="inline-block text-gradient-aurora">{displayedText}</span>
+            <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
           </span>
         </motion.h1>
 

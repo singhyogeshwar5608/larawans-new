@@ -63,3 +63,26 @@ Stage Summary:
 - Console shows: "Software WebGL renderer detected — particles only mode for stability"
 - On real GPUs (Chrome/Firefox/Safari on actual hardware): full 3D R3F scene renders with neural network, particles, rings, bloom
 - Files modified: webgl-boundary.tsx, hero-3d-scene.tsx
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Implement typewriter rotating text effect in hero heading
+
+Work Log:
+- Replaced fade in/out AnimatePresence rotating text with a character-by-character typewriter effect
+- Removed `AnimatePresence`, `useCallback` imports; added `useRef` import
+- Created typewriter state machine: displayedText + wordIndex + isDeleting
+- Typing phase: types each character with 80ms + random 0-40ms jitter for natural feel
+- Pause after full word typed: 1800ms
+- Deleting phase: removes characters at 45ms each (faster than typing)
+- Pause after full word deleted: 400ms, then cycles to next word
+- Added blinking cursor element (`typewriter-cursor` class) with `text-gradient-aurora` to match text color
+- Added CSS: 3px wide, 0.85em tall cursor bar with `blink-cursor` animation (0.75s step-end)
+- Build verified: compiled successfully, no errors
+
+Stage Summary:
+- Typewriter effect cycles through 9 service names: "Modern Businesses" → "Web Development" → "Mobile Apps" → "AI Agents" → "Cloud Solutions" → "SaaS Platforms" → "E-Commerce" → "Digital Marketing" → "UI/UX Design" → repeat
+- Blinking aurora-colored cursor sits at the end of the typed text
+- Natural typing feel with slight random jitter on each keystroke
+- Files modified: hero.tsx, globals.css
