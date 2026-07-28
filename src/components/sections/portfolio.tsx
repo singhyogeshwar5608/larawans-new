@@ -90,27 +90,36 @@ export function Portfolio() {
                 </div>
               </div>
 
-              <div className="p-6">
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-xl font-semibold tracking-tight text-neutral-900">
-                    {p.title}
-                  </h3>
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-500 transition-all duration-300 group-hover:border-[#7c5cff]/40 group-hover:bg-[#7c5cff]/10 group-hover:text-[#7c5cff]">
-                    <ArrowUpRight className="h-4 w-4" />
-                  </span>
-                </div>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-neutral-600">
-                  {p.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-neutral-600"
-                    >
-                      {t}
+              {/* Dark content area with gradient */}
+              <div className="relative p-6 bg-gradient-to-br from-[#0a0b1e] via-[#0f1029] to-[#0a0b1e]">
+                {/* Subtle inner glow matching card accent */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-20"
+                  style={{ background: p.accent }}
+                />
+                <div className="relative">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-xl font-semibold tracking-tight text-white">
+                      {p.title}
+                    </h3>
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/[0.06] text-white/60 transition-all duration-300 group-hover:border-[#00e0c6]/50 group-hover:bg-[#00e0c6]/10 group-hover:text-[#00e0c6]">
+                      <ArrowUpRight className="h-4 w-4" />
                     </span>
-                  ))}
+                  </div>
+                  <p className="mt-2.5 text-[13.5px] leading-relaxed text-white/70">
+                    {p.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {p.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-white/60"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.article>
