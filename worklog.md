@@ -86,3 +86,33 @@ Stage Summary:
 - Blinking aurora-colored cursor sits at the end of the typed text
 - Natural typing feel with slight random jitter on each keystroke
 - Files modified: hero.tsx, globals.css
+
+---
+Task ID: 5
+Agent: Main Agent
+Task: Add premium 3D ecosystem to hero section (glass L logo, orbiting tech nodes, holographic panels, data particles)
+
+Work Log:
+- Created `/src/components/hero-3d/hero-ecosystem.tsx` — full 3D scene with R3F + drei + postprocessing
+- Components built:
+  - LarawansLogo: Glass "L" shape (ExtrudeGeometry + MeshPhysicalMaterial with transmission), slow rotation, energy pulse ring, dual point lights
+  - TechNodes: 11 tech service nodes (octahedrons) orbiting the logo at different radii/speeds with Billboard text labels
+  - ConnectionLines: lineSegments from center to each node with vertex colors, slowly rotating
+  - DataParticles: 200 instanced particles flowing along connections with sine-wave arc
+  - HolographicPanels: 6 glass planes with wireframe UI mockups (bar charts, text lines) floating in background
+  - NeuralBackground: 120 points forming subtle neural network mesh
+  - AmbientParticles: 300 instanced glowing particles with organic float motion
+  - EnergyWaves: 3 expanding rings from center, cycling opacity
+  - CameraRig: Subtle camera position tracking mouse movement
+- Post-processing: Bloom (luminance 0.4, intensity 0.9) + Vignette (darkness 0.6) + ChromaticAberration
+- WebGLBoundary integration: SwiftShader/software renderer detected → renders null → ParticleNetwork fallback
+- Performance tiers: mobile (100 ambient), tablet (200), desktop (300)
+- Integrated into hero.tsx as z-[2] background layer with pointer-events: none
+- Canvas has alpha:true + transparent bg safety net CSS rule
+
+Stage Summary:
+- 3D scene only renders on real GPUs (Chrome/Firefox/Safari on actual hardware)
+- SwiftShader/software renderer automatically falls back to 2D ParticleNetwork (no white overlay)
+- All hero text, buttons, UI remain fully interactive and readable (z-index layering)
+- Files created: hero-ecosystem.tsx
+- Files modified: hero.tsx, globals.css

@@ -398,6 +398,11 @@ section { position: relative; }
   50% { opacity: 0; }
 }
 
+/* ── Hero 3D Ecosystem — ensure canvas stays transparent bg ── */
+#hero canvas {
+  background: transparent !important;
+}
+
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
    R3F's Canvas component can default to white on non-WebGL devices.
    This rule prevents any white flash regardless of WebGL availability. */
