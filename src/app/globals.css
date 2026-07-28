@@ -377,6 +377,27 @@ section { position: relative; }
   to { transform: rotate(360deg); }
 }
 
+/* ── 3D Code Editor (hero background) ── */
+.code-editor-3d {
+  transform: rotateX(28deg) rotateY(-2deg);
+  transform-origin: center 30%;
+  transition: transform 0.3s ease;
+}
+.code-editor-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  margin-left: 1px;
+  background: #528bff;
+  vertical-align: text-bottom;
+  border-radius: 1px;
+  animation: editor-blink 1s step-end infinite;
+}
+@keyframes editor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
    R3F's Canvas component can default to white on non-WebGL devices.
    This rule prevents any white flash regardless of WebGL availability. */

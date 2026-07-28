@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
 import { ParticleNetwork } from "../particle-network";
+import { CodeEditor3D } from "../code-editor-3d";
 
 /** Services ke naam jo hero heading mein typewrite honge */
 const ROTATING_WORDS = [
@@ -98,6 +99,9 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
       />
+
+      {/* 3D Code Editor — background element */}
+      <CodeEditor3D />
 
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
         {/* Top badge */}
