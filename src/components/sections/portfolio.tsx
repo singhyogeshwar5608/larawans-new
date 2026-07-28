@@ -42,8 +42,15 @@ export function Portfolio() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.02)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(124,92,255,0.1)] interactive"
+              className="group relative rounded-3xl interactive"
             >
+              {/* Rotating gradient border */}
+              <div className="pointer-events-none absolute -inset-[1.5px] rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                <div className="rotating-border h-full w-full rounded-3xl" />
+              </div>
+
+              {/* Inner card body */}
+              <div className="relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.02)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
                 className="relative h-40 overflow-hidden sm:h-44"
@@ -113,6 +120,7 @@ export function Portfolio() {
                     </span>
                   ))}
                 </div>
+              </div>
               </div>
             </motion.article>
           ))}

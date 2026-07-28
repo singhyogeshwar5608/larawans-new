@@ -359,6 +359,40 @@ section { position: relative; }
   50% { opacity: 0; }
 }
 
+/* ── Rotating gradient border (portfolio cards) ── */
+.rotating-border {
+  position: relative;
+  border-radius: inherit;
+}
+.rotating-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    #7c5cff,
+    #00e0c6,
+    #4dc4ff,
+    #ff4dd2,
+    #ffb14d,
+    #7c5cff
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: spin-border 3s linear infinite;
+}
+@keyframes spin-border {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
    R3F's Canvas component can default to white on non-WebGL devices.
    This rule prevents any white flash regardless of WebGL availability. */
