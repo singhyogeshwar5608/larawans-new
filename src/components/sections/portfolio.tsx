@@ -42,15 +42,15 @@ export function Portfolio() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative rounded-3xl interactive"
+              className="group relative rounded-3xl p-[2px] interactive"
             >
-              {/* Rotating gradient border — always visible */}
-              <div className="pointer-events-none absolute -inset-[1.5px] rounded-3xl">
-                <div className="rotating-border h-full w-full rounded-3xl" />
+              {/* Rotating gradient border — fills the 2px padding gap */}
+              <div className="absolute inset-0 overflow-hidden rounded-3xl">
+                <div className="rotating-gradient-filler" />
               </div>
 
-              {/* Inner card body */}
-              <div className="relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.02)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+              {/* Card content — sits on top, covers inner area */}
+              <div className="relative overflow-hidden rounded-[22px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
                 className="relative h-40 overflow-hidden sm:h-44"

@@ -360,16 +360,9 @@ section { position: relative; }
 }
 
 /* ── Rotating gradient border (portfolio cards) ── */
-.rotating-border {
-  position: relative;
-  border-radius: inherit;
-}
-.rotating-border::before {
-  content: "";
+.rotating-gradient-filler {
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
+  inset: -100%;
   background: conic-gradient(
     from 0deg,
     #7c5cff,
@@ -379,17 +372,9 @@ section { position: relative; }
     #ffb14d,
     #7c5cff
   );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  animation: spin-border 3s linear infinite;
+  animation: spin-gradient 3s linear infinite;
 }
-@keyframes spin-border {
+@keyframes spin-gradient {
   to { transform: rotate(360deg); }
 }
 
