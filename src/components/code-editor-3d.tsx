@@ -143,11 +143,11 @@ const CODE_LINES: { text: string; tokens: { text: string; color: string }[] }[] 
 ];
 
 /** Time per character when typing a line (ms) */
-const CHAR_SPEED = 4;
+const CHAR_SPEED = 8;
 /** Pause between lines (ms) */
-const LINE_PAUSE = 25;
+const LINE_PAUSE = 60;
 /** Pause after all lines typed, before restart (ms) */
-const RESTART_PAUSE = 800;
+const RESTART_PAUSE = 1500;
 /** Max visible lines in the editor window */
 const MAX_VISIBLE_LINES = 14;
 
@@ -237,11 +237,35 @@ export function CodeEditor3D() {
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-[15%] z-[2] flex justify-center">
       <div className="w-[80%] max-w-4xl [perspective:1200px]">
-        <div className="code-editor-3d rounded-xl">
-          {/* Code body — no window chrome, just floating code */}
-          <div className="overflow-hidden px-6 py-4 sm:px-8 sm:py-5">
+        <div className="code-editor-3d rounded-xl border border-white/[0.08] bg-[#0d1117]/90 backdrop-blur-xl shadow-[0_0_80px_rgba(124,92,255,0.08),0_20px_60px_rgba(0,0,0,0.5)]">
+          {/* Title bar */}
+          <div className="flex items-center gap-2 border-b border-white/[0.06] bg-white/[0.03] px-4 py-2.5">
+            <div className="flex gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+            </div>
+            <div className="ml-3 flex-1 rounded-md bg-white/[0.04] px-3 py-0.5 text-center">
+              <span className="text-[10px] font-mono text-white/30">
+                agent-sdk / deploy.ts
+              </span>
+            </div>
+            <div className="flex gap-2 text-white/20">
+              <span className="text-[10px]">TypeScript</span>
+            </div>
+          </div>
+
+          {/* Code body */}
+          <div className="overflow-hidden px-4 py-3">
             <div className="flex font-mono text-[12px] leading-6 sm:text-[13px] sm:leading-7">
-              {/* Code content — no line numbers, pure floating code */}
+              {/* Line numbers gutter */}
+              <div className="mr-5 flex shrink-0 flex-col select-none text-right text-white/[0.12]">
+                {Array.from({ length: MAX_VISIBLE_LINES }, (_, i) => (
+                  <span key={i + 1 + scrollOffset}>{i + 1 + scrollOffset}</span>
+                ))}
+              </div>
+
+              {/* Code content */}
               <div className="min-w-0 flex-1 overflow-hidden">
                 {Array.from({ length: MAX_VISIBLE_LINES }, (_, i) => {
                   const line = visibleLines[i + scrollOffset];
@@ -250,7 +274,7 @@ export function CodeEditor3D() {
                   return (
                     <div key={i} className="whitespace-nowrap">
                       {line.tokens.map((token, ti) => (
-                        <span key={ti} style={{ color: token.color }} className="opacity-70">
+                        <span key={ti} style={{ color: token.color }}>
                           {token.text}
                         </span>
                       ))}
