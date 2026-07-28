@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
 import { ParticleNetwork } from "../particle-network";
-import { WebGLBoundary, HeroEcosystem } from "../hero-3d/hero-ecosystem";
 
 /** Services ke naam jo hero heading mein typewrite honge */
 const ROTATING_WORDS = [
@@ -74,16 +73,9 @@ export function Hero() {
       id="hero"
       className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* Background — 2D canvas particle network (fallback for software renderers) */}
+      {/* Background — animated particle network */}
       <div className="pointer-events-none absolute inset-0 z-[1]">
         <ParticleNetwork />
-      </div>
-
-      {/* 3D Ecosystem — glass L logo, orbiting tech nodes, holographic panels (real GPU only) */}
-      <div className="pointer-events-none absolute inset-0 z-[2]">
-        <WebGLBoundary>
-          <HeroEcosystem />
-        </WebGLBoundary>
       </div>
 
       {/* Aurora glow behind text */}
