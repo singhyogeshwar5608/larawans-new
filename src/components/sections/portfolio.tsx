@@ -44,8 +44,8 @@ export function Portfolio() {
               }}
               className="group relative rounded-3xl interactive"
             >
-              {/* Rotating gradient border */}
-              <div className="pointer-events-none absolute -inset-[1.5px] rounded-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+              {/* Rotating gradient border — always visible */}
+              <div className="pointer-events-none absolute -inset-[1.5px] rounded-3xl">
                 <div className="rotating-border h-full w-full rounded-3xl" />
               </div>
 
