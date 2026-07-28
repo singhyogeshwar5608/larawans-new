@@ -42,10 +42,15 @@ export function Portfolio() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative rounded-3xl p-[2px] portfolio-card-border interactive"
+              className="group relative interactive"
             >
-              {/* Card content — sits on top, inner white bg covers center, gradient peeks through 2px gap */}
-              <div className="relative overflow-hidden rounded-[22px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+              {/* Outer container — clips the rotating gradient */}
+              <div className="relative rounded-3xl overflow-hidden p-[2px]">
+                {/* Spinning gradient background (much bigger than card so rotation is visible) */}
+                <div className="absolute inset-[-150%] spinning-gradient"></div>
+
+                {/* Actual card content on top */}
+                <div className="relative overflow-hidden rounded-[22px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
                 className="relative h-40 overflow-hidden sm:h-44"
@@ -115,6 +120,7 @@ export function Portfolio() {
                     </span>
                   ))}
                 </div>
+              </div>
               </div>
               </div>
             </motion.article>

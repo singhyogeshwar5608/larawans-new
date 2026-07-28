@@ -359,27 +359,22 @@ section { position: relative; }
   50% { opacity: 0; }
 }
 
-/* ── Rotating gradient border (portfolio cards) via @property ── */
-@property --border-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-.portfolio-card-border {
-  --border-angle: 0deg;
+/* ── Rotating gradient border (portfolio cards) ── */
+.spinning-gradient {
   background: conic-gradient(
-    from var(--border-angle),
+    from 0deg,
     #7c5cff,
     #00e0c6,
     #4dc4ff,
     #ff4dd2,
     #ffb14d,
+    #9dff5c,
     #7c5cff
   );
-  animation: rotate-border-angle 3s linear infinite;
+  animation: spin-border-inner 3s linear infinite;
 }
-@keyframes rotate-border-angle {
-  to { --border-angle: 360deg; }
+@keyframes spin-border-inner {
+  to { transform: rotate(360deg); }
 }
 
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
