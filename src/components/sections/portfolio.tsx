@@ -8,16 +8,29 @@ import { MagneticButton } from "../magnetic-button";
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="Portfolio"
-          title="Work that ships,"
-          highlight="scales, and survives"
-          description="A snapshot of platforms we've shipped across insurance, healthcare, retail, manufacturing, and SaaS. Each one is in production today, handling real revenue and real users."
-        />
+    <section id="portfolio" className="relative bg-[#f8f9fc] py-24 sm:py-32">
+      {/* Top accent line */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 5%, rgba(124,92,255,0.35) 30%, rgba(0,224,198,0.35) 50%, rgba(124,92,255,0.35) 70%, transparent 95%)",
+        }}
+      />
 
-        <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+        {/* Light-theme heading overrides */}
+        <div className="[&_.rounded-full]:border-neutral-200 [&_.rounded-full]:bg-white [&_.rounded-full]:text-neutral-500 [&_h2]:text-neutral-900 [&_p]:text-neutral-600">
+          <SectionHeading
+            eyebrow="Portfolio"
+            title="Work that ships,"
+            highlight="scales, and survives"
+            description="A snapshot of platforms we've shipped across insurance, healthcare, retail, manufacturing, and SaaS. Each one is in production today, handling real revenue and real users."
+          />
+        </div>
+
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => (
             <motion.article
               key={p.title}
@@ -29,7 +42,7 @@ export function Portfolio() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-transparent backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-white/20 interactive"
+              className="group relative overflow-hidden rounded-3xl border border-neutral-200/80 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04),0_0_0_1px_rgba(0,0,0,0.02)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.08),0_0_0_1px_rgba(124,92,255,0.1)] interactive"
             >
               {/* Big gradient header */}
               <div
@@ -79,21 +92,21 @@ export function Portfolio() {
 
               <div className="p-6">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-xl font-semibold tracking-tight">
+                  <h3 className="font-display text-xl font-semibold tracking-tight text-neutral-900">
                     {p.title}
                   </h3>
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-muted-foreground transition-all duration-300 group-hover:border-[#00e0c6]/50 group-hover:bg-[#00e0c6]/10 group-hover:text-[#00e0c6]">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-neutral-500 transition-all duration-300 group-hover:border-[#7c5cff]/40 group-hover:bg-[#7c5cff]/10 group-hover:text-[#7c5cff]">
                     <ArrowUpRight className="h-4 w-4" />
                   </span>
                 </div>
-                <p className="mt-2.5 text-[13.5px] leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 text-[13.5px] leading-relaxed text-neutral-600">
                   {p.description}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {p.tags.map((t) => (
                     <span
                       key={t}
-                      className="rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-muted-foreground"
+                      className="rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-neutral-600"
                     >
                       {t}
                     </span>
