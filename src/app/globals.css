@@ -379,8 +379,8 @@ section { position: relative; }
 
 /* ── 3D Code Editor (hero background) ── */
 .code-editor-3d {
-  transform: rotateX(28deg) rotateY(-2deg);
-  transform-origin: center 30%;
+  transform: rotateX(14deg) rotateY(-1deg);
+  transform-origin: center 20%;
   transition: transform 0.3s ease;
 }
 .code-editor-cursor {
