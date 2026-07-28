@@ -143,11 +143,11 @@ const CODE_LINES: { text: string; tokens: { text: string; color: string }[] }[] 
 ];
 
 /** Time per character when typing a line (ms) */
-const CHAR_SPEED = 28;
+const CHAR_SPEED = 10;
 /** Pause between lines (ms) */
-const LINE_PAUSE = 180;
+const LINE_PAUSE = 60;
 /** Pause after all lines typed, before restart (ms) */
-const RESTART_PAUSE = 3000;
+const RESTART_PAUSE = 1500;
 /** Max visible lines in the editor window */
 const MAX_VISIBLE_LINES = 14;
 
@@ -205,7 +205,7 @@ export function CodeEditor3D() {
         });
         setCharIndex((prev) => prev + 1);
         // Vary speed slightly for natural feel
-        timeoutRef.current = setTimeout(tick, CHAR_SPEED + Math.random() * 15);
+        timeoutRef.current = setTimeout(tick, CHAR_SPEED + Math.random() * 5);
       } else {
         // Line complete — move to next
         setVisibleLines((prev) => {
@@ -235,7 +235,7 @@ export function CodeEditor3D() {
   const scrollOffset = totalLines > MAX_VISIBLE_LINES ? totalLines - MAX_VISIBLE_LINES : 0;
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] flex justify-center pb-6">
+    <div className="pointer-events-none absolute inset-x-0 bottom-[18%] z-[2] flex justify-center">
       <div className="w-[80%] max-w-4xl [perspective:1200px]">
         <div className="code-editor-3d rounded-xl border border-white/[0.08] bg-[#0d1117]/90 backdrop-blur-xl shadow-[0_0_80px_rgba(124,92,255,0.08),0_20px_60px_rgba(0,0,0,0.5)]">
           {/* Title bar */}
