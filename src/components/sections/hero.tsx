@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Sparkles, Star } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
-import { ParticleNetwork } from "../particle-network";
 
 /** Services ke naam jo hero heading mein typewrite honge */
 const ROTATING_WORDS = [
@@ -71,34 +70,65 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-32 pb-20 sm:px-6"
+      className="hero-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-32 pb-20 sm:px-6"
     >
-      {/* Background — animated particle network */}
-      <div className="pointer-events-none absolute inset-0 z-[1]">
-        <ParticleNetwork />
+      {/* ── Layer 1: Animated gradient orbs (floating nebula) ── */}
+      <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
+        {/* Large violet orb — top-left drift */}
+        <div className="hero-orb hero-orb-1 absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-[#7c5cff]/30 blur-[100px]" />
+        {/* Cyan orb — bottom-right drift */}
+        <div className="hero-orb hero-orb-2 absolute -right-24 top-1/4 h-[450px] w-[450px] rounded-full bg-[#00e0c6]/25 blur-[110px]" />
+        {/* Magenta orb — center drift */}
+        <div className="hero-orb hero-orb-3 absolute left-1/2 top-1/3 h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ff4dd2]/20 blur-[90px]" />
+        {/* Deep blue orb — bottom-left */}
+        <div className="hero-orb hero-orb-4 absolute bottom-10 left-1/4 h-[400px] w-[400px] rounded-full bg-[#4dc4ff]/20 blur-[100px]" />
+        {/* Amber accent orb — top-right */}
+        <div className="hero-orb hero-orb-5 absolute right-10 top-20 h-[250px] w-[250px] rounded-full bg-[#ffb14d]/15 blur-[80px]" />
+        {/* Lime accent orb — bottom-right */}
+        <div className="hero-orb hero-orb-6 absolute bottom-1/4 right-1/3 h-[300px] w-[300px] rounded-full bg-[#9dff5c]/12 blur-[90px]" />
       </div>
 
-      {/* Aurora glow behind text */}
+      {/* ── Layer 2: Subtle grid pattern overlay ── */}
+      <div className="pointer-events-none absolute inset-0 z-[2] grid-pattern" aria-hidden />
+
+      {/* ── Layer 3: Animated stars / dots scattered across hero ── */}
+      <div className="pointer-events-none absolute inset-0 z-[2]" aria-hidden>
+        {Array.from({ length: 40 }).map((_, i) => (
+          <div
+            key={i}
+            className="hero-star absolute h-[2px] w-[2px] rounded-full bg-white"
+            style={{
+              left: `${(i * 37 + 13) % 100}%`,
+              top: `${(i * 53 + 7) % 100}%`,
+              animationDelay: `${(i * 0.3) % 5}s`,
+              animationDuration: `${2.5 + (i % 5) * 0.8}s`,
+              opacity: 0.3 + (i % 4) * 0.15,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* ── Layer 4: Central aurora glow behind text ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/3 z-[1] h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-60 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/3 z-[3] h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-70 blur-[120px] hero-aurora"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(124,92,255,0.55), rgba(0,224,198,0.25) 40%, transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(124,92,255,0.6), rgba(0,224,198,0.3) 40%, transparent 70%)",
         }}
       />
 
-      {/* Gradient mask — fades into the next section */}
+      {/* ── Layer 5: Gradient masks for smooth section transitions ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[3] h-40 bg-gradient-to-b from-transparent to-[#050614]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-40 bg-gradient-to-b from-transparent to-[#050614]"
       />
-      {/* Top vignette for navbar legibility */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-[3] h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-32 bg-gradient-to-b from-[#050614]/80 to-transparent"
       />
 
+      {/* ── Main Content ── */}
       <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
         {/* Top badge */}
         <motion.div
