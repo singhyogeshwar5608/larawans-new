@@ -359,12 +359,16 @@ section { position: relative; }
   50% { opacity: 0; }
 }
 
-/* ── Rotating gradient border (portfolio cards) ── */
-.rotating-gradient-filler {
-  position: absolute;
-  inset: -100%;
+/* ── Rotating gradient border (portfolio cards) via @property ── */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.portfolio-card-border {
+  --border-angle: 0deg;
   background: conic-gradient(
-    from 0deg,
+    from var(--border-angle),
     #7c5cff,
     #00e0c6,
     #4dc4ff,
@@ -372,10 +376,10 @@ section { position: relative; }
     #ffb14d,
     #7c5cff
   );
-  animation: spin-gradient 3s linear infinite;
+  animation: rotate-border-angle 3s linear infinite;
 }
-@keyframes spin-gradient {
-  to { transform: rotate(360deg); }
+@keyframes rotate-border-angle {
+  to { --border-angle: 360deg; }
 }
 
 /* ── Hero WebGL safety: force all canvases inside #hero to be transparent ──
