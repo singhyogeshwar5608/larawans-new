@@ -368,7 +368,7 @@ section { position: relative; }
 
 .portfolio-card-border {
   position: relative;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 2px;
   background: conic-gradient(
     from var(--border-angle),
