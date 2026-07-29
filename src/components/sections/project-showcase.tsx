@@ -169,7 +169,6 @@ export function ProjectShowcase() {
               muted
               playsInline
               className="block w-full"
-              style={{ height: "520px", objectFit: "cover", background: "transparent" }}
             />
           </motion.div>
         </div>
