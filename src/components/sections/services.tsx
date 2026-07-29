@@ -83,20 +83,6 @@ export function Services() {
             </span>
           </motion.h2>
 
-          {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
-            className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
-          >
-            From AI agents to enterprise ERPs, mobile apps, and growth marketing — Larawans
-            Digital is your single partner for everything digital, engineered to compound ROI
-            over time.
-          </motion.p>
-        </div>
-
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {services.map((s, i) => (
             <motion.article
