@@ -19,7 +19,7 @@ export function Industries() {
           <SectionHeading
             eyebrow="Industries"
             title="Deep expertise across"
-            highlight="8 verticals"
+            highlight="multi sector"
             description={undefined}
           />
         </div>
