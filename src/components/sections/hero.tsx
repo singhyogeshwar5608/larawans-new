@@ -118,162 +118,102 @@ export function Hero() {
         }}
       />
 
-      {/* ── Layer 5: 3D Floating Code Blocks ── */}
+      {/* ── Layer 5: 3D Wireframe (rotating rings + lines) ── */}
       <div
         className="pointer-events-none absolute inset-0 z-[5] overflow-hidden"
         aria-hidden
-        style={{ perspective: "1200px" }}
       >
-        {/* Main code editor — right side, large, tilted */}
+        {/* Main SVG wireframe — right side */}
         <div
-          className="code-3d-float-1 absolute right-[3%] top-[14%] w-64 sm:w-72 lg:right-[8%] lg:w-80"
-          style={{ transform: "rotateY(-14deg) rotateX(6deg)" }}
+          className="wireframe-3d absolute right-[4%] top-1/2 h-[340px] w-[340px] -translate-y-1/2 sm:h-[440px] sm:w-[440px] lg:right-[10%] lg:h-[520px] lg:w-[520px]"
+          style={{ perspective: "800px" }}
         >
-          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(124,92,255,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
-            {/* Title bar */}
-            <div className="mb-3 flex items-center gap-1.5">
-              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="ml-2 text-[10px] font-mono text-white/25">agent.ts</span>
-            </div>
-            {/* Code content */}
-            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
-              <code>
-                <span className="text-[#7c5cff]">import</span>{" "}
-                <span className="text-white/70">{"{ "}</span>
-                <span className="text-[#00e0c6]">AI</span>
-                <span className="text-white/70">{" }"}</span>{" "}
-                <span className="text-[#7c5cff]">from</span>{" "}
-                <span className="text-[#ffb14d]">&apos;@larawans/core&apos;</span>
-                {"\n"}
-                <span className="text-[#7c5cff]">const</span>{" "}
-                <span className="text-[#00e0c6]">agent</span>{" "}
-                <span className="text-white/50">=</span>{" "}
-                <span className="text-[#7c5cff]">new</span>{" "}
-                <span className="text-[#ff4dd2]">AI</span>
-                <span className="text-white/70">{"({"}</span>
-                {"\n"}
-                {"  "}model<span className="text-white/50">:</span>{" "}
-                <span className="text-[#ffb14d]">&apos;gpt-4-turbo&apos;</span>
-                <span className="text-white/70">,</span>
-                {"\n"}
-                {"  "}tools<span className="text-white/50">:</span>{" "}
-                <span className="text-white/70">[</span>
-                <span className="text-[#4dc4ff]">&apos;search&apos;</span>
-                <span className="text-white/70">,</span>{" "}
-                <span className="text-[#4dc4ff]">&apos;code&apos;</span>
-                <span className="text-white/70">,</span>{" "}
-                <span className="text-[#4dc4ff]">&apos;deploy&apos;</span>
-                <span className="text-white/70">],</span>
-                {"\n"}
-                {"  "}memory<span className="text-white/50">:</span>{" "}
-                <span className="text-[#7c5cff]">true</span>
-                <span className="text-white/70">,</span>
-                {"\n"}
-                {"  "}stream<span className="text-white/50">:</span>{" "}
-                <span className="text-[#7c5cff]">true</span>
-                {"\n"}
-                <span className="text-white/70">{"});"}</span>
-                {"\n\n"}
-                <span className="text-[#7c5cff]">export default</span>{" "}
-                <span className="text-[#00e0c6]">agent</span>
-                <span className="text-white/70">;</span>
-              </code>
-            </pre>
-          </div>
+          <svg className="h-full w-full" viewBox="0 0 400 400" fill="none">
+            {/* Ring 1 — violet, rotating Y axis */}
+            <g className="wire-ring-1" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="180" ry="70" stroke="#7c5cff" strokeWidth="1.2" opacity="0.7" />
+              <ellipse cx="200" cy="200" rx="130" ry="50" stroke="#7c5cff" strokeWidth="0.8" opacity="0.4" />
+              {/* Dots at ring vertices */}
+              <circle cx="20" cy="200" r="4" fill="#7c5cff" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.4;0.9" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="380" cy="200" r="4" fill="#7c5cff" opacity="0.9">
+                <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="130" r="3" fill="#7c5cff" opacity="0.7" />
+              <circle cx="200" cy="270" r="3" fill="#7c5cff" opacity="0.7" />
+            </g>
+            {/* Ring 2 — cyan, rotating X axis */}
+            <g className="wire-ring-2" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="160" ry="80" stroke="#00e0c6" strokeWidth="1.2" opacity="0.6" />
+              <ellipse cx="200" cy="200" rx="110" ry="55" stroke="#00e0c6" strokeWidth="0.6" opacity="0.3" />
+              <circle cx="40" cy="200" r="4" fill="#00e0c6" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.3;0.9" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="360" cy="200" r="4" fill="#00e0c6" opacity="0.9">
+                <animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="120" r="3" fill="#00e0c6" opacity="0.6" />
+            </g>
+            {/* Ring 3 — blue, diagonal */}
+            <g className="wire-ring-3" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="140" ry="60" stroke="#4dc4ff" strokeWidth="1" opacity="0.5" />
+              <circle cx="60" cy="200" r="3.5" fill="#4dc4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3.5s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="340" cy="200" r="3.5" fill="#4dc4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3.5s" repeatCount="indefinite" />
+              </circle>
+            </g>
+            {/* Cross lines connecting rings */}
+            <g className="wire-lines" opacity="0.25">
+              <line x1="200" y1="60" x2="200" y2="340" stroke="#7c5cff" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="60" y1="200" x2="340" y2="200" stroke="#00e0c6" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="100" y1="100" x2="300" y2="300" stroke="#4dc4ff" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="300" y1="100" x2="100" y2="300" stroke="#ff4dd2" strokeWidth="0.4" strokeDasharray="4 6" />
+            </g>
+            {/* Center core glow */}
+            <circle cx="200" cy="200" r="8" fill="none" stroke="#7c5cff" strokeWidth="1" opacity="0.6">
+              <animate attributeName="r" values="8;14;8" dur="4s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="4s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="200" cy="200" r="3" fill="#00e0c6" opacity="0.8">
+              <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite" />
+            </circle>
+          </svg>
         </div>
 
-        {/* Secondary code editor — left bottom, smaller, opposite tilt */}
+        {/* Secondary wireframe — left bottom */}
         <div
-          className="code-3d-float-2 absolute bottom-[18%] left-[2%] hidden w-52 sm:block lg:left-[4%] lg:w-60"
-          style={{ transform: "rotateY(18deg) rotateX(-5deg)" }}
+          className="wireframe-3d-sm absolute bottom-[12%] left-[3%] hidden h-[200px] w-[200px] sm:block lg:left-[5%] lg:h-[240px] lg:w-[240px]"
+          style={{ perspective: "600px" }}
         >
-          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(0,224,198,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
-            {/* Title bar */}
-            <div className="mb-3 flex items-center gap-1.5">
-              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="ml-2 text-[10px] font-mono text-white/25">api.ts</span>
-            </div>
-            {/* Code content */}
-            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
-              <code>
-                <span className="text-[#7c5cff]">async</span>{" "}
-                <span className="text-[#7c5cff]">function</span>{" "}
-                <span className="text-[#00e0c6]">deploy</span>
-                <span className="text-white/70">{"() {"}</span>
-                {"\n"}
-                {"  "}const{" "}
-                <span className="text-[#00e0c6]">app</span>{" "}
-                <span className="text-white/50">=</span>{" "}
-                <span className="text-[#7c5cff]">await</span>{" "}
-                <span className="text-[#ff4dd2]">build</span>
-                <span className="text-white/70">{"();"}</span>
-                {"\n"}
-                {"  "}
-                <span className="text-[#7c5cff]">await</span>{" "}
-                <span className="text-[#ff4dd2]">runTests</span>
-                <span className="text-white/70">{"();"}</span>
-                {"\n"}
-                {"  "}return{" "}
-                <span className="text-white/70">{"{"}</span>
-                {"\n"}
-                {"    "}status<span className="text-white/50">:</span>{" "}
-                <span className="text-[#ffb14d]">&apos;live&apos;</span>
-                {"\n"}
-                {"  "}
-                <span className="text-white/70">{"}"};</span>
-                {"\n"}
-                <span className="text-white/70">{"}"}</span>
-              </code>
-            </pre>
-          </div>
+          <svg className="h-full w-full" viewBox="0 0 200 200" fill="none">
+            <g className="wire-ring-sm-1" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="90" ry="35" stroke="#7c5cff" strokeWidth="1" opacity="0.5" />
+              <circle cx="10" cy="100" r="3" fill="#7c5cff" opacity="0.7">
+                <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="190" cy="100" r="3" fill="#7c5cff" opacity="0.7">
+                <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite" />
+              </circle>
+            </g>
+            <g className="wire-ring-sm-2" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="80" ry="40" stroke="#00e0c6" strokeWidth="0.8" opacity="0.4" />
+              <circle cx="20" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
+              <circle cx="180" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
+            </g>
+            <g className="wire-ring-sm-3" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="70" ry="30" stroke="#4dc4ff" strokeWidth="0.6" opacity="0.3" />
+            </g>
+            <line x1="100" y1="30" x2="100" y2="170" stroke="#7c5cff" strokeWidth="0.4" strokeDasharray="3 5" opacity="0.2" />
+            <line x1="30" y1="100" x2="170" y2="100" stroke="#00e0c6" strokeWidth="0.4" strokeDasharray="3 5" opacity="0.2" />
+            <circle cx="100" cy="100" r="5" fill="none" stroke="#00e0c6" strokeWidth="0.8" opacity="0.5">
+              <animate attributeName="r" values="5;9;5" dur="4s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="100" cy="100" r="2" fill="#7c5cff" opacity="0.7" />
+          </svg>
         </div>
-
-        {/* Third small code block — top left */}
-        <div
-          className="code-3d-float-3 absolute left-[6%] top-[22%] hidden w-44 sm:block lg:left-[8%] lg:w-52"
-          style={{ transform: "rotateY(10deg) rotateX(8deg)" }}
-        >
-          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(77,196,255,0.2),inset_0_1px_0_rgba(255,255,255,0.06)]">
-            {/* Title bar */}
-            <div className="mb-3 flex items-center gap-1.5">
-              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-              <span className="ml-2 text-[10px] font-mono text-white/25">config.ts</span>
-            </div>
-            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
-              <code>
-                <span className="text-[#7c5cff]">export const</span>{" "}
-                <span className="text-[#00e0c6]">config</span>{" "}
-                <span className="text-white/50">=</span>{" "}
-                <span className="text-white/70">{"{"}</span>
-                {"\n"}
-                {"  "}ai<span className="text-white/50">:</span>{" "}
-                <span className="text-[#7c5cff]">true</span>
-                <span className="text-white/70">,</span>
-                {"\n"}
-                {"  "}cloud<span className="text-white/50">:</span>{" "}
-                <span className="text-[#ffb14d]">&apos;aws&apos;</span>
-                {"\n"}
-                <span className="text-white/70">{"}"};</span>
-              </code>
-            </pre>
-          </div>
-        </div>
-
-        {/* Floating code symbols / syntax particles */}
-        <div className="code-symbol code-symbol-1 absolute right-[25%] top-[8%] text-2xl font-mono text-[#7c5cff]/30 sm:text-3xl lg:text-4xl">{"{ }"}</div>
-        <div className="code-symbol code-symbol-2 absolute left-[20%] bottom-[30%] text-xl font-mono text-[#00e0c6]/25 sm:text-2xl">{"</>"}</div>
-        <div className="code-symbol code-symbol-3 absolute right-[15%] bottom-[12%] text-2xl font-mono text-[#ff4dd2]/20 sm:text-3xl">{"( )"}</div>
-        <div className="code-symbol code-symbol-4 absolute left-[35%] top-[12%] hidden text-xl font-mono text-[#4dc4ff]/20 sm:block">{"=>"}</div>
-        <div className="code-symbol code-symbol-5 absolute right-[30%] top-[55%] text-lg font-mono text-[#ffb14d]/20 sm:text-xl">{"[ ]"}</div>
-        <div className="code-symbol code-symbol-6 absolute left-[12%] top-[50%] hidden text-2xl font-mono text-[#9dff5c]/15 sm:block">{"<>"}</div>
-        <div className="code-symbol code-symbol-7 absolute right-[40%] bottom-[25%] hidden text-xl font-mono text-[#7c5cff]/20 sm:block">{"&&"}</div>
-        <div className="code-symbol code-symbol-8 absolute left-[45%] bottom-[8%] hidden text-lg font-mono text-[#00e0c6]/15 sm:block">{"..."}</div>
       </div>
 
       {/* ── Layer 6: Gradient masks for smooth section transitions ── */}
