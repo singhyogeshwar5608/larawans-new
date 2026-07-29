@@ -118,98 +118,93 @@ export function Hero() {
         }}
       />
 
-      {/* ── Layer 5: Scatter & Reform Molecular Wireframe ── */}
+      {/* ── Layer 5: 3D Wireframe (rotating rings + lines) ── */}
       <div
         className="pointer-events-none absolute inset-0 z-[5] overflow-hidden"
         aria-hidden
       >
-        {/* Main molecule network — right side */}
-        <div className="molecule-3d absolute right-[2%] top-[10%] h-[380px] w-[380px] sm:h-[480px] sm:w-[480px] lg:right-[8%] lg:h-[560px] lg:w-[560px]">
+        {/* Main SVG wireframe — right side */}
+        <div className="wireframe-3d absolute right-[4%] top-1/2 h-[340px] w-[340px] -translate-y-1/2 sm:h-[440px] sm:w-[440px] lg:right-[10%] lg:h-[520px] lg:w-[520px]">
           <svg className="h-full w-full" viewBox="0 0 400 400" fill="none">
-            {/* ── CONNECTIONS: break & reform lines ── */}
-            <line x1="200" y1="200" x2="310" y2="80" stroke="#7c5cff" strokeWidth="1.4" className="mol-line" />
-            <line x1="200" y1="200" x2="70" y2="310" stroke="#00e0c6" strokeWidth="1.4" className="mol-line" />
-            <line x1="200" y1="200" x2="360" y2="210" stroke="#4dc4ff" strokeWidth="1.2" className="mol-line" />
-            <line x1="200" y1="200" x2="90" y2="60" stroke="#ff4dd2" strokeWidth="1" className="mol-line" />
-            <line x1="200" y1="200" x2="330" y2="340" stroke="#7c5cff" strokeWidth="1.2" className="mol-line" />
-            <line x1="200" y1="200" x2="190" y2="370" stroke="#00e0c6" strokeWidth="1" className="mol-line" />
-            <line x1="200" y1="200" x2="50" y2="180" stroke="#ffb14d" strokeWidth="0.8" className="mol-line" />
-            {/* Outer connections */}
-            <line x1="310" y1="80" x2="360" y2="210" stroke="#4dc4ff" strokeWidth="0.7" className="mol-line-outer" />
-            <line x1="70" y1="310" x2="190" y2="370" stroke="#00e0c6" strokeWidth="0.7" className="mol-line-outer" />
-            <line x1="90" y1="60" x2="310" y2="80" stroke="#ff4dd2" strokeWidth="0.6" className="mol-line-outer" />
-            <line x1="360" y1="210" x2="330" y2="340" stroke="#7c5cff" strokeWidth="0.6" className="mol-line-outer" />
-            <line x1="50" y1="180" x2="70" y2="310" stroke="#ffb14d" strokeWidth="0.5" className="mol-line-outer" />
-            <line x1="90" y1="60" x2="50" y2="180" stroke="#ff4dd2" strokeWidth="0.5" className="mol-line-outer" />
-            <line x1="330" y1="340" x2="190" y2="370" stroke="#00e0c6" strokeWidth="0.5" className="mol-line-outer" />
-
-            {/* ── NODES: scatter & reform dots ── */}
-            {/* Center node — pulsing */}
-            <circle cx="200" cy="200" r="6" fill="#00e0c6" className="mol-node-core" />
-            <circle cx="200" cy="200" r="16" fill="none" stroke="#7c5cff" strokeWidth="0.8" opacity="0.5">
-              <animate attributeName="r" values="16;24;16" dur="5s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.5;0.15;0.5" dur="5s" repeatCount="indefinite" />
+            {/* Ring 1 — violet, rotating */}
+            <g className="wire-ring-1" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="180" ry="70" stroke="#7c5cff" strokeWidth="1.2" opacity="0.7" />
+              <ellipse cx="200" cy="200" rx="130" ry="50" stroke="#7c5cff" strokeWidth="0.8" opacity="0.4" />
+              <circle cx="20" cy="200" r="4" fill="#7c5cff" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.4;0.9" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="380" cy="200" r="4" fill="#7c5cff" opacity="0.9">
+                <animate attributeName="opacity" values="0.4;0.9;0.4" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="130" r="3" fill="#7c5cff" opacity="0.7" />
+              <circle cx="200" cy="270" r="3" fill="#7c5cff" opacity="0.7" />
+            </g>
+            {/* Ring 2 — cyan, rotating */}
+            <g className="wire-ring-2" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="160" ry="80" stroke="#00e0c6" strokeWidth="1.2" opacity="0.6" />
+              <ellipse cx="200" cy="200" rx="110" ry="55" stroke="#00e0c6" strokeWidth="0.6" opacity="0.3" />
+              <circle cx="40" cy="200" r="4" fill="#00e0c6" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.3;0.9" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="360" cy="200" r="4" fill="#00e0c6" opacity="0.9">
+                <animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="200" cy="120" r="3" fill="#00e0c6" opacity="0.6" />
+            </g>
+            {/* Ring 3 — blue, rotating */}
+            <g className="wire-ring-3" style={{ transformOrigin: "200px 200px" }}>
+              <ellipse cx="200" cy="200" rx="140" ry="60" stroke="#4dc4ff" strokeWidth="1" opacity="0.5" />
+              <circle cx="60" cy="200" r="3.5" fill="#4dc4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3.5s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="340" cy="200" r="3.5" fill="#4dc4ff" opacity="0.8">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="3.5s" repeatCount="indefinite" />
+              </circle>
+            </g>
+            {/* Cross lines */}
+            <g className="wire-lines" opacity="0.25">
+              <line x1="200" y1="60" x2="200" y2="340" stroke="#7c5cff" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="60" y1="200" x2="340" y2="200" stroke="#00e0c6" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="100" y1="100" x2="300" y2="300" stroke="#4dc4ff" strokeWidth="0.5" strokeDasharray="4 6" />
+              <line x1="300" y1="100" x2="100" y2="300" stroke="#ff4dd2" strokeWidth="0.4" strokeDasharray="4 6" />
+            </g>
+            {/* Center core glow */}
+            <circle cx="200" cy="200" r="8" fill="none" stroke="#7c5cff" strokeWidth="1" opacity="0.6">
+              <animate attributeName="r" values="8;14;8" dur="4s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.6;0.2;0.6" dur="4s" repeatCount="indefinite" />
             </circle>
-
-            {/* Node 1 — top-right — scatters outward */}
-            <circle cx="310" cy="80" r="5" fill="#7c5cff" className="mol-node-1" />
-
-            {/* Node 2 — bottom-left */}
-            <circle cx="70" cy="310" r="5" fill="#00e0c6" className="mol-node-2" />
-
-            {/* Node 3 — right */}
-            <circle cx="360" cy="210" r="4.5" fill="#4dc4ff" className="mol-node-3" />
-
-            {/* Node 4 — top-left */}
-            <circle cx="90" cy="60" r="4" fill="#ff4dd2" className="mol-node-4" />
-
-            {/* Node 5 — bottom-right */}
-            <circle cx="330" cy="340" r="4.5" fill="#7c5cff" className="mol-node-5" />
-
-            {/* Node 6 — bottom-center */}
-            <circle cx="190" cy="370" r="4" fill="#00e0c6" className="mol-node-6" />
-
-            {/* Node 7 — left */}
-            <circle cx="50" cy="180" r="3.5" fill="#ffb14d" className="mol-node-7" />
-
-            {/* ── Outer ring — rotating dashed ── */}
-            <circle cx="200" cy="200" r="175" fill="none" stroke="#7c5cff" strokeWidth="0.4" strokeDasharray="10 15" opacity="0.25">
-              <animate attributeName="stroke-dashoffset" values="0;-50" dur="8s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="200" cy="200" r="145" fill="none" stroke="#00e0c6" strokeWidth="0.3" strokeDasharray="6 12" opacity="0.15">
-              <animate attributeName="stroke-dashoffset" values="0;36" dur="10s" repeatCount="indefinite" />
+            <circle cx="200" cy="200" r="3" fill="#00e0c6" opacity="0.8">
+              <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2s" repeatCount="indefinite" />
             </circle>
           </svg>
         </div>
 
-        {/* Secondary molecule — left bottom, smaller */}
-        <div className="molecule-3d-sm absolute bottom-[8%] left-[2%] hidden h-[220px] w-[220px] sm:block lg:left-[4%] lg:h-[260px] lg:w-[260px]">
+        {/* Secondary wireframe — left bottom */}
+        <div className="wireframe-3d-sm absolute bottom-[12%] left-[3%] hidden h-[200px] w-[200px] sm:block lg:left-[5%] lg:h-[240px] lg:w-[240px]">
           <svg className="h-full w-full" viewBox="0 0 200 200" fill="none">
-            {/* Connections */}
-            <line x1="100" y1="100" x2="165" y2="35" stroke="#7c5cff" strokeWidth="1" className="mol-line-sm" />
-            <line x1="100" y1="100" x2="35" y2="155" stroke="#00e0c6" strokeWidth="1" className="mol-line-sm" />
-            <line x1="100" y1="100" x2="175" y2="125" stroke="#4dc4ff" strokeWidth="0.8" className="mol-line-sm" />
-            <line x1="100" y1="100" x2="45" y2="50" stroke="#ff4dd2" strokeWidth="0.8" className="mol-line-sm" />
-            <line x1="165" y1="35" x2="175" y2="125" stroke="#4dc4ff" strokeWidth="0.5" className="mol-line-outer-sm" />
-            <line x1="35" y1="155" x2="45" y2="50" stroke="#ff4dd2" strokeWidth="0.5" className="mol-line-outer-sm" />
-
-            {/* Center */}
-            <circle cx="100" cy="100" r="4" fill="#00e0c6" opacity="0.7" className="mol-node-core-sm" />
-            <circle cx="100" cy="100" r="10" fill="none" stroke="#7c5cff" strokeWidth="0.6" opacity="0.4">
-              <animate attributeName="r" values="10;16;10" dur="6s" repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.4;0.1;0.4" dur="6s" repeatCount="indefinite" />
+            <g className="wire-ring-sm-1" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="90" ry="35" stroke="#7c5cff" strokeWidth="1" opacity="0.5" />
+              <circle cx="10" cy="100" r="3" fill="#7c5cff" opacity="0.7">
+                <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite" />
+              </circle>
+              <circle cx="190" cy="100" r="3" fill="#7c5cff" opacity="0.7">
+                <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite" />
+              </circle>
+            </g>
+            <g className="wire-ring-sm-2" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="80" ry="40" stroke="#00e0c6" strokeWidth="0.8" opacity="0.4" />
+              <circle cx="20" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
+              <circle cx="180" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
+            </g>
+            <g className="wire-ring-sm-3" style={{ transformOrigin: "100px 100px" }}>
+              <ellipse cx="100" cy="100" rx="70" ry="30" stroke="#4dc4ff" strokeWidth="0.6" opacity="0.3" />
+            </g>
+            <line x1="100" y1="30" x2="100" y2="170" stroke="#7c5cff" strokeWidth="0.4" strokeDasharray="3 5" opacity="0.2" />
+            <line x1="30" y1="100" x2="170" y2="100" stroke="#00e0c6" strokeWidth="0.4" strokeDasharray="3 5" opacity="0.2" />
+            <circle cx="100" cy="100" r="5" fill="none" stroke="#00e0c6" strokeWidth="0.8" opacity="0.5">
+              <animate attributeName="r" values="5;9;5" dur="4s" repeatCount="indefinite" />
             </circle>
-
-            {/* Nodes */}
-            <circle cx="165" cy="35" r="3.5" fill="#7c5cff" className="mol-node-sm-1" />
-            <circle cx="35" cy="155" r="3.5" fill="#00e0c6" className="mol-node-sm-2" />
-            <circle cx="175" cy="125" r="3" fill="#4dc4ff" className="mol-node-sm-3" />
-            <circle cx="45" cy="50" r="3" fill="#ff4dd2" className="mol-node-sm-4" />
-
-            {/* Outer ring */}
-            <circle cx="100" cy="100" r="85" fill="none" stroke="#7c5cff" strokeWidth="0.3" strokeDasharray="5 8" opacity="0.2">
-              <animate attributeName="stroke-dashoffset" values="0;-26" dur="9s" repeatCount="indefinite" />
-            </circle>
+            <circle cx="100" cy="100" r="2" fill="#7c5cff" opacity="0.7" />
           </svg>
         </div>
       </div>
