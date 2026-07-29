@@ -76,6 +76,7 @@ export function Services() {
             className="font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]"
           >
             Full-stack services for{" "}
+            <br className="hidden sm:block" />
             <span className="relative inline-block text-left">
               <span className="inline-block text-gradient-aurora">{displayedText}</span>
               <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
