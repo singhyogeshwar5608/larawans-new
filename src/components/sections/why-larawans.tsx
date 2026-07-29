@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Counter } from "../counter";
-import { stats } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
 
 const TEAM_MEMBERS = [
@@ -51,46 +49,6 @@ export function WhyLarawans() {
           />
         </div>
 
-        {/* Animated stats */}
-        <div className="mt-16 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 28, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-                delay: i * 0.1,
-              }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a1a] p-6 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] sm:p-8"
-            >
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-x-0 -top-px h-px opacity-50"
-                style={{
-                  background:
-                    "linear-gradient(90deg,transparent,#7c5cff,#00e0c6,transparent)",
-                }}
-              />
-              <div className="font-display text-5xl font-extrabold tracking-tight sm:text-6xl">
-                <span className="text-gradient-aurora">
-                  <Counter value={stat.value} suffix={stat.suffix} />
-                </span>
-              </div>
-              <div className="mt-3 text-sm font-medium uppercase tracking-[0.16em] text-neutral-400">
-                {stat.label}
-              </div>
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -bottom-12 left-1/2 h-24 w-24 -translate-x-1/2 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-50"
-                style={{ background: "#7c5cff" }}
-              />
-            </motion.div>
-          ))}
-        </div>
-
         {/* Team member profile cards */}
         <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM_MEMBERS.map((member, i) => (
@@ -118,7 +76,7 @@ export function WhyLarawans() {
               />
 
               {/* White card */}
-              <div className="relative z-[1] rounded-3xl bg-white p-6 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-8 sm:pt-[76px]">
+              <div className="relative z-[1] flex min-h-[340px] flex-col rounded-3xl bg-white p-6 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-8 sm:pt-[80px] sm:min-h-[380px]">
                 {/* Avatar — overlaps top edge */}
                 <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-1/2">
                   <div
@@ -138,7 +96,7 @@ export function WhyLarawans() {
                 <p className="mt-1 text-[15px] italic text-neutral-500">
                   {member.role}
                 </p>
-                <p className="mt-4 text-[13px] leading-relaxed text-neutral-400">
+                <p className="mt-5 flex-1 text-[13.5px] leading-relaxed text-neutral-400">
                   {member.bio}
                 </p>
               </div>
