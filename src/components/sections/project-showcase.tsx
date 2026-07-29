@@ -181,47 +181,31 @@ export function ProjectShowcase() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full"
             >
-              {/* ── Laptop Frame ── */}
-              <div className="showcase-laptop-float relative mx-auto" style={{ maxWidth: "680px" }}>
-                {/* Laptop screen bezel */}
-                <div className="relative overflow-hidden rounded-t-[12px] border-[3px] border-b-0 border-neutral-700/80 bg-neutral-800 shadow-[0_0_60px_rgba(124,92,255,0.15)]">
-                  {/* Top bar — camera dot */}
-                  <div className="flex items-center justify-center py-1.5">
-                    <div className="h-1 w-1 rounded-full bg-neutral-500" />
-                  </div>
+              {/* ── Video Player (no frame) ── */}
+              <div className="showcase-laptop-float relative mx-auto overflow-hidden rounded-xl border border-white/10 shadow-[0_0_80px_rgba(124,92,255,0.12)]" style={{ maxWidth: "680px" }}>
+                <video
+                  ref={videoRef}
+                  src={project.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="block w-full"
+                  style={{ aspectRatio: "16/10", objectFit: "cover" }}
+                />
 
-                  {/* Screen area — video */}
-                  <div className="relative w-full overflow-hidden bg-[#0a0b1e]">
-                    <video
-                      ref={videoRef}
-                      src={project.video}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="block w-full"
-                      style={{ aspectRatio: "16/10", objectFit: "cover" }}
-                    />
-
-                    {/* Play/Pause overlay button */}
-                    <button
-                      onClick={togglePlay}
-                      className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white/80 backdrop-blur transition-all hover:bg-black/70 hover:text-white"
-                      aria-label={isPlaying ? "Pause video" : "Play video"}
-                    >
-                      {isPlaying ? (
-                        <Pause className="h-3.5 w-3.5" />
-                      ) : (
-                        <Play className="ml-0.5 h-3.5 w-3.5" />
-                      )}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Laptop base — bottom chin */}
-                <div className="mx-auto h-3 max-w-[90%] rounded-b-xl bg-gradient-to-b from-neutral-700 to-neutral-800 border-x-[3px] border-b-[3px] border-neutral-700/80" />
-                {/* Laptop hinge */}
-                <div className="mx-auto h-1.5 max-w-[50%] rounded-b bg-neutral-600" />
+                {/* Play/Pause overlay button */}
+                <button
+                  onClick={togglePlay}
+                  className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white/80 backdrop-blur transition-all hover:bg-black/70 hover:text-white"
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
+                >
+                  {isPlaying ? (
+                    <Pause className="h-3.5 w-3.5" />
+                  ) : (
+                    <Play className="ml-0.5 h-3.5 w-3.5" />
+                  )}
+                </button>
               </div>
             </motion.div>
           </div>
