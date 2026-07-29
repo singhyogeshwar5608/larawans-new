@@ -6,7 +6,7 @@ import { SectionHeading } from "../section-heading";
 
 export function DevelopmentProcess() {
   return (
-    <section id="process" className="relative py-24 sm:py-32">
+    <section id="process" className="relative pt-[30px] sm:pt-[50px] pb-24 sm:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="How We Work"

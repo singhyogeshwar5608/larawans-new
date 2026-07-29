@@ -34,7 +34,7 @@ const HIGHLIGHTS = [
 
 export function WhyLarawans() {
   return (
-    <section id="why-larawans" className="relative py-24 sm:py-32">
+    <section id="why-larawans" className="relative pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
       {/* Soft glow background */}
       <div
         aria-hidden
