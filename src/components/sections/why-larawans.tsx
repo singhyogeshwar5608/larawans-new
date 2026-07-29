@@ -69,7 +69,7 @@ export function WhyLarawans() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: i * 0.1,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] sm:p-8"
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#0a0a1a] p-6 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] sm:p-8"
             >
               <div
                 aria-hidden
@@ -84,7 +84,7 @@ export function WhyLarawans() {
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </span>
               </div>
-              <div className="mt-3 text-sm font-medium uppercase tracking-[0.16em] text-neutral-500">
+              <div className="mt-3 text-sm font-medium uppercase tracking-[0.16em] text-neutral-400">
                 {stat.label}
               </div>
               <div
@@ -105,7 +105,7 @@ export function WhyLarawans() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-              className="group relative rounded-3xl border border-neutral-200 bg-white p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-colors hover:border-neutral-300"
+              className="group relative flex h-full flex-col rounded-3xl border border-white/10 bg-[#0a0a1a] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-colors hover:border-white/20"
             >
               <div
                 className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl text-base font-bold"
@@ -117,10 +117,10 @@ export function WhyLarawans() {
               >
                 {h.icon}
               </div>
-              <h4 className="font-display text-base font-semibold tracking-tight text-neutral-800">
+              <h4 className="font-display text-base font-semibold tracking-tight text-white">
                 {h.title}
               </h4>
-              <p className="mt-2 text-[13px] leading-relaxed text-neutral-500">
+              <p className="mt-auto text-[13px] leading-relaxed text-neutral-400">
                 {h.body}
               </p>
             </motion.div>
