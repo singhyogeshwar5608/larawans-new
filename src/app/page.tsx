@@ -6,6 +6,7 @@ import { WhyLarawans } from "@/components/sections/why-larawans";
 import { Industries } from "@/components/sections/industries";
 import { AISolutions } from "@/components/sections/ai-solutions";
 import { DevelopmentProcess } from "@/components/sections/development-process";
+import { ProjectShowcase } from "@/components/sections/project-showcase";
 import { Portfolio } from "@/components/sections/portfolio";
 import { TechStack } from "@/components/sections/tech-stack";
 import { Testimonials } from "@/components/sections/testimonials";
@@ -24,6 +25,7 @@ export default function Home() {
       <Industries />
       <AISolutions />
       <DevelopmentProcess />
+      <ProjectShowcase />
       <Portfolio />
       <TechStack />
       <Testimonials />
