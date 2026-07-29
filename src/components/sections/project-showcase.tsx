@@ -153,37 +153,25 @@ export function ProjectShowcase() {
             </motion.div>
           </AnimatePresence>
 
-          {/* RIGHT: Laptop Mockup + Video */}
-          <div className="relative flex items-center justify-center">
-            {/* Glow behind laptop */}
-            <div
-              aria-hidden
-              className="absolute inset-0 -z-10 scale-110 rounded-full blur-[120px] opacity-50"
-              style={{ background: project.accent }}
+          {/* RIGHT: Video */}
+          <motion.div
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative w-full"
+          >
+            <video
+              ref={videoRef}
+              src={project.video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              className="block w-full"
             />
-
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full"
-            >
-              {/* ── Video Player (full visible) ── */}
-              <div className="showcase-laptop-float relative mx-auto" style={{ maxWidth: "680px" }}>
-                <video
-                  ref={videoRef}
-                  src={project.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="block w-full rounded-xl"
-                  controls
-                />
-              </div>
-            </motion.div>
-          </div>
+          </motion.div>
         </div>
 
         {/* ── Project Thumbnails Strip ── */}
