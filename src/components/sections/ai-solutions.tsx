@@ -51,7 +51,7 @@ export function AISolutions() {
   }, [displayedText, wordIndex, isDeleting]);
 
   return (
-    <section id="ai-solutions" className="relative bg-[#050614] py-[40px] sm:py-[70px] overflow-x-hidden md:overflow-visible">
+    <section id="ai-solutions" className="relative bg-[#050614] py-[40px] sm:py-[70px]">
       {/* Dark theme AI glow */}
       <div
         aria-hidden
@@ -105,20 +105,13 @@ export function AISolutions() {
           </motion.p>
         </div>
 
-        {/* Mobile: horizontal slide carousel | Desktop: grid */}
-        <div className="ai-carousel mt-16 flex gap-4 overflow-x-auto px-1 snap-x snap-mandatory md:grid md:grid-cols-2 md:overflow-x-visible lg:grid-cols-3">
+        {/* Mobile: horizontal swipe carousel | Desktop: grid */}
+        <div className="ai-carousel mt-16 flex gap-4 overflow-x-auto snap-x snap-mandatory px-[calc((100vw-100%)/2)] sm:px-0 md:grid md:grid-cols-2 md:overflow-x-visible md:px-0 lg:grid-cols-3">
           {aiSolutions.map((sol, i) => (
-            <motion.article
+            <article
               key={sol.title}
-              initial={{ opacity: 0, y: 28, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.65,
-                ease: [0.22, 1, 0.36, 1],
-                delay: (i % 3) * 0.08,
-              }}
-              className="group relative w-[82vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0d1030] via-[#0a0c24] to-[#0a0c24] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:w-[72vw] md:w-full sm:p-7"
+              className="ai-card group relative w-[82vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0d1030] via-[#0a0c24] to-[#0a0c24] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:w-[72vw] md:w-full sm:p-7"
+              style={{ animationDelay: `${(i % 3) * 0.1}s` }}
             >
               {/* Animated conic border glow on hover */}
               <div
@@ -163,7 +156,7 @@ export function AISolutions() {
                 <line x1="50" y1="10" x2="50" y2="90" stroke="#00e0c6" strokeWidth="0.5" />
                 <circle cx="50" cy="50" r="3" fill="#00e0c6" />
               </svg>
-            </motion.article>
+            </article>
           ))}
         </div>
 
