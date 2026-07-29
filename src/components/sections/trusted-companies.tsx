@@ -58,21 +58,21 @@ export function TrustedCompanies() {
         </motion.p>
 
         <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_12%,#000_88%,transparent)]">
-          <div className="flex w-max animate-marquee items-center gap-20">
+          <div className="flex w-max animate-marquee items-center gap-12 sm:gap-20">
             {items.map((t, i) => (
               <div
                 key={`${t.name}-${i}`}
-                className="group flex shrink-0 items-center gap-3 interactive"
+                className="group flex shrink-0 items-center gap-2 sm:gap-3 interactive"
               >
                 {/* Icon container with light shadow card */}
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.12),0_0_0_1px_rgba(124,92,255,0.2)] group-hover:scale-105">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.12),0_0_0_1px_rgba(124,92,255,0.2)] group-hover:scale-105 sm:h-14 sm:w-14">
                   <t.Icon
-                    className="h-8 w-8 transition-all duration-300"
+                    className="h-5 w-5 transition-all duration-300 sm:h-8 sm:w-8"
                     style={{ color: t.color }}
                     strokeWidth={1.8}
                   />
                 </div>
-                <span className="font-display text-xl font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900">
+                <span className="font-display text-sm font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900 sm:text-xl">
                   {t.name}
                 </span>
               </div>
