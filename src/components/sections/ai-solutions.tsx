@@ -8,24 +8,27 @@ import { MagneticButton } from "../magnetic-button";
 
 export function AISolutions() {
   return (
-    <section id="ai-solutions" className="relative py-24 sm:py-32">
-      {/* AI-themed deep glow */}
+    <section id="ai-solutions" className="relative bg-[#f8f9fc] py-24 sm:py-32">
+      {/* Light theme AI glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-[1] opacity-70"
+        className="pointer-events-none absolute inset-0 -z-[1] opacity-50"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,92,255,0.18), transparent 60%), radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,224,198,0.12), transparent 60%)",
+            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,92,255,0.08), transparent 60%), radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,224,198,0.06), transparent 60%)",
         }}
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="AI Solutions"
-          title="Intelligent systems that"
-          highlight="do the work for you"
-          description="AI isn't a feature we add at the end — it's the foundation. These six AI capabilities can be deployed standalone or woven into any of our software products to multiply their impact."
-        />
+        {/* Light-theme heading overrides */}
+        <div className="[&_.rounded-full]:border-neutral-200 [&_.rounded-full]:bg-white [&_.rounded-full]:text-neutral-500 [&_h2]:text-neutral-900 [&_p]:text-neutral-600">
+          <SectionHeading
+            eyebrow="AI Solutions"
+            title="Intelligent systems that"
+            highlight="do the work for you"
+            description="AI isn't a feature we add at the end — it's the foundation. These six AI capabilities can be deployed standalone or woven into any of our software products to multiply their impact."
+          />
+        </div>
 
         <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {aiSolutions.map((sol, i) => (
