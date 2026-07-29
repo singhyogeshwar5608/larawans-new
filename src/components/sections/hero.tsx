@@ -70,7 +70,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-[80px] pb-[60px] sm:px-6"
+      className="hero-bg relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#050614] px-4 pt-[80px] pb-[30px] sm:px-6"
     >
       {/* ── Layer 1: Animated gradient orbs (floating nebula) ── */}
       <div className="pointer-events-none absolute inset-0 z-[1]" aria-hidden>
