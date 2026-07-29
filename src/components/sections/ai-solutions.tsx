@@ -51,14 +51,14 @@ export function AISolutions() {
   }, [displayedText, wordIndex, isDeleting]);
 
   return (
-    <section id="ai-solutions" className="relative bg-[#f8f9fc] py-[40px] sm:py-[70px] overflow-x-hidden md:overflow-visible">
-      {/* Light theme AI glow */}
+    <section id="ai-solutions" className="relative bg-[#050614] py-[40px] sm:py-[70px] overflow-x-hidden md:overflow-visible">
+      {/* Dark theme AI glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-[1] opacity-50"
+        className="pointer-events-none absolute inset-0 -z-[1] opacity-60"
         style={{
           background:
-            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,92,255,0.08), transparent 60%), radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,224,198,0.06), transparent 60%)",
+            "radial-gradient(ellipse 60% 50% at 50% 0%, rgba(124,92,255,0.15), transparent 60%), radial-gradient(ellipse 50% 50% at 50% 100%, rgba(0,224,198,0.1), transparent 60%)",
         }}
       />
 
@@ -71,7 +71,7 @@ export function AISolutions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.6 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-500 backdrop-blur"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-violet-200/80 backdrop-blur"
           >
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#7c5cff] shadow-[0_0_10px_#7c5cff]" />
             AI Solutions
@@ -83,7 +83,7 @@ export function AISolutions() {
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
-            className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-neutral-900 sm:text-5xl lg:text-[3.4rem]"
+            className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem]"
           >
             Intelligent systems that{" "}
             <br className="hidden sm:block" />
@@ -99,7 +99,7 @@ export function AISolutions() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
-            className="max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg"
+            className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
           >
             AI isn't a feature we add at the end — it's the foundation. These six AI capabilities can be deployed standalone or woven into any of our software products to multiply their impact.
           </motion.p>
@@ -174,7 +174,7 @@ export function AISolutions() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mt-12 flex justify-center"
         >
-          <MagneticButton href="#contact" variant="glass" className="px-7 py-3.5 !border-neutral-300 !bg-white !text-neutral-800 !shadow-md hover:!bg-neutral-100 hover:!border-neutral-400">
+          <MagneticButton href="#contact" variant="glass" className="px-7 py-3.5">
             Explore AI strategy session
             <ArrowRight className="h-4 w-4" />
           </MagneticButton>
