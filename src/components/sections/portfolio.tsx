@@ -30,7 +30,7 @@ export function Portfolio() {
           />
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 [grid-template-rows:auto]">
           {projects.map((p, i) => (
             <motion.article
               key={p.title}
@@ -42,12 +42,12 @@ export function Portfolio() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative interactive"
+              className="group relative interactive h-full"
             >
               {/* Outer wrapper with rotating gradient border */}
-              <div className="portfolio-card-border">
+              <div className="portfolio-card-border h-full">
                 {/* Actual card content on top */}
-                <div className="relative overflow-hidden rounded-[10px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+                <div className="relative flex h-full flex-col overflow-hidden rounded-[14px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
                 className="relative h-40 overflow-hidden sm:h-44"
@@ -95,7 +95,7 @@ export function Portfolio() {
               </div>
 
               {/* Dark content area — solid navy-black, no gradient */}
-              <div className="relative p-6 bg-[#0a0b1e]">
+              <div className="relative mt-auto p-6 bg-[#0a0b1e]">
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-display text-xl font-semibold tracking-tight text-white">
                     {p.title}
