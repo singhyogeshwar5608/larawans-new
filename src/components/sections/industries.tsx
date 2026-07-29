@@ -21,7 +21,7 @@ export function Industries() {
           description={undefined}
         />
 
-        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
+        <div className="mt-16 grid grid-cols-2 place-items-center gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
           {industries.map((ind, i) => (
             <motion.div
               key={ind.name}
@@ -33,7 +33,7 @@ export function Industries() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.1,
               }}
-              className="ind-card group relative flex flex-col overflow-hidden rounded-xl bg-[#0e1029] transition-all duration-400 hover:scale-[1.03]"
+              className="ind-card group relative flex w-full max-w-[220px] flex-col overflow-hidden rounded-xl bg-[#0e1029] aspect-square transition-all duration-400 hover:scale-[1.03] sm:max-w-[260px] lg:max-w-[280px]"
               style={{
                 borderTop: `3px solid ${cardAccents[i]}`,
               }}
