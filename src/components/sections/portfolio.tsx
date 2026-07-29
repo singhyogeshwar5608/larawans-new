@@ -131,7 +131,7 @@ export function Portfolio() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="mt-12 flex justify-center"
         >
-          <MagneticButton href="#contact" variant="glass" className="px-7 py-3.5">
+          <MagneticButton href="#contact" variant="glass" className="px-7 py-3.5 !border-neutral-300 !bg-white !text-neutral-800 !shadow-md hover:!bg-neutral-100 hover:!border-neutral-400">
             Start your case study
             <ArrowUpRight className="h-4 w-4" />
           </MagneticButton>
