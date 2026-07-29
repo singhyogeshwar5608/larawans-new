@@ -118,7 +118,59 @@ export function Hero() {
         }}
       />
 
-      {/* ── Layer 5: Gradient masks for smooth section transitions ── */}
+      {/* ── Layer 5: 3D Tech Wireframe (rotating orbital rings) ── */}
+      <div className="pointer-events-none absolute inset-0 z-[3] flex items-center justify-center" aria-hidden>
+        {/* Main wireframe — right side */}
+        <div className="hero-tech-3d absolute right-[8%] top-1/2 h-[320px] w-[320px] -translate-y-1/2 sm:h-[420px] sm:w-[420px] lg:right-[12%] lg:h-[500px] lg:w-[500px]">
+          {/* Ring 1 */}
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--1">
+            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot bottom-0 left-1/2 -translate-x-1/2" />
+          </div>
+          {/* Ring 2 */}
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--2">
+            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+          {/* Ring 3 */}
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--3">
+            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
+          </div>
+          {/* Floating particles */}
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="hero-tech-3d__particle"
+              style={{
+                left: `${20 + (i * 23) % 70}%`,
+                top: `${15 + (i * 19) % 75}%`,
+                animationDelay: `${(i * 1.1) % 6}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Secondary smaller wireframe — left side */}
+        <div className="hero-tech-3d absolute bottom-[15%] left-[5%] hidden h-[160px] w-[160px] sm:block lg:h-[200px] lg:w-[200px]">
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--1" style={{ animationDirection: "reverse", animationDuration: "18s" }}>
+            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot bottom-0 left-1/2 -translate-x-1/2" />
+          </div>
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--2" style={{ animationDirection: "reverse", animationDuration: "22s" }}>
+            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
+          </div>
+          <div className="hero-tech-3d__ring hero-tech-3d__ring--3" style={{ animationDuration: "26s" }}>
+            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
+          </div>
+        </div>
+      </div>
+
+      {/* ── Layer 6: Gradient masks for smooth section transitions ── */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-40 bg-gradient-to-b from-transparent to-[#050614]"

@@ -470,6 +470,86 @@ section { position: relative; }
   50% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.08); }
 }
 
+/* ── Hero 3D Tech Wireframe (rotating orbital rings) ── */
+.hero-tech-3d {
+  perspective: 800px;
+  will-change: transform;
+}
+.hero-tech-3d__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(124, 92, 255, 0.25);
+  transform-style: preserve-3d;
+}
+.hero-tech-3d__ring--1 {
+  border-color: rgba(124, 92, 255, 0.3);
+  animation: ring-rotate-x 12s linear infinite;
+}
+.hero-tech-3d__ring--2 {
+  border-color: rgba(0, 224, 198, 0.25);
+  animation: ring-rotate-y 16s linear infinite;
+}
+.hero-tech-3d__ring--3 {
+  border-color: rgba(77, 196, 255, 0.2);
+  animation: ring-rotate-z 20s linear infinite;
+}
+
+/* Ring vertices / dots on each ring */
+.hero-tech-3d__dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #7c5cff;
+  box-shadow: 0 0 8px 2px rgba(124, 92, 255, 0.5);
+}
+.hero-tech-3d__ring--2 .hero-tech-3d__dot {
+  background: #00e0c6;
+  box-shadow: 0 0 8px 2px rgba(0, 224, 198, 0.5);
+}
+.hero-tech-3d__ring--3 .hero-tech-3d__dot {
+  background: #4dc4ff;
+  box-shadow: 0 0 8px 2px rgba(77, 196, 255, 0.5);
+}
+
+/* Tiny floating particles around the wireframe */
+.hero-tech-3d__particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: rgba(124, 92, 255, 0.6);
+  animation: particle-float 8s ease-in-out infinite;
+}
+.hero-tech-3d__particle:nth-child(odd) {
+  background: rgba(0, 224, 198, 0.5);
+  animation-duration: 10s;
+}
+.hero-tech-3d__particle:nth-child(3n) {
+  background: rgba(77, 196, 255, 0.5);
+  animation-duration: 7s;
+}
+
+@keyframes ring-rotate-x {
+  0% { transform: rotateX(60deg) rotateY(0deg); }
+  100% { transform: rotateX(60deg) rotateY(360deg); }
+}
+@keyframes ring-rotate-y {
+  0% { transform: rotateY(-30deg) rotateX(0deg); }
+  100% { transform: rotateY(-30deg) rotateX(360deg); }
+}
+@keyframes ring-rotate-z {
+  0% { transform: rotateX(90deg) rotateZ(0deg); }
+  100% { transform: rotateX(90deg) rotateZ(360deg); }
+}
+@keyframes particle-float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+  25% { transform: translateY(-15px) translateX(8px); opacity: 0.8; }
+  50% { transform: translateY(-5px) translateX(-10px); opacity: 0.5; }
+  75% { transform: translateY(-20px) translateX(5px); opacity: 0.7; }
+}
+
 /* ── Project Showcase — Laptop float animation ── */
 .showcase-laptop-float {
   animation: laptop-float 6s ease-in-out infinite;
