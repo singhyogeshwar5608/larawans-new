@@ -48,7 +48,7 @@ export function TechStack() {
           description={undefined}
         />
 
-        <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
+        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {techStack.map((t, i) => {
             const Icon = ICON_MAP[t.name];
             return (
@@ -60,34 +60,55 @@ export function TechStack() {
                 transition={{
                   duration: 0.55,
                   ease: [0.22, 1, 0.36, 1],
-                  delay: (i % 7) * 0.05,
+                  delay: (i % 6) * 0.06,
                 }}
-                whileHover={{ y: -6, scale: 1.04 }}
-                className="tech-card group relative flex aspect-square flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.06] to-white/[0.01] p-5 backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:shadow-[0_8px_32px_-8px_rgba(124,92,255,0.2)] interactive"
+                whileHover={{ y: -6, scale: 1.05 }}
+                className="tech-card group relative flex aspect-square flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl p-5 transition-all duration-500 interactive"
+                style={{
+                  background: `linear-gradient(145deg, ${t.color}12 0%, ${t.color}04 60%, rgba(255,255,255,0.02) 100%)`,
+                  border: `1px solid ${t.color}18`,
+                }}
               >
-                {/* Glow */}
+                {/* Top color bar */}
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-[2px] rounded-t-2xl"
+                  style={{ background: `linear-gradient(90deg, transparent, ${t.color}, transparent)` }}
+                />
+
+                {/* Icon glow ring */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  className="absolute flex h-16 w-16 items-center justify-center rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 sm:h-18 sm:w-18"
                   style={{
-                    background: `radial-gradient(circle at 50% 30%, ${t.color}33, transparent 60%)`,
+                    background: `radial-gradient(circle, ${t.color}20, transparent 70%)`,
+                    filter: "blur(8px)",
                   }}
                 />
 
-                <Icon
-                  className="h-10 w-10 opacity-80 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110 sm:h-11 sm:w-11"
-                  style={{ color: t.color }}
-                  strokeWidth={1.6}
-                />
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-500 group-hover:scale-110 sm:h-14 sm:w-14"
+                  style={{
+                    background: `${t.color}10`,
+                    border: `1px solid ${t.color}15`,
+                  }}
+                >
+                  <Icon
+                    className="h-6 w-6 transition-all duration-500 sm:h-7 sm:w-7"
+                    style={{ color: t.color }}
+                    strokeWidth={1.6}
+                  />
+                </div>
                 <span className="font-display text-[11px] font-semibold tracking-wider uppercase text-muted-foreground transition-colors group-hover:text-foreground sm:text-xs">
                   {t.name}
                 </span>
 
-                {/* Bottom accent */}
-                <span
+                {/* Hover glow */}
+                <div
                   aria-hidden
-                  className="absolute inset-x-3 bottom-2.5 h-[2px] origin-center scale-x-0 rounded-full transition-transform duration-500 group-hover:scale-x-100"
-                  style={{ background: `linear-gradient(90deg, ${t.color}, ${t.color}88)` }}
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    background: `radial-gradient(circle at 50% 40%, ${t.color}15, transparent 70%)`,
+                  }}
                 />
               </motion.div>
             );

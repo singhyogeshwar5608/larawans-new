@@ -520,11 +520,24 @@ section { position: relative; }
 /* ── Tech Stack Cards — stylish glass tiles ── */
 .tech-card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
 }
 .tech-card:hover {
   box-shadow:
-    0 8px 32px -8px rgba(124, 92, 255, 0.25),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 12px 40px -8px rgba(124, 92, 255, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(130%);
+}
+
+/* ── Testimonials carousel (mobile) ── */
+.testimonial-carousel {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.testimonial-carousel::-webkit-scrollbar {
+  display: none;
 }
 .ind-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
