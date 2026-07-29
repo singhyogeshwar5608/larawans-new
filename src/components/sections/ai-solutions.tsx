@@ -77,7 +77,7 @@ export function AISolutions() {
             AI Solutions
           </motion.div>
 
-          {/* Heading with typewriter */}
+          {/* Heading */}
           <motion.h2
             initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -85,12 +85,8 @@ export function AISolutions() {
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
             className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem]"
           >
-            Intelligent systems that{" "}
-            <br className="hidden sm:block" />
-            <span className="relative inline-block text-left">
-              <span className="inline-block text-gradient-aurora">{displayedText}</span>
-              <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
-            </span>
+            AI Integration That{" "}
+            <span className="text-gradient-aurora">Actually Delivers</span>
           </motion.h2>
 
           {/* Description */}
