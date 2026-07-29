@@ -11,7 +11,7 @@ export function Testimonials() {
   testimonials.forEach((t, i) => cols[i % 3].push(t));
 
   return (
-    <section id="testimonials" className="relative py-24 sm:py-32">
+    <section id="testimonials" className="relative py-[40px] sm:py-[60px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Testimonials"
