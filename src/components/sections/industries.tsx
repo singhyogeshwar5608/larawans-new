@@ -12,14 +12,17 @@ const cardAccents = [
 
 export function Industries() {
   return (
-    <section id="industries" className="relative py-24 sm:py-32">
+    <section id="industries" className="relative bg-[#f8f9fc] py-[40px] sm:py-[60px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="Industries"
-          title="Deep expertise across"
-          highlight="9 verticals"
-          description={undefined}
-        />
+        {/* Light-theme heading overrides */}
+        <div className="[&_.rounded-full]:border-neutral-200 [&_.rounded-full]:bg-white [&_.rounded-full]:text-neutral-500 [&_h2]:text-neutral-900 [&_p]:text-neutral-600">
+          <SectionHeading
+            eyebrow="Industries"
+            title="Deep expertise across"
+            highlight="9 verticals"
+            description={undefined}
+          />
+        </div>
 
         {/* Flex-wrap — centered rows, more cards per row on desktop */}
         <div className="mt-16 flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-5">
@@ -34,7 +37,7 @@ export function Industries() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 5) * 0.08,
               }}
-              className="ind-card group relative flex w-[145px] flex-col overflow-hidden rounded-xl bg-[#0e1029] transition-all duration-400 hover:scale-[1.03] sm:w-[175px] lg:w-[195px]"
+              className="ind-card group relative flex w-[165px] flex-col overflow-hidden rounded-xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-all duration-400 hover:scale-[1.03] sm:w-[200px] lg:w-[220px]"
               style={{
                 borderTop: `3px solid ${cardAccents[i]}`,
               }}
@@ -48,31 +51,31 @@ export function Industries() {
               </span>
 
               {/* Content */}
-              <div className="relative flex flex-col gap-1 p-3.5 sm:p-4 lg:p-5">
+              <div className="relative flex flex-col gap-1.5 p-4 sm:p-5 lg:p-6">
                 {/* Icon */}
                 <div
-                  className="flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-400 sm:h-9 sm:w-9"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-400 sm:h-10 sm:w-10"
                   style={{ backgroundColor: `${cardAccents[i]}15` }}
                 >
                   <ind.icon
-                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
+                    className="h-4 w-4 sm:h-[18px] sm:w-[18px]"
                     strokeWidth={1.6}
                     style={{ color: cardAccents[i] }}
                   />
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display text-[13px] font-bold tracking-tight text-foreground/95 sm:text-sm">
+                <h3 className="font-display text-[14px] font-bold tracking-tight text-neutral-800 sm:text-[15px]">
                   {ind.name}
                 </h3>
 
                 {/* Blurb — description */}
-                <p className="mt-0.5 flex-1 text-[11px] leading-relaxed text-muted-foreground/50 sm:text-[12px]">
+                <p className="mt-0.5 flex-1 text-[12px] leading-relaxed text-neutral-500 sm:text-[13px]">
                   {ind.blurb}
                 </p>
 
                 {/* Explore tag — bottom */}
-                <div className="mt-auto flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/40 transition-colors duration-400 group-hover:text-muted-foreground/80">
+                <div className="mt-auto flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-400 transition-colors duration-400 group-hover:text-neutral-600">
                   <span>Explore</span>
                   <svg
                     className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
