@@ -23,11 +23,11 @@ export default function Home() {
       <Services />
       <Industries />
       <AISolutions />
-      <DevelopmentProcess />
       <ProjectShowcase />
       <Portfolio />
       <TechStack />
       <WhyLarawans />
+      <DevelopmentProcess />
       <Testimonials />
       <FAQ />
       <Contact />
