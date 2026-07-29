@@ -1,12 +1,55 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Cpu } from "lucide-react";
 import { aiSolutions } from "@/lib/site-data";
-import { SectionHeading } from "../section-heading";
 import { MagneticButton } from "../magnetic-button";
 
+/** AI solution titles jo typewrite honge */
+const ROTATING_WORDS = aiSolutions.map((s) => s.title);
+
+const TYPING_SPEED = 70;
+const DELETING_SPEED = 40;
+const PAUSE_AFTER_TYPE = 1500;
+const PAUSE_AFTER_DELETE = 350;
+
 export function AISolutions() {
+  const [displayedText, setDisplayedText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const currentWord = ROTATING_WORDS[wordIndex];
+
+    const tick = () => {
+      if (!isDeleting) {
+        if (displayedText.length < currentWord.length) {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+          timeoutRef.current = setTimeout(tick, TYPING_SPEED + Math.random() * 30);
+        } else {
+          timeoutRef.current = setTimeout(() => setIsDeleting(true), PAUSE_AFTER_TYPE);
+        }
+      } else {
+        if (displayedText.length > 0) {
+          setDisplayedText(displayedText.slice(0, -1));
+          timeoutRef.current = setTimeout(tick, DELETING_SPEED);
+        } else {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+          timeoutRef.current = setTimeout(tick, PAUSE_AFTER_DELETE);
+        }
+      }
+    };
+
+    timeoutRef.current = setTimeout(tick, isDeleting ? DELETING_SPEED : TYPING_SPEED);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [displayedText, wordIndex, isDeleting]);
+
   return (
     <section id="ai-solutions" className="relative bg-[#f8f9fc] py-24 sm:py-32">
       {/* Light theme AI glow */}
@@ -20,14 +63,46 @@ export function AISolutions() {
       />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        {/* Light-theme heading overrides */}
-        <div className="[&_.rounded-full]:border-neutral-200 [&_.rounded-full]:bg-white [&_.rounded-full]:text-neutral-500 [&_h2]:text-neutral-900 [&_p]:text-neutral-600">
-          <SectionHeading
-            eyebrow="AI Solutions"
-            title="Intelligent systems that"
-            highlight="do the work for you"
-            description="AI isn't a feature we add at the end — it's the foundation. These six AI capabilities can be deployed standalone or woven into any of our software products to multiply their impact."
-          />
+        {/* Custom heading with typewriter */}
+        <div className="flex flex-col items-center gap-5 text-center">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-500 backdrop-blur"
+          >
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#7c5cff] shadow-[0_0_10px_#7c5cff]" />
+            AI Solutions
+          </motion.div>
+
+          {/* Heading with typewriter */}
+          <motion.h2
+            initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+            className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-neutral-900 sm:text-5xl lg:text-[3.4rem]"
+          >
+            Intelligent systems that{" "}
+            <br className="hidden sm:block" />
+            <span className="relative inline-block text-left">
+              <span className="inline-block text-gradient-aurora">{displayedText}</span>
+              <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
+            </span>
+          </motion.h2>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
+            className="max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg"
+          >
+            AI isn't a feature we add at the end — it's the foundation. These six AI capabilities can be deployed standalone or woven into any of our software products to multiply their impact.
+          </motion.p>
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
