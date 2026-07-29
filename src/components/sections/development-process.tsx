@@ -12,7 +12,7 @@ export function DevelopmentProcess() {
           eyebrow="How We Work"
           title="A proven process from"
           highlight="idea to impact"
-          description="Seven stages, one obsession: shipping software that moves your business metrics. Every stage ends with a deliverable you can review, not a status update."
+          description={undefined}
         />
 
         <div className="relative mx-auto mt-16 max-w-4xl">
