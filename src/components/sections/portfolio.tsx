@@ -8,7 +8,7 @@ import { MagneticButton } from "../magnetic-button";
 
 export function Portfolio() {
   return (
-    <section id="portfolio" className="relative bg-[#f8f9fc] py-24 sm:py-32">
+    <section id="portfolio" className="relative bg-[#f8f9fc] py-[30px]">
       {/* Top accent line */}
       <div
         aria-hidden
@@ -26,7 +26,7 @@ export function Portfolio() {
             eyebrow="Portfolio"
             title="Work that ships,"
             highlight="scales, and survives"
-            description="A snapshot of platforms we've shipped across insurance, healthcare, retail, manufacturing, and SaaS. Each one is in production today, handling real revenue and real users."
+            description={undefined}
           />
         </div>
 
