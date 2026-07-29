@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Monitor, Play, Pause } from "lucide-react";
+import { ExternalLink, Monitor } from "lucide-react";
 import { SectionHeading } from "../section-heading";
 import { MagneticButton } from "../magnetic-button";
 
@@ -39,25 +39,13 @@ const showcaseProjects: ShowcaseProject[] = [
 
 export function ProjectShowcase() {
   const [projectIndex, setProjectIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const project = showcaseProjects[projectIndex];
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
   /* Reset video when project changes */
   const switchProject = (index: number) => {
     setProjectIndex(index);
-    setIsPlaying(true);
     setTimeout(() => {
       if (videoRef.current) {
         videoRef.current.currentTime = 0;
@@ -181,8 +169,8 @@ export function ProjectShowcase() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full"
             >
-              {/* ── Video Player (no frame) ── */}
-              <div className="showcase-laptop-float relative mx-auto overflow-hidden rounded-xl border border-white/10 shadow-[0_0_80px_rgba(124,92,255,0.12)]" style={{ maxWidth: "680px" }}>
+              {/* ── Video Player (full visible) ── */}
+              <div className="showcase-laptop-float relative mx-auto" style={{ maxWidth: "680px" }}>
                 <video
                   ref={videoRef}
                   src={project.video}
@@ -190,22 +178,9 @@ export function ProjectShowcase() {
                   loop
                   muted
                   playsInline
-                  className="block w-full"
-                  style={{ aspectRatio: "16/10", objectFit: "cover" }}
+                  className="block w-full rounded-xl"
+                  controls
                 />
-
-                {/* Play/Pause overlay button */}
-                <button
-                  onClick={togglePlay}
-                  className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white/80 backdrop-blur transition-all hover:bg-black/70 hover:text-white"
-                  aria-label={isPlaying ? "Pause video" : "Play video"}
-                >
-                  {isPlaying ? (
-                    <Pause className="h-3.5 w-3.5" />
-                  ) : (
-                    <Play className="ml-0.5 h-3.5 w-3.5" />
-                  )}
-                </button>
               </div>
             </motion.div>
           </div>
