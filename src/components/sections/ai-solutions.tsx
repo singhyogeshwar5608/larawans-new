@@ -106,7 +106,7 @@ export function AISolutions() {
         </div>
 
         {/* Mobile: horizontal slide carousel | Desktop: grid */}
-        <div className="mt-16 flex gap-4 overflow-x-auto px-1 pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 md:overflow-x-visible md:pb-0 lg:grid-cols-3">
+        <div className="ai-carousel mt-16 flex gap-4 overflow-x-auto px-1 snap-x snap-mandatory md:grid md:grid-cols-2 md:overflow-x-visible lg:grid-cols-3">
           {aiSolutions.map((sol, i) => (
             <motion.article
               key={sol.title}

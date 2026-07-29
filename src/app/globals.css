@@ -503,12 +503,18 @@ section { position: relative; }
 }
 
 /* Hide scrollbar for carousels */
-.scrollbar-hide {
+.scrollbar-hide,
+.ai-carousel {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.scrollbar-hide::-webkit-scrollbar {
+.scrollbar-hide::-webkit-scrollbar,
+.ai-carousel::-webkit-scrollbar {
   display: none;
+}
+.ai-carousel {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
 }
 
 /* ── Industry Cards — flat dark style with colored top accent ── */
