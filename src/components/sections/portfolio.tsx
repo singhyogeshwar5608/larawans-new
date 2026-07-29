@@ -2,9 +2,71 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
+import {
+  SiLaravel,
+  SiReact,
+  SiNextdotjs,
+  SiFlutter,
+  SiNodedotjs,
+  SiPython,
+  SiDotnet,
+  SiFirebase,
+  SiMysql,
+  SiPostgresql,
+  SiDocker,
+  SiStripe,
+  SiShopify,
+  SiWoo,
+} from "react-icons/si";
+import { Cloud, Server, Bot } from "lucide-react";
 import { projects } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
 import { MagneticButton } from "../magnetic-button";
+
+type IconType = ComponentType<
+  SVGProps<SVGSVGElement> & { className?: string; style?: React.CSSProperties }
+>;
+
+const ICON_MAP: Record<string, IconType> = {
+  Laravel: SiLaravel,
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  Flutter: SiFlutter,
+  "Node.js": SiNodedotjs,
+  Python: SiPython,
+  ".NET": SiDotnet,
+  AWS: Cloud,
+  Azure: Server,
+  Firebase: SiFirebase,
+  MySQL: SiMysql,
+  PostgreSQL: SiPostgresql,
+  Docker: SiDocker,
+  Stripe: SiStripe,
+  Shopify: SiShopify,
+  WooCommerce: SiWoo,
+  AI: Bot,
+};
+
+const TAG_COLORS: Record<string, string> = {
+  Laravel: "#FF2D20",
+  React: "#61DAFB",
+  "Next.js": "#171717",
+  Flutter: "#02569B",
+  "Node.js": "#83CD29",
+  Python: "#3776AB",
+  ".NET": "#512BD4",
+  AWS: "#FF9900",
+  Azure: "#0078D4",
+  Firebase: "#FFCA28",
+  MySQL: "#4479A1",
+  PostgreSQL: "#4169E1",
+  Docker: "#2496ED",
+  Stripe: "#635BFF",
+  Shopify: "#96BF48",
+  WooCommerce: "#96588A",
+  AI: "#7c5cff",
+};
 
 export function Portfolio() {
   return (
@@ -50,7 +112,7 @@ export function Portfolio() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[14px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
-                className="relative h-40 overflow-hidden sm:h-44"
+                className="relative h-44 overflow-hidden sm:h-52"
                 style={{ background: p.accent }}
               >
                 {/* Pattern overlay */}
@@ -107,15 +169,24 @@ export function Portfolio() {
                 <p className="mt-2.5 text-[13.5px] leading-relaxed text-white/70">
                   {p.description}
                 </p>
-                <div className="mt-4 flex flex-wrap gap-1.5">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-0.5 text-[10.5px] font-medium uppercase tracking-wider text-white/60"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                <div className="mt-5 flex items-center gap-2">
+                  {p.tags.map((t) => {
+                    const Icon = ICON_MAP[t];
+                    const color = TAG_COLORS[t] || "#7c5cff";
+                    return (
+                      <div
+                        key={t}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border border-white/10 bg-white/[0.05]"
+                        title={t}
+                      >
+                        {Icon ? (
+                          <Icon className="h-4 w-4" style={{ color }} />
+                        ) : (
+                          <span className="text-[9px] font-bold text-white/50">{t.slice(0,2)}</span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
                 </div>
