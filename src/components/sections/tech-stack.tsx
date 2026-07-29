@@ -41,7 +41,7 @@ const ICON_MAP: Record<string, IconType> = {
 
 export function TechStack() {
   return (
-    <section id="tech-stack" className="relative pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
+    <section id="tech-stack" className="relative py-[30px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Tech Stack"
