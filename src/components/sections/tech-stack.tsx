@@ -86,18 +86,11 @@ export function TechStack() {
                   }}
                 />
 
-                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-500 group-hover:scale-110 sm:h-14 sm:w-14"
-                  style={{
-                    background: `${t.color}10`,
-                    border: `1px solid ${t.color}15`,
-                  }}
-                >
-                  <Icon
-                    className="h-6 w-6 transition-all duration-500 sm:h-7 sm:w-7"
-                    style={{ color: t.color }}
-                    strokeWidth={1.6}
-                  />
-                </div>
+                <Icon
+                  className="transition-all duration-500 group-hover:scale-110"
+                  style={{ color: t.color, width: "48px", height: "48px" }}
+                  strokeWidth={1.6}
+                />
                 <span className="font-display text-[11px] font-semibold tracking-wider uppercase text-muted-foreground transition-colors group-hover:text-foreground sm:text-xs">
                   {t.name}
                 </span>
