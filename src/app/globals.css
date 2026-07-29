@@ -535,9 +535,25 @@ section { position: relative; }
   touch-action: pan-x;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 }
 .testimonial-carousel::-webkit-scrollbar {
   display: none;
+}
+.testimonial-card {
+  animation: testimonial-fade-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes testimonial-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
 }
 .ind-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);

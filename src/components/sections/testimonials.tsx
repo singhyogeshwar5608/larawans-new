@@ -1,13 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 import { testimonials } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="relative overflow-x-hidden py-[40px] sm:py-[60px]">
+    <section id="testimonials" className="relative py-[40px] sm:py-[60px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Testimonials"
@@ -16,22 +15,13 @@ export function Testimonials() {
           description="Real outcomes from real partners — measured in claim turnaround, App Store ratings, revenue, and reduced headcount, not vanity metrics."
         />
 
-        {/* Mobile: horizontal carousel | Desktop: masonry 3-col grid */}
-        <div
-          className="testimonial-carousel mt-16 flex gap-5 overflow-x-auto px-0.5 snap-x snap-mandatory md:grid md:grid-cols-2 md:gap-5 md:overflow-x-visible md:px-0 lg:grid-cols-3"
-        >
+        {/* Mobile: horizontal swipe carousel | Desktop: 3-col grid */}
+        <div className="testimonial-carousel mt-16 flex gap-5 overflow-x-auto snap-x snap-mandatory px-[calc((100vw-100%)/2)] sm:px-0 md:grid md:grid-cols-2 md:overflow-x-visible md:px-0 lg:grid-cols-3">
           {testimonials.map((t, i) => (
-            <motion.figure
+            <figure
               key={t.name}
-              initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
-              whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-                delay: (i % 3) * 0.08,
-              }}
-              className="group relative w-[88vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/20 md:w-full interactive sm:w-[78vw]"
+              className="testimonial-card group relative w-[85vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/20 md:w-full interactive sm:w-[400px]"
+              style={{ animationDelay: `${(i % 3) * 0.1}s` }}
             >
               {/* Quote icon */}
               <div className="mb-4 flex items-center justify-between">
@@ -79,7 +69,7 @@ export function Testimonials() {
                     "linear-gradient(90deg,transparent,#7c5cff,#00e0c6,transparent)",
                 }}
               />
-            </motion.figure>
+            </figure>
           ))}
         </div>
       </div>
