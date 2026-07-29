@@ -118,63 +118,162 @@ export function Hero() {
         }}
       />
 
-      {/* ── Layer 5: 3D Tech Wireframe (rotating orbital rings) ── */}
+      {/* ── Layer 5: 3D Floating Code Blocks ── */}
       <div
-        className="pointer-events-none absolute inset-0 z-[5] flex items-center justify-center"
+        className="pointer-events-none absolute inset-0 z-[5] overflow-hidden"
         aria-hidden
-        style={{ perspective: "900px" }}
+        style={{ perspective: "1200px" }}
       >
-        {/* Main wireframe — right side */}
-        <div className="hero-tech-3d absolute right-[8%] top-1/2 h-[320px] w-[320px] -translate-y-1/2 sm:h-[420px] sm:w-[420px] lg:right-[12%] lg:h-[500px] lg:w-[500px]">
-          {/* Ring 1 — violet */}
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--1">
-            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot bottom-0 left-1/2 -translate-x-1/2" />
+        {/* Main code editor — right side, large, tilted */}
+        <div
+          className="code-3d-float-1 absolute right-[3%] top-[14%] w-64 sm:w-72 lg:right-[8%] lg:w-80"
+          style={{ transform: "rotateY(-14deg) rotateX(6deg)" }}
+        >
+          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(124,92,255,0.3),inset_0_1px_0_rgba(255,255,255,0.06)]">
+            {/* Title bar */}
+            <div className="mb-3 flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <span className="ml-2 text-[10px] font-mono text-white/25">agent.ts</span>
+            </div>
+            {/* Code content */}
+            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
+              <code>
+                <span className="text-[#7c5cff]">import</span>{" "}
+                <span className="text-white/70">{"{ "}</span>
+                <span className="text-[#00e0c6]">AI</span>
+                <span className="text-white/70">{" }"}</span>{" "}
+                <span className="text-[#7c5cff]">from</span>{" "}
+                <span className="text-[#ffb14d]">&apos;@larawans/core&apos;</span>
+                {"\n"}
+                <span className="text-[#7c5cff]">const</span>{" "}
+                <span className="text-[#00e0c6]">agent</span>{" "}
+                <span className="text-white/50">=</span>{" "}
+                <span className="text-[#7c5cff]">new</span>{" "}
+                <span className="text-[#ff4dd2]">AI</span>
+                <span className="text-white/70">{"({"}</span>
+                {"\n"}
+                {"  "}model<span className="text-white/50">:</span>{" "}
+                <span className="text-[#ffb14d]">&apos;gpt-4-turbo&apos;</span>
+                <span className="text-white/70">,</span>
+                {"\n"}
+                {"  "}tools<span className="text-white/50">:</span>{" "}
+                <span className="text-white/70">[</span>
+                <span className="text-[#4dc4ff]">&apos;search&apos;</span>
+                <span className="text-white/70">,</span>{" "}
+                <span className="text-[#4dc4ff]">&apos;code&apos;</span>
+                <span className="text-white/70">,</span>{" "}
+                <span className="text-[#4dc4ff]">&apos;deploy&apos;</span>
+                <span className="text-white/70">],</span>
+                {"\n"}
+                {"  "}memory<span className="text-white/50">:</span>{" "}
+                <span className="text-[#7c5cff]">true</span>
+                <span className="text-white/70">,</span>
+                {"\n"}
+                {"  "}stream<span className="text-white/50">:</span>{" "}
+                <span className="text-[#7c5cff]">true</span>
+                {"\n"}
+                <span className="text-white/70">{"});"}</span>
+                {"\n\n"}
+                <span className="text-[#7c5cff]">export default</span>{" "}
+                <span className="text-[#00e0c6]">agent</span>
+                <span className="text-white/70">;</span>
+              </code>
+            </pre>
           </div>
-          {/* Ring 2 — cyan */}
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--2">
-            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
-          </div>
-          {/* Ring 3 — blue */}
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--3">
-            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
-          </div>
-          {/* Floating particles */}
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="hero-tech-3d__particle"
-              style={{
-                left: `${20 + (i * 23) % 70}%`,
-                top: `${15 + (i * 19) % 75}%`,
-                animationDelay: `${(i * 1.1) % 6}s`,
-              }}
-            />
-          ))}
         </div>
 
-        {/* Secondary smaller wireframe — left side */}
+        {/* Secondary code editor — left bottom, smaller, opposite tilt */}
         <div
-          className="hero-tech-3d absolute bottom-[15%] left-[5%] hidden h-[160px] w-[160px] sm:block lg:h-[200px] lg:w-[200px]"
-          style={{ perspective: "600px" }}
+          className="code-3d-float-2 absolute bottom-[18%] left-[2%] hidden w-52 sm:block lg:left-[4%] lg:w-60"
+          style={{ transform: "rotateY(18deg) rotateX(-5deg)" }}
         >
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--1" style={{ animationDirection: "reverse", animationDuration: "18s" }}>
-            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot bottom-0 left-1/2 -translate-x-1/2" />
-          </div>
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--2" style={{ animationDirection: "reverse", animationDuration: "22s" }}>
-            <div className="hero-tech-3d__dot left-0 top-1/2 -translate-x-1/2 -translate-y-1/2" />
-            <div className="hero-tech-3d__dot right-0 top-1/2 -translate-y-1/2" />
-          </div>
-          <div className="hero-tech-3d__ring hero-tech-3d__ring--3" style={{ animationDuration: "26s" }}>
-            <div className="hero-tech-3d__dot left-1/2 top-0 -translate-x-1/2 -translate-y-1/2" />
+          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(0,224,198,0.25),inset_0_1px_0_rgba(255,255,255,0.06)]">
+            {/* Title bar */}
+            <div className="mb-3 flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <span className="ml-2 text-[10px] font-mono text-white/25">api.ts</span>
+            </div>
+            {/* Code content */}
+            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
+              <code>
+                <span className="text-[#7c5cff]">async</span>{" "}
+                <span className="text-[#7c5cff]">function</span>{" "}
+                <span className="text-[#00e0c6]">deploy</span>
+                <span className="text-white/70">{"() {"}</span>
+                {"\n"}
+                {"  "}const{" "}
+                <span className="text-[#00e0c6]">app</span>{" "}
+                <span className="text-white/50">=</span>{" "}
+                <span className="text-[#7c5cff]">await</span>{" "}
+                <span className="text-[#ff4dd2]">build</span>
+                <span className="text-white/70">{"();"}</span>
+                {"\n"}
+                {"  "}
+                <span className="text-[#7c5cff]">await</span>{" "}
+                <span className="text-[#ff4dd2]">runTests</span>
+                <span className="text-white/70">{"();"}</span>
+                {"\n"}
+                {"  "}return{" "}
+                <span className="text-white/70">{"{"}</span>
+                {"\n"}
+                {"    "}status<span className="text-white/50">:</span>{" "}
+                <span className="text-[#ffb14d]">&apos;live&apos;</span>
+                {"\n"}
+                {"  "}
+                <span className="text-white/70">{"}"};</span>
+                {"\n"}
+                <span className="text-white/70">{"}"}</span>
+              </code>
+            </pre>
           </div>
         </div>
+
+        {/* Third small code block — top left */}
+        <div
+          className="code-3d-float-3 absolute left-[6%] top-[22%] hidden w-44 sm:block lg:left-[8%] lg:w-52"
+          style={{ transform: "rotateY(10deg) rotateX(8deg)" }}
+        >
+          <div className="rounded-xl border border-white/[0.12] bg-[#0a0c24]/90 p-3.5 shadow-[0_25px_60px_-15px_rgba(77,196,255,0.2),inset_0_1px_0_rgba(255,255,255,0.06)]">
+            {/* Title bar */}
+            <div className="mb-3 flex items-center gap-1.5">
+              <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+              <div className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+              <span className="ml-2 text-[10px] font-mono text-white/25">config.ts</span>
+            </div>
+            <pre className="text-[10px] leading-[1.8] font-mono sm:text-[11px]">
+              <code>
+                <span className="text-[#7c5cff]">export const</span>{" "}
+                <span className="text-[#00e0c6]">config</span>{" "}
+                <span className="text-white/50">=</span>{" "}
+                <span className="text-white/70">{"{"}</span>
+                {"\n"}
+                {"  "}ai<span className="text-white/50">:</span>{" "}
+                <span className="text-[#7c5cff]">true</span>
+                <span className="text-white/70">,</span>
+                {"\n"}
+                {"  "}cloud<span className="text-white/50">:</span>{" "}
+                <span className="text-[#ffb14d]">&apos;aws&apos;</span>
+                {"\n"}
+                <span className="text-white/70">{"}"};</span>
+              </code>
+            </pre>
+          </div>
+        </div>
+
+        {/* Floating code symbols / syntax particles */}
+        <div className="code-symbol code-symbol-1 absolute right-[25%] top-[8%] text-2xl font-mono text-[#7c5cff]/30 sm:text-3xl lg:text-4xl">{"{ }"}</div>
+        <div className="code-symbol code-symbol-2 absolute left-[20%] bottom-[30%] text-xl font-mono text-[#00e0c6]/25 sm:text-2xl">{"</>"}</div>
+        <div className="code-symbol code-symbol-3 absolute right-[15%] bottom-[12%] text-2xl font-mono text-[#ff4dd2]/20 sm:text-3xl">{"( )"}</div>
+        <div className="code-symbol code-symbol-4 absolute left-[35%] top-[12%] hidden text-xl font-mono text-[#4dc4ff]/20 sm:block">{"=>"}</div>
+        <div className="code-symbol code-symbol-5 absolute right-[30%] top-[55%] text-lg font-mono text-[#ffb14d]/20 sm:text-xl">{"[ ]"}</div>
+        <div className="code-symbol code-symbol-6 absolute left-[12%] top-[50%] hidden text-2xl font-mono text-[#9dff5c]/15 sm:block">{"<>"}</div>
+        <div className="code-symbol code-symbol-7 absolute right-[40%] bottom-[25%] hidden text-xl font-mono text-[#7c5cff]/20 sm:block">{"&&"}</div>
+        <div className="code-symbol code-symbol-8 absolute left-[45%] bottom-[8%] hidden text-lg font-mono text-[#00e0c6]/15 sm:block">{"..."}</div>
       </div>
 
       {/* ── Layer 6: Gradient masks for smooth section transitions ── */}
