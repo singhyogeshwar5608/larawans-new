@@ -52,27 +52,27 @@ export function TrustedCompanies() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.6 }}
-          className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500"
+          className="mb-5 hidden text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500 sm:block"
         >
           Trusted by forward-thinking teams · Powered by best-in-class tech
         </motion.p>
 
-        <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_12%,#000_88%,transparent)]">
-          <div className="flex w-max animate-marquee items-center gap-12 sm:gap-20">
+        <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_10%,#000_90%,transparent)]">
+          <div className="flex w-max animate-marquee items-center gap-6 sm:gap-20">
             {items.map((t, i) => (
               <div
                 key={`${t.name}-${i}`}
                 className="group flex shrink-0 items-center gap-2 sm:gap-3 interactive"
               >
                 {/* Icon container with light shadow card */}
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.12),0_0_0_1px_rgba(124,92,255,0.2)] group-hover:scale-105 sm:h-14 sm:w-14">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white shadow-[0_1px_4px_rgba(0,0,0,0.06),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-300 group-hover:shadow-[0_4px_14px_rgba(0,0,0,0.12),0_0_0_1px_rgba(124,92,255,0.2)] group-hover:scale-105 sm:h-14 sm:w-14 sm:rounded-xl">
                   <t.Icon
-                    className="h-5 w-5 transition-all duration-300 sm:h-8 sm:w-8"
+                    className="h-4 w-4 transition-all duration-300 sm:h-8 sm:w-8"
                     style={{ color: t.color }}
                     strokeWidth={1.8}
                   />
                 </div>
-                <span className="font-display text-sm font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900 sm:text-xl">
+                <span className="font-display text-xs font-semibold tracking-tight text-neutral-700 transition-colors group-hover:text-neutral-900 sm:text-xl">
                   {t.name}
                 </span>
               </div>
