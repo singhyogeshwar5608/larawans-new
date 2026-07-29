@@ -34,7 +34,7 @@ export function TrustedCompanies() {
   return (
     <section
       id="trusted-companies"
-      className="relative border-y border-neutral-200 bg-[#f8f9fc] py-10 sm:py-14"
+      className="relative border-y border-neutral-200 bg-[#f8f9fc] py-5 sm:py-8"
     >
       {/* Subtle top highlight line */}
       <div
@@ -52,7 +52,7 @@ export function TrustedCompanies() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.6 }}
-          className="mb-8 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500"
+          className="mb-5 text-center text-[11px] font-semibold uppercase tracking-[0.32em] text-neutral-500"
         >
           Trusted by forward-thinking teams · Powered by best-in-class tech
         </motion.p>
