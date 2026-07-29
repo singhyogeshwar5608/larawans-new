@@ -105,7 +105,8 @@ export function AISolutions() {
           </motion.p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile: horizontal slide carousel | Desktop: grid */}
+        <div className="mt-16 flex gap-4 overflow-x-auto px-1 pb-4 snap-x snap-mandatory scrollbar-hide md:grid md:grid-cols-2 md:overflow-x-visible md:pb-0 lg:grid-cols-3">
           {aiSolutions.map((sol, i) => (
             <motion.article
               key={sol.title}
@@ -117,7 +118,7 @@ export function AISolutions() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.08,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0d1030] via-[#0a0c24] to-[#0a0c24] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:p-7"
+              className="group relative w-[82vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-br from-[#0d1030] via-[#0a0c24] to-[#0a0c24] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:w-[72vw] md:w-full sm:p-7"
             >
               {/* Animated conic border glow on hover */}
               <div

@@ -502,6 +502,15 @@ section { position: relative; }
   100% { transform: rotate(360deg); }
 }
 
+/* Hide scrollbar for carousels */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Industry Cards — flat dark style with colored top accent ── */
 .ind-card {
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
