@@ -470,40 +470,170 @@ section { position: relative; }
   50% { opacity: 0.85; transform: translate(-50%, -50%) scale(1.08); }
 }
 
-/* ── Hero 3D SVG Wireframe (rotating rings + lines) ── */
-.wire-ring-1 {
-  animation: wire-rotate-1 14s linear infinite;
+/* ── Hero 3D Scatter & Reform Molecular Wireframe ── */
+
+/* --- LINES: draw → break → draw (infinite) --- */
+.mol-line {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 0;
+  animation: mol-line-scatter 5s ease-in-out infinite;
 }
-.wire-ring-2 {
-  animation: wire-rotate-2 18s linear infinite;
+.mol-line-outer {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 0;
+  animation: mol-line-scatter 5s ease-in-out infinite 0.3s;
 }
-.wire-ring-3 {
-  animation: wire-rotate-3 22s linear infinite;
+.mol-line-sm {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 0;
+  animation: mol-line-scatter 6s ease-in-out infinite 0.5s;
 }
-.wire-ring-sm-1 {
-  animation: wire-rotate-1 20s linear infinite reverse;
-}
-.wire-ring-sm-2 {
-  animation: wire-rotate-2 24s linear infinite reverse;
-}
-.wire-ring-sm-3 {
-  animation: wire-rotate-3 28s linear infinite;
-}
-.wire-lines {
-  animation: wire-rotate-2 30s linear infinite;
+.mol-line-outer-sm {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: mol-line-scatter 6s ease-in-out infinite 0.8s;
 }
 
-@keyframes wire-rotate-1 {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+/* Lines: visible → fade out (break) → fade in (reform) */
+@keyframes mol-line-scatter {
+  0%   { stroke-dashoffset: 300; opacity: 0; }
+  15%  { stroke-dashoffset: 0;   opacity: 1; }
+  45%  { stroke-dashoffset: 0;   opacity: 1; }
+  55%  { stroke-dashoffset: 300; opacity: 0; }
+  85%  { stroke-dashoffset: 300; opacity: 0; }
+  100% { stroke-dashoffset: 300; opacity: 0; }
 }
-@keyframes wire-rotate-2 {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(-360deg); }
+
+/* --- NODES: connected → scatter outward → come back --- */
+.mol-node-core {
+  animation: mol-core-pulse 5s ease-in-out infinite;
 }
-@keyframes wire-rotate-3 {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.mol-node-core-sm {
+  animation: mol-core-pulse 6s ease-in-out infinite;
+}
+
+/* Center node: stays but pulses opacity */
+@keyframes mol-core-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* Node 1 — top-right: scatters to far top-right */
+.mol-node-1 {
+  animation: mol-scatter-1 5s ease-in-out infinite;
+}
+@keyframes mol-scatter-1 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(30px, -25px); opacity: 0.2; }
+  85%      { transform: translate(30px, -25px); opacity: 0.2; }
+}
+
+/* Node 2 — bottom-left: scatters to far bottom-left */
+.mol-node-2 {
+  animation: mol-scatter-2 5s ease-in-out infinite 0.1s;
+}
+@keyframes mol-scatter-2 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-25px, 30px); opacity: 0.2; }
+  85%      { transform: translate(-25px, 30px); opacity: 0.2; }
+}
+
+/* Node 3 — right: scatters to far right */
+.mol-node-3 {
+  animation: mol-scatter-3 5s ease-in-out infinite 0.15s;
+}
+@keyframes mol-scatter-3 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(35px, -10px); opacity: 0.15; }
+  85%      { transform: translate(35px, -10px); opacity: 0.15; }
+}
+
+/* Node 4 — top-left: scatters to far top-left */
+.mol-node-4 {
+  animation: mol-scatter-4 5s ease-in-out infinite 0.2s;
+}
+@keyframes mol-scatter-4 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-30px, -20px); opacity: 0.2; }
+  85%      { transform: translate(-30px, -20px); opacity: 0.2; }
+}
+
+/* Node 5 — bottom-right: scatters to far bottom-right */
+.mol-node-5 {
+  animation: mol-scatter-5 5s ease-in-out infinite 0.25s;
+}
+@keyframes mol-scatter-5 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(25px, 25px); opacity: 0.2; }
+  85%      { transform: translate(25px, 25px); opacity: 0.2; }
+}
+
+/* Node 6 — bottom-center: scatters down */
+.mol-node-6 {
+  animation: mol-scatter-6 5s ease-in-out infinite 0.3s;
+}
+@keyframes mol-scatter-6 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-5px, 30px); opacity: 0.2; }
+  85%      { transform: translate(-5px, 30px); opacity: 0.2; }
+}
+
+/* Node 7 — left: scatters to far left */
+.mol-node-7 {
+  animation: mol-scatter-7 5s ease-in-out infinite 0.35s;
+}
+@keyframes mol-scatter-7 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-30px, 10px); opacity: 0.2; }
+  85%      { transform: translate(-30px, 10px); opacity: 0.2; }
+}
+
+/* --- Small molecule nodes --- */
+.mol-node-sm-1 {
+  animation: mol-scatter-sm-1 6s ease-in-out infinite;
+}
+@keyframes mol-scatter-sm-1 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(20px, -15px); opacity: 0.15; }
+  85%      { transform: translate(20px, -15px); opacity: 0.15; }
+}
+
+.mol-node-sm-2 {
+  animation: mol-scatter-sm-2 6s ease-in-out infinite 0.15s;
+}
+@keyframes mol-scatter-sm-2 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-20px, 20px); opacity: 0.15; }
+  85%      { transform: translate(-20px, 20px); opacity: 0.15; }
+}
+
+.mol-node-sm-3 {
+  animation: mol-scatter-sm-3 6s ease-in-out infinite 0.2s;
+}
+@keyframes mol-scatter-sm-3 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(22px, 12px); opacity: 0.15; }
+  85%      { transform: translate(22px, 12px); opacity: 0.15; }
+}
+
+.mol-node-sm-4 {
+  animation: mol-scatter-sm-4 6s ease-in-out infinite 0.25s;
+}
+@keyframes mol-scatter-sm-4 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  45%      { transform: translate(0, 0); opacity: 1; }
+  55%      { transform: translate(-18px, -18px); opacity: 0.15; }
+  85%      { transform: translate(-18px, -18px); opacity: 0.15; }
 }
 
 /* ── Project Showcase — Laptop float animation ── */
