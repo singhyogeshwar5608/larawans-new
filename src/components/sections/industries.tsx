@@ -33,7 +33,7 @@ export function Industries() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.1,
               }}
-              className="ind-card group relative flex w-full max-w-[220px] flex-col overflow-hidden rounded-xl bg-[#0e1029] aspect-square transition-all duration-400 hover:scale-[1.03] sm:max-w-[260px] lg:max-w-[280px]"
+              className="ind-card group relative flex w-full max-w-[155px] flex-col overflow-hidden rounded-lg bg-[#0e1029] aspect-square transition-all duration-400 hover:scale-[1.03] sm:max-w-[175px] lg:max-w-[190px]"
               style={{
                 borderTop: `3px solid ${cardAccents[i]}`,
               }}
@@ -47,34 +47,34 @@ export function Industries() {
               </span>
 
               {/* Content */}
-              <div className="relative flex flex-col gap-1.5 p-3.5 sm:p-4">
+              <div className="relative flex flex-col gap-1 p-3 sm:p-3.5">
                 {/* Icon */}
                 <div
-                  className="flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-400 sm:h-10 sm:w-10"
+                  className="flex h-8 w-8 items-center justify-center rounded-md transition-all duration-400 sm:h-9 sm:w-9"
                   style={{ backgroundColor: `${cardAccents[i]}15` }}
                 >
                   <ind.icon
-                    className="h-4 w-4 sm:h-[18px] sm:w-[18px]"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
                     strokeWidth={1.6}
                     style={{ color: cardAccents[i] }}
                   />
                 </div>
 
                 {/* Title */}
-                <h3 className="font-display text-[15px] font-bold tracking-tight text-foreground/95 sm:text-base">
+                <h3 className="font-display text-[13px] font-bold tracking-tight text-foreground/95 sm:text-sm">
                   {ind.name}
                 </h3>
 
                 {/* Blurb */}
-                <p className="text-[12px] leading-relaxed text-muted-foreground/60 sm:text-[13px]">
+                <p className="text-[11px] leading-snug text-muted-foreground/50 sm:text-[12px]">
                   {ind.blurb}
                 </p>
 
                 {/* Explore tag — bottom */}
-                <div className="mt-auto flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/40 transition-colors duration-400 group-hover:text-muted-foreground/80">
+                <div className="mt-auto flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/40 transition-colors duration-400 group-hover:text-muted-foreground/80">
                   <span>Explore</span>
                   <svg
-                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                    className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
