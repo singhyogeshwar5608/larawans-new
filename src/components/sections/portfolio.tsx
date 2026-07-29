@@ -47,7 +47,7 @@ export function Portfolio() {
               {/* Outer wrapper with rotating gradient border */}
               <div className="portfolio-card-border">
                 {/* Actual card content on top */}
-                <div className="relative overflow-hidden rounded-[5px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+                <div className="relative overflow-hidden rounded-[10px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
                 className="relative h-40 overflow-hidden sm:h-44"
