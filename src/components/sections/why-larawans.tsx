@@ -5,30 +5,25 @@ import { Counter } from "../counter";
 import { stats } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
 
-const HIGHLIGHTS = [
+const TEAM_MEMBERS = [
   {
-    title: "AI-First by Default",
-    body: "Every project ships with LLMs, RAG, and automation baked into the architecture — not bolted on later. Your software gets smarter the longer you use it.",
-    icon: "✦",
-    accent: "#7c5cff",
+    name: "Lena Pearce",
+    role: "Creative Director",
+    bio: "Crafting visual identities and user experiences that connect brands with their audience on an emotional level.",
+    blobColor: "#0EA5E9",
   },
   {
-    title: "Senior-Only Engineers",
-    body: "No juniors learning on your budget. Every line of code is written by engineers with 6+ years of production experience across 12+ industries.",
-    icon: "◆",
-    accent: "#00e0c6",
+    name: "Sophia Bach",
+    role: "Lead Engineer",
+    bio: "Architecting scalable systems with clean code and modern frameworks that power enterprise-grade applications.",
+    blobColor: "#22C55E",
+    featured: true,
   },
   {
-    title: "Transparent Delivery",
-    body: "Weekly demos, GitHub access, Slack channels, and real-time dashboards. You always know what we're building, why, and how it maps to your KPIs.",
-    icon: "▲",
-    accent: "#ff4dd2",
-  },
-  {
-    title: "Long-Term Partnership",
-    body: "92% of our clients renew after the first project. We're not a vendor — we're the team you call when something needs to ship, scale, or survive.",
-    icon: "●",
-    accent: "#ffb14d",
+    name: "Arielle Cooper",
+    role: "Product Strategist",
+    bio: "Turning complex business requirements into intuitive product roadmaps that drive measurable growth outcomes.",
+    blobColor: "#14B8A6",
   },
 ];
 
@@ -96,33 +91,68 @@ export function WhyLarawans() {
           ))}
         </div>
 
-        {/* Highlight pillars */}
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-          {HIGHLIGHTS.map((h, i) => (
+        {/* Team member profile cards */}
+        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {TEAM_MEMBERS.map((member, i) => (
             <motion.div
-              key={h.title}
-              initial={{ opacity: 0, y: 22 }}
+              key={member.name}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-              className="group relative flex h-full flex-col rounded-3xl border border-white/10 bg-[#0a0a1a] p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-colors hover:border-white/20"
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
+              className="group relative mx-auto w-full max-w-[340px]"
             >
+              {/* Colorful blob behind card */}
               <div
-                className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl text-base font-bold"
+                aria-hidden
+                className="absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-80"
                 style={{
-                  color: h.accent,
-                  background: `${h.accent}1a`,
-                  boxShadow: `0 0 18px ${h.accent}55`,
+                  background: member.blobColor,
+                  borderRadius: "58% 42% 55% 45% / 52% 58% 42% 48%",
+                  top: "-6%",
+                  left: "-4%",
+                  right: "-4%",
+                  bottom: "-8%",
+                  transform: `rotate(${i === 0 ? "-6deg" : i === 2 ? "6deg" : "0deg"})`,
                 }}
-              >
-                {h.icon}
+              />
+
+              {/* White card */}
+              <div className="relative z-[1] rounded-3xl bg-white p-6 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-8 sm:pt-[76px]">
+                {/* Avatar — overlaps top edge */}
+                <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-1/2">
+                  <div
+                    className="flex h-[100px] w-[100px] items-center justify-center rounded-full border-[3px] border-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+                    style={{ background: `linear-gradient(145deg, ${member.blobColor}40, ${member.blobColor}20)` }}
+                  >
+                    <svg className="h-10 w-10" viewBox="0 0 48 48" fill="none">
+                      <circle cx="24" cy="18" r="8" fill={member.blobColor} opacity="0.8" />
+                      <path d="M8 42c0-8.8 7.2-16 16-16s16 7.2 16 16" fill={member.blobColor} opacity="0.5" />
+                    </svg>
+                  </div>
+                </div>
+
+                <h4 className="font-display text-xl font-semibold tracking-tight text-neutral-900">
+                  {member.name}
+                </h4>
+                <p className="mt-1 text-[15px] italic text-neutral-500">
+                  {member.role}
+                </p>
+                <p className="mt-4 text-[13px] leading-relaxed text-neutral-400">
+                  {member.bio}
+                </p>
               </div>
-              <h4 className="font-display text-base font-semibold tracking-tight text-white">
-                {h.title}
-              </h4>
-              <p className="mt-auto text-[13px] leading-relaxed text-neutral-400">
-                {h.body}
-              </p>
+
+              {/* Star badge (featured card only) */}
+              {member.featured && (
+                <div className="absolute -bottom-5 left-1/2 z-[3] -translate-x-1/2">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-[0_4px_16px_rgba(0,0,0,0.1)]">
+                    <svg className="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  </div>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
