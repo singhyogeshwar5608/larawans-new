@@ -7,7 +7,7 @@ import { SectionHeading } from "../section-heading";
 /** Unique neon accent per industry card — top bar color */
 const cardAccents = [
   "#7c5cff", "#00e0c6", "#ff4dd2", "#ffb14d", "#4dc4ff",
-  "#9dff5c", "#00e0ff", "#7c5cff", "#ff4dd2",
+  "#00e0ff", "#7c5cff", "#ff4dd2",
 ];
 
 export function Industries() {
@@ -19,7 +19,7 @@ export function Industries() {
           <SectionHeading
             eyebrow="Industries"
             title="Deep expertise across"
-            highlight="9 verticals"
+            highlight="8 verticals"
             description={undefined}
           />
         </div>

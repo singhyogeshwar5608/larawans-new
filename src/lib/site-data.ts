@@ -23,7 +23,7 @@ import {
   HeartPulse,
   Factory,
   Store,
-  Wheat,
+
   Truck,
   Building2,
   Banknote,
@@ -151,7 +151,6 @@ export const industries: Industry[] = [
   { name: "Healthcare", icon: HeartPulse, blurb: "HIPAA-ready EMR, telehealth & scheduling." },
   { name: "Manufacturing", icon: Factory, blurb: "MES, inventory & shop-floor analytics." },
   { name: "Retail", icon: Store, blurb: "Omnichannel POS, loyalty & merchandising." },
-  { name: "Agriculture", icon: Wheat, blurb: "Supply chain, traceability & IoT dashboards." },
   { name: "Logistics", icon: Truck, blurb: "Fleet, route optimisation & TMS platforms." },
   { name: "Real Estate", icon: Building2, blurb: "Listings, CRM & investor portals." },
   { name: "Finance", icon: Banknote, blurb: "Lending, fintech & compliance systems." },
