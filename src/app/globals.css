@@ -471,6 +471,16 @@ section { position: relative; }
 }
 
 /* ── Hero 3D SVG Wireframe (rotating rings + lines) ── */
+.wire-ring-1,
+.wire-ring-2,
+.wire-ring-3,
+.wire-ring-sm-1,
+.wire-ring-sm-2,
+.wire-ring-sm-3,
+.wire-lines {
+  transform-box: fill-box;
+  transform-origin: center;
+}
 .wire-ring-1 { animation: wire-rotate-1 14s linear infinite; }
 .wire-ring-2 { animation: wire-rotate-2 18s linear infinite; }
 .wire-ring-3 { animation: wire-rotate-3 22s linear infinite; }

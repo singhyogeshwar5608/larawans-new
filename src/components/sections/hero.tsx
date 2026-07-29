@@ -127,7 +127,7 @@ export function Hero() {
         <div className="wireframe-3d absolute right-[4%] top-1/2 h-[340px] w-[340px] -translate-y-1/2 sm:h-[440px] sm:w-[440px] lg:right-[10%] lg:h-[520px] lg:w-[520px]">
           <svg className="h-full w-full" viewBox="0 0 400 400" fill="none">
             {/* Ring 1 — violet, rotating */}
-            <g className="wire-ring-1" style={{ transformOrigin: "200px 200px" }}>
+            <g className="wire-ring-1">
               <ellipse cx="200" cy="200" rx="180" ry="70" stroke="#7c5cff" strokeWidth="1.2" opacity="0.7" />
               <ellipse cx="200" cy="200" rx="130" ry="50" stroke="#7c5cff" strokeWidth="0.8" opacity="0.4" />
               <circle cx="20" cy="200" r="4" fill="#7c5cff" opacity="0.9">
@@ -140,7 +140,7 @@ export function Hero() {
               <circle cx="200" cy="270" r="3" fill="#7c5cff" opacity="0.7" />
             </g>
             {/* Ring 2 — cyan, rotating */}
-            <g className="wire-ring-2" style={{ transformOrigin: "200px 200px" }}>
+            <g className="wire-ring-2">
               <ellipse cx="200" cy="200" rx="160" ry="80" stroke="#00e0c6" strokeWidth="1.2" opacity="0.6" />
               <ellipse cx="200" cy="200" rx="110" ry="55" stroke="#00e0c6" strokeWidth="0.6" opacity="0.3" />
               <circle cx="40" cy="200" r="4" fill="#00e0c6" opacity="0.9">
@@ -152,7 +152,7 @@ export function Hero() {
               <circle cx="200" cy="120" r="3" fill="#00e0c6" opacity="0.6" />
             </g>
             {/* Ring 3 — blue, rotating */}
-            <g className="wire-ring-3" style={{ transformOrigin: "200px 200px" }}>
+            <g className="wire-ring-3">
               <ellipse cx="200" cy="200" rx="140" ry="60" stroke="#4dc4ff" strokeWidth="1" opacity="0.5" />
               <circle cx="60" cy="200" r="3.5" fill="#4dc4ff" opacity="0.8">
                 <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3.5s" repeatCount="indefinite" />
@@ -182,7 +182,7 @@ export function Hero() {
         {/* Secondary wireframe — left bottom */}
         <div className="wireframe-3d-sm absolute bottom-[12%] left-[3%] hidden h-[200px] w-[200px] sm:block lg:left-[5%] lg:h-[240px] lg:w-[240px]">
           <svg className="h-full w-full" viewBox="0 0 200 200" fill="none">
-            <g className="wire-ring-sm-1" style={{ transformOrigin: "100px 100px" }}>
+            <g className="wire-ring-sm-1">
               <ellipse cx="100" cy="100" rx="90" ry="35" stroke="#7c5cff" strokeWidth="1" opacity="0.5" />
               <circle cx="10" cy="100" r="3" fill="#7c5cff" opacity="0.7">
                 <animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite" />
@@ -191,12 +191,12 @@ export function Hero() {
                 <animate attributeName="opacity" values="0.2;0.7;0.2" dur="3s" repeatCount="indefinite" />
               </circle>
             </g>
-            <g className="wire-ring-sm-2" style={{ transformOrigin: "100px 100px" }}>
+            <g className="wire-ring-sm-2">
               <ellipse cx="100" cy="100" rx="80" ry="40" stroke="#00e0c6" strokeWidth="0.8" opacity="0.4" />
               <circle cx="20" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
               <circle cx="180" cy="100" r="2.5" fill="#00e0c6" opacity="0.6" />
             </g>
-            <g className="wire-ring-sm-3" style={{ transformOrigin: "100px 100px" }}>
+            <g className="wire-ring-sm-3">
               <ellipse cx="100" cy="100" rx="70" ry="30" stroke="#4dc4ff" strokeWidth="0.6" opacity="0.3" />
             </g>
             <line x1="100" y1="30" x2="100" y2="170" stroke="#7c5cff" strokeWidth="0.4" strokeDasharray="3 5" opacity="0.2" />
