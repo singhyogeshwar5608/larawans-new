@@ -21,13 +21,13 @@ export default function Home() {
       <Hero />
       <TrustedCompanies />
       <Services />
-      <WhyLarawans />
       <Industries />
       <AISolutions />
       <DevelopmentProcess />
       <ProjectShowcase />
       <Portfolio />
       <TechStack />
+      <WhyLarawans />
       <Testimonials />
       <FAQ />
       <Contact />

@@ -50,7 +50,7 @@ export function WhyLarawans() {
           eyebrow="Why Larawans"
           title="The team behind"
           highlight="compounding outcomes"
-          description="We don't ship software and disappear. We become the engineering partner you rely on for the next decade — with the track record to prove it."
+          description={undefined}
         />
 
         {/* Animated stats */}
