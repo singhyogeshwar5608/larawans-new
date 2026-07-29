@@ -21,9 +21,9 @@ export default function Home() {
       <Hero />
       <TrustedCompanies />
       <Services />
+      <ProjectShowcase />
       <Industries />
       <AISolutions />
-      <ProjectShowcase />
       <Portfolio />
       <TechStack />
       <WhyLarawans />
