@@ -51,7 +51,7 @@ export function AISolutions() {
   }, [displayedText, wordIndex, isDeleting]);
 
   return (
-    <section id="ai-solutions" className="relative bg-[#f8f9fc] py-[40px] sm:py-[70px]">
+    <section id="ai-solutions" className="relative bg-[#f8f9fc] py-[40px] sm:py-[70px] overflow-x-hidden md:overflow-visible">
       {/* Light theme AI glow */}
       <div
         aria-hidden
