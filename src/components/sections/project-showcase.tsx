@@ -168,8 +168,8 @@ export function ProjectShowcase() {
               loop
               muted
               playsInline
-              controls
               className="block w-full"
+              style={{ height: "520px", objectFit: "cover", background: "transparent" }}
             />
           </motion.div>
         </div>
