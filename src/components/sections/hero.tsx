@@ -246,7 +246,8 @@ export function Hero() {
         >
           <span className="text-gradient-neon">AI-First Software</span>
           <br />
-          <span className="text-foreground">Development Company for </span>
+          <span className="text-foreground">Development Company for</span>
+          <br />
           {/* Typewriter rotating word */}
           <span className="relative inline-block text-left">
             <span className="inline-block text-gradient-aurora">{displayedText}</span>
