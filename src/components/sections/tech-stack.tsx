@@ -41,13 +41,13 @@ const ICON_MAP: Record<string, IconType> = {
 
 export function TechStack() {
   return (
-    <section id="tech-stack" className="relative py-24 sm:py-32">
+    <section id="tech-stack" className="relative pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Tech Stack"
           title="Built on the"
           highlight="right tools for the job"
-          description="We're polyglot engineers. We pick the stack based on your scale, team, and roadmap — not what we happened to learn first. Here's what's in our active rotation."
+          description={undefined}
         />
 
         <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7">
