@@ -34,24 +34,27 @@ const HIGHLIGHTS = [
 
 export function WhyLarawans() {
   return (
-    <section id="why-larawans" className="relative pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
-      {/* Soft glow background */}
+    <section id="why-larawans" className="relative bg-[#f8f9fc] pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
+      {/* Soft glow background — light theme */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-30 blur-[120px]"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-[120px]"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(124,92,255,0.4), transparent 70%)",
+            "radial-gradient(ellipse at center, rgba(124,92,255,0.12), transparent 70%)",
         }}
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="Why Larawans"
-          title="The team behind"
-          highlight="compounding outcomes"
-          description={undefined}
-        />
+        {/* Light-theme heading overrides */}
+        <div className="[&_.rounded-full]:border-neutral-200 [&_.rounded-full]:bg-white [&_.rounded-full]:text-neutral-500 [&_h2]:text-neutral-900 [&_p]:text-neutral-600">
+          <SectionHeading
+            eyebrow="Why Larawans"
+            title="The team behind"
+            highlight="compounding outcomes"
+            description={undefined}
+          />
+        </div>
 
         {/* Animated stats */}
         <div className="mt-16 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
@@ -66,7 +69,7 @@ export function WhyLarawans() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: i * 0.1,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-transparent p-6 text-center backdrop-blur sm:p-8"
+              className="group relative overflow-hidden rounded-3xl border border-neutral-200 bg-white p-6 text-center shadow-[0_2px_12px_rgba(0,0,0,0.06)] sm:p-8"
             >
               <div
                 aria-hidden
@@ -81,7 +84,7 @@ export function WhyLarawans() {
                   <Counter value={stat.value} suffix={stat.suffix} />
                 </span>
               </div>
-              <div className="mt-3 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              <div className="mt-3 text-sm font-medium uppercase tracking-[0.16em] text-neutral-500">
                 {stat.label}
               </div>
               <div
@@ -102,7 +105,7 @@ export function WhyLarawans() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: i * 0.08 }}
-              className="group relative rounded-3xl border border-white/[0.06] bg-white/[0.02] p-5 backdrop-blur transition-colors hover:border-white/15"
+              className="group relative rounded-3xl border border-neutral-200 bg-white p-5 shadow-[0_2px_12px_rgba(0,0,0,0.06)] transition-colors hover:border-neutral-300"
             >
               <div
                 className="mb-3 flex h-9 w-9 items-center justify-center rounded-xl text-base font-bold"
@@ -114,10 +117,10 @@ export function WhyLarawans() {
               >
                 {h.icon}
               </div>
-              <h4 className="font-display text-base font-semibold tracking-tight">
+              <h4 className="font-display text-base font-semibold tracking-tight text-neutral-800">
                 {h.title}
               </h4>
-              <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
+              <p className="mt-2 text-[13px] leading-relaxed text-neutral-500">
                 {h.body}
               </p>
             </motion.div>
