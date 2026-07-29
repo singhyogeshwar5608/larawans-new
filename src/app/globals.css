@@ -502,14 +502,14 @@ section { position: relative; }
   100% { transform: rotate(360deg); }
 }
 
-/* ── Industry Cards — bold colored tiles (separate from site theme) ── */
-.ind-card-tile {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+/* ── Industry Cards — flat dark style with colored top accent ── */
+.ind-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
 }
-.ind-card-tile:hover {
+.ind-card:hover {
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
 /* ── Project Showcase — Laptop float animation ── */
