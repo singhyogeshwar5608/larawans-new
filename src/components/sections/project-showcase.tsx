@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ExternalLink, Monitor } from "lucide-react";
+import { ExternalLink, Monitor, Play, Pause } from "lucide-react";
 import { SectionHeading } from "../section-heading";
 import { MagneticButton } from "../magnetic-button";
 
@@ -13,8 +13,8 @@ export type ShowcaseProject = {
   category: string;
   description: string;
   tags: string[];
-  accent: string; // tailwind gradient
-  screenshots: { src: string; alt: string }[];
+  accent: string;
+  video: string;
   stats: { value: string; label: string }[];
 };
 
@@ -28,14 +28,7 @@ const showcaseProjects: ShowcaseProject[] = [
       "End-to-end pollution monitoring and compliance management platform — real-time emissions tracking, customer lifecycle management, automated expiry alerts, and integrated payment processing for regulatory bodies.",
     tags: ["Laravel", "MySQL", "Real-time Dashboard"],
     accent: "linear-gradient(135deg, #7c5cff 0%, #00e0c6 100%)",
-    screenshots: [
-      { src: "/showcase/pollution-erp/pollution-login.PNG", alt: "Pollution ERP — Login Page" },
-      { src: "/showcase/pollution-erp/pollution-dashboard.PNG", alt: "Pollution ERP — Dashboard" },
-      { src: "/showcase/pollution-erp/pollution-customer.PNG", alt: "Pollution ERP — Customer Management" },
-      { src: "/showcase/pollution-erp/pollution-payments.PNG", alt: "Pollution ERP — Payments" },
-      { src: "/showcase/pollution-erp/pollution-expiry.PNG", alt: "Pollution ERP — Expiry Tracking" },
-      { src: "/showcase/pollution-erp/pollution-profile.PNG", alt: "Pollution ERP — Profile" },
-    ],
+    video: "/showcase/pollution-erp/pollution-erp.mp4",
     stats: [
       { value: "100+", label: "Clients Managed" },
       { value: "24/7", label: "Real-time Tracking" },
@@ -44,54 +37,34 @@ const showcaseProjects: ShowcaseProject[] = [
   },
 ];
 
-/* ── Slide Timer ── */
-const AUTO_SLIDE_MS = 4000;
-
 export function ProjectShowcase() {
   const [projectIndex, setProjectIndex] = useState(0);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const project = showcaseProjects[projectIndex];
-  const totalSlides = project.screenshots.length;
 
-  /* Auto-advance slides */
-  const advanceSlide = useCallback(() => {
-    setIsTransitioning(true);
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  /* Reset video when project changes */
+  const switchProject = (index: number) => {
+    setProjectIndex(index);
+    setIsPlaying(true);
     setTimeout(() => {
-      setSlideIndex((prev) => (prev + 1) % totalSlides);
-      setIsTransitioning(false);
-    }, 300);
-  }, [totalSlides]);
-
-  useEffect(() => {
-    timerRef.current = setInterval(advanceSlide, AUTO_SLIDE_MS);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [advanceSlide]);
-
-  /* Reset slide when project changes */
-  useEffect(() => {
-    setSlideIndex(0);
-  }, [projectIndex]);
-
-  const goNextSlide = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    advanceSlide();
-    timerRef.current = setInterval(advanceSlide, AUTO_SLIDE_MS);
-  }, [advanceSlide]);
-
-  const goPrevSlide = useCallback(() => {
-    if (timerRef.current) clearInterval(timerRef.current);
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setSlideIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-      setIsTransitioning(false);
-    }, 300);
-    timerRef.current = setInterval(advanceSlide, AUTO_SLIDE_MS);
-  }, [advanceSlide, totalSlides]);
+      if (videoRef.current) {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play();
+      }
+    }, 100);
+  };
 
   return (
     <section id="showcase" className="relative overflow-hidden bg-[#050614] py-24 sm:py-32">
@@ -192,7 +165,7 @@ export function ProjectShowcase() {
             </motion.div>
           </AnimatePresence>
 
-          {/* RIGHT: Laptop Mockup + Slideshow */}
+          {/* RIGHT: Laptop Mockup + Video */}
           <div className="relative flex items-center justify-center">
             {/* Glow behind laptop */}
             <div
@@ -206,101 +179,49 @@ export function ProjectShowcase() {
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="relative w-full max-w-[640px]"
+              className="relative w-full"
             >
               {/* ── Laptop Frame ── */}
-              <div className="showcase-laptop-float relative">
+              <div className="showcase-laptop-float relative mx-auto" style={{ maxWidth: "680px" }}>
                 {/* Laptop screen bezel */}
-                <div className="relative rounded-t-xl border-[3px] border-neutral-700/80 bg-neutral-800 shadow-[0_0_60px_rgba(124,92,255,0.15)]">
+                <div className="relative overflow-hidden rounded-t-[12px] border-[3px] border-b-0 border-neutral-700/80 bg-neutral-800 shadow-[0_0_60px_rgba(124,92,255,0.15)]">
                   {/* Top bar — camera dot */}
                   <div className="flex items-center justify-center py-1.5">
                     <div className="h-1 w-1 rounded-full bg-neutral-500" />
                   </div>
 
-                  {/* Screen area — screenshot slideshow */}
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0b1e]">
-                    {/* Screenshot slides */}
-                    <AnimatePresence mode="wait">
-                      <motion.img
-                        key={project.screenshots[slideIndex].src}
-                        src={project.screenshots[slideIndex].src}
-                        alt={project.screenshots[slideIndex].alt}
-                        initial={{ opacity: 0, scale: 1.08 }}
-                        animate={{
-                          opacity: isTransitioning ? 0 : 1,
-                          scale: isTransitioning ? 0.95 : 1,
-                        }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="absolute inset-0 h-full w-full object-cover object-top"
-                      />
-                    </AnimatePresence>
-
-                    {/* Ken Burns slow zoom overlay effect */}
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, rgba(0,0,0,0) 70%, rgba(5,6,20,0.4) 100%)",
-                      }}
+                  {/* Screen area — video */}
+                  <div className="relative w-full overflow-hidden bg-[#0a0b1e]">
+                    <video
+                      ref={videoRef}
+                      src={project.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="block w-full"
+                      style={{ aspectRatio: "16/10", objectFit: "cover" }}
                     />
 
-                    {/* Slide counter badge */}
-                    <div className="absolute bottom-3 left-3 rounded-full bg-black/60 px-2.5 py-1 text-[10px] font-medium text-white/80 backdrop-blur">
-                      {slideIndex + 1} / {totalSlides}
-                    </div>
+                    {/* Play/Pause overlay button */}
+                    <button
+                      onClick={togglePlay}
+                      className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white/80 backdrop-blur transition-all hover:bg-black/70 hover:text-white"
+                      aria-label={isPlaying ? "Pause video" : "Play video"}
+                    >
+                      {isPlaying ? (
+                        <Pause className="h-3.5 w-3.5" />
+                      ) : (
+                        <Play className="ml-0.5 h-3.5 w-3.5" />
+                      )}
+                    </button>
                   </div>
                 </div>
 
                 {/* Laptop base — bottom chin */}
-                <div className="mx-auto h-3 max-w-[85%] rounded-b-lg bg-gradient-to-b from-neutral-700 to-neutral-800" />
+                <div className="mx-auto h-3 max-w-[90%] rounded-b-xl bg-gradient-to-b from-neutral-700 to-neutral-800 border-x-[3px] border-b-[3px] border-neutral-700/80" />
                 {/* Laptop hinge */}
-                <div className="mx-auto h-1.5 max-w-[60%] rounded-b bg-neutral-600" />
-              </div>
-
-              {/* ── Slide Navigation ── */}
-              <div className="mt-6 flex items-center justify-center gap-4">
-                {/* Prev arrow */}
-                <button
-                  onClick={goPrevSlide}
-                  aria-label="Previous slide"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/60 backdrop-blur transition-all hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-
-                {/* Dots */}
-                <div className="flex items-center gap-2">
-                  {project.screenshots.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => {
-                        if (timerRef.current) clearInterval(timerRef.current);
-                        setIsTransitioning(true);
-                        setTimeout(() => {
-                          setSlideIndex(i);
-                          setIsTransitioning(false);
-                        }, 200);
-                        timerRef.current = setInterval(advanceSlide, AUTO_SLIDE_MS);
-                      }}
-                      aria-label={`Go to slide ${i + 1}`}
-                      className={`h-2 rounded-full transition-all duration-300 ${
-                        i === slideIndex
-                          ? "w-8 bg-[#00e0c6] shadow-[0_0_10px_rgba(0,224,198,0.5)]"
-                          : "w-2 bg-white/20 hover:bg-white/40"
-                      }`}
-                    />
-                  ))}
-                </div>
-
-                {/* Next arrow */}
-                <button
-                  onClick={goNextSlide}
-                  aria-label="Next slide"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/60 backdrop-blur transition-all hover:border-white/20 hover:bg-white/[0.08] hover:text-white"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+                <div className="mx-auto h-1.5 max-w-[50%] rounded-b bg-neutral-600" />
               </div>
             </motion.div>
           </div>
@@ -312,16 +233,16 @@ export function ProjectShowcase() {
             {showcaseProjects.map((p, i) => (
               <button
                 key={p.slug}
-                onClick={() => setProjectIndex(i)}
+                onClick={() => switchProject(i)}
                 className={`flex-shrink-0 overflow-hidden rounded-xl border-2 transition-all duration-300 ${
                   i === projectIndex
                     ? "border-[#00e0c6] shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                     : "border-white/10 hover:border-white/20"
                 }`}
               >
-                <img
-                  src={p.screenshots[0].src}
-                  alt={p.title}
+                <video
+                  src={p.video}
+                  muted
                   className="h-16 w-24 object-cover"
                 />
                 <div className="bg-white/[0.05] px-2 py-1 text-[10px] font-medium text-white/70">
