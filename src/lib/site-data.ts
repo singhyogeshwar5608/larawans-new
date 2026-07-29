@@ -341,7 +341,6 @@ export const techStack: TechItem[] = [
   { name: "Node.js", color: "#83CD29" },
   { name: "Python", color: "#3776AB" },
   { name: ".NET", color: "#512BD4" },
-  { name: "Docker", color: "#2496ED" },
   { name: "AWS", color: "#FF9900" },
   { name: "Azure", color: "#0078D4" },
   { name: "Firebase", color: "#FFCA28" },

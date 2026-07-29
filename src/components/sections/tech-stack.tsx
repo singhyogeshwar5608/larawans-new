@@ -10,7 +10,6 @@ import {
   SiNodedotjs,
   SiPython,
   SiDotnet,
-  SiDocker,
   SiFirebase,
   SiMysql,
   SiPostgresql,
@@ -31,7 +30,6 @@ const ICON_MAP: Record<string, IconType> = {
   "Node.js": SiNodedotjs,
   Python: SiPython,
   ".NET": SiDotnet,
-  Docker: SiDocker,
   AWS: Cloud,
   Azure: Server,
   Firebase: SiFirebase,
@@ -65,7 +63,7 @@ export function TechStack() {
                   delay: (i % 7) * 0.05,
                 }}
                 whileHover={{ y: -6, scale: 1.04 }}
-                className="group relative flex aspect-square flex-col items-center justify-center gap-3 overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-b from-white/[0.04] to-transparent p-5 backdrop-blur transition-colors hover:border-white/20 interactive"
+                className="tech-card group relative flex aspect-square flex-col items-center justify-center gap-3 overflow-hidden rounded-2xl border border-white/[0.07] bg-gradient-to-b from-white/[0.06] to-white/[0.01] p-5 backdrop-blur-sm transition-all duration-500 hover:border-white/20 hover:shadow-[0_8px_32px_-8px_rgba(124,92,255,0.2)] interactive"
               >
                 {/* Glow */}
                 <div
@@ -77,19 +75,19 @@ export function TechStack() {
                 />
 
                 <Icon
-                  className="h-9 w-9 opacity-80 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110"
+                  className="h-10 w-10 opacity-80 transition-all duration-500 group-hover:opacity-100 group-hover:scale-110 sm:h-11 sm:w-11"
                   style={{ color: t.color }}
                   strokeWidth={1.6}
                 />
-                <span className="font-display text-xs font-semibold tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+                <span className="font-display text-[11px] font-semibold tracking-wider uppercase text-muted-foreground transition-colors group-hover:text-foreground sm:text-xs">
                   {t.name}
                 </span>
 
                 {/* Bottom accent */}
                 <span
                   aria-hidden
-                  className="absolute inset-x-4 bottom-3 h-0.5 origin-center scale-x-0 rounded-full transition-transform duration-500 group-hover:scale-x-100"
-                  style={{ background: t.color }}
+                  className="absolute inset-x-3 bottom-2.5 h-[2px] origin-center scale-x-0 rounded-full transition-transform duration-500 group-hover:scale-x-100"
+                  style={{ background: `linear-gradient(90deg, ${t.color}, ${t.color}88)` }}
                 />
               </motion.div>
             );
