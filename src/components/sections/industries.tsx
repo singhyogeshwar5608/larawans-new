@@ -33,7 +33,7 @@ export function Industries() {
                 ease: [0.22, 1, 0.36, 1],
                 delay: (i % 3) * 0.1,
               }}
-              className="ind-card group relative flex flex-col overflow-hidden rounded-2xl bg-[#0e1029] transition-all duration-400 hover:scale-[1.03]"
+              className="ind-card group relative flex flex-col overflow-hidden rounded-2xl bg-[#0e1029] aspect-square transition-all duration-400 hover:scale-[1.03]"
               style={{
                 borderTop: `3px solid ${cardAccents[i]}`,
               }}
