@@ -6,6 +6,76 @@ import { ArrowRight, Cpu } from "lucide-react";
 import { aiSolutions } from "@/lib/site-data";
 import { MagneticButton } from "../magnetic-button";
 
+/* ── Custom SVG icons for each AI card ── */
+const AIIconMap: Record<string, React.FC<React.SVGProps<SVGSVGElement>>> = {
+  "AI Chatbots": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <rect x="8" y="6" width="32" height="24" rx="4" stroke="currentColor" strokeWidth="2" />
+      <path d="M16 32h16M24 32v6M18 38h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="18" cy="18" r="2.5" fill="currentColor" opacity="0.7" />
+      <circle cx="30" cy="18" r="2.5" fill="currentColor" opacity="0.7" />
+      <path d="M18 24c2 2 8 2 12 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  "AI Voice Agents": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path d="M14 24c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M10 24c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <path d="M18 24c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <rect x="22" y="26" width="4" height="10" rx="2" fill="currentColor" opacity="0.6" />
+      <circle cx="24" cy="38" r="2" fill="currentColor" />
+    </svg>
+  ),
+  "AI Automation": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <circle cx="24" cy="14" r="5" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="34" r="4" stroke="currentColor" strokeWidth="2" />
+      <circle cx="36" cy="34" r="4" stroke="currentColor" strokeWidth="2" />
+      <line x1="21" y1="18" x2="14" y2="31" stroke="currentColor" strokeWidth="2" />
+      <line x1="27" y1="18" x2="34" y2="31" stroke="currentColor" strokeWidth="2" />
+      <path d="M8 14l4 4M40 14l-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+      <circle cx="24" cy="14" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="34" r="1.5" fill="currentColor" />
+      <circle cx="36" cy="34" r="1.5" fill="currentColor" />
+    </svg>
+  ),
+  "AI Document Processing": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <rect x="10" y="6" width="24" height="34" rx="3" stroke="currentColor" strokeWidth="2" />
+      <path d="M34 14l6-2v28l-6 2V14z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <line x1="16" y1="16" x2="28" y2="16" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <line x1="16" y1="22" x2="28" y2="22" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <line x1="16" y1="28" x2="24" y2="28" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <path d="M18 6v-2h12v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <circle cx="37" cy="26" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M35 24l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+  "AI CRM": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <circle cx="24" cy="14" r="6" stroke="currentColor" strokeWidth="2" />
+      <circle cx="10" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+      <circle cx="38" cy="22" r="4" stroke="currentColor" strokeWidth="1.5" opacity="0.5" />
+      <path d="M18 22v4c0 4 6 8 6 8s6-4 6-8v-4" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <line x1="14" y1="24" x2="20" y2="22" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      <line x1="34" y1="24" x2="28" y2="22" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      <path d="M12 34c4 2 16 2 24 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.4" />
+      <circle cx="24" cy="14" r="2" fill="currentColor" opacity="0.5" />
+    </svg>
+  ),
+  "AI Customer Support": (props) => (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path d="M12 20c0-6.6 5.4-12 12-12s12 5.4 12 12v4c0 1.1-.9 2-2 2h-2v6c0 2.2-1.8 4-4 4h-8c-2.2 0-4-1.8-4-4v-6h-2c-1.1 0-2-.9-2-2v-4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M16 28v-8M32 28v-8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <circle cx="20" cy="22" r="2" fill="currentColor" opacity="0.7" />
+      <circle cx="28" cy="22" r="2" fill="currentColor" opacity="0.7" />
+      <path d="M22 26c0 1 1 1.5 2 1.5s2-.5 2-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.5" />
+      <circle cx="38" cy="14" r="5" stroke="currentColor" strokeWidth="1.5" opacity="0.6" />
+      <path d="M36 14h4M38 12v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+    </svg>
+  ),
+};
+
 /** AI solution titles jo typewrite honge */
 const ROTATING_WORDS = aiSolutions.map((s) => s.title);
 
@@ -77,7 +147,7 @@ export function AISolutions() {
             AI Solutions
           </motion.div>
 
-          {/* Heading */}
+          {/* Heading with typewriter */}
           <motion.h2
             initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -86,7 +156,11 @@ export function AISolutions() {
             className="font-display text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[3.4rem]"
           >
             AI Integration That{" "}
-            <span className="text-gradient-aurora">Actually Delivers</span>
+            <br className="hidden sm:block" />
+            <span className="relative inline-block text-left">
+              <span className="inline-block text-gradient-aurora">{displayedText}</span>
+              <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
+            </span>
           </motion.h2>
 
           {/* Description */}
@@ -121,8 +195,8 @@ export function AISolutions() {
               />
 
               <div className="relative">
-                <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-[#7c5cff]/30 to-[#00e0c6]/20">
-                  <sol.icon className="h-5.5 w-5.5 text-[#00e0c6]" strokeWidth={1.8} />
+                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-[#7c5cff]/30 to-[#00e0c6]/20">
+                  {(() => { const Icon = AIIconMap[sol.title]; return Icon ? <Icon className="h-7 w-7 text-[#00e0c6]" /> : null; })()}
                 </div>
 
                 <h3 className="font-display text-xl font-semibold tracking-tight">
