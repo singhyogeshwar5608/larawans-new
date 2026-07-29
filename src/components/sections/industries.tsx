@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import { industries } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
 
+/** Unique neon accent per industry card — top bar color */
+const cardAccents = [
+  "#7c5cff", "#00e0c6", "#ff4dd2", "#ffb14d", "#4dc4ff",
+  "#9dff5c", "#00e0ff", "#7c5cff", "#ff4dd2",
+];
+
 export function Industries() {
   return (
     <section id="industries" className="relative py-24 sm:py-32">
@@ -12,54 +18,72 @@ export function Industries() {
           eyebrow="Industries"
           title="Deep expertise across"
           highlight="9 verticals"
-          description="We don't write generic software. Every industry comes with its own regulations, workflows, and edge cases — and we've shipped production systems in all of them."
+          description={undefined}
         />
 
-        <div className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
           {industries.map((ind, i) => (
             <motion.div
               key={ind.name}
-              initial={{ opacity: 0, y: 28, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{
-                duration: 0.6,
+                duration: 0.55,
                 ease: [0.22, 1, 0.36, 1],
-                delay: (i % 3) * 0.08,
+                delay: (i % 3) * 0.1,
               }}
-              className="group relative overflow-hidden rounded-3xl border border-white/[0.07] bg-gradient-to-br from-white/[0.04] to-transparent p-6 backdrop-blur transition-all duration-500 hover:-translate-y-1 hover:border-[#7c5cff]/40 interactive sm:p-7"
+              className="ind-card group relative flex flex-col overflow-hidden rounded-2xl bg-[#0e1029] transition-all duration-400 hover:scale-[1.03]"
+              style={{
+                borderTop: `3px solid ${cardAccents[i]}`,
+              }}
             >
-              {/* Animated radial hover glow */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-50"
-                style={{
-                  background:
-                    "radial-gradient(circle,#7c5cff 0%,transparent 70%)",
-                }}
-              />
-
-              <div className="relative flex items-start justify-between">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-[#7c5cff]/20 to-[#00e0c6]/10 text-[#00e0c6] transition-all duration-500 group-hover:scale-110 group-hover:text-white">
-                  <ind.icon className="h-5.5 w-5.5" strokeWidth={1.8} />
-                </div>
-                <span className="font-mono text-[11px] text-muted-foreground/60">
-                  0{i + 1}
-                </span>
-              </div>
-
-              <h3 className="mt-5 font-display text-xl font-semibold tracking-tight">
-                {ind.name}
-              </h3>
-              <p className="mt-2 text-[13px] leading-relaxed text-muted-foreground">
-                {ind.blurb}
-              </p>
-
-              {/* Bottom accent line on hover */}
+              {/* Background number watermark */}
               <span
                 aria-hidden
-                className="absolute inset-x-0 bottom-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-[#7c5cff] to-[#00e0c6] transition-transform duration-500 group-hover:scale-x-100"
-              />
+                className="pointer-events-none absolute -right-3 -bottom-4 select-none font-display text-[7rem] font-black leading-none text-white/[0.03] transition-colors duration-400 group-hover:text-white/[0.06]"
+              >
+                0{i + 1}
+              </span>
+
+              {/* Content */}
+              <div className="relative flex flex-1 flex-col p-5 sm:p-6 lg:p-7">
+                {/* Icon */}
+                <div
+                  className="flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-400 sm:h-12 sm:w-12"
+                  style={{ backgroundColor: `${cardAccents[i]}15` }}
+                >
+                  <ind.icon
+                    className="h-5 w-5 sm:h-5.5 sm:w-5.5"
+                    strokeWidth={1.6}
+                    style={{ color: cardAccents[i] }}
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-foreground/95 sm:text-xl">
+                  {ind.name}
+                </h3>
+
+                {/* Blurb */}
+                <p className="mt-1.5 flex-1 text-[13px] leading-relaxed text-muted-foreground/70 sm:text-sm">
+                  {ind.blurb}
+                </p>
+
+                {/* Explore tag — bottom */}
+                <div className="mt-4 flex items-center gap-1.5 text-[12px] font-semibold uppercase tracking-wider text-muted-foreground/40 transition-colors duration-400 group-hover:text-muted-foreground/80">
+                  <span>Explore</span>
+                  <svg
+                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>

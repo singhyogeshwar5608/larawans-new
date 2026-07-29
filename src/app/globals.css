@@ -502,6 +502,16 @@ section { position: relative; }
   100% { transform: rotate(360deg); }
 }
 
+/* ── Industry Cards — flat minimal style (separate from glass) ── */
+.ind-card {
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+}
+.ind-card:hover {
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
 /* ── Project Showcase — Laptop float animation ── */
 .showcase-laptop-float {
   animation: laptop-float 6s ease-in-out infinite;
