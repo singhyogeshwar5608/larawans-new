@@ -1,20 +1,100 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { services } from "@/lib/site-data";
-import { SectionHeading } from "../section-heading";
+import { MagneticButton } from "../magnetic-button";
+
+/** Service titles jo typewrite honge */
+const ROTATING_WORDS = services.map((s) => s.title);
+
+const TYPING_SPEED = 70;
+const DELETING_SPEED = 40;
+const PAUSE_AFTER_TYPE = 1500;
+const PAUSE_AFTER_DELETE = 350;
 
 export function Services() {
+  const [displayedText, setDisplayedText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const currentWord = ROTATING_WORDS[wordIndex];
+
+    const tick = () => {
+      if (!isDeleting) {
+        if (displayedText.length < currentWord.length) {
+          setDisplayedText(currentWord.slice(0, displayedText.length + 1));
+          timeoutRef.current = setTimeout(tick, TYPING_SPEED + Math.random() * 30);
+        } else {
+          timeoutRef.current = setTimeout(() => setIsDeleting(true), PAUSE_AFTER_TYPE);
+        }
+      } else {
+        if (displayedText.length > 0) {
+          setDisplayedText(displayedText.slice(0, -1));
+          timeoutRef.current = setTimeout(tick, DELETING_SPEED);
+        } else {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
+          timeoutRef.current = setTimeout(tick, PAUSE_AFTER_DELETE);
+        }
+      }
+    };
+
+    timeoutRef.current = setTimeout(tick, isDeleting ? DELETING_SPEED : TYPING_SPEED);
+
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [displayedText, wordIndex, isDeleting]);
+
   return (
     <section id="services" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <SectionHeading
-          eyebrow="What We Do"
-          title="Full-stack services for"
-          highlight="AI-first businesses"
-          description="From AI agents to enterprise ERPs, mobile apps, and growth marketing — Larawans Digital is your single partner for everything digital, engineered to compound ROI over time."
-        />
+        {/* Custom heading with typewriter */}
+        <div className="flex flex-col items-center gap-5 text-center">
+          {/* Eyebrow */}
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-violet-200/80 backdrop-blur"
+          >
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#00e0c6] shadow-[0_0_10px_#00e0c6]" />
+            What We Do
+          </motion.div>
+
+          {/* Heading with typewriter */}
+          <motion.h2
+            initial={{ opacity: 0, y: 22, filter: "blur(8px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+            className="font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]"
+          >
+            Full-stack services for{" "}
+            <span className="relative inline-block text-left">
+              <span className="inline-block text-gradient-aurora">{displayedText}</span>
+              <span className="typewriter-cursor text-gradient-aurora" aria-hidden="true" />
+            </span>
+          </motion.h2>
+
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.18 }}
+            className="max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+          >
+            From AI agents to enterprise ERPs, mobile apps, and growth marketing — Larawans
+            Digital is your single partner for everything digital, engineered to compound ROI
+            over time.
+          </motion.p>
+        </div>
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {services.map((s, i) => (
