@@ -3,11 +3,19 @@
 import { motion } from "framer-motion";
 import { industries } from "@/lib/site-data";
 import { SectionHeading } from "../section-heading";
+import { ArrowUpRight } from "lucide-react";
 
-/** Unique neon accent per industry card — top bar color */
-const cardAccents = [
-  "#7c5cff", "#00e0c6", "#ff4dd2", "#ffb14d", "#4dc4ff",
-  "#9dff5c", "#00e0ff", "#7c5cff", "#ff4dd2",
+/** Bold warm/bright gradients — completely different from site's dark neon theme */
+const cardBgs = [
+  "linear-gradient(135deg, #ff6b6b, #ee5a24)",
+  "linear-gradient(135deg, #00b894, #00cec9)",
+  "linear-gradient(135deg, #6c5ce7, #a855f7)",
+  "linear-gradient(135deg, #f9a825, #ff9f43)",
+  "linear-gradient(135deg, #74b9ff, #0984e3)",
+  "linear-gradient(135deg, #55efc4, #00b894)",
+  "linear-gradient(135deg, #fd79a8, #e84393)",
+  "linear-gradient(135deg, #5f27cd, #7c5cff)",
+  "linear-gradient(135deg, #a8e063, #56ab2f)",
 ];
 
 export function Industries() {
@@ -21,67 +29,45 @@ export function Industries() {
           description={undefined}
         />
 
-        <div className="mt-16 grid grid-cols-2 place-items-center gap-3 sm:gap-4 lg:grid-cols-3 lg:gap-5">
+        {/* Flex-wrap layout — centered rows, fills available space */}
+        <div className="mt-16 flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-4">
           {industries.map((ind, i) => (
             <motion.div
               key={ind.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 28, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{
-                duration: 0.55,
+                duration: 0.5,
                 ease: [0.22, 1, 0.36, 1],
-                delay: (i % 3) * 0.1,
+                delay: (i % 5) * 0.07,
               }}
-              className="ind-card group relative flex w-full max-w-[155px] flex-col overflow-hidden rounded-lg bg-[#0e1029] aspect-square transition-all duration-400 hover:scale-[1.03] sm:max-w-[175px] lg:max-w-[190px]"
-              style={{
-                borderTop: `3px solid ${cardAccents[i]}`,
-              }}
+              className="ind-card-tile group relative flex aspect-square w-[105px] cursor-pointer flex-col justify-between overflow-hidden rounded-2xl p-3.5 shadow-lg transition-all duration-400 hover:shadow-2xl hover:scale-[1.05] sm:w-[125px] sm:p-4 md:w-[140px] lg:w-[150px]"
+              style={{ background: cardBgs[i] }}
             >
-              {/* Background number watermark */}
+              {/* Large faded number in background */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute -right-2 -bottom-2 select-none font-display text-[4rem] font-black leading-none text-white/[0.03] transition-colors duration-400 group-hover:text-white/[0.06]"
+                className="pointer-events-none absolute -bottom-2 -right-1 select-none font-display text-[3.5rem] font-black leading-none text-white/10 transition-all duration-400 group-hover:text-white/20 sm:text-[4rem]"
               >
                 0{i + 1}
               </span>
 
-              {/* Content */}
-              <div className="relative flex flex-col gap-1 p-3 sm:p-3.5">
-                {/* Icon */}
-                <div
-                  className="flex h-8 w-8 items-center justify-center rounded-md transition-all duration-400 sm:h-9 sm:w-9"
-                  style={{ backgroundColor: `${cardAccents[i]}15` }}
-                >
-                  <ind.icon
-                    className="h-3.5 w-3.5 sm:h-4 sm:w-4"
-                    strokeWidth={1.6}
-                    style={{ color: cardAccents[i] }}
-                  />
-                </div>
+              {/* Top — Icon */}
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/30 group-hover:scale-110 sm:h-9 sm:w-9">
+                <ind.icon className="h-4 w-4 text-white sm:h-[18px] sm:w-[18px]" strokeWidth={2} />
+              </div>
 
-                {/* Title */}
-                <h3 className="font-display text-[13px] font-bold tracking-tight text-foreground/95 sm:text-sm">
+              {/* Bottom — Title + Arrow */}
+              <div className="relative flex flex-col gap-1.5">
+                <h3 className="font-display text-[12px] font-bold leading-tight tracking-tight text-white sm:text-[13px]">
                   {ind.name}
                 </h3>
-
-                {/* Blurb */}
-                <p className="text-[11px] leading-snug text-muted-foreground/50 sm:text-[12px]">
-                  {ind.blurb}
-                </p>
-
-                {/* Explore tag — bottom */}
-                <div className="mt-auto flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/40 transition-colors duration-400 group-hover:text-muted-foreground/80">
-                  <span>Explore</span>
-                  <svg
-                    className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
+                <div className="flex items-center gap-1 opacity-0 transition-all duration-300 group-hover:opacity-100">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-white/80">
+                    Explore
+                  </span>
+                  <ArrowUpRight className="h-3 w-3 text-white/80 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </div>
               </div>
             </motion.div>
