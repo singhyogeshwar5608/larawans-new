@@ -153,23 +153,46 @@ export function ProjectShowcase() {
             </motion.div>
           </AnimatePresence>
 
-          {/* RIGHT: Video */}
+          {/* RIGHT: Desktop Monitor + Video */}
           <motion.div
             initial={{ opacity: 0, y: 40, scale: 0.95 }}
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full"
+            className="relative mx-auto w-full"
+            style={{ maxWidth: "720px" }}
           >
-            <video
-              ref={videoRef}
-              src={project.video}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="block w-full"
-            />
+            {/* Monitor body — thin bezel, NO overflow hidden */}
+            <div className="relative rounded-lg border-[4px] border-neutral-700/70 bg-neutral-800">
+              {/* Top bar — webcam dot + status dots */}
+              <div className="flex items-center justify-center gap-2 py-1.5">
+                <div className="h-[3px] w-[3px] rounded-full bg-neutral-500/80" />
+                <div className="flex items-center gap-1">
+                  <div className="h-[3px] w-[3px] rounded-full bg-neutral-500/50" />
+                  <div className="h-[3px] w-[3px] rounded-full bg-neutral-500/50" />
+                  <div className="h-[3px] w-[3px] rounded-full bg-neutral-500/50" />
+                </div>
+              </div>
+
+              {/* Screen — video sits directly, no cropping */}
+              <div className="px-1.5 pb-1.5">
+                <video
+                  ref={videoRef}
+                  src={project.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="block w-full rounded-sm"
+                />
+              </div>
+            </div>
+
+            {/* Monitor stand — neck */}
+            <div className="mx-auto h-8 w-20 bg-gradient-to-b from-neutral-700 to-neutral-800" />
+
+            {/* Monitor stand — base */}
+            <div className="mx-auto h-2 w-36 rounded-b-lg bg-neutral-700/80" />
           </motion.div>
         </div>
 
