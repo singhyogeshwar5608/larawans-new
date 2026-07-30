@@ -3,6 +3,15 @@
 import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Monitor } from "lucide-react";
+import {
+  SiLaravel,
+  SiMysql,
+  SiReact,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiRedis,
+  SiStripe,
+} from "react-icons/si";
 import { SectionHeading } from "../section-heading";
 import { MagneticButton } from "../magnetic-button";
 
@@ -19,6 +28,26 @@ export type ShowcaseProject = {
 };
 
 /* ── Data ── */
+const SHOWCASE_ICON_MAP: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  Laravel: SiLaravel,
+  MySQL: SiMysql,
+  React: SiReact,
+  "Tailwind CSS": SiTailwindcss,
+  "Node.js": SiNodedotjs,
+  Redis: SiRedis,
+  Stripe: SiStripe,
+};
+
+const SHOWCASE_ICON_COLORS: Record<string, string> = {
+  Laravel: "#FF2D20",
+  MySQL: "#4479A1",
+  React: "#61DAFB",
+  "Tailwind CSS": "#06B6D4",
+  "Node.js": "#83CD29",
+  Redis: "#DC382D",
+  Stripe: "#635BFF",
+};
+
 const showcaseProjects: ShowcaseProject[] = [
   {
     slug: "pollution-erp",
@@ -27,6 +56,7 @@ const showcaseProjects: ShowcaseProject[] = [
     description:
       "End-to-end pollution monitoring and compliance management platform — real-time emissions tracking, customer lifecycle management, automated expiry alerts, and integrated payment processing for regulatory bodies.",
     tags: ["Laravel", "MySQL", "Real-time Dashboard"],
+    iconTags: ["Laravel", "MySQL", "React"],
     accent: "linear-gradient(135deg, #7c5cff 0%, #00e0c6 100%)",
     video: "/showcase/pollution-erp/pollution-erp.mp4",
     stats: [
@@ -37,8 +67,11 @@ const showcaseProjects: ShowcaseProject[] = [
   },
 ];
 
+const TABS = ["Laravel", "MySQL", "React", "Tailwind CSS", "Node.js", "Redis", "Stripe"];
+
 export function ProjectShowcase() {
   const [projectIndex, setProjectIndex] = useState(0);
+  const [activeTab, setActiveTab] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const project = showcaseProjects[projectIndex];
@@ -108,18 +141,39 @@ export function ProjectShowcase() {
                 {project.description}
               </p>
 
-              {/* Tech tags */}
-              <div className="mt-6 flex flex-wrap gap-2">
-                {project.tags.map((tag, i) => (
-                  <motion.span
-                    key={tag}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.1, duration: 0.4 }}
-                    className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-medium uppercase tracking-wider text-white/60"
+              {/* Tech stack icons */}
+              <div className="mt-6 flex flex-wrap gap-3">
+                {(project.iconTags || []).map((tag, i) => {
+                  const IconComp = SHOWCASE_ICON_MAP[tag];
+                  const color = SHOWCASE_ICON_COLORS[tag] || "#7c5cff";
+                  return (
+                    <motion.div
+                      key={tag}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: i * 0.1, duration: 0.4 }}
+                      className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] backdrop-blur"
+                    >
+                      {IconComp && <IconComp className="h-5 w-5" style={{ color }} />}
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Tech tabs */}
+              <div className="mt-3 flex flex-wrap gap-2">
+                {TABS.map((tab, i) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(i)}
+                    className={`rounded-full border px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-wider transition-all duration-300 ${
+                      activeTab === i
+                        ? "border-[#00e0c6]/40 bg-[#00e0c6]/10 text-[#00e0c6] shadow-[0_0_12px_rgba(0,224,198,0.15)]"
+                        : "border-white/10 bg-white/[0.04] text-white/50 hover:border-white/20 hover:text-white/70"
+                    }`}
                   >
-                    {tag}
-                  </motion.span>
+                    {tab}
+                  </button>
                 ))}
               </div>
 
