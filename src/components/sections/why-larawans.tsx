@@ -60,23 +60,21 @@ export function WhyLarawans() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
               className="group relative mx-auto w-full max-w-[260px]"
             >
-              {/* Colorful square behind card */}
+              {/* Colorful diamond (rotated square) behind card — only corners peek out */}
               <div
                 aria-hidden
-                className="absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-80"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70 transition-opacity duration-500 group-hover:opacity-90"
                 style={{
                   background: member.blobColor,
-                  borderRadius: "0px",
-                  top: "-8%",
-                  left: "-6%",
-                  right: "-6%",
-                  bottom: "-8%",
-                  transform: `rotate(${i === 0 ? "-8deg" : i === 2 ? "8deg" : "0deg"})`,
+                  borderRadius: "4px",
+                  width: "110%",
+                  height: "110%",
+                  transform: `translate(-50%, -50%) rotate(45deg)`,
                 }}
               />
 
               {/* White card */}
-              <div className="relative z-[1] flex min-h-[420px] flex-col rounded-2xl bg-white p-5 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-6 sm:pt-[80px] sm:min-h-[460px]">
+              <div className="relative z-[1] flex min-h-[340px] flex-col rounded-2xl bg-white p-5 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-6 sm:pt-[80px] sm:min-h-[380px]">
                 {/* Avatar — overlaps top edge */}
                 <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-1/2">
                   <div
