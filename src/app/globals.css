@@ -595,39 +595,28 @@ section { position: relative; }
   100% { transform: translateX(100%); }
 }
 
-/* ── Courses Section — Animations ── */
+/* ── Courses Section — Compact Animations ── */
 .course-fade-up {
   opacity: 0;
-  transform: translateY(24px);
-  animation: course-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(20px);
+  animation: course-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.course-panel {
+.course-pill {
   opacity: 0;
-  transform: translateY(30px);
-  animation: course-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(16px);
+  animation: course-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.course-topic {
-  opacity: 0;
-  transform: translateX(-12px);
-  animation: course-topic-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.course-pill:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.12), 0 0 0 1px rgba(245, 158, 11, 0.1);
 }
 
-.course-divider {
-  transform: scaleX(0);
-  animation: course-divider-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: 0.2s;
+.course-pill:hover .ml-auto {
+  color: #F59E0B;
 }
 
 @keyframes course-fade-up {
   to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes course-topic-in {
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes course-divider-in {
-  to { transform: scaleX(1); }
 }
