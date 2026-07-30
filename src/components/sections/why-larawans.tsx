@@ -67,9 +67,9 @@ export function WhyLarawans() {
                 style={{
                   background: member.blobColor,
                   borderRadius: "28px",
-                  width: "calc(100% + 28px)",
-                  height: "calc(100% + 28px)",
-                  transform: "translate(-50%, -50%) rotate(18deg)",
+                  width: "100%",
+                  height: "100%",
+                  transform: "translate(-50%, -50%) rotate(11deg)",
                 }}
               />
 
