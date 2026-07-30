@@ -125,19 +125,19 @@ export function ProjectShowcase() {
             >
               {/* Category badge */}
               <span
-                className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-violet-200/70 backdrop-blur"
+                className="mb-4 mx-auto sm:mx-0 inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-violet-200/70 backdrop-blur"
               >
                 <Monitor className="h-3 w-3 text-[#00e0c6]" />
                 {project.category}
               </span>
 
               {/* Title */}
-              <h3 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-[2.8rem]">
+              <h3 className="text-center font-display text-3xl font-bold tracking-tight text-foreground sm:text-left sm:text-4xl lg:text-[2.8rem]">
                 {project.title}
               </h3>
 
               {/* Description */}
-              <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+              <p className="mt-4 mx-auto max-w-lg text-center text-[15px] leading-relaxed text-muted-foreground sm:mx-0 sm:text-left">
                 {project.description}
               </p>
 
