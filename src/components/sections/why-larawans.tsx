@@ -9,12 +9,14 @@ const TEAM_MEMBERS = [
     role: "Creative Director",
     bio: "Crafting visual identities and user experiences that connect brands with their audience on an emotional level.",
     blobColor: "#0EA5E9",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face",
   },
   {
     name: "Sophia Bach",
     role: "Lead Engineer",
     bio: "Architecting scalable systems with clean code and modern frameworks that power enterprise-grade applications.",
     blobColor: "#22C55E",
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
     featured: true,
   },
   {
@@ -22,6 +24,7 @@ const TEAM_MEMBERS = [
     role: "Product Strategist",
     bio: "Turning complex business requirements into intuitive product roadmaps that drive measurable growth outcomes.",
     blobColor: "#14B8A6",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face",
   },
 ];
 
@@ -74,17 +77,17 @@ export function WhyLarawans() {
               />
 
               {/* White card */}
-              <div className="relative z-[1] flex min-h-[340px] flex-col rounded-2xl bg-white p-5 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-6 sm:pt-[80px] sm:min-h-[380px]">
+              <div className="relative z-[1] flex min-h-[280px] flex-col rounded-2xl bg-white p-5 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-6 sm:pt-[80px] sm:min-h-[320px]">
                 {/* Avatar — overlaps top edge */}
                 <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-1/2">
                   <div
-                    className="flex h-[100px] w-[100px] items-center justify-center rounded-full border-[3px] border-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
-                    style={{ background: `linear-gradient(145deg, ${member.blobColor}40, ${member.blobColor}20)` }}
+                    className="h-[100px] w-[100px] overflow-hidden rounded-full border-[3px] border-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
                   >
-                    <svg className="h-10 w-10" viewBox="0 0 48 48" fill="none">
-                      <circle cx="24" cy="18" r="8" fill={member.blobColor} opacity="0.8" />
-                      <path d="M8 42c0-8.8 7.2-16 16-16s16 7.2 16 16" fill={member.blobColor} opacity="0.5" />
-                    </svg>
+                    <img
+                      src={member.avatar}
+                      alt={member.name}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                 </div>
 
