@@ -60,16 +60,16 @@ export function WhyLarawans() {
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: i * 0.1 }}
               className="group relative mx-auto w-full max-w-[260px]"
             >
-              {/* Colorful diamond (rotated square) behind card — only corners peek out */}
+              {/* Colorful rounded square rotated 45° — only curved corners peek out */}
               <div
                 aria-hidden
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-70 transition-opacity duration-500 group-hover:opacity-90"
+                className="absolute left-1/2 top-1/2 opacity-80 transition-opacity duration-500 group-hover:opacity-100"
                 style={{
                   background: member.blobColor,
-                  borderRadius: "4px",
-                  width: "110%",
-                  height: "110%",
-                  transform: `translate(-50%, -50%) rotate(45deg)`,
+                  borderRadius: "28px",
+                  width: "calc(100% + 28px)",
+                  height: "calc(100% + 28px)",
+                  transform: "translate(-50%, -50%) rotate(45deg)",
                 }}
               />
 
