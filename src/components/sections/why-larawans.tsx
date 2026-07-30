@@ -30,7 +30,7 @@ const TEAM_MEMBERS = [
 
 export function WhyLarawans() {
   return (
-    <section id="why-larawans" className="relative bg-[#f8f9fc] pt-24 sm:pt-32 pb-[30px] sm:pb-[50px]">
+    <section id="why-larawans" className="relative bg-[#f8f9fc] pt-[30px] sm:pt-32 pb-[30px] sm:pb-[50px]">
       {/* Soft glow background — light theme */}
       <div
         aria-hidden
@@ -53,7 +53,7 @@ export function WhyLarawans() {
         </div>
 
         {/* Team member profile cards */}
-        <div className="mt-[82px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-[82px] grid grid-cols-1 gap-[82px] sm:gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM_MEMBERS.map((member, i) => (
             <motion.div
               key={member.name}
