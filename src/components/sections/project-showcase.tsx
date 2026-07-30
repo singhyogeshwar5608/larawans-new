@@ -67,7 +67,15 @@ const showcaseProjects: ShowcaseProject[] = [
   },
 ];
 
-const TABS = ["Laravel", "MySQL", "React", "Tailwind CSS", "Node.js", "Redis", "Stripe"];
+const TABS = [
+  { label: "Laravel", color: "#FF2D20" },
+  { label: "MySQL", color: "#4479A1" },
+  { label: "React", color: "#61DAFB" },
+  { label: "Tailwind CSS", color: "#06B6D4" },
+  { label: "Node.js", color: "#83CD29" },
+  { label: "Redis", color: "#DC382D" },
+  { label: "Stripe", color: "#635BFF" },
+];
 
 export function ProjectShowcase() {
   const [projectIndex, setProjectIndex] = useState(0);
@@ -164,19 +172,23 @@ export function ProjectShowcase() {
               <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
                 {TABS.map((tab, i) => (
                   <button
-                    key={tab}
+                    key={tab.label}
                     onClick={() => setActiveTab(i)}
                     className={`group relative overflow-hidden rounded-full border px-4 py-1.5 text-[11px] font-medium uppercase tracking-wider transition-all duration-300 ${
                       activeTab === i
-                        ? "border-[#00e0c6]/50 bg-gradient-to-r from-[#00e0c6]/15 to-[#7c5cff]/15 text-[#00e0c6] shadow-[0_0_16px_rgba(0,224,198,0.2),inset_0_0_12px_rgba(0,224,198,0.05)]"
-                        : "border-white/10 bg-white/[0.04] text-white/40 hover:border-white/20 hover:bg-white/[0.08] hover:text-white/70"
+                        ? `border-[${tab.color}]/60 shadow-[0_0_16px_${tab.color}33,inset_0_0_12px_${tab.color}15]`
+                        : `border-white/10 hover:border-white/20`
                     }`}
+                    style={{
+                      background: activeTab === i
+                        ? `linear-gradient(135deg, ${tab.color}20, ${tab.color}08)`
+                        : `${tab.color}10`,
+                      color: activeTab === i ? tab.color : `${tab.color}99`,
+                    }}
                   >
-                    {/* shimmer effect on active */}
-                    {activeTab === i && (
-                      <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                    )}
-                    <span className="relative">{tab}</span>
+                    {/* shimmer effect on all tabs */}
+                    <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/[0.07] to-transparent" />
+                    <span className="relative">{tab.label}</span>
                   </button>
                 ))}
               </div>
