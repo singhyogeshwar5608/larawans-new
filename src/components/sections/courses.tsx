@@ -134,7 +134,7 @@ function useCounter(target: number, duration = 1400, start = false) {
   return count;
 }
 
-/* ── Course Card ── */
+/* ── Course Card (Compact) ── */
 function CourseCard({ course, index, inView }: {
   course: typeof COURSES[number];
   index: number;
@@ -143,100 +143,82 @@ function CourseCard({ course, index, inView }: {
   const Icon = course.icon;
   return (
     <div
-      className="course-card group relative rounded-2xl border p-5 transition-all duration-500 hover:-translate-y-2 sm:p-6"
+      className="course-card group relative flex items-center gap-3.5 rounded-xl border px-4 py-3.5 transition-all duration-500 hover:-translate-y-1 sm:gap-4 sm:px-5 sm:py-4"
       style={{
         background: "#FFFFFF",
         borderColor: "rgba(0,0,0,0.06)",
-        boxShadow: `0 4px 20px rgba(0,0,0,0.03)`,
-        animationDelay: `${0.2 + index * 0.1}s`,
+        boxShadow: `0 2px 12px rgba(0,0,0,0.03)`,
+        animationDelay: `${0.2 + index * 0.08}s`,
       }}
     >
       {/* Shimmer sweep on hover */}
-      <div className="course-card-shimmer absolute inset-0 rounded-2xl overflow-hidden pointer-events-none" aria-hidden>
+      <div className="course-card-shimmer absolute inset-0 rounded-xl overflow-hidden pointer-events-none" aria-hidden>
         <div className="course-shimmer-bar absolute inset-0" />
       </div>
 
-      {/* Top row: icon + badges */}
-      <div className="relative flex items-start justify-between">
-        {/* Icon */}
-        <div
-          className="flex h-12 w-12 items-center justify-center rounded-xl shadow-lg transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-          style={{ background: course.gradient }}
-        >
-          <Icon className="h-6 w-6 text-white" />
-        </div>
+      {/* Icon */}
+      <div
+        className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-lg shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
+        style={{ background: course.gradient }}
+      >
+        <Icon className="h-5 w-5 text-white" />
+      </div>
 
-        {/* Badges */}
+      {/* Content */}
+      <div className="relative min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span
-            className="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider"
-            style={{ background: course.tagColor, color: course.tagText }}
+          <h3
+            className="text-[14px] font-bold leading-snug sm:text-[15px]"
+            style={{ color: "#1A1A2E" }}
           >
-            {course.level}
+            {course.title}
+          </h3>
+        </div>
+        <div className="mt-1 flex items-center gap-2">
+          <span
+            className="text-[10px] font-semibold uppercase tracking-[0.12em]"
+            style={{ color: course.accent }}
+          >
+            {course.category}
           </span>
-          <span
-            className="flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wider"
-            style={{ background: "rgba(0,0,0,0.04)", color: "#6B7280" }}
-          >
+          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+          <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
             <Clock className="h-2.5 w-2.5" />
             {course.duration}
           </span>
+          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+          <span className="text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
+            {course.modules} Modules
+          </span>
+        </div>
+        {/* Topics inline */}
+        <div className="mt-2 flex flex-wrap gap-1">
+          {course.topics.slice(0, 3).map((topic) => (
+            <span
+              key={topic}
+              className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-medium"
+              style={{ background: course.tagColor, color: course.tagText }}
+            >
+              <CheckCircle2 className="h-2 w-2" />
+              {topic}
+            </span>
+          ))}
         </div>
       </div>
 
-      {/* Title */}
-      <h3
-        className="relative mt-4 text-[17px] font-bold leading-snug sm:text-lg"
-        style={{ color: "#1A1A2E" }}
+      {/* Enroll button */}
+      <button
+        className="course-enroll-btn group/btn relative shrink-0 flex items-center gap-1 rounded-lg px-3 py-2 text-[11px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+        style={{ background: course.gradient }}
       >
-        {course.title}
-      </h3>
-
-      {/* Category */}
-      <span
-        className="relative mt-1 block text-[11px] font-semibold uppercase tracking-[0.14em]"
-        style={{ color: course.accent }}
-      >
-        {course.category}
-      </span>
-
-      {/* Description */}
-      <p className="relative mt-2.5 text-[13px] leading-relaxed" style={{ color: "#6B7280" }}>
-        {course.description}
-      </p>
-
-      {/* Topics preview */}
-      <div className="relative mt-4 flex flex-wrap gap-1.5">
-        {course.topics.map((topic) => (
-          <span
-            key={topic}
-            className="inline-flex items-center gap-1 rounded-lg px-2.5 py-1 text-[11px] font-medium transition-colors duration-300"
-            style={{ background: "rgba(0,0,0,0.03)", color: "#4B5563" }}
-          >
-            <CheckCircle2 className="h-3 w-3" style={{ color: course.accent }} />
-            {topic}
-          </span>
-        ))}
-      </div>
-
-      {/* Modules count */}
-      <div className="relative mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: "rgba(0,0,0,0.05)" }}>
-        <span className="text-[11px] font-medium" style={{ color: "#9CA3AF" }}>
-          {course.modules} Modules
-        </span>
-        <button
-          className="course-enroll-btn group/btn flex items-center gap-1.5 rounded-xl px-4 py-2 text-[12px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
-          style={{ background: course.gradient }}
-        >
-          Enroll Now
-          <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover/btn:translate-x-1" />
-        </button>
-      </div>
+        Enroll
+        <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
+      </button>
 
       {/* Glow on hover */}
       <div
-        className="course-card-glow pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ boxShadow: `0 12px 40px ${course.glow}, inset 0 0 0 1px ${course.glow}` }}
+        className="course-card-glow pointer-events-none absolute inset-0 rounded-xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{ boxShadow: `0 8px 28px ${course.glow}` }}
         aria-hidden
       />
     </div>
@@ -325,7 +307,7 @@ export function Courses() {
         </div>
 
         {/* ── Course Cards Grid ── */}
-        <div className="mt-12 grid grid-cols-1 gap-5 sm:mt-14 sm:grid-cols-2 lg:gap-6">
+        <div className="mt-12 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 lg:gap-4">
           {COURSES.map((course, i) => (
             <CourseCard key={course.title} course={course} index={i} inView={inView} />
           ))}
