@@ -25,11 +25,13 @@ const COURSES = [
     title: "Web Development",
     subtitle: "Laravel · React · Next.js",
     category: "Full-Stack Engineering",
-    description: "From backend architecture to frontend interfaces — master the complete web stack.",
-    topics: ["Advanced Eloquent", "React Patterns", "RESTful APIs", "Streaming SSR", "State Management"],
+    description: "Learn to build complete websites from scratch — backend logic with Laravel, modern UI with React, and fast apps with Next.js.",
+    outcome: "Ship your own portfolio site by week 4",
+    topics: ["Eloquent ORM", "React Patterns", "RESTful APIs", "Streaming SSR"],
     duration: "16 Weeks",
     level: "All Levels",
     modules: 50,
+    students: "2,400+",
     icon: Code2,
     gradient: "linear-gradient(135deg, #F59E0B, #F97316)",
     glow: "rgba(245, 158, 11, 0.15)",
@@ -42,11 +44,13 @@ const COURSES = [
     title: "AI Integration",
     subtitle: "LLMs · RAG · Agents",
     category: "Artificial Intelligence",
-    description: "Embed intelligence into any app — orchestrate LLMs, build RAG pipelines, and ship AI agents.",
+    description: "Add AI powers to any app — connect ChatGPT, build smart search, and create chatbots that actually understand users.",
+    outcome: "Deploy a working AI chatbot by course end",
     topics: ["LLM APIs & Prompts", "RAG Pipelines", "AI Chatbots", "Automation"],
     duration: "10 Weeks",
     level: "All Levels",
     modules: 30,
+    students: "1,800+",
     icon: BrainCircuit,
     gradient: "linear-gradient(135deg, #0D9488, #06B6D4)",
     glow: "rgba(13, 148, 136, 0.15)",
@@ -59,11 +63,13 @@ const COURSES = [
     title: "Digital Marketing",
     subtitle: "SEO · Analytics · Growth",
     category: "Marketing & Growth",
-    description: "Data-driven marketing strategies — SEO, paid campaigns, analytics, and conversion optimization.",
-    topics: ["SEO Mastery", "Google Analytics", "Social Media Ads", "Content Strategy", "CRO"],
+    description: "Master online marketing from zero — rank on Google, run ad campaigns, read analytics, and grow real business traffic.",
+    outcome: "Run live campaigns with real ad spend",
+    topics: ["SEO Mastery", "Google Analytics", "Social Media Ads", "Content Strategy"],
     duration: "8 Weeks",
-    level: "Beginner",
+    level: "Beginner Friendly",
     modules: 22,
+    students: "1,200+",
     icon: Megaphone,
     gradient: "linear-gradient(135deg, #EC4899, #F472B6)",
     glow: "rgba(236, 72, 153, 0.15)",
@@ -76,11 +82,13 @@ const COURSES = [
     title: "DevOps & Cloud",
     subtitle: "Docker · CI/CD · AWS",
     category: "Infrastructure",
-    description: "CI/CD pipelines, containers, cloud architecture — ship with confidence and automate everything.",
+    description: "Stop guessing deployments — learn Docker, set up auto-deploy pipelines, and host apps on AWS like a pro.",
+    outcome: "Go live with your own cloud setup by week 5",
     topics: ["Docker", "GitHub Actions", "AWS / GCP", "Monitoring"],
     duration: "6 Weeks",
-    level: "Beginner",
+    level: "Beginner Friendly",
     modules: 18,
+    students: "900+",
     icon: Server,
     gradient: "linear-gradient(135deg, #EF4444, #F97316)",
     glow: "rgba(239, 68, 68, 0.15)",
@@ -92,10 +100,10 @@ const COURSES = [
 ];
 
 const FEATURES = [
-  { icon: Play, text: "Project-based learning" },
-  { icon: Users, text: "1-on-1 mentorship" },
-  { icon: Trophy, text: "Certificate on completion" },
-  { icon: Zap, text: "Lifetime access" },
+  { icon: Play, text: "Learn by doing projects" },
+  { icon: Users, text: "Direct mentor support" },
+  { icon: Trophy, text: "Get certified on finish" },
+  { icon: Zap, text: "Access forever, no expiry" },
 ];
 
 const HIGHLIGHTS = [
@@ -191,6 +199,7 @@ function CourseCard({ course, index, inView }: {
 
       {/* Content */}
       <div className="relative min-w-0 flex-1">
+        {/* Title + Level */}
         <div className="flex items-center gap-2">
           <h3
             className="text-[14px] font-bold leading-snug sm:text-[15px]"
@@ -199,43 +208,54 @@ function CourseCard({ course, index, inView }: {
             {course.title}
           </h3>
           <span
-            className="hidden shrink-0 rounded-md px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider sm:inline-block"
+            className="shrink-0 rounded-md px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider"
             style={{ background: course.tagColor, color: course.tagText }}
           >
             {course.level}
           </span>
         </div>
-        {/* Subtitle line */}
-        <p className="mt-0.5 text-[10px] font-semibold tracking-wide" style={{ color: course.accent }}>
-          {course.subtitle}
+
+        {/* Readable description */}
+        <p className="mt-1.5 text-[11px] leading-snug sm:text-[12px]" style={{ color: "#6B7280" }}>
+          {course.description}
         </p>
-        <div className="mt-1 flex items-center gap-2">
-          <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
-            <Clock className="h-2.5 w-2.5" />
-            {course.duration}
-          </span>
-          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
-          <span className="text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
-            {course.modules} Modules
-          </span>
+
+        {/* Outcome + Meta row */}
+        <div className="mt-2 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
+              <Clock className="h-2.5 w-2.5" />
+              {course.duration}
+            </span>
+            <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+            <span className="text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
+              {course.modules} Modules
+            </span>
+            <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+            <span className="text-[10px] font-medium" style={{ color: course.accent }}>
+              {course.students} students
+            </span>
+          </div>
         </div>
-        {/* Topics inline chips */}
-        <div className="mt-2 flex flex-wrap gap-1">
+
+        {/* Topics chips + Outcome */}
+        <div className="mt-2 flex flex-wrap items-center gap-1">
           {course.topics.slice(0, 3).map((topic) => (
             <span
               key={topic}
               className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-medium"
-              style={{ background: "rgba(0,0,0,0.04)", color: "#4B5563" }}
+              style={{ background: course.tagColor, color: course.tagText }}
             >
-              <CheckCircle2 className="h-2 w-2" style={{ color: course.accent }} />
+              <CheckCircle2 className="h-2 w-2" />
               {topic}
             </span>
           ))}
-          {course.topics.length > 3 && (
-            <span className="inline-flex items-center rounded-md px-1.5 py-0.5 text-[9px] font-medium" style={{ color: "#9CA3AF" }}>
-              +{course.topics.length - 3}
-            </span>
-          )}
+          <span
+            className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[9px] font-medium"
+            style={{ background: "rgba(0,0,0,0.04)", color: "#4B5563" }}
+          >
+            {course.outcome}
+          </span>
         </div>
       </div>
 
@@ -303,7 +323,7 @@ export function Courses() {
             className="course-fade-up mt-5 font-display text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl lg:text-[2.8rem]"
             style={{ color: "#1A1A2E", animationDelay: "0.08s" }}
           >
-            Don&apos;t just learn —{" "}
+            Learn by building —{" "}
             <span className="bg-gradient-to-r from-amber-500 via-orange-500 to-teal-500 bg-clip-text text-transparent">
               build real products
             </span>
@@ -314,9 +334,9 @@ export function Courses() {
             className="course-fade-up mt-4 text-[15px] leading-relaxed sm:text-base"
             style={{ color: "#6B7280", animationDelay: "0.14s" }}
           >
-            Industry-crafted courses designed by practitioners who ship production code daily.
-            Master the exact frameworks, patterns, and tools we use to build for real clients —
-            and start building from day one.
+            Our courses are built by real developers who work on client projects every day.
+            No boring theory — you will write real code, solve real problems, and build
+            projects that you can actually show in your portfolio.
           </p>
         </div>
 
@@ -396,7 +416,7 @@ export function Courses() {
           <div className="flex items-center gap-2 mt-1">
             <CheckCircle2 className="h-3.5 w-3.5" style={{ color: "#0D9488" }} />
             <p className="text-[12px] font-medium" style={{ color: "#6B7280" }}>
-              No prerequisites required — start from any level
+              No experience needed — we start from the basics
             </p>
           </div>
 
@@ -411,7 +431,7 @@ export function Courses() {
               ))}
             </div>
             <span className="text-[11px] font-medium" style={{ color: "#9CA3AF" }}>
-              Joined by <strong style={{ color: "#374151" }}>500+</strong> learners this month
+              Trusted by <strong style={{ color: "#374151" }}>500+</strong> learners this month
             </span>
           </div>
         </div>
