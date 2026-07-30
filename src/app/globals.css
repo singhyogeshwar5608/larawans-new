@@ -594,3 +594,40 @@ section { position: relative; }
   0% { transform: translateX(-100%); }
   100% { transform: translateX(100%); }
 }
+
+/* ── Courses Section — Animations ── */
+.course-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: course-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.course-panel {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: course-fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.course-topic {
+  opacity: 0;
+  transform: translateX(-12px);
+  animation: course-topic-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.course-divider {
+  transform: scaleX(0);
+  animation: course-divider-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes course-fade-up {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes course-topic-in {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes course-divider-in {
+  to { transform: scaleX(1); }
+}
