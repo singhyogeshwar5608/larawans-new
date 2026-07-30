@@ -92,7 +92,7 @@ export function Portfolio() {
           />
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 [grid-template-rows:auto]">
+        <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-[380px] mx-auto sm:max-w-none">
           {projects.map((p, i) => (
             <motion.article
               key={p.title}
@@ -112,7 +112,7 @@ export function Portfolio() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[14px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
-                className="relative h-[230px] overflow-hidden sm:h-[260px]"
+                className="relative h-[260px] overflow-hidden"
                 style={{ background: p.accent }}
               >
                 {/* Pattern overlay */}
