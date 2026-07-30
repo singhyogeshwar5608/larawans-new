@@ -286,7 +286,7 @@ export function Courses() {
     <section
       id="courses"
       ref={ref}
-      className="relative overflow-hidden py-20 sm:py-28"
+      className="relative overflow-hidden py-[30px]"
       style={{ background: "#FAFAF5" }}
     >
       {/* Background decorations */}
