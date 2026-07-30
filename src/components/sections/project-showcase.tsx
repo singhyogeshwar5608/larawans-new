@@ -88,7 +88,7 @@ export function ProjectShowcase() {
   };
 
   return (
-    <section id="showcase" className="relative overflow-hidden bg-[#050614] py-24 sm:py-32">
+    <section id="showcase" className="relative overflow-hidden bg-[#050614] pt-[30px] pb-24 sm:py-32">
       {/* Subtle grid background */}
       <div className="pointer-events-none absolute inset-0 grid-pattern" aria-hidden />
 
@@ -161,18 +161,22 @@ export function ProjectShowcase() {
               </div>
 
               {/* Tech tabs */}
-              <div className="mt-3 flex flex-wrap gap-2">
+              <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
                 {TABS.map((tab, i) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(i)}
-                    className={`rounded-full border px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-wider transition-all duration-300 ${
+                    className={`group relative overflow-hidden rounded-full border px-4 py-1.5 text-[11px] font-medium uppercase tracking-wider transition-all duration-300 ${
                       activeTab === i
-                        ? "border-[#00e0c6]/40 bg-[#00e0c6]/10 text-[#00e0c6] shadow-[0_0_12px_rgba(0,224,198,0.15)]"
-                        : "border-white/10 bg-white/[0.04] text-white/50 hover:border-white/20 hover:text-white/70"
+                        ? "border-[#00e0c6]/50 bg-gradient-to-r from-[#00e0c6]/15 to-[#7c5cff]/15 text-[#00e0c6] shadow-[0_0_16px_rgba(0,224,198,0.2),inset_0_0_12px_rgba(0,224,198,0.05)]"
+                        : "border-white/10 bg-white/[0.04] text-white/40 hover:border-white/20 hover:bg-white/[0.08] hover:text-white/70"
                     }`}
                   >
-                    {tab}
+                    {/* shimmer effect on active */}
+                    {activeTab === i && (
+                      <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    )}
+                    <span className="relative">{tab}</span>
                   </button>
                 ))}
               </div>
