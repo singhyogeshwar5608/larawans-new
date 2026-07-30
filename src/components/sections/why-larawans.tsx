@@ -53,7 +53,7 @@ export function WhyLarawans() {
         </div>
 
         {/* Team member profile cards */}
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-[82px] grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {TEAM_MEMBERS.map((member, i) => (
             <motion.div
               key={member.name}
