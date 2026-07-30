@@ -235,23 +235,18 @@ export function Navbar() {
                       animate="visible"
                       exit="exit"
                       onClick={() => setOpen(false)}
-                      className="group relative flex items-center gap-4 rounded-2xl px-5 py-4 transition-all duration-300 hover:bg-white/[0.04]"
+                      className="group relative flex items-center gap-4 rounded-2xl px-5 py-4 transition-all duration-300"
                     >
-                      {/* Left accent line */}
-                      <span className="absolute left-0 top-1/2 h-0 w-[3px] -translate-y-1/2 rounded-full bg-gradient-to-b from-[#7c5cff] to-[#00e0c6] opacity-0 transition-all duration-300 group-hover:h-8" />
-
-                      {/* Link number */}
-                      <span className="text-[11px] font-bold tabular-nums text-white/20 transition-colors duration-300 group-hover:text-[#7c5cff]/60">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
+                      {/* Left-to-right gradient hover bg */}
+                      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#7c5cff]/15 via-[#00e0c6]/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                       {/* Link label */}
-                      <span className="flex-1 text-[17px] font-semibold tracking-tight text-white/80 transition-all duration-300 group-hover:text-white group-hover:translate-x-1">
+                      <span className="relative flex-1 text-[17px] font-semibold tracking-tight text-white/80 transition-all duration-300 group-hover:text-white group-hover:translate-x-1">
                         {l.label}
                       </span>
 
                       {/* Arrow icon */}
-                      <ArrowUpRight className="h-4 w-4 text-white/20 transition-all duration-300 group-hover:text-[#00e0c6] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRight className="relative h-4 w-4 text-white/20 transition-all duration-300 group-hover:text-[#00e0c6] group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </motion.a>
                   ))}
                 </nav>
