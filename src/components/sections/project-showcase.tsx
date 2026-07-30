@@ -142,7 +142,7 @@ export function ProjectShowcase() {
               </p>
 
               {/* Tech stack icons */}
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
                 {(project.iconTags || []).map((tag, i) => {
                   const IconComp = SHOWCASE_ICON_MAP[tag];
                   const color = SHOWCASE_ICON_COLORS[tag] || "#7c5cff";
