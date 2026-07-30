@@ -8,7 +8,6 @@ import {
   GraduationCap,
   Code2,
   BrainCircuit,
-  Monitor,
   Server,
   Users,
   Trophy,
@@ -17,58 +16,34 @@ import {
   Sparkles,
   Play,
   Flame,
+  Megaphone,
 } from "lucide-react";
 
-/* ── Image Showcase Data ── */
-const IMAGE_SHOWCASE = [
-  {
-    title: "Web Development",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
-  },
-  {
-    title: "Digital Marketing",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
-  },
-  {
-    title: "SEO Strategy",
-    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=400&h=300&fit=crop",
-  },
-  {
-    title: "Cyber Security",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop",
-  },
-  {
-    title: "UI / UX Design",
-    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=300&fit=crop",
-  },
-  {
-    title: "Cloud & DevOps",
-    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=300&fit=crop",
-  },
-];
-
-/* ── Course Data ── */
+/* ── Course Data (4 cards with images) ── */
 const COURSES = [
   {
-    title: "Laravel Mastery",
-    category: "Backend Engineering",
-    description: "From Eloquent ORM to API design — build production-grade apps that scale.",
-    topics: ["Advanced Eloquent", "RESTful APIs", "Queue Systems", "Testing & Caching"],
-    duration: "8 Weeks",
-    level: "Intermediate",
-    modules: 24,
+    title: "Web Development",
+    subtitle: "Laravel · React · Next.js",
+    category: "Full-Stack Engineering",
+    description: "From backend architecture to frontend interfaces — master the complete web stack.",
+    topics: ["Advanced Eloquent", "React Patterns", "RESTful APIs", "Streaming SSR", "State Management"],
+    duration: "16 Weeks",
+    level: "All Levels",
+    modules: 50,
     icon: Code2,
     gradient: "linear-gradient(135deg, #F59E0B, #F97316)",
     glow: "rgba(245, 158, 11, 0.15)",
     accent: "#F59E0B",
     tagColor: "#FEF3C7",
     tagText: "#92400E",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=200&h=200&fit=crop",
   },
   {
-    title: "AI Integration Blueprint",
+    title: "AI Integration",
+    subtitle: "LLMs · RAG · Agents",
     category: "Artificial Intelligence",
-    description: "LLM orchestration, RAG pipelines, and building AI features users love.",
-    topics: ["LLM APIs & Prompts", "RAG Pipelines", "AI Chatbots", "Automation Flows"],
+    description: "Embed intelligence into any app — orchestrate LLMs, build RAG pipelines, and ship AI agents.",
+    topics: ["LLM APIs & Prompts", "RAG Pipelines", "AI Chatbots", "Automation"],
     duration: "10 Weeks",
     level: "All Levels",
     modules: 30,
@@ -78,26 +53,30 @@ const COURSES = [
     accent: "#0D9488",
     tagColor: "#CCFBF1",
     tagText: "#065F46",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=200&h=200&fit=crop",
   },
   {
-    title: "React & Next.js Pro",
-    category: "Frontend Development",
-    description: "Server components, streaming SSR, and blazing-fast interfaces with React 19.",
-    topics: ["Component Patterns", "Streaming SSR", "State at Scale", "Core Web Vitals"],
+    title: "Digital Marketing",
+    subtitle: "SEO · Analytics · Growth",
+    category: "Marketing & Growth",
+    description: "Data-driven marketing strategies — SEO, paid campaigns, analytics, and conversion optimization.",
+    topics: ["SEO Mastery", "Google Analytics", "Social Media Ads", "Content Strategy", "CRO"],
     duration: "8 Weeks",
-    level: "Intermediate",
-    modules: 26,
-    icon: Monitor,
-    gradient: "linear-gradient(135deg, #7C3AED, #A855F7)",
-    glow: "rgba(124, 58, 237, 0.15)",
-    accent: "#7C3AED",
-    tagColor: "#F3E8FF",
-    tagText: "#581C87",
+    level: "Beginner",
+    modules: 22,
+    icon: Megaphone,
+    gradient: "linear-gradient(135deg, #EC4899, #F472B6)",
+    glow: "rgba(236, 72, 153, 0.15)",
+    accent: "#EC4899",
+    tagColor: "#FCE7F3",
+    tagText: "#9D174D",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200&h=200&fit=crop",
   },
   {
     title: "DevOps & Cloud",
+    subtitle: "Docker · CI/CD · AWS",
     category: "Infrastructure",
-    description: "CI/CD, containers, cloud architecture — ship with confidence.",
+    description: "CI/CD pipelines, containers, cloud architecture — ship with confidence and automate everything.",
     topics: ["Docker", "GitHub Actions", "AWS / GCP", "Monitoring"],
     duration: "6 Weeks",
     level: "Beginner",
@@ -108,6 +87,7 @@ const COURSES = [
     accent: "#EF4444",
     tagColor: "#FEE2E2",
     tagText: "#991B1B",
+    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=200&h=200&fit=crop",
   },
 ];
 
@@ -119,8 +99,8 @@ const FEATURES = [
 ];
 
 const HIGHLIGHTS = [
-  { icon: BookOpen, value: 98, suffix: "+", label: "Modules" },
-  { icon: Clock, value: 235, suffix: "+", label: "Learning Hours" },
+  { icon: BookOpen, value: 120, suffix: "+", label: "Modules" },
+  { icon: Clock, value: 300, suffix: "+", label: "Learning Hours" },
   { icon: Users, value: 500, suffix: "+", label: "Active Learners" },
   { icon: Flame, value: 100, suffix: "%", label: "Hands-on Projects" },
 ];
@@ -162,7 +142,7 @@ function useCounter(target: number, duration = 1400, start = false) {
   return count;
 }
 
-/* ── Course Card (Compact) ── */
+/* ── Course Card ── */
 function CourseCard({ course, index, inView }: {
   course: typeof COURSES[number];
   index: number;
@@ -184,12 +164,29 @@ function CourseCard({ course, index, inView }: {
         <div className="course-shimmer-bar absolute inset-0" />
       </div>
 
-      {/* Icon */}
-      <div
-        className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-lg shadow-md transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3"
-        style={{ background: course.gradient }}
-      >
-        <Icon className="h-5 w-5 text-white" />
+      {/* Image + Icon combo */}
+      <div className="relative flex shrink-0 items-center justify-center">
+        {/* Background image (blurred, clipped) */}
+        <div
+          className="absolute inset-0 rounded-lg overflow-hidden transition-transform duration-500 group-hover:scale-110"
+          style={{ width: "44px", height: "44px" }}
+        >
+          <img
+            src={course.image}
+            alt=""
+            className="h-full w-full object-cover"
+            style={{ filter: "brightness(0.7) saturate(1.3)" }}
+          />
+        </div>
+        {/* Gradient overlay on image */}
+        <div
+          className="absolute rounded-lg"
+          style={{ width: "44px", height: "44px", background: course.gradient, opacity: 0.55 }}
+        />
+        {/* Icon on top */}
+        <div className="relative flex h-11 w-11 items-center justify-center">
+          <Icon className="h-5 w-5 text-white drop-shadow-lg" />
+        </div>
       </div>
 
       {/* Content */}
@@ -201,15 +198,18 @@ function CourseCard({ course, index, inView }: {
           >
             {course.title}
           </h3>
-        </div>
-        <div className="mt-1 flex items-center gap-2">
           <span
-            className="text-[10px] font-semibold uppercase tracking-[0.12em]"
-            style={{ color: course.accent }}
+            className="hidden shrink-0 rounded-md px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider sm:inline-block"
+            style={{ background: course.tagColor, color: course.tagText }}
           >
-            {course.category}
+            {course.level}
           </span>
-          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+        </div>
+        {/* Subtitle line */}
+        <p className="mt-0.5 text-[10px] font-semibold tracking-wide" style={{ color: course.accent }}>
+          {course.subtitle}
+        </p>
+        <div className="mt-1 flex items-center gap-2">
           <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
             <Clock className="h-2.5 w-2.5" />
             {course.duration}
@@ -219,24 +219,29 @@ function CourseCard({ course, index, inView }: {
             {course.modules} Modules
           </span>
         </div>
-        {/* Topics inline */}
+        {/* Topics inline chips */}
         <div className="mt-2 flex flex-wrap gap-1">
           {course.topics.slice(0, 3).map((topic) => (
             <span
               key={topic}
               className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-medium"
-              style={{ background: course.tagColor, color: course.tagText }}
+              style={{ background: "rgba(0,0,0,0.04)", color: "#4B5563" }}
             >
-              <CheckCircle2 className="h-2 w-2" />
+              <CheckCircle2 className="h-2 w-2" style={{ color: course.accent }} />
               {topic}
             </span>
           ))}
+          {course.topics.length > 3 && (
+            <span className="inline-flex items-center rounded-md px-1.5 py-0.5 text-[9px] font-medium" style={{ color: "#9CA3AF" }}>
+              +{course.topics.length - 3}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Enroll button */}
       <button
-        className="course-enroll-btn group/btn relative shrink-0 flex items-center gap-1 rounded-lg px-3 py-2 text-[11px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+        className="course-enroll-btn group/btn relative shrink-0 flex items-center gap-1 rounded-lg px-3 py-2 text-[11px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:px-3.5"
         style={{ background: course.gradient }}
       >
         Enroll
@@ -271,7 +276,7 @@ export function Courses() {
       {/* Animated floating shapes */}
       <div aria-hidden className="course-float-1 pointer-events-none absolute right-[15%] top-[20%] h-3 w-3 rounded-full opacity-30" style={{ background: "#F59E0B" }} />
       <div aria-hidden className="course-float-2 pointer-events-none absolute left-[10%] top-[45%] h-2 w-2 rounded-full opacity-25" style={{ background: "#0D9488" }} />
-      <div aria-hidden className="course-float-3 pointer-events-none absolute right-[8%] bottom-[25%] h-2.5 w-2.5 rounded-full opacity-20" style={{ background: "#7C3AED" }} />
+      <div aria-hidden className="course-float-3 pointer-events-none absolute right-[8%] bottom-[25%] h-2.5 w-2.5 rounded-full opacity-20" style={{ background: "#EC4899" }} />
 
       {/* Dot pattern */}
       <div
@@ -334,54 +339,6 @@ export function Courses() {
           })}
         </div>
 
-        {/* ── Image Showcase Strip ── */}
-        <div className="course-fade-up mt-12 sm:mt-14" style={{ animationDelay: "0.22s" }}>
-          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:gap-3.5">
-            {IMAGE_SHOWCASE.map((item, i) => (
-              <div
-                key={item.title}
-                className="course-img-card group relative overflow-hidden rounded-xl sm:rounded-2xl"
-                style={{
-                  aspectRatio: "4/3",
-                  animationDelay: `${0.24 + i * 0.06}s`,
-                }}
-              >
-                {/* Image */}
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                {/* Gradient overlay */}
-                <div
-                  className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{
-                    background: "linear-gradient(to top, rgba(26,26,46,0.75) 0%, rgba(26,26,46,0.15) 50%, transparent 100%)",
-                  }}
-                />
-                {/* Top shimmer on hover */}
-                <div
-                  className="course-img-shimmer pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                  aria-hidden
-                />
-                {/* Label */}
-                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
-                  <h4 className="text-[12px] font-bold text-white sm:text-[13px]">
-                    {item.title}
-                  </h4>
-                  <div className="mt-1 h-0.5 w-0 rounded-full transition-all duration-500 group-hover:w-8" style={{ background: "#F59E0B" }} />
-                </div>
-                {/* Corner accent */}
-                <div
-                  className="pointer-events-none absolute right-3 top-3 h-2 w-2 rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 sm:right-4 sm:top-4"
-                  style={{ background: "#0D9488" }}
-                  aria-hidden
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* ── Course Cards Grid ── */}
         <div className="mt-12 grid grid-cols-1 gap-3 sm:mt-14 sm:grid-cols-2 lg:gap-4">
           {COURSES.map((course, i) => (
@@ -394,7 +351,6 @@ export function Courses() {
           className="course-fade-up mt-14 overflow-hidden rounded-2xl border p-1 sm:mt-16"
           style={{ background: "#FFFFFF", borderColor: "rgba(0,0,0,0.06)", boxShadow: "0 6px 30px rgba(0,0,0,0.03)" }}
         >
-          {/* Inner gradient bar */}
           <div
             className="relative rounded-xl px-6 py-6 sm:px-8 sm:py-7"
             style={{ background: "linear-gradient(135deg, rgba(245,158,11,0.06) 0%, rgba(13,148,136,0.06) 100%)" }}
@@ -426,7 +382,6 @@ export function Courses() {
           className="course-fade-up mt-12 flex flex-col items-center gap-3 sm:mt-14"
           style={{ animationDelay: "0.5s" }}
         >
-          {/* Pulsing CTA */}
           <div className="course-cta-pulse relative">
             <button
               className="group relative flex items-center gap-2.5 rounded-2xl px-8 py-4 text-[14px] font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
@@ -445,10 +400,9 @@ export function Courses() {
             </p>
           </div>
 
-          {/* Social proof mini */}
           <div className="mt-3 flex items-center gap-2">
             <div className="flex -space-x-2">
-              {["bg-amber-400", "bg-teal-400", "bg-violet-400", "bg-red-400"].map((bg, i) => (
+              {["bg-amber-400", "bg-teal-400", "bg-pink-400", "bg-red-400"].map((bg, i) => (
                 <div key={i} className={`h-6 w-6 rounded-full border-2 border-[#FAFAF5] ${bg} flex items-center justify-center`}>
                   <span className="text-[8px] font-bold text-white">
                     {["A", "R", "S", "K"][i]}
