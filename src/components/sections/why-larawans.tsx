@@ -77,9 +77,9 @@ export function WhyLarawans() {
               />
 
               {/* White card */}
-              <div className="relative z-[1] flex min-h-[280px] flex-col rounded-2xl bg-white p-4 pt-[52px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-5 sm:pt-[56px] sm:min-h-[320px]">
+              <div className="relative z-[1] flex min-h-[280px] flex-col rounded-2xl bg-white p-4 pt-[112px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-5 sm:pt-[116px] sm:min-h-[320px]">
                 {/* Avatar — overlaps top edge */}
-                <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-[40%]">
+                <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-[28%]">
                   <div
                     className="h-[120px] w-[120px] overflow-hidden rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
                   >
