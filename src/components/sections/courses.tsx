@@ -19,6 +19,34 @@ import {
   Flame,
 } from "lucide-react";
 
+/* ── Image Showcase Data ── */
+const IMAGE_SHOWCASE = [
+  {
+    title: "Web Development",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Digital Marketing",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop",
+  },
+  {
+    title: "SEO Strategy",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Cyber Security",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&h=300&fit=crop",
+  },
+  {
+    title: "UI / UX Design",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=400&h=300&fit=crop",
+  },
+  {
+    title: "Cloud & DevOps",
+    image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400&h=300&fit=crop",
+  },
+];
+
 /* ── Course Data ── */
 const COURSES = [
   {
@@ -304,6 +332,54 @@ export function Courses() {
               </div>
             );
           })}
+        </div>
+
+        {/* ── Image Showcase Strip ── */}
+        <div className="course-fade-up mt-12 sm:mt-14" style={{ animationDelay: "0.22s" }}>
+          <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3 lg:gap-3.5">
+            {IMAGE_SHOWCASE.map((item, i) => (
+              <div
+                key={item.title}
+                className="course-img-card group relative overflow-hidden rounded-xl sm:rounded-2xl"
+                style={{
+                  aspectRatio: "4/3",
+                  animationDelay: `${0.24 + i * 0.06}s`,
+                }}
+              >
+                {/* Image */}
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                {/* Gradient overlay */}
+                <div
+                  className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{
+                    background: "linear-gradient(to top, rgba(26,26,46,0.75) 0%, rgba(26,26,46,0.15) 50%, transparent 100%)",
+                  }}
+                />
+                {/* Top shimmer on hover */}
+                <div
+                  className="course-img-shimmer pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  aria-hidden
+                />
+                {/* Label */}
+                <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4">
+                  <h4 className="text-[12px] font-bold text-white sm:text-[13px]">
+                    {item.title}
+                  </h4>
+                  <div className="mt-1 h-0.5 w-0 rounded-full transition-all duration-500 group-hover:w-8" style={{ background: "#F59E0B" }} />
+                </div>
+                {/* Corner accent */}
+                <div
+                  className="pointer-events-none absolute right-3 top-3 h-2 w-2 rounded-full opacity-0 transition-all duration-500 group-hover:opacity-100 sm:right-4 sm:top-4"
+                  style={{ background: "#0D9488" }}
+                  aria-hidden
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ── Course Cards Grid ── */}
