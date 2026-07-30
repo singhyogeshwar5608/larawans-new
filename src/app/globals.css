@@ -595,28 +595,111 @@ section { position: relative; }
   100% { transform: translateX(100%); }
 }
 
-/* ── Courses Section — Compact Animations ── */
+/* ── Courses Section — Premium Animations ── */
 .course-fade-up {
   opacity: 0;
-  transform: translateY(20px);
-  animation: course-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(24px);
+  animation: course-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.course-pill {
+.course-card {
   opacity: 0;
-  transform: translateY(16px);
-  animation: course-fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(24px) scale(0.97);
+  animation: course-card-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.course-pill:hover {
-  border-color: rgba(245, 158, 11, 0.3);
-  box-shadow: 0 8px 28px rgba(245, 158, 11, 0.12), 0 0 0 1px rgba(245, 158, 11, 0.1);
+.course-card:hover {
+  border-color: rgba(245, 158, 11, 0.2) !important;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.06), 0 0 0 1px rgba(245,158,11,0.08) !important;
 }
 
-.course-pill:hover .ml-auto {
-  color: #F59E0B;
+.course-card-glow {
+  border-radius: inherit;
+  z-index: -1;
 }
+
+/* Shimmer sweep on hover */
+.course-card-shimmer {
+  z-index: 1;
+  border-radius: inherit;
+}
+.course-shimmer-bar {
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.6) 45%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.6) 55%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: none;
+}
+.course-card:hover .course-shimmer-bar {
+  animation: course-shimmer-sweep 0.8s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Enroll button scale */
+.course-enroll-btn {
+  position: relative;
+  overflow: hidden;
+}
+.course-enroll-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  transform: translateX(-100%);
+}
+.course-enroll-btn:hover::after {
+  animation: course-shimmer-sweep 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* CTA pulse ring */
+.course-cta-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #0D9488, #06B6D4);
+  opacity: 0;
+  z-index: -1;
+  animation: course-cta-ring 2.5s ease-out infinite;
+}
+
+/* Floating dots */
+.course-float-1 { animation: course-float-a 7s ease-in-out infinite; }
+.course-float-2 { animation: course-float-b 9s ease-in-out infinite; }
+.course-float-3 { animation: course-float-c 8s ease-in-out infinite; }
 
 @keyframes course-fade-up {
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes course-card-in {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes course-shimmer-sweep {
+  to { transform: translateX(100%); }
+}
+
+@keyframes course-cta-ring {
+  0% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+@keyframes course-float-a {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  33% { transform: translate(12px, -18px); opacity: 0.5; }
+  66% { transform: translate(-8px, 8px); opacity: 0.2; }
+}
+@keyframes course-float-b {
+  0%, 100% { transform: translate(0, 0); opacity: 0.25; }
+  50% { transform: translate(-15px, -12px); opacity: 0.45; }
+}
+@keyframes course-float-c {
+  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
+  40% { transform: translate(10px, 14px); opacity: 0.4; }
+  80% { transform: translate(-6px, -10px); opacity: 0.15; }
 }
