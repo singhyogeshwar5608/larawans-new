@@ -77,11 +77,11 @@ export function WhyLarawans() {
               />
 
               {/* White card */}
-              <div className="relative z-[1] flex min-h-[280px] flex-col rounded-2xl bg-white p-5 pt-[72px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-6 sm:pt-[80px] sm:min-h-[320px]">
+              <div className="relative z-[1] flex min-h-[280px] flex-col rounded-2xl bg-white p-4 pt-[52px] text-center shadow-[0_10px_40px_rgba(0,0,0,0.08),0_4px_12px_rgba(0,0,0,0.04)] transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_16px_50px_rgba(0,0,0,0.12)] sm:p-5 sm:pt-[56px] sm:min-h-[320px]">
                 {/* Avatar — overlaps top edge */}
-                <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-1/2">
+                <div className="absolute left-1/2 top-0 z-[2] -translate-x-1/2 -translate-y-[40%]">
                   <div
-                    className="h-[100px] w-[100px] overflow-hidden rounded-full border-[3px] border-white shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
+                    className="h-[120px] w-[120px] overflow-hidden rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.12)]"
                   >
                     <img
                       src={member.avatar}
@@ -97,7 +97,7 @@ export function WhyLarawans() {
                 <p className="mt-1 text-[15px] italic text-neutral-500">
                   {member.role}
                 </p>
-                <p className="mt-5 flex-1 text-[13.5px] leading-relaxed text-neutral-400">
+                <p className="mt-3 flex-1 text-[13px] leading-relaxed text-neutral-400">
                   {member.bio}
                 </p>
               </div>
