@@ -257,7 +257,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
                 </span>
               )}
             </div>
-            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-3 line-clamp-1 sm:line-clamp-2">
+            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-3 line-clamp-3">
               {course.description}
             </p>
             {/* Tech Stack */}

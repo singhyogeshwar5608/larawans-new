@@ -39,7 +39,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "Full Stack",
     category: "Web Development",
     description:
-      "Master both frontend and backend development with Laravel, React, and Next.js to build production-ready web applications from scratch.",
+      "Learn to build complete web applications from scratch using Laravel for the backend, React and Next.js for the frontend. This course covers everything from basic HTML and CSS to deploying production-ready apps with real-world projects.",
     longDescription:
       "This comprehensive program takes you from foundational web concepts to deploying full-stack applications at scale. You will learn to architect robust backends with Laravel, build dynamic frontends with React, and leverage the power of Next.js for server-rendered and static applications. Throughout the course, you will work on real-world projects that simulate professional development workflows, including version control, CI/CD pipelines, API design, and responsive UI development. By the end, you will have a portfolio of deployable applications and the confidence to tackle any full-stack challenge in the industry.",
     aboutText:
@@ -115,7 +115,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "AI Prompts",
     category: "Artificial Intelligence",
     description:
-      "Learn to craft powerful prompts for ChatGPT, Midjourney, and LangChain to automate workflows and generate stunning AI content.",
+      "Discover how to write effective prompts for AI tools like ChatGPT, Midjourney, and LangChain to automate tasks and create high-quality content. You will learn prompt techniques, chaining methods, and real-world applications across different industries.",
     longDescription:
       "Prompt engineering is the most in-demand skill in the AI era. This course teaches you the science and art of communicating effectively with large language models and image generators. You will master techniques like chain-of-thought prompting, few-shot learning, system prompt design, and structured output formatting. Through hands-on exercises with ChatGPT, Midjourney, and LangChain, you will learn to build AI-powered applications that generate text, images, and code. The course also covers prompt testing, evaluation frameworks, and strategies for building reliable AI pipelines that deliver consistent results across different models and use cases.",
     aboutText:
@@ -191,7 +191,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "Flutter Dev",
     category: "Mobile Development",
     description:
-      "Build beautiful, natively compiled mobile applications for iOS and Android from a single Dart codebase using Flutter and Firebase.",
+      "Develop cross-platform mobile apps for both iOS and Android using a single codebase with Flutter and Dart. You will learn to build beautiful UIs, manage state, integrate Firebase for backend services, and publish your apps on app stores.",
     longDescription:
       "Flutter has revolutionized mobile app development by enabling developers to ship high-performance applications for both iOS and Android from a single codebase. This course covers everything from Dart fundamentals to advanced state management, animations, and native device integration. You will learn to build responsive UIs with Flutter's widget system, manage application state with Riverpod and Bloc, handle offline data with SQLite and Hive, and deploy backend services with Firebase. The curriculum includes building production-quality apps with push notifications, authentication, cloud storage, and real-time databases. By graduation, you will have published apps on both the App Store and Google Play.",
     aboutText:
@@ -266,7 +266,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "Marketing",
     category: "Marketing",
     description:
-      "Become a certified digital marketing expert with hands-on training in Google Ads, SEO, social media marketing, and analytics-driven strategies.",
+      "Launch and grow digital marketing campaigns across Google Ads, SEO, social media, and email to drive real business results. You will work with live campaigns, analyze performance data, and build strategies that convert visitors into customers.",
     longDescription:
       "Digital marketing is the backbone of every successful online business. This course provides a complete roadmap from strategy formulation to execution and measurement across all major digital channels. You will learn to create and optimize Google Ads campaigns, build organic traffic through advanced SEO techniques, engage audiences on social media platforms, and design email marketing funnels that convert. The analytics module teaches you to use Google Analytics 4, Tag Manager, and Data Studio to track performance and make data-driven decisions. Real campaign budgets are allocated for hands-on practice, ensuring you graduate with tangible results and a portfolio of live campaigns.",
     aboutText:
@@ -343,7 +343,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "UI/UX Design",
     category: "Design",
     description:
-      "Master user interface and experience design using Figma, from wireframing and prototyping to creating pixel-perfect design systems.",
+      "Design user-friendly interfaces and seamless experiences using Figma, from early wireframes to interactive prototypes and full design systems. You will learn research methods, layout principles, and how to hand off designs to developers smoothly.",
     longDescription:
       "Great products start with great design. This course teaches you the complete UI/UX design process, from understanding user needs through research to delivering polished, interactive prototypes. You will master Figma as your primary design tool, learning advanced techniques like auto layout, component variants, design tokens, and collaborative workflows. The UX module covers user research methods, information architecture, wireframing, usability testing, and accessibility standards. You will build a comprehensive design system from scratch and apply it to real product designs. The course also covers design handoff to developers, ensuring your designs are implemented accurately in production.",
     aboutText:
@@ -417,7 +417,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "DevOps",
     category: "Cloud & Infrastructure",
     description:
-      "Master DevOps practices and cloud platforms to build, deploy, and scale applications with Docker, AWS, Terraform, and Kubernetes.",
+      "Set up and manage cloud infrastructure, CI/CD pipelines, and containerized deployments using Docker, Kubernetes, AWS, and Terraform. You will gain practical skills in monitoring, logging, and automating the entire software delivery process.",
     longDescription:
       "DevOps engineers are among the highest-paid professionals in tech, and this course prepares you to join their ranks. You will learn to containerize applications with Docker, orchestrate deployments with Kubernetes, and manage cloud infrastructure on AWS using infrastructure-as-code with Terraform. The curriculum covers the complete DevOps lifecycle, from continuous integration with GitHub Actions to continuous delivery with automated deployment pipelines. You will master monitoring and observability with Prometheus and Grafana, implement logging with ELK stack, and ensure security with vault secrets management. Real-world scenarios simulate production environments, giving you the hands-on experience that employers demand.",
     aboutText:
@@ -493,7 +493,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "AI Automation",
     category: "Automation & No-Code",
     description:
-      "Automate business processes without writing code using Zapier, Make, and Airtable combined with AI-powered workflows and integrations.",
+      "Automate everyday business tasks using no-code tools like Zapier, Make, and Airtable, plus AI integrations for smarter workflows. You will learn to connect apps, build automated pipelines, and save hours of manual work every week.",
     longDescription:
       "No-code and AI automation are transforming how businesses operate, enabling non-technical professionals to build powerful workflows in hours instead of months. This course teaches you to connect applications, automate repetitive tasks, and build internal tools using platforms like Zapier, Make, and Airtable. You will learn to design multi-step automations that handle data entry, notifications, reporting, and customer communication. The AI integration module shows you how to add ChatGPT, image recognition, and sentiment analysis to your automations. Whether you want to streamline your own business or offer automation services to clients, this course gives you the practical skills to deliver immediate value.",
     aboutText:
@@ -568,7 +568,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "Data Analytics",
     category: "Data Science",
     description:
-      "Transform raw data into actionable insights using Python, Pandas, and Power BI for data cleaning, analysis, visualization, and reporting.",
+      "Analyze and visualize data to uncover trends and insights using Python, Pandas, and Power BI dashboards. You will learn data cleaning, statistical analysis, chart building, and how to present findings that help businesses make smarter decisions.",
     longDescription:
       "Data-driven decision making is essential for every modern organization, and Python has become the language of choice for data analytics. This course teaches you to collect, clean, analyze, and visualize data using Python's powerful ecosystem of libraries. You will master Pandas for data manipulation, NumPy for numerical computing, Matplotlib and Seaborn for visualization, and Scikit-learn for introductory machine learning. The Power BI module teaches you to create interactive dashboards and reports that communicate insights to stakeholders effectively. Through real-world datasets from finance, healthcare, e-commerce, and social media, you will develop the analytical thinking and technical skills that employers value most.",
     aboutText:
@@ -644,7 +644,7 @@ export const ALL_COURSES: CourseItem[] = [
     shortTag: "3D & Animation",
     category: "Design & Multimedia",
     description:
-      "Create stunning 3D models, environments, and animations using Blender and After Effects for games, films, and product visualization.",
+      "Create professional 3D models, animations, and visual effects using Blender and After Effects for games, films, and product showcases. You will learn modeling, texturing, lighting, rigging, and rendering techniques to build a demo reel that stands out.",
     longDescription:
       "The demand for 3D content is exploding across gaming, film, advertising, e-commerce, and virtual reality. This course teaches you to create professional-quality 3D models, textures, lighting setups, and animations using Blender, the industry's most powerful free 3D software. You will learn the complete 3D production pipeline, from blocking out shapes and sculpting details to UV unwrapping, texture painting, and rendering photorealistic scenes. The animation module covers keyframing, rigging, character animation principles, and physics simulations. The After Effects module teaches you to composite 3D renders with live footage, add motion graphics, and apply cinematic color grading. By the end, you will have a demo reel showcasing your best work.",
     aboutText:
