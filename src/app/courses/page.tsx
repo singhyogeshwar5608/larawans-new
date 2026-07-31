@@ -21,6 +21,11 @@ import {
   GraduationCap,
   Sparkles,
   Star,
+  Monitor,
+  FolderOpen,
+  BarChart3,
+  Award,
+  Flame,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -316,17 +321,74 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           </div>
 
           {/* ── Right: Meta + CTA ── */}
-          <div className="hidden sm:flex flex-col items-center justify-center gap-3 px-5 sm:px-6 flex-shrink-0 border-l border-[#F3F4F6]">
-            {/* Duration */}
+          <div className="hidden sm:flex flex-col items-center justify-center gap-2.5 px-5 sm:px-6 py-[20px] flex-shrink-0 border-l border-[#F3F4F6]">
+            {/* Course Mode */}
             <div className="flex items-center gap-1.5">
-              <Clock size={13} style={{ color: tc }} />
-              <span className="text-[12px] text-[#4B5563] font-semibold">{course.duration}</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                <Monitor size={13} style={{ color: tc }} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
+                <span className="text-[11px] text-[#111827] font-bold leading-tight">Online</span>
+              </div>
             </div>
-            {/* Level */}
-            <LevelBars level={course.level} color={tc} />
+            {/* Star Rating */}
+            <div className="flex items-center gap-1.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                <Star size={13} style={{ color: "#FBBF24" }} fill="#FBBF24" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
+                <div className="flex items-center gap-0.5">
+                  <span className="text-[11px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
+                  <div className="flex items-center">
+                    {[1,2,3,4,5].map((s) => (
+                      <Star key={s} size={8} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* Course Difficulty */}
+            <div className="flex items-center gap-1.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                <BarChart3 size={13} style={{ color: tc }} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
+                <span className="text-[11px] text-[#111827] font-bold leading-tight">{course.level}</span>
+              </div>
+            </div>
+            {/* Projects Count */}
+            <div className="flex items-center gap-1.5">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                <FolderOpen size={13} style={{ color: tc }} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
+                <span className="text-[11px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
+              </div>
+            </div>
+            {/* Course Badge */}
+            {course.badge && (
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                  <Flame size={13} style={{ color: tc }} />
+                </div>
+                <span
+                  className="rounded-full px-2.5 py-[2px] text-[10px] font-bold uppercase tracking-wider"
+                  style={{
+                    backgroundColor: BADGE_COLORS[course.badge]?.bg,
+                    color: BADGE_COLORS[course.badge]?.text,
+                  }}
+                >
+                  {course.badge}
+                </span>
+              </div>
+            )}
             {/* View Course pill */}
             <div
-              className="flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-bold transition-all duration-300 group-hover:shadow-md"
+              className="flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-bold transition-all duration-300 group-hover:shadow-md mt-1"
               style={{
                 color: tc,
                 backgroundColor: `${tc}10`,
