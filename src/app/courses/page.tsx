@@ -257,10 +257,12 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
                 </span>
               )}
             </div>
-            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-3 line-clamp-3">
+            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-2 line-clamp-3">
               {course.description}
             </p>
-            {/* Tech Stack */}
+            {/* Divider */}
+            <div className="w-full h-px bg-[#F3F4F6] my-2"></div>
+            {/* Tech Stack Row */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {course.techStack.slice(0, 6).map((tech) => (
                 <TechIcon key={tech.name} name={tech.name} color={tech.color} />
