@@ -305,71 +305,45 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
             </div>
             {/* Divider */}
             <div className="w-full h-px bg-[#F3F4F6] my-1"></div>
-            {/* Meta Row: Mode | Rating | Difficulty | Projects */}
-            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
-              {/* Course Mode */}
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                  <Monitor size={15} style={{ color: tc }} />
+            {/* Meta Chips Row: Mode | Rating | Difficulty | Projects */}
+            <div className="flex items-center gap-2 flex-wrap">
+              {/* Course Mode Chip */}
+              <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 border border-[#F3F4F6] bg-white shadow-sm">
+                <Monitor size={13} style={{ color: tc }} />
+                <span className="text-[11px] font-bold" style={{ color: tc }}>Online</span>
+              </span>
+              {/* Star Rating Chip */}
+              <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 border border-[#F3F4F6] bg-white shadow-sm">
+                <Star size={13} style={{ color: "#FBBF24" }} fill="#FBBF24" />
+                <span className="text-[11px] font-bold text-[#111827]">4.{8 + (index % 2)}</span>
+                <div className="flex items-center">
+                  {[1,2,3,4,5].map((s) => (
+                    <Star key={s} size={8} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
+                  ))}
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
-                  <span className="text-[12px] text-[#111827] font-bold leading-tight">Online</span>
-                </div>
-              </div>
-              {/* Star Rating */}
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                  <Star size={15} style={{ color: "#FBBF24" }} fill="#FBBF24" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
-                  <div className="flex items-center gap-0.5">
-                    <span className="text-[12px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
-                    <div className="flex items-center">
-                      {[1,2,3,4,5].map((s) => (
-                        <Star key={s} size={9} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Course Difficulty */}
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                  <BarChart3 size={15} style={{ color: tc }} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
-                  <span className="text-[12px] text-[#111827] font-bold leading-tight">{course.level}</span>
-                </div>
-              </div>
-              {/* Projects Count */}
-              <div className="flex items-center gap-2">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                  <FolderOpen size={15} style={{ color: tc }} />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
-                  <span className="text-[12px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
-                </div>
-              </div>
-              {/* Course Badge */}
+              </span>
+              {/* Course Difficulty Chip */}
+              <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 border border-[#F3F4F6] bg-white shadow-sm">
+                <BarChart3 size={13} style={{ color: tc }} />
+                <span className="text-[11px] font-bold" style={{ color: tc }}>{course.level}</span>
+              </span>
+              {/* Projects Count Chip */}
+              <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 border border-[#F3F4F6] bg-white shadow-sm">
+                <FolderOpen size={13} style={{ color: tc }} />
+                <span className="text-[11px] font-bold text-[#111827]">{course.projects.length} Projects</span>
+              </span>
+              {/* Course Badge Chip */}
               {course.badge && (
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                    <Flame size={15} style={{ color: tc }} />
-                  </div>
-                  <span
-                    className="rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-wider"
+                <span className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 shadow-sm">
+                  <Flame size={13} style={{ color: BADGE_COLORS[course.badge]?.text }} />
+                  <span className="text-[10px] font-bold uppercase tracking-wider"
                     style={{
-                      backgroundColor: BADGE_COLORS[course.badge]?.bg,
                       color: BADGE_COLORS[course.badge]?.text,
                     }}
                   >
                     {course.badge}
                   </span>
-                </div>
+                </span>
               )}
             </div>
             {/* Mobile-only View Course */}
