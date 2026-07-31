@@ -232,7 +232,6 @@ function TechIcon({ name, color }: { name: string; color: string }) {
 
 function CourseCard({ course, index }: { course: CourseItem; index: number }) {
   const themeColor = course.themeColor || "#6366F1";
-  const num = String(index + 1).padStart(2, "0");
 
   return (
     <motion.div variants={cardVariants}>
@@ -240,27 +239,12 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
         <div
           className="relative flex items-center gap-5 sm:gap-6 rounded-2xl border border-[#F3F4F6] bg-white px-5 sm:px-8 py-5 sm:py-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:border-[#E5E7EB]"
         >
-          {/* ── Left: Number + Divider + Icon ── */}
-          <div className="flex items-center gap-4 sm:gap-5">
-            {/* Large faded number */}
-            <span
-              className="text-[36px] sm:text-[44px] font-light leading-none select-none"
-              style={{ color: "#E5E7EB" }}
-            >
-              {num}
-            </span>
-            {/* Colored divider */}
-            <div
-              className="w-[2px] h-12 rounded-full flex-shrink-0"
-              style={{ backgroundColor: themeColor }}
-            />
-            {/* Icon container */}
-            <div
-              className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl flex-shrink-0"
-              style={{ backgroundColor: `${themeColor}15`, color: themeColor }}
-            >
-              {course.emoji}
-            </div>
+          {/* ── Left: Icon with bg color ── */}
+          <div
+            className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl flex-shrink-0"
+            style={{ backgroundColor: `${themeColor}18` }}
+          >
+            {course.emoji}
           </div>
 
           {/* ── Middle: Content ── */}
