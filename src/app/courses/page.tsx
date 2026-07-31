@@ -199,7 +199,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
     <motion.div variants={cardVariants}>
       <Link href={`/courses/${course.slug}`} className="block group">
         <div
-          className="relative flex items-stretch gap-0 rounded-2xl border border-[#F3F4F6] bg-white overflow-hidden transition-all duration-400 hover:-translate-y-1 group-hover:border-transparent"
+          className="relative flex items-stretch gap-0 rounded-2xl border border-[#F3F4F6] bg-white overflow-hidden transition-all duration-400 hover:-translate-y-1 group-hover:border-transparent py-[7px]"
           style={{
             boxShadow: `0 1px 3px rgba(0,0,0,0.04)`,
           }}
@@ -214,7 +214,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
 
           {/* ── Left: Colored icon section ── */}
           <div
-            className="flex items-center justify-center w-[90px] sm:w-[110px] flex-shrink-0 relative"
+            className="flex items-center justify-center w-[70px] sm:w-[110px] flex-shrink-0 relative"
             style={{
               background: `linear-gradient(160deg, ${tc}35 0%, ${tc}18 100%)`,
             }}
@@ -225,7 +225,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
               style={{ background: `linear-gradient(180deg, ${tc}, ${tc}80)` }}
             />
             <div
-              className="flex h-14 w-14 items-center justify-center rounded-2xl text-2xl relative z-10"
+              className="flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl text-xl sm:text-2xl relative z-10"
               style={{
                 background: `linear-gradient(135deg, ${tc}45, ${tc}25)`,
                 boxShadow: `0 4px 12px ${tc}25`,
@@ -236,9 +236,9 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           </div>
 
           {/* ── Middle: Content ── */}
-          <div className="flex-1 min-w-0 px-5 sm:px-6 py-4 sm:py-5 flex flex-col justify-center">
+          <div className="flex-1 min-w-0 px-3 sm:px-6 py-0 sm:py-0 flex flex-col justify-center">
             <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
-              <h3 className="text-[15px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] truncate">
+              <h3 className="text-[14px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] leading-tight">
                 {course.title}
               </h3>
               {course.badge && BADGE_COLORS[course.badge] && (
@@ -273,10 +273,25 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
                 </span>
               )}
             </div>
+            {/* Mobile-only meta row */}
+            <div className="flex sm:hidden items-center gap-3 mt-2.5">
+              <div className="flex items-center gap-1">
+                <Clock size={11} style={{ color: tc }} />
+                <span className="text-[11px] text-[#4B5563] font-semibold">{course.duration}</span>
+              </div>
+              <LevelBars level={course.level} color={tc} />
+              <div
+                className="ml-auto flex items-center gap-1 rounded-full px-3 py-1.5 text-[11px] font-bold"
+                style={{ color: tc, backgroundColor: `${tc}10` }}
+              >
+                View Course
+                <ArrowRight size={11} />
+              </div>
+            </div>
           </div>
 
           {/* ── Right: Meta + CTA ── */}
-          <div className="flex flex-col items-center justify-center gap-3 px-5 sm:px-6 flex-shrink-0 border-l border-[#F3F4F6]">
+          <div className="hidden sm:flex flex-col items-center justify-center gap-3 px-5 sm:px-6 flex-shrink-0 border-l border-[#F3F4F6]">
             {/* Duration */}
             <div className="flex items-center gap-1.5">
               <Clock size={13} style={{ color: tc }} />
