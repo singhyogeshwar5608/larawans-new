@@ -236,7 +236,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           </div>
 
           {/* ── Middle: Content ── */}
-          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-[17px] flex flex-col justify-center">
+          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-[42px] flex flex-col justify-center">
             <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
               <h3 className="text-[14px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] leading-tight">
                 {course.title}
