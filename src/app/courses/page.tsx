@@ -199,7 +199,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
     <motion.div variants={cardVariants}>
       <Link href={`/courses/${course.slug}`} className="block group">
         <div
-          className="relative flex items-stretch gap-0 rounded-2xl border border-[#F3F4F6] bg-white overflow-hidden transition-all duration-400 hover:-translate-y-1 group-hover:border-transparent py-[17px]"
+          className="relative flex items-stretch gap-0 rounded-2xl border border-[#F3F4F6] bg-white overflow-hidden transition-all duration-400 hover:-translate-y-1 group-hover:border-transparent"
           style={{
             boxShadow: `0 1px 3px rgba(0,0,0,0.04)`,
           }}
@@ -236,7 +236,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           </div>
 
           {/* ── Middle: Content ── */}
-          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-0 sm:py-0 flex flex-col justify-center">
+          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-[17px] flex flex-col justify-center">
             <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
               <h3 className="text-[14px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] leading-tight">
                 {course.title}
