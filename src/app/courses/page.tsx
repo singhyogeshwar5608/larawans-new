@@ -303,13 +303,77 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
                 );
               })}
             </div>
-            {/* Mobile-only meta row */}
-            <div className="flex sm:hidden items-center gap-3 mt-2.5">
-              <div className="flex items-center gap-1">
-                <Clock size={11} style={{ color: tc }} />
-                <span className="text-[11px] text-[#4B5563] font-semibold">{course.duration}</span>
+            {/* Divider */}
+            <div className="w-full h-px bg-[#F3F4F6] my-2"></div>
+            {/* Meta Row: Mode | Rating | Difficulty | Projects */}
+            <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
+              {/* Course Mode */}
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
+                  <Monitor size={11} style={{ color: tc }} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
+                  <span className="text-[10px] text-[#111827] font-bold leading-tight">Online</span>
+                </div>
               </div>
-              <LevelBars level={course.level} color={tc} />
+              {/* Star Rating */}
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
+                  <Star size={11} style={{ color: "#FBBF24" }} fill="#FBBF24" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
+                  <div className="flex items-center gap-0.5">
+                    <span className="text-[10px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
+                    <div className="flex items-center">
+                      {[1,2,3,4,5].map((s) => (
+                        <Star key={s} size={7} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* Course Difficulty */}
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
+                  <BarChart3 size={11} style={{ color: tc }} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
+                  <span className="text-[10px] text-[#111827] font-bold leading-tight">{course.level}</span>
+                </div>
+              </div>
+              {/* Projects Count */}
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
+                  <FolderOpen size={11} style={{ color: tc }} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
+                  <span className="text-[10px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
+                </div>
+              </div>
+              {/* Course Badge */}
+              {course.badge && (
+                <div className="flex items-center gap-1.5">
+                  <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
+                    <Flame size={11} style={{ color: tc }} />
+                  </div>
+                  <span
+                    className="rounded-full px-2 py-[2px] text-[9px] font-bold uppercase tracking-wider"
+                    style={{
+                      backgroundColor: BADGE_COLORS[course.badge]?.bg,
+                      color: BADGE_COLORS[course.badge]?.text,
+                    }}
+                  >
+                    {course.badge}
+                  </span>
+                </div>
+              )}
+            </div>
+            {/* Mobile-only View Course */}
+            <div className="flex sm:hidden items-center mt-2.5">
               <div
                 className="ml-auto flex items-center gap-1 rounded-full px-3 py-1.5 text-[11px] font-bold"
                 style={{ color: tc, backgroundColor: `${tc}10` }}
@@ -320,75 +384,10 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
             </div>
           </div>
 
-          {/* ── Right: Meta + CTA ── */}
-          <div className="hidden sm:flex flex-col items-center justify-center gap-2.5 px-5 sm:px-6 py-[20px] flex-shrink-0 border-l border-[#F3F4F6]">
-            {/* Course Mode */}
-            <div className="flex items-center gap-1.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                <Monitor size={13} style={{ color: tc }} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
-                <span className="text-[11px] text-[#111827] font-bold leading-tight">Online</span>
-              </div>
-            </div>
-            {/* Star Rating */}
-            <div className="flex items-center gap-1.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                <Star size={13} style={{ color: "#FBBF24" }} fill="#FBBF24" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
-                <div className="flex items-center gap-0.5">
-                  <span className="text-[11px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
-                  <div className="flex items-center">
-                    {[1,2,3,4,5].map((s) => (
-                      <Star key={s} size={8} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Course Difficulty */}
-            <div className="flex items-center gap-1.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                <BarChart3 size={13} style={{ color: tc }} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
-                <span className="text-[11px] text-[#111827] font-bold leading-tight">{course.level}</span>
-              </div>
-            </div>
-            {/* Projects Count */}
-            <div className="flex items-center gap-1.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                <FolderOpen size={13} style={{ color: tc }} />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
-                <span className="text-[11px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
-              </div>
-            </div>
-            {/* Course Badge */}
-            {course.badge && (
-              <div className="flex items-center gap-1.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
-                  <Flame size={13} style={{ color: tc }} />
-                </div>
-                <span
-                  className="rounded-full px-2.5 py-[2px] text-[10px] font-bold uppercase tracking-wider"
-                  style={{
-                    backgroundColor: BADGE_COLORS[course.badge]?.bg,
-                    color: BADGE_COLORS[course.badge]?.text,
-                  }}
-                >
-                  {course.badge}
-                </span>
-              </div>
-            )}
-            {/* View Course pill */}
+          {/* ── Right: View Course CTA only ── */}
+          <div className="hidden sm:flex flex-col items-center justify-center px-5 sm:px-6 flex-shrink-0 border-l border-[#F3F4F6]">
             <div
-              className="flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-bold transition-all duration-300 group-hover:shadow-md mt-1"
+              className="flex items-center gap-1.5 rounded-full px-4 py-2.5 text-[12px] font-bold transition-all duration-300 group-hover:shadow-md"
               style={{
                 color: tc,
                 backgroundColor: `${tc}10`,
