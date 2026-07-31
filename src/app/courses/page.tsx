@@ -388,33 +388,135 @@ export default function CoursesPage() {
             </span>
           </motion.div>
 
-          {/* Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-            className="max-w-3xl"
-          >
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#6366F1]/10 px-4 py-1.5 mb-5">
-              <Sparkles size={14} className="text-[#6366F1]" />
-              <span className="text-[12px] font-bold uppercase tracking-wider text-[#6366F1]">
-                Learn from Industry Experts
-              </span>
-            </div>
-            <h1 className="text-[32px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.08] tracking-tight text-[#111827]">
-              Explore Our{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #6366F1 0%, #EC4899 40%, #F97316 100%)" }}
-              >
-                Professional Courses
-              </span>
-            </h1>
-            <p className="mt-4 text-[15px] sm:text-base text-[#4B5563] leading-relaxed max-w-2xl">
-              Practical, project-based training programs designed by industry experts.
-              Master in-demand skills with real-world projects and personalized mentorship.
-            </p>
-          </motion.div>
+          {/* Hero Content: Two Column */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:gap-10 xl:gap-16">
+            {/* Left: Headline + Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, ease: "easeOut" }}
+              className="flex-1 max-w-3xl"
+            >
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#6366F1]/10 px-4 py-1.5 mb-5">
+                <Sparkles size={14} className="text-[#6366F1]" />
+                <span className="text-[12px] font-bold uppercase tracking-wider text-[#6366F1]">
+                  Learn from Industry Experts
+                </span>
+              </div>
+              <h1 className="text-[32px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.08] tracking-tight text-[#111827]">
+                Explore Our{" "}
+                <span
+                  className="bg-clip-text text-transparent"
+                  style={{ backgroundImage: "linear-gradient(135deg, #6366F1 0%, #EC4899 40%, #F97316 100%)" }}
+                >
+                  Professional Courses
+                </span>
+              </h1>
+              <p className="mt-4 text-[15px] sm:text-base text-[#4B5563] leading-relaxed max-w-2xl">
+                Practical, project-based training programs designed by industry experts.
+                Master in-demand skills with real-world projects and personalized mentorship.
+              </p>
+            </motion.div>
+
+            {/* Right: Attractive SVG Illustration */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              className="hidden lg:flex flex-shrink-0 items-center justify-center w-[340px] xl:w-[420px]"
+            >
+              <svg viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full drop-shadow-2xl">
+                {/* Background circle */}
+                <circle cx="250" cy="200" r="180" fill="url(#heroGrad1)" opacity="0.12" />
+                <circle cx="250" cy="200" r="140" fill="url(#heroGrad2)" opacity="0.08" />
+                {/* Book stack */}
+                <g transform="translate(120, 140)">
+                  <rect x="0" y="80" width="120" height="16" rx="3" fill="#6366F1" opacity="0.85" />
+                  <rect x="10" y="62" width="110" height="16" rx="3" fill="#EC4899" opacity="0.85" />
+                  <rect x="5" y="44" width="115" height="16" rx="3" fill="#F97316" opacity="0.85" />
+                  <rect x="15" y="26" width="105" height="16" rx="3" fill="#3B82F6" opacity="0.85" />
+                  {/* Book spine lines */}
+                  <line x1="8" y1="80" x2="8" y2="96" stroke="#4F46E5" strokeWidth="2" />
+                  <line x1="18" y1="62" x2="18" y2="78" stroke="#DB2777" strokeWidth="2" />
+                  <line x1="12" y1="44" x2="12" y2="60" stroke="#EA580C" strokeWidth="2" />
+                  <line x1="22" y1="26" x2="22" y2="42" stroke="#2563EB" strokeWidth="2" />
+                </g>
+                {/* Laptop */}
+                <g transform="translate(260, 120)">
+                  {/* Screen */}
+                  <rect x="10" y="0" width="120" height="80" rx="8" fill="#1E1B4B" />
+                  <rect x="16" y="6" width="108" height="62" rx="4" fill="url(#screenGrad)" />
+                  {/* Code lines on screen */}
+                  <rect x="24" y="16" width="40" height="4" rx="2" fill="#A5B4FC" opacity="0.7" />
+                  <rect x="70" y="16" width="30" height="4" rx="2" fill="#F9A8D4" opacity="0.7" />
+                  <rect x="24" y="26" width="55" height="4" rx="2" fill="#67E8F9" opacity="0.6" />
+                  <rect x="84" y="26" width="20" height="4" rx="2" fill="#FCD34D" opacity="0.6" />
+                  <rect x="24" y="36" width="35" height="4" rx="2" fill="#86EFAC" opacity="0.7" />
+                  <rect x="64" y="36" width="45" height="4" rx="2" fill="#C4B5FD" opacity="0.6" />
+                  <rect x="24" y="46" width="50" height="4" rx="2" fill="#FCA5A5" opacity="0.6" />
+                  <rect x="24" y="56" width="25" height="4" rx="2" fill="#93C5FD" opacity="0.5" />
+                  {/* Keyboard base */}
+                  <path d="M0 82 L10 80 L130 80 L140 82 L140 88 Q140 92 136 92 L4 92 Q0 92 0 88 Z" fill="#312E81" />
+                  <rect x="40" y="84" width="60" height="4" rx="2" fill="#4338CA" opacity="0.4" />
+                </g>
+                {/* Floating elements */}
+                {/* Graduation cap */}
+                <g transform="translate(80, 80)">
+                  <polygon points="40,12 80,28 40,44 0,28" fill="#FBBF24" />
+                  <polygon points="40,12 80,28 40,44 0,28" fill="url(#capGrad)" />
+                  <rect x="36" y="28" width="8" height="20" fill="#F59E0B" />
+                  <path d="M20 32 Q20 48 40 52 Q60 48 60 32" fill="#6366F1" opacity="0.8" />
+                  <circle cx="80" cy="52" r="5" fill="#FBBF24" />
+                  <line x1="80" y1="28" x2="80" y2="52" stroke="#F59E0B" strokeWidth="2" />
+                </g>
+                {/* Floating code brackets */}
+                <g transform="translate(400, 100)" opacity="0.7">
+                  <text x="0" y="0" fontSize="32" fontWeight="bold" fill="#6366F1">&lt;/&gt;</text>
+                </g>
+                {/* Floating star */}
+                <g transform="translate(60, 200)">
+                  <polygon points="12,0 15,9 24,9 17,15 19,24 12,19 5,24 7,15 0,9 9,9" fill="#F472B6" opacity="0.8" />
+                </g>
+                {/* Floating rocket */}
+                <g transform="translate(390, 260)">
+                  <path d="M20 0 L28 14 L20 10 L12 14 Z" fill="#6366F1" />
+                  <rect x="17" y="10" width="6" height="14" rx="3" fill="#818CF8" />
+                  <path d="M14 22 L10 28 L17 24 Z" fill="#F97316" />
+                  <path d="M26 22 L30 28 L23 24 Z" fill="#F97316" />
+                  <circle cx="20" cy="16" r="2.5" fill="#C7D2FE" />
+                </g>
+                {/* Floating circles / dots */}
+                <circle cx="440" cy="180" r="6" fill="#34D399" opacity="0.6" />
+                <circle cx="60" cy="140" r="4" fill="#60A5FA" opacity="0.5" />
+                <circle cx="420" cy="310" r="5" fill="#FBBF24" opacity="0.5" />
+                <circle cx="90" cy="310" r="7" fill="#A78BFA" opacity="0.4" />
+                <circle cx="340" cy="80" r="4" fill="#F472B6" opacity="0.5" />
+                {/* Connection lines (subtle) */}
+                <line x1="150" y1="160" x2="180" y2="155" stroke="#6366F1" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
+                <line x1="380" y1="280" x2="410" y2="300" stroke="#F97316" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
+                <line x1="70" y1="100" x2="100" y2="95" stroke="#FBBF24" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" />
+                {/* Gradients */}
+                <defs>
+                  <linearGradient id="heroGrad1" x1="70" y1="20" x2="430" y2="380" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#6366F1" />
+                    <stop offset="1" stopColor="#EC4899" />
+                  </linearGradient>
+                  <linearGradient id="heroGrad2" x1="110" y1="60" x2="390" y2="340" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#3B82F6" />
+                    <stop offset="1" stopColor="#F97316" />
+                  </linearGradient>
+                  <linearGradient id="screenGrad" x1="16" y1="6" x2="124" y2="68" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#1E1B4B" />
+                    <stop offset="1" stopColor="#312E81" />
+                  </linearGradient>
+                  <linearGradient id="capGrad" x1="0" y1="12" x2="80" y2="44" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#FBBF24" stopOpacity="0.8" />
+                    <stop offset="1" stopColor="#F59E0B" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </motion.div>
+          </div>
 
           {/* Stats Row — Colorful Cards */}
           <motion.div
