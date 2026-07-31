@@ -241,7 +241,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           </div>
 
           {/* ── Middle: Content ── */}
-          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-[42px] flex flex-col justify-center">
+          <div className="flex-1 min-w-0 px-[22px] sm:px-[34px] py-[14px] flex flex-col justify-center">
             <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
               <h3 className="text-[14px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] leading-tight">
                 {course.title}
@@ -262,11 +262,11 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
                 </span>
               )}
             </div>
-            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-2 line-clamp-3">
+            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-1 line-clamp-2">
               {course.description}
             </p>
             {/* Divider */}
-            <div className="w-full h-px bg-[#F3F4F6] my-2"></div>
+            <div className="w-full h-px bg-[#F3F4F6] my-1"></div>
             {/* Tech Stack Names Row */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {course.techStack.slice(0, 6).map((tech) => (
@@ -285,7 +285,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
               )}
             </div>
             {/* Tech Stack Icons Row */}
-            <div className="flex items-center gap-1.5 flex-wrap mt-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap mt-1">
               {course.techStack.slice(0, 6).map((tech) => {
                 const IconComp = TECH_ICON_MAP[tech.name];
                 return (
@@ -304,64 +304,64 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
               })}
             </div>
             {/* Divider */}
-            <div className="w-full h-px bg-[#F3F4F6] my-2"></div>
+            <div className="w-full h-px bg-[#F3F4F6] my-1"></div>
             {/* Meta Row: Mode | Rating | Difficulty | Projects */}
             <div className="flex items-center gap-3 sm:gap-4 flex-wrap">
               {/* Course Mode */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
-                  <Monitor size={11} style={{ color: tc }} />
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                  <Monitor size={15} style={{ color: tc }} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
-                  <span className="text-[10px] text-[#111827] font-bold leading-tight">Online</span>
+                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Mode</span>
+                  <span className="text-[12px] text-[#111827] font-bold leading-tight">Online</span>
                 </div>
               </div>
               {/* Star Rating */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
-                  <Star size={11} style={{ color: "#FBBF24" }} fill="#FBBF24" />
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                  <Star size={15} style={{ color: "#FBBF24" }} fill="#FBBF24" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
+                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Rating</span>
                   <div className="flex items-center gap-0.5">
-                    <span className="text-[10px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
+                    <span className="text-[12px] text-[#111827] font-bold leading-tight">4.{8 + (index % 2)}</span>
                     <div className="flex items-center">
                       {[1,2,3,4,5].map((s) => (
-                        <Star key={s} size={7} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
+                        <Star key={s} size={9} className={s <= (4 + (index % 2)) ? "text-[#FBBF24]" : "text-[#E5E7EB]"} fill={s <= (4 + (index % 2)) ? "#FBBF24" : "none"} />
                       ))}
                     </div>
                   </div>
                 </div>
               </div>
               {/* Course Difficulty */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
-                  <BarChart3 size={11} style={{ color: tc }} />
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                  <BarChart3 size={15} style={{ color: tc }} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
-                  <span className="text-[10px] text-[#111827] font-bold leading-tight">{course.level}</span>
+                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Difficulty</span>
+                  <span className="text-[12px] text-[#111827] font-bold leading-tight">{course.level}</span>
                 </div>
               </div>
               {/* Projects Count */}
-              <div className="flex items-center gap-1.5">
-                <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
-                  <FolderOpen size={11} style={{ color: tc }} />
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                  <FolderOpen size={15} style={{ color: tc }} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[9px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
-                  <span className="text-[10px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
+                  <span className="text-[10px] text-[#9CA3AF] font-medium leading-tight">Projects</span>
+                  <span className="text-[12px] text-[#111827] font-bold leading-tight">{course.projects.length} Projects</span>
                 </div>
               </div>
               {/* Course Badge */}
               {course.badge && (
-                <div className="flex items-center gap-1.5">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-md" style={{ backgroundColor: `${tc}12` }}>
-                    <Flame size={11} style={{ color: tc }} />
+                <div className="flex items-center gap-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ backgroundColor: `${tc}12` }}>
+                    <Flame size={15} style={{ color: tc }} />
                   </div>
                   <span
-                    className="rounded-full px-2 py-[2px] text-[9px] font-bold uppercase tracking-wider"
+                    className="rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-wider"
                     style={{
                       backgroundColor: BADGE_COLORS[course.badge]?.bg,
                       color: BADGE_COLORS[course.badge]?.text,
