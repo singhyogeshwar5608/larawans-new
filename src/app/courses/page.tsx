@@ -262,18 +262,41 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
             </p>
             {/* Divider */}
             <div className="w-full h-px bg-[#F3F4F6] my-2"></div>
-            {/* Tech Stack Row */}
+            {/* Tech Stack Names Row */}
             <div className="flex items-center gap-1.5 flex-wrap">
               {course.techStack.slice(0, 6).map((tech) => (
-                <TechIcon key={tech.name} name={tech.name} color={tech.color} />
+                <span
+                  key={`name-${tech.name}`}
+                  className="inline-flex items-center rounded-full px-2.5 py-[3px] bg-white border border-[#F3F4F6] shadow-sm text-[10px] font-bold"
+                  style={{ color: tech.color }}
+                >
+                  {tech.name}
+                </span>
               ))}
               {course.techStack.length > 6 && (
-                <span
-                  className="inline-flex items-center rounded-full px-2 py-1 bg-[#F3F4F6] text-[10px] font-bold text-[#6B7280]"
-                >
+                <span className="inline-flex items-center rounded-full px-2 py-[3px] bg-[#F3F4F6] text-[10px] font-bold text-[#6B7280]">
                   +{course.techStack.length - 6}
                 </span>
               )}
+            </div>
+            {/* Tech Stack Icons Row */}
+            <div className="flex items-center gap-1.5 flex-wrap mt-1.5">
+              {course.techStack.slice(0, 6).map((tech) => {
+                const IconComp = TECH_ICON_MAP[tech.name];
+                return (
+                  <div
+                    key={`icon-${tech.name}`}
+                    className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F9FAFB] border border-[#F3F4F6]"
+                    title={tech.name}
+                  >
+                    {IconComp ? (
+                      <IconComp size={14} color={tech.color} />
+                    ) : (
+                      <span className="block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: tech.color }} />
+                    )}
+                  </div>
+                );
+              })}
             </div>
             {/* Mobile-only meta row */}
             <div className="flex sm:hidden items-center gap-3 mt-2.5">
