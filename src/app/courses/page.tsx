@@ -289,17 +289,16 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
               {course.techStack.slice(0, 6).map((tech) => {
                 const IconComp = TECH_ICON_MAP[tech.name];
                 return (
-                  <div
+                  <span
                     key={`icon-${tech.name}`}
-                    className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#F9FAFB] border border-[#F3F4F6]"
-                    title={tech.name}
+                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 bg-[#F9FAFB] border border-[#F3F4F6] shadow-sm"
                   >
                     {IconComp ? (
-                      <IconComp size={14} color={tech.color} />
+                      <IconComp size={13} color={tech.color} />
                     ) : (
                       <span className="block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: tech.color }} />
                     )}
-                  </div>
+                  </span>
                 );
               })}
             </div>
