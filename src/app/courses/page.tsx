@@ -176,14 +176,16 @@ function TechIcon({ name, color }: { name: string; color: string }) {
   const IconComponent = TECH_ICON_MAP[name];
   return (
     <div
-      className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#F3F4F6] shadow-sm"
-      title={name}
+      className="inline-flex items-center gap-1.5 rounded-full px-2 py-1 bg-white border border-[#F3F4F6] shadow-sm"
     >
       {IconComponent ? (
-        <IconComponent size={14} color={color} />
+        <IconComponent size={13} color={color} />
       ) : (
         <span className="block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
       )}
+      <span className="text-[10px] font-bold" style={{ color }}>
+        {name}
+      </span>
     </div>
   );
 }
@@ -214,7 +216,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           <div
             className="flex items-center justify-center w-[90px] sm:w-[110px] flex-shrink-0 relative"
             style={{
-              background: `linear-gradient(160deg, ${tc}18 0%, ${tc}08 100%)`,
+              background: `linear-gradient(160deg, ${tc}35 0%, ${tc}18 100%)`,
             }}
           >
             {/* Subtle accent stripe */}
@@ -225,7 +227,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
             <div
               className="flex h-14 w-14 items-center justify-center rounded-2xl text-2xl relative z-10"
               style={{
-                background: `linear-gradient(135deg, ${tc}30, ${tc}15)`,
+                background: `linear-gradient(135deg, ${tc}45, ${tc}25)`,
                 boxShadow: `0 4px 12px ${tc}25`,
               }}
             >
@@ -259,22 +261,17 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
               {course.description}
             </p>
             {/* Tech Stack */}
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF] hidden sm:inline">
-                Tech Stack
-              </span>
-              <div className="flex items-center gap-1">
-                {course.techStack.slice(0, 8).map((tech) => (
-                  <TechIcon key={tech.name} name={tech.name} color={tech.color} />
-                ))}
-                {course.techStack.length > 8 && (
-                  <span
-                    className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#F3F4F6] shadow-sm text-[9px] font-bold text-[#9CA3AF]"
-                  >
-                    +{course.techStack.length - 8}
-                  </span>
-                )}
-              </div>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {course.techStack.slice(0, 6).map((tech) => (
+                <TechIcon key={tech.name} name={tech.name} color={tech.color} />
+              ))}
+              {course.techStack.length > 6 && (
+                <span
+                  className="inline-flex items-center rounded-full px-2 py-1 bg-[#F3F4F6] text-[10px] font-bold text-[#6B7280]"
+                >
+                  +{course.techStack.length - 6}
+                </span>
+              )}
             </div>
           </div>
 

@@ -1,0 +1,627 @@
+     1→"use client";
+     2→
+     3→import { useState, useMemo } from "react";
+     4→import Link from "next/link";
+     5→import { motion } from "framer-motion";
+     6→import {
+     7→  Search,
+     8→  Code2,
+     9→  BrainCircuit,
+    10→  TrendingUp,
+    11→  Palette,
+    12→  Cloud,
+    13→  Zap,
+    14→  ArrowRight,
+    15→  BookOpen,
+    16→  Clock,
+    17→  Users,
+    18→  FolderGit2,
+    19→  ChevronRight,
+    20→  Signal,
+    21→  GraduationCap,
+    22→  Sparkles,
+    23→  Star,
+    24→} from "lucide-react";
+    25→import {
+    26→  SiLaravel,
+    27→  SiReact,
+    28→  SiNextdotjs,
+    29→  SiTypescript,
+    30→  SiTailwindcss,
+    31→  SiMysql,
+    32→  SiVercel,
+    33→  SiDocker,
+    34→  SiOpenaigym as SiOpenai,
+    35→  SiPython,
+    36→  SiFlutter,
+    37→  SiFirebase,
+    38→  SiGooglecloud,
+    39→  SiFigma,
+    40→  SiFramer,
+    41→  SiNotion,
+    42→  SiKubernetes,
+    43→  SiTerraform,
+    44→  SiGrafana,
+    45→  SiPrometheus,
+    46→  SiLinux,
+    47→  SiZapier,
+    48→  SiSlackware as SiSlack,
+    49→  SiGoogleanalytics,
+    50→  SiGoogleads,
+    51→  SiCanvas as SiCanva,
+    52→  SiWordpress,
+    53→  SiBlender,
+    54→} from "react-icons/si";
+    55→import { ALL_COURSES } from "@/lib/course-data";
+    56→import type { CourseItem } from "@/lib/course-data";
+    57→
+    58→// ─── Category Map ───────────────────────────────────────────────────────────────
+    59→
+    60→const CATEGORY_MAP: Record<string, string[]> = {
+    61→  Development: [
+    62→    "full-stack-web-development",
+    63→    "mobile-app-development-flutter",
+    64→  ],
+    65→  AI: ["ai-prompt-engineering"],
+    66→  Marketing: ["digital-marketing-mastery"],
+    67→  Design: ["ui-ux-design-figma", "3d-design-blender"],
+    68→  Cloud: ["devops-cloud-engineering"],
+    69→  SEO: ["digital-marketing-mastery"],
+    70→};
+    71→
+    72→// ─── Category Tabs Config ──────────────────────────────────────────────────────
+    73→
+    74→const CATEGORIES = [
+    75→  { label: "All Courses", value: "all", icon: Zap },
+    76→  { label: "Development", value: "Development", icon: Code2 },
+    77→  { label: "AI", value: "AI", icon: BrainCircuit },
+    78→  { label: "Marketing", value: "Marketing", icon: TrendingUp },
+    79→  { label: "Design", value: "Design", icon: Palette },
+    80→  { label: "Cloud", value: "Cloud", icon: Cloud },
+    81→  { label: "SEO", value: "SEO", icon: Search },
+    82→];
+    83→
+    84→// ─── Stats with unique colors ──────────────────────────────────────────────────
+    85→
+    86→const STATS = [
+    87→  { icon: BookOpen, value: "9", label: "Courses", gradient: "linear-gradient(135deg, #6366F1, #818CF8)", shadow: "#6366F130" },
+    88→  { icon: Clock, value: "300+", label: "Learning Hours", gradient: "linear-gradient(135deg, #F59E0B, #FBBF24)", shadow: "#F59E0B30" },
+    89→  { icon: Users, value: "10,000+", label: "Students", gradient: "linear-gradient(135deg, #10B981, #34D399)", shadow: "#10B98130" },
+    90→  { icon: FolderGit2, value: "100+", label: "Projects", gradient: "linear-gradient(135deg, #EC4899, #F472B6)", shadow: "#EC489930" },
+    91→];
+    92→
+    93→// ─── Tech Icon Mapping ──────────────────────────────────────────────────────────
+    94→
+    95→type TechIconComponent = React.ComponentType<{ size?: number; color?: string }>;
+    96→
+    97→const TECH_ICON_MAP: Record<string, TechIconComponent> = {
+    98→  Laravel: SiLaravel, React: SiReact, "Next.js": SiNextdotjs, TypeScript: SiTypescript,
+    99→  "Tailwind CSS": SiTailwindcss, MySQL: SiMysql, Vercel: SiVercel, Docker: SiDocker,
+   100→  ChatGPT: SiOpenai, "OpenAI API": SiOpenai, "DALL-E": SiOpenai, "Hugging Face": SiOpenai,
+   101→  Python: SiPython, Flutter: SiFlutter, Dart: SiFlutter, Firebase: SiFirebase,
+   102→  "Google Cloud": SiGooglecloud, Figma: SiFigma, Framer: SiFramer, "Adobe XD": SiFigma,
+   103→  Notion: SiNotion, AWS: SiGooglecloud, Kubernetes: SiKubernetes, Terraform: SiTerraform,
+   104→  Grafana: SiGrafana, Prometheus: SiPrometheus, Linux: SiLinux, Zapier: SiZapier,
+   105→  "GitHub Actions": SiNotion, OpenAI: SiOpenai, Slack: SiSlack,
+   106→  "Google Analytics": SiGoogleanalytics, "Google Ads": SiGoogleads, Ahrefs: SiGoogleanalytics,
+   107→  Canva: SiCanva, WordPress: SiWordpress, Blender: SiBlender, Photoshop: SiCanva,
+   108→  "Google Sheets": SiGooglecloud, "Meta Ads": SiGoogleads, SEMrush: SiGoogleanalytics,
+   109→  Pandas: SiPython, "Power BI": SiGrafana, NumPy: SiPython, Matplotlib: SiPython,
+   110→  Seaborn: SiPython, Jupyter: SiPython, "Scikit-learn": SiPython,
+   111→  "After Effects": SiBlender, "Substance Painter": SiBlender, "Premiere Pro": SiBlender,
+   112→  "DaVinci Resolve": SiBlender, Make: SiZapier, Airtable: SiFirebase,
+   113→  "Riverpod": SiFlutter, SQLite: SiMysql, Hive: SiFirebase, Miro: SiFramer,
+   114→  Principle: SiFramer, "Mailchimp": SiCanva, LangChain: SiPython, Midjourney: SiOpenai,
+   115→};
+   116→
+   117→// ─── Badge Color Map ────────────────────────────────────────────────────────────
+   118→
+   119→const BADGE_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
+   120→  Popular: { bg: "#EDE9FE", text: "#7C3AED", dot: "#7C3AED" },
+   121→  Trending: { bg: "#ECFDF5", text: "#059669", dot: "#10B981" },
+   122→  Bestseller: { bg: "#FEF3C7", text: "#92400E", dot: "#F59E0B" },
+   123→  New: { bg: "#DBEAFE", text: "#1D4ED8", dot: "#3B82F6" },
+   124→};
+   125→
+   126→// ─── Level Config ─────────────────────────────────────────────────────────────────
+   127→
+   128→const LEVEL_CONFIG: Record<string, { bars: number; label: string }> = {
+   129→  "All Levels": { bars: 3, label: "All Levels" },
+   130→  Beginner: { bars: 1, label: "Beginner" },
+   131→  Intermediate: { bars: 2, label: "Intermediate" },
+   132→  Advanced: { bars: 3, label: "Advanced" },
+   133→};
+   134→
+   135→// ─── Animation Variants ─────────────────────────────────────────────────────────
+   136→
+   137→const containerVariants = {
+   138→  hidden: {},
+   139→  visible: { transition: { staggerChildren: 0.07 } },
+   140→};
+   141→
+   142→const cardVariants = {
+   143→  hidden: { opacity: 0, y: 24, scale: 0.98 },
+   144→  visible: {
+   145→    opacity: 1, y: 0, scale: 1,
+   146→    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+   147→  },
+   148→};
+   149→
+   150→// ─── Level Bars ───────────────────────────────────────────────────────────────────
+   151→
+   152→function LevelBars({ level, color }: { level: string; color: string }) {
+   153→  const config = LEVEL_CONFIG[level] || LEVEL_CONFIG["All Levels"];
+   154→  return (
+   155→    <div className="flex items-center gap-1.5">
+   156→      <div className="flex items-end gap-[2px]">
+   157→        {[1, 2, 3].map((bar) => (
+   158→          <div
+   159→            key={bar}
+   160→            className="w-[3px] rounded-full"
+   161→            style={{
+   162→              height: `${6 + bar * 4}px`,
+   163→              backgroundColor: bar <= config.bars ? color : "#E5E7EB",
+   164→            }}
+   165→          />
+   166→        ))}
+   167→      </div>
+   168→      <span className="text-[12px] text-[#6B7280] font-medium">{config.label}</span>
+   169→    </div>
+   170→  );
+   171→}
+   172→
+   173→// ─── Tech Stack Icon ────────────────────────────────────────────────────────────
+   174→
+   175→function TechIcon({ name, color }: { name: string; color: string }) {
+   176→  const IconComponent = TECH_ICON_MAP[name];
+   177→  return (
+   178→    <div
+   179→      className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#F3F4F6] shadow-sm"
+   180→      title={name}
+   181→    >
+   182→      {IconComponent ? (
+   183→        <IconComponent size={14} color={color} />
+   184→      ) : (
+   185→        <span className="block h-1.5 w-1.5 rounded-full" style={{ backgroundColor: color }} />
+   186→      )}
+   187→    </div>
+   188→  );
+   189→}
+   190→
+   191→// ─── Course Card ────────────────────────────────────────────────────────────────
+   192→
+   193→function CourseCard({ course, index }: { course: CourseItem; index: number }) {
+   194→  const tc = course.themeColor || "#6366F1";
+   195→
+   196→  return (
+   197→    <motion.div variants={cardVariants}>
+   198→      <Link href={`/courses/${course.slug}`} className="block group">
+   199→        <div
+   200→          className="relative flex items-stretch gap-0 rounded-2xl border border-[#F3F4F6] bg-white overflow-hidden transition-all duration-400 hover:-translate-y-1 group-hover:border-transparent"
+   201→          style={{
+   202→            boxShadow: `0 1px 3px rgba(0,0,0,0.04)`,
+   203→          }}
+   204→        >
+   205→          {/* ── Hover glow overlay ── */}
+   206→          <div
+   207→            className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+   208→            style={{
+   209→              background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${tc}08, transparent 40%)`,
+   210→            }}
+   211→          />
+   212→
+   213→          {/* ── Left: Colored icon section ── */}
+   214→          <div
+   215→            className="flex items-center justify-center w-[90px] sm:w-[110px] flex-shrink-0 relative"
+   216→            style={{
+   217→              background: `linear-gradient(160deg, ${tc}18 0%, ${tc}08 100%)`,
+   218→            }}
+   219→          >
+   220→            {/* Subtle accent stripe */}
+   221→            <div
+   222→              className="absolute left-0 top-0 bottom-0 w-[3px]"
+   223→              style={{ background: `linear-gradient(180deg, ${tc}, ${tc}80)` }}
+   224→            />
+   225→            <div
+   226→              className="flex h-14 w-14 items-center justify-center rounded-2xl text-2xl relative z-10"
+   227→              style={{
+   228→                background: `linear-gradient(135deg, ${tc}30, ${tc}15)`,
+   229→                boxShadow: `0 4px 12px ${tc}25`,
+   230→              }}
+   231→            >
+   232→              {course.emoji}
+   233→            </div>
+   234→          </div>
+   235→
+   236→          {/* ── Middle: Content ── */}
+   237→          <div className="flex-1 min-w-0 px-5 sm:px-6 py-4 sm:py-5 flex flex-col justify-center">
+   238→            <div className="flex items-center gap-2.5 mb-1.5 flex-wrap">
+   239→              <h3 className="text-[15px] sm:text-[17px] font-bold text-[#111827] group-hover:text-[#1a1a2e] truncate">
+   240→                {course.title}
+   241→              </h3>
+   242→              {course.badge && BADGE_COLORS[course.badge] && (
+   243→                <span
+   244→                  className="inline-flex items-center gap-1 rounded-full px-2.5 py-[3px] text-[10px] font-bold uppercase tracking-wider flex-shrink-0"
+   245→                  style={{
+   246→                    backgroundColor: BADGE_COLORS[course.badge].bg,
+   247→                    color: BADGE_COLORS[course.badge].text,
+   248→                  }}
+   249→                >
+   250→                  <span
+   251→                    className="h-1.5 w-1.5 rounded-full"
+   252→                    style={{ backgroundColor: BADGE_COLORS[course.badge].dot }}
+   253→                  />
+   254→                  {course.badge}
+   255→                </span>
+   256→              )}
+   257→            </div>
+   258→            <p className="text-[13px] text-[#6B7280] leading-relaxed mb-3 line-clamp-1 sm:line-clamp-2">
+   259→              {course.description}
+   260→            </p>
+   261→            {/* Tech Stack */}
+   262→            <div className="flex items-center gap-2 flex-wrap">
+   263→              <span className="text-[9px] font-bold uppercase tracking-widest text-[#9CA3AF] hidden sm:inline">
+   264→                Tech Stack
+   265→              </span>
+   266→              <div className="flex items-center gap-1">
+   267→                {course.techStack.slice(0, 8).map((tech) => (
+   268→                  <TechIcon key={tech.name} name={tech.name} color={tech.color} />
+   269→                ))}
+   270→                {course.techStack.length > 8 && (
+   271→                  <span
+   272→                    className="flex h-7 w-7 items-center justify-center rounded-md bg-white border border-[#F3F4F6] shadow-sm text-[9px] font-bold text-[#9CA3AF]"
+   273→                  >
+   274→                    +{course.techStack.length - 8}
+   275→                  </span>
+   276→                )}
+   277→              </div>
+   278→            </div>
+   279→          </div>
+   280→
+   281→          {/* ── Right: Meta + CTA ── */}
+   282→          <div className="flex flex-col items-center justify-center gap-3 px-5 sm:px-6 flex-shrink-0 border-l border-[#F3F4F6]">
+   283→            {/* Duration */}
+   284→            <div className="flex items-center gap-1.5">
+   285→              <Clock size={13} style={{ color: tc }} />
+   286→              <span className="text-[12px] text-[#4B5563] font-semibold">{course.duration}</span>
+   287→            </div>
+   288→            {/* Level */}
+   289→            <LevelBars level={course.level} color={tc} />
+   290→            {/* View Course pill */}
+   291→            <div
+   292→              className="flex items-center gap-1.5 rounded-full px-4 py-2 text-[12px] font-bold transition-all duration-300 group-hover:shadow-md"
+   293→              style={{
+   294→                color: tc,
+   295→                backgroundColor: `${tc}10`,
+   296→              }}
+   297→            >
+   298→              View Course
+   299→              <ArrowRight
+   300→                size={13}
+   301→                className="transition-transform duration-300 group-hover:translate-x-1"
+   302→              />
+   303→            </div>
+   304→          </div>
+   305→
+   306→          {/* ── Hover border glow ── */}
+   307→          <div
+   308→            className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+   309→            style={{
+   310→              boxShadow: `0 8px 30px ${tc}15, 0 0 0 1px ${tc}20`,
+   311→            }}
+   312→          />
+   313→        </div>
+   314→      </Link>
+   315→    </motion.div>
+   316→  );
+   317→}
+   318→
+   319→// ─── Main Page ─────────────────────────────────────────────────────────────────
+   320→
+   321→export default function CoursesPage() {
+   322→  const [activeCategory, setActiveCategory] = useState("all");
+   323→  const [searchQuery, setSearchQuery] = useState("");
+   324→
+   325→  const filteredCourses = useMemo(() => {
+   326→    let courses = ALL_COURSES;
+   327→    if (activeCategory !== "all" && CATEGORY_MAP[activeCategory]) {
+   328→      const slugs = CATEGORY_MAP[activeCategory];
+   329→      courses = courses.filter((c) => slugs.includes(c.slug));
+   330→    }
+   331→    if (searchQuery.trim()) {
+   332→      const q = searchQuery.toLowerCase();
+   333→      courses = courses.filter(
+   334→        (c) =>
+   335→          c.title.toLowerCase().includes(q) ||
+   336→          c.description.toLowerCase().includes(q) ||
+   337→          c.category.toLowerCase().includes(q) ||
+   338→          c.techStack.some((t) => t.name.toLowerCase().includes(q))
+   339→      );
+   340→    }
+   341→    return courses;
+   342→  }, [activeCategory, searchQuery]);
+   343→
+   344→  return (
+   345→    <main className="min-h-screen" style={{ background: "#FAFBFF" }}>
+   346→      {/* ─── Hero Section ─────────────────────────────────────────────── */}
+   347→      <section className="relative overflow-hidden">
+   348→        {/* Multi-color gradient blobs */}
+   349→        <div
+   350→          className="pointer-events-none absolute -top-32 -right-32 h-[500px] w-[500px] rounded-full opacity-50 blur-[100px]"
+   351→          style={{ background: "linear-gradient(135deg, #C084FC, #60A5FA)" }}
+   352→        />
+   353→        <div
+   354→          className="pointer-events-none absolute -bottom-40 -left-40 h-[450px] w-[450px] rounded-full opacity-40 blur-[100px]"
+   355→          style={{ background: "linear-gradient(135deg, #34D399, #FBBF24)" }}
+   356→        />
+   357→        <div
+   358→          className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[300px] w-[600px] rounded-full opacity-20 blur-[120px]"
+   359→          style={{ background: "linear-gradient(90deg, #F472B6, #A78BFA)" }}
+   360→        />
+   361→
+   362→        <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-12 sm:pb-16">
+   363→          {/* Breadcrumb */}
+   364→          <motion.div
+   365→            initial={{ opacity: 0, y: 10 }}
+   366→            animate={{ opacity: 1, y: 0 }}
+   367→            transition={{ duration: 0.4 }}
+   368→            className="flex items-center gap-1.5 mb-6 sm:mb-8"
+   369→          >
+   370→            <Link href="/" className="text-[13px] font-medium text-[#6B7280] hover:text-[#6366F1] transition-colors">
+   371→              Home
+   372→            </Link>
+   373→            <ChevronRight size={14} className="text-[#9CA3AF]" />
+   374→            <span className="text-[13px] font-bold uppercase tracking-wide" style={{ color: "#6366F1" }}>
+   375→              All Courses
+   376→            </span>
+   377→          </motion.div>
+   378→
+   379→          {/* Headline */}
+   380→          <motion.div
+   381→            initial={{ opacity: 0, y: 15 }}
+   382→            animate={{ opacity: 1, y: 0 }}
+   383→            transition={{ duration: 0.55, ease: "easeOut" }}
+   384→            className="max-w-3xl"
+   385→          >
+   386→            <div className="inline-flex items-center gap-2 rounded-full bg-[#6366F1]/10 px-4 py-1.5 mb-5">
+   387→              <Sparkles size={14} className="text-[#6366F1]" />
+   388→              <span className="text-[12px] font-bold uppercase tracking-wider text-[#6366F1]">
+   389→                Learn from Industry Experts
+   390→              </span>
+   391→            </div>
+   392→            <h1 className="text-[32px] sm:text-[44px] lg:text-[54px] font-extrabold leading-[1.08] tracking-tight text-[#111827]">
+   393→              Explore Our{" "}
+   394→              <span
+   395→                className="bg-clip-text text-transparent"
+   396→                style={{ backgroundImage: "linear-gradient(135deg, #6366F1 0%, #EC4899 40%, #F97316 100%)" }}
+   397→              >
+   398→                Professional Courses
+   399→              </span>
+   400→            </h1>
+   401→            <p className="mt-4 text-[15px] sm:text-base text-[#4B5563] leading-relaxed max-w-2xl">
+   402→              Practical, project-based training programs designed by industry experts.
+   403→              Master in-demand skills with real-world projects and personalized mentorship.
+   404→            </p>
+   405→          </motion.div>
+   406→
+   407→          {/* Stats Row — Colorful Cards */}
+   408→          <motion.div
+   409→            className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
+   410→            initial={{ opacity: 0, y: 20 }}
+   411→            animate={{ opacity: 1, y: 0 }}
+   412→            transition={{ duration: 0.55, delay: 0.15, ease: "easeOut" }}
+   413→          >
+   414→            {STATS.map((stat, i) => (
+   415→              <div
+   416→                key={stat.label}
+   417→                className="relative flex items-center gap-3 rounded-2xl bg-white border border-[#F3F4F6] px-4 py-4 sm:px-5 sm:py-5 overflow-hidden"
+   418→                style={{ boxShadow: `0 2px 8px ${stat.shadow}` }}
+   419→              >
+   420→                {/* Subtle gradient accent at top */}
+   421→                <div
+   422→                  className="absolute top-0 left-0 right-0 h-[2px]"
+   423→                  style={{ background: stat.gradient }}
+   424→                />
+   425→                <div
+   426→                  className="flex h-11 w-11 items-center justify-center rounded-xl flex-shrink-0"
+   427→                  style={{ background: stat.gradient, boxShadow: `0 4px 12px ${stat.shadow}` }}
+   428→                >
+   429→                  <stat.icon size={20} className="text-white" strokeWidth={2} />
+   430→                </div>
+   431→                <div>
+   432→                  <span className="text-xl sm:text-2xl font-extrabold text-[#111827]">{stat.value}</span>
+   433→                  <p className="text-[11px] sm:text-xs text-[#6B7280] font-medium leading-tight mt-0.5">{stat.label}</p>
+   434→                </div>
+   435→              </div>
+   436→            ))}
+   437→          </motion.div>
+   438→        </div>
+   439→      </section>
+   440→
+   441→      {/* ─── Filters + Search ──────────────────────────────────────────── */}
+   442→      <section className="sticky top-0 z-30 border-b border-[#F3F4F6] bg-white/80 backdrop-blur-xl">
+   443→        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
+   444→          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+   445→            {/* Category Tabs */}
+   446→            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar w-full sm:w-auto pb-1 sm:pb-0">
+   447→              {CATEGORIES.map((cat) => {
+   448→                const Icon = cat.icon;
+   449→                const isActive = activeCategory === cat.value;
+   450→                return (
+   451→                  <button
+   452→                    key={cat.value}
+   453→                    onClick={() => setActiveCategory(cat.value)}
+   454→                    className={`relative inline-flex items-center gap-1.5 whitespace-nowrap px-3.5 sm:px-4 py-2 text-[13px] font-medium transition-all duration-200 cursor-pointer flex-shrink-0 rounded-lg ${
+   455→                      isActive
+   456→                        ? "text-[#6366F1] font-semibold"
+   457→                        : "text-[#6B7280] hover:text-[#6366F1] hover:bg-[#6366F1]/5"
+   458→                    }`}
+   459→                  >
+   460→                    <Icon size={15} />
+   461→                    <span>{cat.label}</span>
+   462→                    {isActive && (
+   463→                      <motion.div
+   464→                        layoutId="activeTab"
+   465→                        className="absolute inset-0 rounded-lg bg-[#6366F1]/8"
+   466→                        style={{ border: "1.5px solid #6366F125" }}
+   467→                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+   468→                      />
+   469→                    )}
+   470→                    {isActive && (
+   471→                      <motion.div
+   472→                        layoutId="activeTabLine"
+   473→                        className="absolute -bottom-[9px] left-3 right-3 h-[2.5px] rounded-full"
+   474→                        style={{ background: "linear-gradient(90deg, #6366F1, #A78BFA)" }}
+   475→                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+   476→                      />
+   477→                    )}
+   478→                  </button>
+   479→                );
+   480→              })}
+   481→            </div>
+   482→
+   483→            {/* Search Bar */}
+   484→            <div className="relative w-full sm:w-auto sm:ml-auto sm:min-w-[280px]">
+   485→              <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9CA3AF]" />
+   486→              <input
+   487→                type="text"
+   488→                placeholder="Search a course..."
+   489→                value={searchQuery}
+   490→                onChange={(e) => setSearchQuery(e.target.value)}
+   491→                className="w-full rounded-xl border border-[#E5E7EB] bg-[#F9FAFB] py-2.5 pl-10 pr-4 text-sm text-[#111827] placeholder-[#9CA3AF] outline-none transition-all duration-200 focus:border-[#6366F1] focus:ring-2 focus:ring-[#6366F1]/15 focus:bg-white focus:shadow-sm focus:shadow-[#6366F1]/10"
+   492→              />
+   493→            </div>
+   494→          </div>
+   495→        </div>
+   496→      </section>
+   497→
+   498→      {/* ─── Course Cards ─────────────────────────────────────────────── */}
+   499→      <section className="py-8 sm:py-12">
+   500→        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+   501→          {filteredCourses.length > 0 ? (
+   502→            <motion.div
+   503→              className="flex flex-col gap-3 sm:gap-4"
+   504→              variants={containerVariants}
+   505→              initial="hidden"
+   506→              animate="visible"
+   507→            >
+   508→              {filteredCourses.map((course, index) => (
+   509→                <CourseCard key={course.slug} course={course} index={index} />
+   510→              ))}
+   511→            </motion.div>
+   512→          ) : (
+   513→            <motion.div
+   514→              className="flex flex-col items-center justify-center py-20 text-center"
+   515→              initial={{ opacity: 0, scale: 0.95 }}
+   516→              animate={{ opacity: 1, scale: 1 }}
+   517→              transition={{ duration: 0.4 }}
+   518→            >
+   519→              <div className="flex items-center justify-center h-16 w-16 rounded-2xl bg-[#F3F4F6] mb-4">
+   520→                <Search size={24} className="text-[#9CA3AF]" />
+   521→              </div>
+   522→              <h3 className="text-lg font-semibold text-[#111827] mb-1">No courses found</h3>
+   523→              <p className="text-sm text-[#6B7280] max-w-sm">
+   524→                Try adjusting your search query or selecting a different category.
+   525→              </p>
+   526→              <button
+   527→                onClick={() => { setSearchQuery(""); setActiveCategory("all"); }}
+   528→                className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-[#6366F1] px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#6366F1]/25 transition-all duration-200 hover:bg-[#5558E6] hover:-translate-y-0.5 cursor-pointer"
+   529→              >
+   530→                Clear Filters
+   531→              </button>
+   532→            </motion.div>
+   533→          )}
+   534→
+   535→          {filteredCourses.length > 0 && (
+   536→            <motion.p
+   537→              initial={{ opacity: 0 }}
+   538→              animate={{ opacity: 1 }}
+   539→              transition={{ delay: 0.5 }}
+   540→              className="mt-8 text-center text-sm text-[#9CA3AF]"
+   541→            >
+   542→              Showing {filteredCourses.length} of {ALL_COURSES.length} courses
+   543→            </motion.p>
+   544→          )}
+   545→        </div>
+   546→      </section>
+   547→
+   548→      {/* ─── Bottom CTA Banner ────────────────────────────────────────── */}
+   549→      <section className="relative overflow-hidden">
+   550→        <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20">
+   551→          <div
+   552→            className="relative rounded-3xl overflow-hidden px-8 sm:px-12 lg:px-16 py-10 sm:py-14"
+   553→            style={{ background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 40%, #4338CA 100%)" }}
+   554→          >
+   555→            {/* Decorative elements */}
+   556→            <div className="pointer-events-none absolute -top-20 -right-20 h-60 w-60 rounded-full opacity-20 blur-[60px]" style={{ backgroundColor: "#818CF8" }} />
+   557→            <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full opacity-15 blur-[50px]" style={{ backgroundColor: "#C084FC" }} />
+   558→            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full opacity-[0.07]" style={{ background: "conic-gradient(from 0deg, #6366F1, #EC4899, #F97316, #6366F1)" }} />
+   559→
+   560→            {/* Floating dots */}
+   561→            {[...Array(6)].map((_, i) => (
+   562→              <div
+   563→                key={i}
+   564→                className="pointer-events-none absolute rounded-full opacity-20"
+   565→                style={{
+   566→                  width: `${4 + i * 2}px`,
+   567→                  height: `${4 + i * 2}px`,
+   568→                  backgroundColor: "#A5B4FC",
+   569→                  top: `${15 + i * 12}%`,
+   570→                  left: `${10 + i * 15}%`,
+   571→                }}
+   572→              />
+   573→            ))}
+   574→
+   575→            <div className="relative flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+   576→              {/* Left: Icon */}
+   577→              <div className="flex-shrink-0">
+   578→                <div className="relative">
+   579→                  <div
+   580→                    className="flex h-20 w-20 items-center justify-center rounded-2xl"
+   581→                    style={{ background: "linear-gradient(135deg, rgba(99,102,241,0.3), rgba(168,139,250,0.2))", backdropFilter: "blur(10px)" }}
+   582→                  >
+   583→                    <GraduationCap size={36} className="text-[#C4B5FD]" />
+   584→                  </div>
+   585→                  <div
+   586→                    className="absolute -top-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full"
+   587→                    style={{ background: "linear-gradient(135deg, #F59E0B, #FBBF24)", boxShadow: "0 2px 8px #F59E0B40" }}
+   588→                  >
+   589→                    <Star size={12} className="text-white" fill="white" />
+   590→                  </div>
+   591→                </div>
+   592→              </div>
+   593→
+   594→              {/* Middle: Text */}
+   595→              <div className="flex-1 text-center lg:text-left">
+   596→                <h2 className="text-[22px] sm:text-[26px] lg:text-[30px] font-bold text-white leading-tight">
+   597→                  Not sure which course is right for you?
+   598→                </h2>
+   599→                <p className="mt-2.5 text-[14px] sm:text-[15px] text-[#A5B4FC] leading-relaxed max-w-xl">
+   600→                  Book a free consultation with our expert advisors. We&apos;ll help you
+   601→                  choose the perfect learning path based on your goals and experience level.
+   602→                </p>
+   603→              </div>
+   604→
+   605→              {/* Right: CTA */}
+   606→              <div className="flex-shrink-0">
+   607→                <Link
+   608→                  href="/"
+   609→                  className="group relative inline-flex items-center gap-2 rounded-full px-8 py-4 text-[14px] font-bold text-white overflow-hidden transition-all duration-300 hover:-translate-y-1"
+   610→                  style={{ boxShadow: "0 8px 24px rgba(99,102,241,0.4)" }}
+   611→                >
+   612→                  <div className="absolute inset-0 bg-gradient-to-r from-[#6366F1] to-[#818CF8]" />
+   613→                  <div className="absolute inset-0 bg-gradient-to-r from-[#818CF8] to-[#A78BFA] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+   614→                  <span className="relative flex items-center gap-2">
+   615→                    Book Free Consultation
+   616→                    <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+   617→                  </span>
+   618→                </Link>
+   619→              </div>
+   620→            </div>
+   621→          </div>
+   622→        </div>
+   623→      </section>
+   624→    </main>
+   625→  );
+   626→}
+   627→
