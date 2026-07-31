@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
+import Link from "next/link";
 import {
   BookOpen,
   Clock,
@@ -260,13 +261,14 @@ function CourseCard({ course, index, inView }: {
       </div>
 
       {/* Enroll button */}
-      <button
+      <Link
+        href="/courses"
         className="course-enroll-btn group/btn relative shrink-0 flex items-center gap-1 rounded-lg px-3 py-2 text-[11px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:px-3.5"
         style={{ background: course.gradient }}
       >
         Enroll
         <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
-      </button>
+      </Link>
 
       {/* Glow on hover */}
       <div
@@ -401,14 +403,15 @@ export function Courses() {
           style={{ animationDelay: "0.5s" }}
         >
           <div className="course-cta-pulse relative">
-            <button
+            <Link
+              href="/courses"
               className="group relative flex items-center gap-2.5 rounded-2xl px-8 py-4 text-[14px] font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
               style={{ background: "linear-gradient(135deg, #0D9488, #06B6D4)" }}
             >
               <Sparkles className="h-4 w-4" />
               Start Learning Today
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center gap-2 mt-1">
