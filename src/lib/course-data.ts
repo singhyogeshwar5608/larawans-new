@@ -24,6 +24,7 @@ export interface CourseItem {
   glow: string;
   iconBg: string;
   badge?: string;
+  themeColor: string; // hex color for course card accent
 }
 
 export function getCourseBySlug(slug: string): CourseItem | undefined {
@@ -105,6 +106,7 @@ export const ALL_COURSES: CourseItem[] = [
     accent: "#3B82F6",
     glow: "rgba(59,130,246,0.3)",
     iconBg: "bg-blue-500/10",
+    themeColor: "#6366F1",
   },
   {
     slug: "ai-prompt-engineering",
@@ -180,6 +182,7 @@ export const ALL_COURSES: CourseItem[] = [
     glow: "rgba(16,185,129,0.3)",
     iconBg: "bg-emerald-500/10",
     badge: "Trending",
+    themeColor: "#22C55E",
   },
   {
     slug: "mobile-app-development-flutter",
@@ -254,6 +257,7 @@ export const ALL_COURSES: CourseItem[] = [
     accent: "#0EA5E9",
     glow: "rgba(14,165,233,0.3)",
     iconBg: "bg-sky-500/10",
+    themeColor: "#3B82F6",
   },
   {
     slug: "digital-marketing-mastery",
@@ -330,6 +334,7 @@ export const ALL_COURSES: CourseItem[] = [
     glow: "rgba(245,158,11,0.3)",
     iconBg: "bg-amber-500/10",
     badge: "Bestseller",
+    themeColor: "#F59E0B",
   },
   {
     slug: "ui-ux-design-figma",
@@ -403,6 +408,7 @@ export const ALL_COURSES: CourseItem[] = [
     accent: "#F43F5E",
     glow: "rgba(244,63,94,0.3)",
     iconBg: "bg-rose-500/10",
+    themeColor: "#EC4899",
   },
   {
     slug: "devops-cloud-engineering",
@@ -478,6 +484,7 @@ export const ALL_COURSES: CourseItem[] = [
     accent: "#8B5CF6",
     glow: "rgba(139,92,246,0.3)",
     iconBg: "bg-violet-500/10",
+    themeColor: "#8B5CF6",
   },
   {
     slug: "ai-automation-zapier",
@@ -552,6 +559,7 @@ export const ALL_COURSES: CourseItem[] = [
     glow: "rgba(234,179,8,0.3)",
     iconBg: "bg-yellow-500/10",
     badge: "New",
+    themeColor: "#F97316",
   },
   {
     slug: "data-analytics-python",
@@ -627,6 +635,7 @@ export const ALL_COURSES: CourseItem[] = [
     accent: "#14B8A6",
     glow: "rgba(20,184,166,0.3)",
     iconBg: "bg-teal-500/10",
+    themeColor: "#0EA5E9",
   },
   {
     slug: "3d-design-blender",
@@ -701,5 +710,6 @@ export const ALL_COURSES: CourseItem[] = [
     glow: "rgba(217,70,239,0.3)",
     iconBg: "bg-fuchsia-500/10",
     badge: "Popular",
+    themeColor: "#A855F7",
   },
 ];
