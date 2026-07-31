@@ -242,7 +242,7 @@ function CourseCard({ course, index }: { course: CourseItem; index: number }) {
           {/* ── Left: Icon with bg color ── */}
           <div
             className="flex h-12 w-12 items-center justify-center rounded-2xl text-xl flex-shrink-0"
-            style={{ backgroundColor: `${themeColor}18` }}
+            style={{ backgroundColor: `${themeColor}20` }}
           >
             {course.emoji}
           </div>
