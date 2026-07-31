@@ -11,13 +11,12 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-24 sm:py-32">
-      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+    <section id="faq" className="relative pt-[30px] pb-[30px]">
+      <div className="mx-auto w-[97%] px-4 sm:px-6 md:w-[70%]">
         <SectionHeading
           eyebrow="FAQ"
           title="Answers to the"
           highlight="questions that matter"
-          description="Real questions from founders, CTOs, and product leaders we've spoken to over the past 12 years. Don't see yours? Just ask."
         />
 
         <div className="mt-14 flex flex-col gap-3">

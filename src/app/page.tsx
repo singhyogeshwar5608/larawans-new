@@ -2,12 +2,12 @@ import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/sections/hero";
 import { TrustedCompanies } from "@/components/sections/trusted-companies";
 import { Services } from "@/components/sections/services";
+import { Courses } from "@/components/sections/courses";
 import { WhyLarawans } from "@/components/sections/why-larawans";
 import { Industries } from "@/components/sections/industries";
 import { AISolutions } from "@/components/sections/ai-solutions";
 import { DevelopmentProcess } from "@/components/sections/development-process";
 import { ProjectShowcase } from "@/components/sections/project-showcase";
-import { Courses } from "@/components/sections/courses";
 import { Portfolio } from "@/components/sections/portfolio";
 import { TechStack } from "@/components/sections/tech-stack";
 import { Testimonials } from "@/components/sections/testimonials";
@@ -22,8 +22,8 @@ export default function Home() {
       <Hero />
       <TrustedCompanies />
       <Services />
-      <ProjectShowcase />
       <Courses />
+      <ProjectShowcase />
       <Industries />
       <AISolutions />
       <Portfolio />

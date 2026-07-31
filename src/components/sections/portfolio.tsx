@@ -112,7 +112,7 @@ export function Portfolio() {
                 <div className="relative flex h-full flex-col overflow-hidden rounded-[14px] bg-white transition-all duration-500 group-hover:-translate-y-1 group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
               {/* Big gradient header */}
               <div
-                className="relative h-[260px] overflow-hidden"
+                className="relative h-[330px] overflow-hidden"
                 style={{ background: p.accent }}
               >
                 {/* Pattern overlay */}

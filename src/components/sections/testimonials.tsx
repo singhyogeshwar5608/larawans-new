@@ -6,13 +6,14 @@ import { SectionHeading } from "../section-heading";
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="relative py-[40px] sm:py-[60px]">
+    <section id="testimonials" className="relative py-[40px] sm:py-[60px]" style={{ background: "#F8F8F3" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="Testimonials"
           title="What clients say after"
           highlight="working with us"
-          description="Real outcomes from real partners — measured in claim turnaround, App Store ratings, revenue, and reduced headcount, not vanity metrics."
+          titleStyle={{ color: "#1A1A2E" }}
+          eyebrowStyle={{ background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A" }}
         />
 
         {/* Mobile: horizontal swipe carousel | Desktop: 3-col grid */}
@@ -20,8 +21,8 @@ export function Testimonials() {
           {testimonials.map((t, i) => (
             <figure
               key={t.name}
-              className="testimonial-card group relative w-[85vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-gradient-to-b from-white/[0.05] to-transparent p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 hover:border-white/20 md:w-full interactive sm:w-[400px]"
-              style={{ animationDelay: `${(i % 3) * 0.1}s` }}
+              className="testimonial-card group relative w-[85vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/10 p-6 transition-all duration-500 hover:-translate-y-1 md:w-full interactive sm:w-[400px]"
+              style={{ background: "#0b0d22", boxShadow: "0 8px 32px rgba(0,0,0,0.25)", animationDelay: `${(i % 3) * 0.1}s` }}
             >
               {/* Quote icon */}
               <div className="mb-4 flex items-center justify-between">
@@ -39,7 +40,7 @@ export function Testimonials() {
                 </div>
               </div>
 
-              <blockquote className="text-[14px] leading-relaxed text-foreground/90">
+              <blockquote className="text-[14px] leading-relaxed" style={{ color: "#eef1ff" }}>
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 

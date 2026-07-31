@@ -37,7 +37,10 @@ const SOCIALS = [
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto overflow-hidden border-t border-white/[0.08] bg-[#06081a]/80 backdrop-blur-xl">
+    <footer
+      className="relative mt-auto overflow-hidden border-t border-white/[0.08] bg-[#06081a]/80 backdrop-blur-xl"
+      style={{ borderRadius: "10px 10px 0 0" }}
+    >
       {/* Glow top */}
       <div
         aria-hidden

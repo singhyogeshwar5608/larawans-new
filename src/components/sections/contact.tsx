@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Mail, Phone, MapPin, Send, Sparkles } from "lucide-react";
 import { MagneticButton } from "../magnetic-button";
-import { ParticleNetwork } from "../particle-network";
 
 export function Contact() {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
@@ -18,11 +17,10 @@ export function Contact() {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden py-24 sm:py-32">
-      <ParticleNetwork className="opacity-50" />
+    <section id="contact" className="relative overflow-hidden py-[40px]" style={{ background: "#F8F8F3" }}>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0d1030]/80 via-[#0a0c24]/70 to-[#0a0c24]/50 p-8 backdrop-blur-2xl sm:p-12 lg:p-16">
+        <div className="relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0d1030]/95 via-[#0a0c24]/90 to-[#0a0c24]/85 p-8 sm:p-12 lg:p-16" style={{ boxShadow: "0 24px 80px rgba(0,0,0,0.25)" }}>
           {/* Decorative glows */}
           <div
             aria-hidden
@@ -49,17 +47,13 @@ export function Contact() {
                 Let's Build Something Amazing Together
               </motion.div>
 
-              <motion.h2
-                initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
+              <h2
                 className="mt-5 font-display text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-[3.2rem]"
               >
                 <span className="text-gradient-neon">Let's turn your idea</span>
                 <br />
                 <span className="text-gradient-aurora">into shipped software.</span>
-              </motion.h2>
+              </h2>
 
               <motion.p
                 initial={{ opacity: 0, y: 18 }}
@@ -121,7 +115,8 @@ export function Contact() {
                     required
                     rows={4}
                     placeholder="A short paragraph about your project, timeline, and goals…"
-                    className="interactive resize-none rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors focus:border-[#7c5cff]/60 focus:bg-[#7c5cff]/[0.05]"
+                    className="interactive resize-none rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors"
+                    style={{ background: "#FFFFFF", color: "#1A1A2E" }}
                   />
                 </div>
 
@@ -199,7 +194,8 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         required={required}
         placeholder={placeholder}
-        className="interactive rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/60 outline-none transition-colors focus:border-[#7c5cff]/60 focus:bg-[#7c5cff]/[0.05]"
+        className="interactive rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors"
+        style={{ background: "#FFFFFF", color: "#1A1A2E" }}
       />
     </div>
   );

@@ -220,7 +220,7 @@ export function Hero() {
       />
 
       {/* ── Main Content ── */}
-      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
+      <div className="relative z-50 mx-auto flex max-w-5xl flex-col items-center text-center">
         {/* Top badge */}
         <motion.div
           initial={{ opacity: 0, y: 18, scale: 0.95 }}
@@ -312,7 +312,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.1, duration: 0.8 }}
-        className="absolute bottom-7 left-1/2 z-10 -translate-x-1/2"
+        className="absolute bottom-7 left-1/2 z-50 -translate-x-1/2"
       >
         <div className="flex h-9 w-6 items-start justify-center rounded-full border border-white/15 p-1.5 backdrop-blur">
           <motion.span

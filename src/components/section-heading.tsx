@@ -13,6 +13,8 @@ export function SectionHeading({
   description,
   align = "center",
   className,
+  titleStyle,
+  eyebrowStyle,
 }: {
   eyebrow?: string;
   title: string;
@@ -20,6 +22,8 @@ export function SectionHeading({
   description?: string;
   align?: "center" | "left";
   className?: string;
+  titleStyle?: React.CSSProperties;
+  eyebrowStyle?: React.CSSProperties;
 }) {
   return (
     <div
@@ -36,6 +40,7 @@ export function SectionHeading({
           viewport={{ once: true, amount: 0.6 }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-violet-200/80 backdrop-blur"
+          style={eyebrowStyle}
         >
           <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#00e0c6] shadow-[0_0_10px_#00e0c6]" />
           {eyebrow}
@@ -48,6 +53,7 @@ export function SectionHeading({
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
         className="font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]"
+        style={titleStyle}
       >
         {title}{" "}
         {highlight && <span className="text-gradient-aurora">{highlight}</span>}

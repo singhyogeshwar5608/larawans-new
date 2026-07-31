@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import Link from "next/link";
 import {
   BookOpen,
   Clock,
@@ -23,12 +22,13 @@ import {
 /* ── Course Data (4 cards with images) ── */
 const COURSES = [
   {
-    title: "Web Development",
-    subtitle: "Laravel · React · Next.js",
+    title: "Web & App Development",
+    subtitle: "Laravel · React · Flutter · SEO",
     category: "Full-Stack Engineering",
-    description: "Learn to build complete websites from scratch — backend logic with Laravel, modern UI with React, and fast apps with Next.js.",
-    outcome: "Ship your own portfolio site by week 4",
-    topics: ["Eloquent ORM", "React Patterns", "RESTful APIs", "Streaming SSR"],
+    description: "Learn to build complete websites and mobile apps from scratch — backend with Laravel, modern UI with React, cross-platform apps with Flutter, and rank on Google with SEO.",
+    outcome: "Ship your own portfolio site & app by week 4",
+    topics: ["React Patterns", "Flutter Apps", "SEO Mastery", "RESTful APIs"],
+    highlight: "SEO Mastery",
     duration: "16 Weeks",
     level: "All Levels",
     modules: 50,
@@ -175,7 +175,6 @@ function CourseCard({ course, index, inView }: {
 
       {/* Image + Icon combo */}
       <div className="relative flex shrink-0 items-center justify-center">
-        {/* Background image (blurred, clipped) */}
         <div
           className="absolute inset-0 rounded-lg overflow-hidden transition-transform duration-500 group-hover:scale-110"
           style={{ width: "44px", height: "44px" }}
@@ -187,12 +186,10 @@ function CourseCard({ course, index, inView }: {
             style={{ filter: "brightness(0.7) saturate(1.3)" }}
           />
         </div>
-        {/* Gradient overlay on image */}
         <div
           className="absolute rounded-lg"
           style={{ width: "44px", height: "44px", background: course.gradient, opacity: 0.55 }}
         />
-        {/* Icon on top */}
         <div className="relative flex h-11 w-11 items-center justify-center">
           <Icon className="h-5 w-5 text-white drop-shadow-lg" />
         </div>
@@ -221,22 +218,20 @@ function CourseCard({ course, index, inView }: {
           {course.description}
         </p>
 
-        {/* Outcome + Meta row */}
-        <div className="mt-2 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
-              <Clock className="h-2.5 w-2.5" />
-              {course.duration}
-            </span>
-            <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
-            <span className="text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
-              {course.modules} Modules
-            </span>
-            <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
-            <span className="text-[10px] font-medium" style={{ color: course.accent }}>
-              {course.students} students
-            </span>
-          </div>
+        {/* Meta row */}
+        <div className="mt-2 flex items-center gap-2">
+          <span className="flex items-center gap-0.5 text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
+            <Clock className="h-2.5 w-2.5" />
+            {course.duration}
+          </span>
+          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+          <span className="text-[10px] font-medium" style={{ color: "#9CA3AF" }}>
+            {course.modules} Modules
+          </span>
+          <span className="text-[10px]" style={{ color: "#D1D5DB" }}>·</span>
+          <span className="text-[10px] font-medium" style={{ color: course.accent }}>
+            {course.students} students
+          </span>
         </div>
 
         {/* Topics chips + Outcome */}
@@ -244,8 +239,12 @@ function CourseCard({ course, index, inView }: {
           {course.topics.slice(0, 3).map((topic) => (
             <span
               key={topic}
-              className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-medium"
-              style={{ background: course.tagColor, color: course.tagText }}
+              className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[9px] font-bold"
+              style={
+                (course as { highlight?: string }).highlight === topic
+                  ? { background: course.gradient, color: "#FFFFFF" }
+                  : { background: course.tagColor, color: course.tagText }
+              }
             >
               <CheckCircle2 className="h-2 w-2" />
               {topic}
@@ -261,14 +260,13 @@ function CourseCard({ course, index, inView }: {
       </div>
 
       {/* Enroll button */}
-      <Link
-        href="/courses"
+      <button
         className="course-enroll-btn group/btn relative shrink-0 flex items-center gap-1 rounded-lg px-3 py-2 text-[11px] font-bold text-white transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 sm:px-3.5"
         style={{ background: course.gradient }}
       >
         Enroll
         <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-1" />
-      </Link>
+      </button>
 
       {/* Glow on hover */}
       <div
@@ -336,9 +334,7 @@ export function Courses() {
             className="course-fade-up mt-4 text-[15px] leading-relaxed sm:text-base"
             style={{ color: "#6B7280", animationDelay: "0.14s" }}
           >
-            Our courses are built by real developers who work on client projects every day.
-            No boring theory — you will write real code, solve real problems, and build
-            projects that you can actually show in your portfolio.
+            Learn from industry experts with practical, project-based training. Build real websites, apps, AI tools, and marketing campaigns while creating a portfolio that helps you get internships, freelance clients, or a full-time job.
           </p>
         </div>
 
@@ -405,15 +401,14 @@ export function Courses() {
           style={{ animationDelay: "0.5s" }}
         >
           <div className="course-cta-pulse relative">
-            <Link
-              href="/courses"
+            <button
               className="group relative flex items-center gap-2.5 rounded-2xl px-8 py-4 text-[14px] font-bold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
               style={{ background: "linear-gradient(135deg, #0D9488, #06B6D4)" }}
             >
               <Sparkles className="h-4 w-4" />
               Start Learning Today
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
+            </button>
           </div>
 
           <div className="flex items-center gap-2 mt-1">

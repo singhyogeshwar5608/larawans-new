@@ -335,7 +335,7 @@ body {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
@@ -504,13 +504,11 @@ section { position: relative; }
 
 /* Hide scrollbar for carousels */
 .scrollbar-hide,
-.no-scrollbar,
 .ai-carousel {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 .scrollbar-hide::-webkit-scrollbar,
-.no-scrollbar::-webkit-scrollbar,
 .ai-carousel::-webkit-scrollbar {
   display: none;
 }
@@ -597,51 +595,59 @@ section { position: relative; }
   100% { transform: translateX(100%); }
 }
 
-/* ── Courses Section — Premium Animations ── */
+/* ── Course Section — Warm Theme Animations ── */
+
+/* Fade-up stagger entrance */
 .course-fade-up {
   opacity: 0;
-  transform: translateY(24px);
+  transform: translateY(18px);
   animation: course-fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
+@keyframes course-fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+/* Card scale-in entrance */
 .course-card {
   opacity: 0;
-  transform: translateY(24px) scale(0.97);
-  animation: course-card-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: scale(0.96) translateY(12px);
+  animation: course-card-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes course-card-in {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-.course-card:hover {
-  border-color: rgba(245, 158, 11, 0.2) !important;
-  box-shadow: 0 16px 48px rgba(0,0,0,0.06), 0 0 0 1px rgba(245,158,11,0.08) !important;
-}
-
+/* Card glow on hover */
 .course-card-glow {
-  border-radius: inherit;
-  z-index: -1;
+  transition: opacity 0.5s ease;
 }
 
 /* Shimmer sweep on hover */
-.course-card-shimmer {
-  z-index: 1;
-  border-radius: inherit;
-}
-.course-shimmer-bar {
+.course-card-shimmer .course-shimmer-bar {
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(255, 255, 255, 0.6) 45%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.6) 55%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.35) 55%,
     transparent 60%
   );
   transform: translateX(-100%);
   transition: none;
 }
 .course-card:hover .course-shimmer-bar {
-  animation: course-shimmer-sweep 0.8s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: course-shimmer-sweep 0.75s ease forwards;
+}
+@keyframes course-shimmer-sweep {
+  to { transform: translateX(100%); }
 }
 
-/* Enroll button scale */
+/* Enroll button hover */
 .course-enroll-btn {
   position: relative;
   overflow: hidden;
@@ -650,11 +656,12 @@ section { position: relative; }
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  background: rgba(255, 255, 255, 0.15);
   transform: translateX(-100%);
+  transition: transform 0.4s ease;
 }
 .course-enroll-btn:hover::after {
-  animation: course-shimmer-sweep 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateX(100%);
 }
 
 /* CTA pulse ring */
@@ -666,110 +673,30 @@ section { position: relative; }
   background: linear-gradient(135deg, #0D9488, #06B6D4);
   opacity: 0;
   z-index: -1;
-  animation: course-cta-ring 2.5s ease-out infinite;
+  animation: course-cta-ring 2.5s ease-in-out infinite;
 }
-
-/* Floating dots */
-.course-float-1 { animation: course-float-a 7s ease-in-out infinite; }
-.course-float-2 { animation: course-float-b 9s ease-in-out infinite; }
-.course-float-3 { animation: course-float-c 8s ease-in-out infinite; }
-
-@keyframes course-fade-up {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes course-card-in {
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes course-shimmer-sweep {
-  to { transform: translateX(100%); }
-}
-
 @keyframes course-cta-ring {
-  0% { opacity: 0.5; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.15); }
+  0%, 100% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(1.04); }
 }
+
+/* Floating decorative dots */
+.course-float-1 { animation: course-float-a 6s ease-in-out infinite; }
+.course-float-2 { animation: course-float-b 8s ease-in-out infinite; }
+.course-float-3 { animation: course-float-c 7s ease-in-out infinite; }
 
 @keyframes course-float-a {
-  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-  33% { transform: translate(12px, -18px); opacity: 0.5; }
-  66% { transform: translate(-8px, 8px); opacity: 0.2; }
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(12px, -18px); }
+  50% { transform: translate(-8px, -30px); }
+  75% { transform: translate(15px, -10px); }
 }
 @keyframes course-float-b {
-  0%, 100% { transform: translate(0, 0); opacity: 0.25; }
-  50% { transform: translate(-15px, -12px); opacity: 0.45; }
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-20px, 14px); }
+  66% { transform: translate(10px, -20px); }
 }
 @keyframes course-float-c {
-  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-  40% { transform: translate(10px, 14px); opacity: 0.4; }
-  80% { transform: translate(-6px, -10px); opacity: 0.15; }
-}
-
-/* ── Course Detail Page — Hero SVG Animations ── */
-@keyframes hero-laptop-float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(0.3deg); }
-}
-@keyframes hero-float-a {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(-6px, -10px) rotate(-2deg); }
-}
-@keyframes hero-float-b {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(8px, -12px) rotate(1.5deg); }
-}
-@keyframes hero-float-c {
   0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-8px, -6px); }
+  50% { transform: translate(-15px, -25px); }
 }
-@keyframes hero-float-d {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(5px, -10px) rotate(3deg); }
-}
-@keyframes hero-float-e {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(-4px, -8px) rotate(-1.5deg); }
-}
-@keyframes hero-glow-pulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
-}
-@keyframes hero-bulb-glow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
-}
-@keyframes hero-cursor-blink {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 0; }
-}
-@keyframes hero-particle-drift {
-  0%, 100% { transform: translateY(0) scale(1); opacity: 0.15; }
-  50% { transform: translateY(-10px) scale(1.3); opacity: 0.35; }
-}
-@keyframes cta-chip-pulse {
-  0%, 100% { opacity: 0.8; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.08); }
-}
-@keyframes cta-chip-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.hero-svg-laptop { animation: hero-laptop-float 6s ease-in-out infinite; }
-.hero-svg-float-a { animation: hero-float-a 5s ease-in-out infinite; transform-origin: 140px 145px; }
-.hero-svg-float-b { animation: hero-float-b 6s ease-in-out 0.5s infinite; transform-origin: 440px 115px; }
-.hero-svg-float-c { animation: hero-float-c 5.5s ease-in-out 1s infinite; transform-origin: 475px 275px; }
-.hero-svg-float-d { animation: hero-float-d 6s ease-in-out 0.8s infinite; transform-origin: 490px 385px; }
-.hero-svg-float-e { animation: hero-float-e 5s ease-in-out 2s infinite; transform-origin: 50px 245px; }
-.hero-svg-glow-pulse { animation: hero-glow-pulse 4s ease-in-out infinite; }
-.hero-svg-bulb { animation: hero-bulb-glow 4s ease-in-out infinite; }
-.hero-svg-cursor { animation: hero-cursor-blink 1s step-end infinite; }
-.hero-svg-particle { animation: hero-particle-drift 5s ease-in-out infinite; }
-.hero-svg-particle-slow { animation: hero-particle-drift 7s ease-in-out 1s infinite; }
-.hero-svg-particle-med { animation: hero-particle-drift 6s ease-in-out 2s infinite; }
-.cta-chip-pulse { animation: cta-chip-pulse 4s ease-in-out infinite; }
-.cta-chip-rotate { animation: cta-chip-rotate 20s linear infinite; transform-origin: center; transform-box: fill-box; }
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

@@ -6,7 +6,7 @@ import { SectionHeading } from "../section-heading";
 
 export function DevelopmentProcess() {
   return (
-    <section id="process" className="relative pt-[30px] sm:pt-[50px] pb-24 sm:pb-32">
+    <section id="process" className="relative pt-[30px] sm:pt-[50px] pb-[30px]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           eyebrow="How We Work"
@@ -111,28 +111,29 @@ function StepCard({
       whileInView={{ opacity: 1, y: 0, x: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
-      className={`group glass-card relative overflow-hidden rounded-3xl p-6 interactive ${
+      className={`group relative overflow-hidden rounded-3xl border border-black/[0.06] p-6 interactive ${
         align === "right" ? "lg:text-right" : ""
       }`}
+      style={{ background: "#F3F3EE", boxShadow: "0 4px 20px rgba(0,0,0,0.08)" }}
     >
       <div
         className={`flex items-center gap-3 ${
           align === "right" ? "lg:flex-row-reverse" : ""
         }`}
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#7c5cff]/30 to-[#00e0c6]/20 text-[#00e0c6]">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={{ border: "1px solid rgba(0,0,0,0.08)", background: "linear-gradient(135deg, rgba(124,92,255,0.12), rgba(0,224,198,0.08))", color: "#7c5cff" }}>
           <step.icon className="h-5 w-5" strokeWidth={1.8} />
         </div>
         <div className={`flex flex-col ${align === "right" ? "lg:items-end" : ""}`}>
-          <span className="font-mono text-[10.5px] uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.2em]" style={{ color: "#6B7280" }}>
             Stage {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="font-display text-lg font-semibold tracking-tight">
+          <h3 className="font-display text-lg font-semibold tracking-tight" style={{ color: "#1A1A2E" }}>
             {step.title}
           </h3>
         </div>
       </div>
-      <p className="mt-3 text-[13.5px] leading-relaxed text-muted-foreground">
+      <p className="mt-3 text-[13.5px] leading-relaxed" style={{ color: "#4B5563" }}>
         {step.description}
       </p>
     </motion.div>
