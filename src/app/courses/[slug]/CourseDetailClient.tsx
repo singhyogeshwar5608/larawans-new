@@ -1,587 +1,942 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  ArrowLeft, ArrowRight, Clock, Users, BookOpen, CheckCircle2, Zap,
-  Star, Play, Sparkles, GraduationCap, ChevronDown, ChevronUp,
-  Globe, ShoppingCart, BarChart3, FileText, Layout, Code, Search,
-  Target, Share2, Mail, PenTool, Mic, MessageCircle, Cloud, Shield,
-  Activity, Utensils, PieChart, UsersRound, UserPlus, Smartphone,
-  Layers, ShoppingBag, Box, Palette, Image, BookOpen as BookIcon,
-  GitBranch, FileCode, RefreshCw, Calendar, MapPin, Link, Map,
-  Award, Infinity, Headphones, Briefcase, HelpCircle, Download,
+  ArrowLeft,
+  ArrowRight,
+  Home,
+  Clock,
+  Users,
+  BookOpen,
+  CheckCircle2,
+  Zap,
+  Star,
+  Play,
+  Sparkles,
+  GraduationCap,
+  ChevronDown,
+  ChevronUp,
+  Globe,
+  ShoppingCart,
+  BarChart3,
+  FileText,
+  Layout,
+  Code,
+  Search,
+  Target,
+  Share2,
+  Mail,
+  PenTool,
+  Mic,
+  MessageCircle,
+  Cloud,
+  Shield,
+  Activity,
+  Utensils,
+  PieChart,
+  UsersRound,
+  UserPlus,
+  Smartphone,
+  Layers,
+  ShoppingBag,
+  Box,
+  Palette,
+  Image as ImageIcon,
+  GitBranch,
+  FileCode,
+  RefreshCw,
+  Calendar,
+  MapPin,
+  Award,
+  Infinity as InfinityIcon,
+  Headphones,
+  Briefcase,
+  HelpCircle,
+  Download,
+  Terminal,
+  Cpu,
+  Bot,
+  Binary,
+  Check,
+  Building2,
+  Compass,
+  Laptop,
+  Lightbulb,
+  CheckCircle,
 } from "lucide-react";
 import NextLink from "next/link";
+import { ALL_COURSES } from "@/lib/course-data";
 import type { CourseItem } from "@/lib/course-data";
 
-/* ── Icon map for projects ── */
+/* ── Tech Icon Mapping ── */
+import {
+  SiLaravel,
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiTailwindcss,
+  SiMysql,
+  SiVercel,
+  SiDocker,
+  SiOpenaigym as SiOpenai,
+  SiPython,
+  SiFlutter,
+  SiFirebase,
+  SiGooglecloud,
+  SiFigma,
+  SiFramer,
+  SiNotion,
+  SiKubernetes,
+  SiTerraform,
+  SiGrafana,
+  SiPrometheus,
+  SiLinux,
+  SiZapier,
+  SiSlackware as SiSlack,
+  SiGoogleanalytics,
+  SiGoogleads,
+  SiCanvas as SiCanva,
+  SiWordpress,
+  SiBlender,
+} from "react-icons/si";
+
+type TechIconComponent = React.ComponentType<{ size?: number; color?: string }>;
+
+const TECH_ICON_MAP: Record<string, TechIconComponent> = {
+  Laravel: SiLaravel,
+  React: SiReact,
+  "Next.js": SiNextdotjs,
+  TypeScript: SiTypescript,
+  "Tailwind CSS": SiTailwindcss,
+  MySQL: SiMysql,
+  Vercel: SiVercel,
+  Docker: SiDocker,
+  ChatGPT: SiOpenai,
+  "OpenAI API": SiOpenai,
+  "DALL-E": SiOpenai,
+  "Hugging Face": SiOpenai,
+  Python: SiPython,
+  Flutter: SiFlutter,
+  Dart: SiFlutter,
+  Firebase: SiFirebase,
+  "Google Cloud": SiGooglecloud,
+  Figma: SiFigma,
+  Framer: SiFramer,
+  Notion: SiNotion,
+  AWS: SiGooglecloud,
+  Kubernetes: SiKubernetes,
+  Terraform: SiTerraform,
+  Grafana: SiGrafana,
+  Prometheus: SiPrometheus,
+  Linux: SiLinux,
+  Zapier: SiZapier,
+  Slack: SiSlack,
+  "Google Analytics": SiGoogleanalytics,
+  "Google Ads": SiGoogleads,
+  Canva: SiCanva,
+  WordPress: SiWordpress,
+  Blender: SiBlender,
+};
+
+/* ── Project Icons ── */
 const PROJECT_ICONS: Record<string, React.ElementType> = {
-  globe: Globe, "shopping-cart": ShoppingCart, "bar-chart": BarChart3,
-  "file-text": FileText, layout: Layout, code: Code, search: Search,
-  target: Target, "share-2": Share2, mail: Mail, "pen-tool": PenTool,
-  mic: Mic, "message-circle": MessageCircle, cloud: Cloud, shield: Shield,
-  activity: Activity, utensils: Utensils, "pie-chart": PieChart,
-  users: UsersRound, "user-plus": UserPlus, smartphone: Smartphone,
-  layers: Layers, "shopping-bag": ShoppingBag, box: Box, palette: Palette,
-  image: Image, "book-open": BookIcon, "git-branch": GitBranch,
-  "file-code": FileCode, "refresh-cw": RefreshCw, calendar: Calendar,
-  "map-pin": MapPin, link: Link, map: Map,
+  globe: Globe,
+  "shopping-cart": ShoppingCart,
+  "bar-chart": BarChart3,
+  "file-text": FileText,
+  layout: Layout,
+  code: Code,
+  search: Search,
+  target: Target,
+  "share-2": Share2,
+  mail: Mail,
+  "pen-tool": PenTool,
+  mic: Mic,
+  "message-circle": MessageCircle,
+  cloud: Cloud,
+  shield: Shield,
+  activity: Activity,
+  utensils: Utensils,
+  "pie-chart": PieChart,
+  users: UsersRound,
+  "user-plus": UserPlus,
+  smartphone: Smartphone,
+  layers: Layers,
+  "shopping-bag": ShoppingBag,
+  box: Box,
+  palette: Palette,
+  image: ImageIcon,
 };
 
 /* ── FAQ Data ── */
 const FAQ_DATA = [
-  { q: "Do I need coding experience?", a: "No, this course is designed for complete beginners. We start from the very basics and gradually build up to advanced concepts. All you need is a laptop and internet connection." },
-  { q: "What tools do I need?", a: "You will need a laptop with at least 8GB RAM. All tools used in the course are either free or have free tiers available. We provide setup guides for every tool." },
-  { q: "Will I get a certificate?", a: "Yes, you will receive a verified certificate of completion that you can add to your LinkedIn profile or resume. The certificate is recognized by industry professionals." },
-  { q: "How much time should I invest?", a: "We recommend dedicating 8-10 hours per week for optimal progress. However, the course is self-paced, so you can adjust your learning speed based on your schedule." },
-  { q: "Is this suitable for beginners?", a: "Absolutely. The curriculum is structured to take you from zero to professional. Each module builds on the previous one, and our mentors provide support at every step." },
-  { q: "Do I get lifetime access?", a: "Yes, once you enroll, you get lifetime access to all course materials, including any future updates and new content we add. You can revisit any module anytime." },
-  { q: "Is there mentor support?", a: "Yes, you get direct access to industry mentors who review your work, answer questions, and guide you through challenges. Mentor support is available throughout the course." },
-  { q: "Can I get a refund?", a: "We offer a 7-day no-questions-asked refund policy. If the course is not right for you within the first week, you get a full refund." },
+  {
+    q: "Do I need prior coding or technical experience to join?",
+    a: "No prior experience is required! The curriculum is designed from scratch, starting with fundamental concepts and progressively building up to industry-level mastery.",
+  },
+  {
+    q: "What hardware and software tools will I need?",
+    a: "You only need a standard computer or laptop with at least 8GB RAM and a stable internet connection. All software tools, SDKs, and IDEs used in the course are free or open-source.",
+  },
+  {
+    q: "Will I receive a verified certificate upon completion?",
+    a: "Yes! Upon successfully completing the course modules and capstone project, you will receive a verified digital certificate that you can attach to your LinkedIn and resume.",
+  },
+  {
+    q: "How many hours per week should I dedicate to learning?",
+    a: "We recommend spending about 6 to 8 hours per week for optimal learning, including watching video lectures, completing hands-on exercises, and building capstone projects.",
+  },
+  {
+    q: "Do I get lifetime access to course updates and materials?",
+    a: "Absolutely. Enrolling gives you lifetime access to all current and future video lessons, code repositories, exercise templates, and community discussion channels.",
+  },
+  {
+    q: "Is there 1-on-1 mentor guidance available?",
+    a: "Yes! You will have direct access to senior mentors and industry software engineers for code reviews, doubt clearance, portfolio feedback, and interview prep.",
+  },
+  {
+    q: "What kind of portfolio projects will I build?",
+    a: "You will build 6 to 8 real-world, production-ready applications complete with full documentation, clean codebase, and live cloud deployment URL to showcase to employers.",
+  },
+  {
+    q: "What if I am not satisfied with the course?",
+    a: "We offer a 7-day money-back guarantee. If you feel the course doesn't match your expectations within the first week, you can request a 100% full refund.",
+  },
 ];
 
-/* ── Animation helpers ── */
-/* Content is always visible (no opacity:0). Motion adds subtle slide. */
+/* ── Motion Helper ── */
 const fadeUp = (delay = 0) => ({
   initial: { y: 15 },
   whileInView: { y: 0 },
   viewport: { once: true, margin: "-40px" },
-  transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.45, delay },
 });
 
-const stagger = (base = 0) => ({ ...fadeUp(base), transition: { ...fadeUp(base).transition, duration: 0.45 } });
-
-/* ── No-motion fallback ── */
-const noMotion = { initial: false, animate: { opacity: 1 } };
-
-/* ── Hero SVG (premium laptop illustration) ── */
-function HeroSVG() {
+/* ── Hero Vector Laptop Illustration ── */
+function HeroLaptopSVG() {
   return (
-    <svg viewBox="0 0 540 500" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+    <svg viewBox="0 0 540 460" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto max-w-lg mx-auto">
       <defs>
-        <linearGradient id="hScreenBg" x1="0" y1="0" x2="0.3" y2="1"><stop offset="0%" stopColor="#0F1115"/><stop offset="100%" stopColor="#0F172A"/></linearGradient>
-        <linearGradient id="hLidOuter" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#1E1F2E"/><stop offset="100%" stopColor="#14152A"/></linearGradient>
-        <linearGradient id="hLidEdge" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#2A2B3E"/><stop offset="100%" stopColor="#1A1B2E"/></linearGradient>
-        <linearGradient id="hBaseTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#E8EAED"/><stop offset="100%" stopColor="#D4D8DE"/></linearGradient>
-        <linearGradient id="hBaseFront" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#B8BCC4"/><stop offset="100%" stopColor="#A0A4AC"/></linearGradient>
-        <linearGradient id="hAiGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#818CF8"/><stop offset="40%" stopColor="#6C63FF"/><stop offset="100%" stopColor="#5B51E0"/></linearGradient>
-        <radialGradient id="hAiGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#6C63FF" stopOpacity="0.4"/><stop offset="100%" stopColor="#6C63FF" stopOpacity="0"/></radialGradient>
-        <linearGradient id="hBar1" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#F59E0B"/><stop offset="100%" stopColor="#FBBF24"/></linearGradient>
-        <linearGradient id="hBar2" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#FB923C"/><stop offset="100%" stopColor="#FDBA74"/></linearGradient>
-        <linearGradient id="hBar3" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#818CF8"/><stop offset="100%" stopColor="#A78BFA"/></linearGradient>
-        <linearGradient id="hBar4" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stopColor="#6C63FF"/><stop offset="100%" stopColor="#7C73FF"/></linearGradient>
-        <radialGradient id="hBulbGlow" cx="50%" cy="35%" r="60%"><stop offset="0%" stopColor="#FEF3C7" stopOpacity="0.9"/><stop offset="50%" stopColor="#FDE68A" stopOpacity="0.35"/><stop offset="100%" stopColor="#FCD34D" stopOpacity="0"/></radialGradient>
-        <radialGradient id="hBlob1" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#EDE9FE" stopOpacity="0.7"/><stop offset="100%" stopColor="#EDE9FE" stopOpacity="0"/></radialGradient>
-        <radialGradient id="hBlob2" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#DBEAFE" stopOpacity="0.4"/><stop offset="100%" stopColor="#DBEAFE" stopOpacity="0"/></radialGradient>
-        <filter id="hCardShadow" x="-25%" y="-25%" width="150%" height="170%"><feDropShadow dx="0" dy="8" stdDeviation="14" floodColor="#6366F1" floodOpacity="0.1"/></filter>
-        <filter id="hLightShadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="10" floodColor="#000000" floodOpacity="0.06"/></filter>
-        <filter id="hGroundShadow" x="-20%" y="-10%" width="140%" height="140%"><feDropShadow dx="0" dy="8" stdDeviation="28" floodColor="#1E1B4B" floodOpacity="0.1"/></filter>
-        <filter id="hPurpleShadow" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="14" stdDeviation="20" floodColor="#6C63FF" floodOpacity="0.15"/></filter>
+        <linearGradient id="screenGrad" x1="0" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stopColor="#0F172A" />
+          <stop offset="100%" stopColor="#1E1B4B" />
+        </linearGradient>
+        <linearGradient id="lidFrame" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#334155" />
+          <stop offset="100%" stopColor="#1E293B" />
+        </linearGradient>
+        <linearGradient id="aiCardGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#6366F1" />
+          <stop offset="100%" stopColor="#4F46E5" />
+        </linearGradient>
       </defs>
-      {/* Ambient blobs */}
-      <ellipse cx="290" cy="270" rx="200" ry="180" fill="url(#hBlob1)"/>
-      <ellipse cx="400" cy="180" rx="100" ry="100" fill="url(#hBlob2)"/>
-      {/* Dot grid */}
-      <g opacity="0.45">
-        {Array.from({length:36}).map((_,i)=>{const row=Math.floor(i/6),col=i%6;return <circle key={`dot-${i}`} cx={395+col*20} cy={55+row*20} r="2" fill="#C7D2FE"/>;})}
-      </g>
-      {/* Ambient circles */}
-      <circle cx="100" cy="90" r="30" fill="#C4B5FD" opacity="0.3"/>
-      <circle cx="430" cy="190" r="16" fill="#93C5FD" opacity="0.22"/>
-      <circle cx="475" cy="250" r="10" fill="#DDD6FE" opacity="0.35"/>
-      {/* Particles */}
-      <g className="hero-svg-particle"><circle cx="70" cy="195" r="3" fill="#A78BFA" opacity="0.25"/></g>
-      <g className="hero-svg-particle-slow"><circle cx="460" cy="145" r="2.5" fill="#93C5FD" opacity="0.2"/></g>
-      <g className="hero-svg-particle-med"><circle cx="150" cy="395" r="2" fill="#FCD34D" opacity="0.25"/></g>
 
-      {/* Laptop */}
-      <g className="hero-svg-laptop" filter="url(#hGroundShadow)">
-        <path d="M148,105 L388,95 L392,265 L144,275 Z" rx="14" fill="url(#hLidOuter)" stroke="#2A2B3E" strokeWidth="0.5"/>
-        <path d="M148,105 Q148,95 162,93 L374,83 Q388,81 388,95 Z" fill="url(#hLidEdge)" opacity="0.5"/>
-        <path d="M158,118 L380,108 L382,254 L156,264 Z" rx="6" fill="url(#hScreenBg)"/>
-        <circle cx="269" cy="95" r="2.5" fill="#2A2B3E"/><circle cx="269" cy="95" r="1.2" fill="#3B3C52"/>
-        <circle cx="172" cy="130" r="3.5" fill="#6C63FF"/>
-        {/* Skeleton card */}
-        <rect x="166" y="142" width="82" height="52" rx="5" fill="#161825" opacity="0.85"/>
-        <circle cx="175" cy="152" r="2.8" fill="#6C63FF"/>
-        <rect x="182" y="150" width="36" height="3.5" rx="1.5" fill="#DDD6FE" opacity="0.5"/>
-        <rect x="182" y="157" width="52" height="3.5" rx="1.5" fill="#93C5FD" opacity="0.4"/>
-        <rect x="182" y="164" width="44" height="3.5" rx="1.5" fill="#DDD6FE" opacity="0.35"/>
-        <rect x="182" y="171" width="28" height="3.5" rx="1.5" fill="#93C5FD" opacity="0.4"/>
-        {/* Right card */}
-        <rect x="298" y="148" width="68" height="42" rx="5" fill="#161825" opacity="0.7"/>
-        <rect x="306" y="157" width="48" height="3" rx="1.5" fill="#93C5FD" opacity="0.3"/>
-        <rect x="306" y="164" width="38" height="3" rx="1.5" fill="#DDD6FE" opacity="0.25"/>
-        <rect x="306" y="171" width="44" height="3" rx="1.5" fill="#93C5FD" opacity="0.2"/>
-        {/* AI badge glow */}
-        <g className="hero-svg-glow-pulse"><ellipse cx="270" cy="198" rx="60" ry="60" fill="url(#hAiGlow)"/></g>
-        {/* AI badge */}
-        <rect x="232" y="160" width="76" height="76" rx="18" fill="url(#hAiGrad)"/>
-        <text x="270" y="212" textAnchor="middle" fontFamily="system-ui,-apple-system,sans-serif" fontSize="38" fontWeight="900" fill="#FFFFFF" letterSpacing="-1">AI</text>
-        {/* Cursor */}
-        <rect x="168" y="232" width="2.5" height="12" rx="1" fill="#6C63FF" opacity="0.7" className="hero-svg-cursor"/>
-        {/* Hinge + base */}
-        <path d="M152,275 L390,265 L394,278 L148,288 Z" fill="#A0A4AC"/>
-        <path d="M152,275 L390,265 L390,271 L152,281 Z" fill="#C8CCD4" opacity="0.5"/>
-        <path d="M115,288 L425,278 L442,362 L98,372 Z" fill="url(#hBaseTop)"/>
-        <path d="M98,372 L442,362 L438,372 L102,380 Z" fill="url(#hBaseFront)"/>
-        <path d="M148,296 L392,286 L408,342 L132,350 Z" fill="#B8BCC4" opacity="0.45"/>
-        {/* Keyboard lines */}
-        {[304,313,322,331,340].map((y,i)=><line key={`kb-${i}`} x1={155-i*4} y1={y} x2={395-i*2} y2={y-10} stroke="#9CA3AF" strokeWidth="1" opacity="0.35"/>)}
-        {/* Trackpad */}
-        <path d="M230,348 L326,343 L330,358 L234,362 Z" rx="4" fill="#C8CCD4" opacity="0.4" stroke="#B0B5BC" strokeWidth="0.8"/>
+      {/* Ambient background glow */}
+      <circle cx="270" cy="220" r="180" fill="#818CF8" opacity="0.12" />
+      <circle cx="420" cy="140" r="90" fill="#C084FC" opacity="0.15" />
+      <circle cx="120" cy="320" r="100" fill="#34D399" opacity="0.1" />
+
+      {/* Grid Pattern Dots */}
+      <g opacity="0.3">
+        {Array.from({ length: 30 }).map((_, i) => {
+          const r = Math.floor(i / 6);
+          const c = i % 6;
+          return <circle key={i} cx={400 + c * 18} cy={40 + r * 18} r="1.8" fill="#818CF8" />;
+        })}
       </g>
 
-      {/* Floating card: Code snippet */}
-      <g filter="url(#hCardShadow)" className="hero-svg-float-a">
-        <rect x="55" y="85" width="110" height="76" rx="10" fill="#FFFFFF"/>
-        <rect x="63" y="93" width="36" height="16" rx="8" fill="#6C63FF"/>
-        <text x="81" y="104.5" textAnchor="middle" fontFamily="monospace" fontSize="8.5" fontWeight="700" fill="#FFFFFF">&lt;/&gt;</text>
-        <rect x="67" y="118" width="26" height="4" rx="2" fill="#DDD6FE" opacity="0.75"/>
-        <rect x="67" y="127" width="78" height="4" rx="2" fill="#93C5FD" opacity="0.65"/>
-        <rect x="67" y="136" width="58" height="4" rx="2" fill="#DDD6FE" opacity="0.55"/>
-        <rect x="67" y="145" width="36" height="4" rx="2" fill="#93C5FD" opacity="0.65"/>
+      {/* Laptop Base Shadow */}
+      <ellipse cx="270" cy="385" rx="210" ry="18" fill="#0F172A" opacity="0.12" />
+
+      {/* Laptop Screen Body */}
+      <rect x="110" y="80" width="320" height="230" rx="16" fill="url(#lidFrame)" stroke="#475569" strokeWidth="2" />
+      <rect x="122" y="94" width="296" height="202" rx="8" fill="url(#screenGrad)" />
+
+      {/* Laptop Screen Content - IDE & UI Mock */}
+      <circle cx="136" cy="106" r="3.5" fill="#EF4444" />
+      <circle cx="147" cy="106" r="3.5" fill="#F59E0B" />
+      <circle cx="158" cy="106" r="3.5" fill="#10B981" />
+
+      {/* Code Lines inside screen */}
+      <rect x="136" y="122" width="90" height="8" rx="3" fill="#6366F1" opacity="0.8" />
+      <rect x="136" y="136" width="140" height="6" rx="2" fill="#94A3B8" opacity="0.5" />
+      <rect x="136" y="147" width="110" height="6" rx="2" fill="#94A3B8" opacity="0.35" />
+      <rect x="136" y="158" width="160" height="6" rx="2" fill="#34D399" opacity="0.6" />
+
+      {/* AI Center Badge on Screen */}
+      <rect x="220" y="180" width="100" height="90" rx="16" fill="url(#aiCardGrad)" />
+      <text x="270" y="238" textAnchor="middle" fontFamily="sans-serif" fontSize="36" fontWeight="900" fill="#FFFFFF">
+        AI
+      </text>
+
+      {/* Laptop Keyboard Base */}
+      <path d="M70,310 L470,310 L490,325 L50,325 Z" fill="#CBD5E1" />
+      <path d="M50,325 L490,325 L480,335 L60,335 Z" fill="#94A3B8" />
+
+      {/* Floating Graphic Pill 1: Code */}
+      <g transform="translate(45, 110)">
+        <rect width="100" height="64" rx="14" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="2" />
+        <circle cx="30" cy="32" r="16" fill="#EEF2FF" />
+        <text x="30" y="37" textAnchor="middle" fontFamily="monospace" fontSize="14" fontWeight="800" fill="#4F46E5">
+          &lt;/&gt;
+        </text>
+        <rect x="54" y="24" width="36" height="6" rx="2" fill="#1E293B" />
+        <rect x="54" y="35" width="28" height="5" rx="2" fill="#94A3B8" />
       </g>
 
-      {/* Floating card: Bar chart */}
-      <g filter="url(#hCardShadow)" className="hero-svg-float-b">
-        <rect x="385" y="75" width="105" height="80" rx="10" fill="#FFFFFF"/>
-        <line x1="400" y1="140" x2="478" y2="140" stroke="#E5E7EB" strokeWidth="1.5"/>
-        <rect x="404" y="122" width="13" height="18" rx="3" fill="url(#hBar1)"/>
-        <rect x="424" y="112" width="13" height="28" rx="3" fill="url(#hBar2)"/>
-        <rect x="444" y="102" width="13" height="38" rx="3" fill="url(#hBar3)"/>
-        <rect x="464" y="92" width="13" height="48" rx="3" fill="url(#hBar4)"/>
+      {/* Floating Graphic Pill 2: Analytics Chart */}
+      <g transform="translate(390, 200)">
+        <rect width="110" height="74" rx="14" fill="#FFFFFF" stroke="#E2E8F0" strokeWidth="2" />
+        <rect x="18" y="44" width="12" height="18" rx="3" fill="#818CF8" />
+        <rect x="36" y="32" width="12" height="30" rx="3" fill="#F59E0B" />
+        <rect x="54" y="24" width="12" height="38" rx="3" fill="#4F46E5" />
+        <rect x="72" y="16" width="12" height="46" rx="3" fill="#10B981" />
       </g>
 
-      {/* Floating card: Chat bubble */}
-      <g filter="url(#hLightShadow)" className="hero-svg-float-c">
-        <path d="M408,290 L400,300 L410,294 Z" fill="#8BA4E8"/>
-        <rect x="408" y="258" width="72" height="38" rx="14" fill="#8BA4E8"/>
-        <circle cx="427" cy="277" r="4" fill="#FFFFFF" opacity="0.85"/>
-        <circle cx="444" cy="277" r="4" fill="#FFFFFF" opacity="0.85"/>
-        <circle cx="461" cy="277" r="4" fill="#FFFFFF" opacity="0.85"/>
-      </g>
-
-      {/* Floating card: Lightbulb */}
-      <g filter="url(#hPurpleShadow)" className="hero-svg-float-d">
-        <circle cx="490" cy="365" r="48" fill="url(#hBulbGlow)" className="hero-svg-bulb"/>
-        <path d="M490,328 C506,328 518,342 518,358 C518,370 508,378 505,384 L475,384 C472,378 462,370 462,358 C462,342 474,328 490,328 Z" fill="#FDE68A" stroke="#FCD34D" strokeWidth="1.2"/>
-        <path d="M490,338 C500,338 508,347 508,358 C508,365 504,370 500,374 L480,374 C476,370 472,365 472,358 C472,347 480,338 490,338 Z" fill="#FEF9C4" opacity="0.6"/>
-        <path d="M484,348 L490,360 L496,348" stroke="#F59E0B" strokeWidth="1.8" fill="none" opacity="0.7"/>
-        <rect x="479" y="384" width="22" height="6" rx="2" fill="#9CA3AF"/>
-        <rect x="481" y="390" width="18" height="4" rx="2" fill="#B0B5BC"/>
-      </g>
-
-      {/* Floating card: Text/Bullet card */}
-      <g filter="url(#hLightShadow)" className="hero-svg-float-e">
-        <rect x="12" y="215" width="74" height="62" rx="8" fill="#FFFFFF"/>
-        <circle cx="28" cy="234" r="3" fill="#6C63FF"/>
-        <rect x="36" y="232" width="40" height="4" rx="2" fill="#DDD6FE" opacity="0.65"/>
-        <rect x="26" y="242" width="52" height="4" rx="2" fill="#E5E7EB" opacity="0.5"/>
-        <rect x="26" y="250" width="42" height="4" rx="2" fill="#E5E7EB" opacity="0.4"/>
-        <rect x="26" y="258" width="34" height="4" rx="2" fill="#DDD6FE" opacity="0.45"/>
-        <circle cx="28" cy="268" r="3" fill="#818CF8" opacity="0.7"/>
+      {/* Floating Idea Bulb Badge */}
+      <g transform="translate(410, 70)">
+        <circle cx="28" cy="28" r="28" fill="#FEF3C7" stroke="#FDE68A" strokeWidth="2" />
+        <text x="28" y="36" textAnchor="middle" fontSize="24">
+          💡
+        </text>
       </g>
     </svg>
   );
 }
 
-/* ── CTA AI Chip SVG ── */
-function CTAChipSVG() {
-  return (
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto max-w-[320px] lg:max-w-[380px]">
-      <defs>
-        <radialGradient id="cGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stopColor="#818CF8" stopOpacity="0.4"/><stop offset="60%" stopColor="#6C63FF" stopOpacity="0.1"/><stop offset="100%" stopColor="#6C63FF" stopOpacity="0"/></radialGradient>
-        <linearGradient id="cGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#818CF8"/><stop offset="100%" stopColor="#6C63FF"/></linearGradient>
-      </defs>
-      <circle cx="100" cy="100" r="90" fill="url(#cGlow)" className="cta-chip-pulse"/>
-      <rect x="50" y="50" width="100" height="100" rx="28" fill="url(#cGrad)" className="cta-chip-rotate"/>
-      <text x="100" y="108" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="42" fontWeight="900" fill="#FFFFFF">AI</text>
-      {[0,1,2,3,4,5,6,7].map((i)=>{const angle=(i*45)*Math.PI/180,r=62;const cx=100+r*Math.cos(angle),cy=100+r*Math.sin(angle);return <circle key={`chip-${i}`} cx={cx} cy={cy} r="5" fill="#818CF8" opacity="0.6"/>;})}
-      {[0,1,2,3].map((i)=>{const angle=(i*90+22.5)*Math.PI/180,r2=78;const x1=100+72*Math.cos(angle),y1=100+72*Math.sin(angle);const x2=100+r2*Math.cos(angle),y2=100+r2*Math.sin(angle);return <line key={`line-${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#A78BFA" strokeWidth="2" opacity="0.3"/>;})}
-    </svg>
-  );
-}
+// ─── Main Course Detail Component ──────────────────────────────────────────────
 
-/* ══════════════════════════════════════════════════ */
-/* ── MAIN COMPONENT ── */
-/* ══════════════════════════════════════════════════ */
 export default function CourseDetailClient({ course }: { course: CourseItem }) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeModule, setActiveModule] = useState<number | null>(0);
+
+  const tc = course.themeColor || "#6366F1";
+
+  // Calculate learning path steps from topics with pastel styling matching reference image
+  const learningSteps = [
+    { num: "01", title: "Introduction to AI & ML", icon: Laptop, bg: "bg-purple-100/90 border-purple-200 text-purple-700", ring: "ring-purple-200" },
+    { num: "02", title: "Prompt Engineering Mastery", icon: Code, bg: "bg-indigo-100/90 border-indigo-200 text-indigo-700", ring: "ring-indigo-200" },
+    { num: "03", title: "LLM APIs (OpenAI, Claude)", icon: Cpu, bg: "bg-orange-100/90 border-orange-200 text-orange-700", ring: "ring-orange-200" },
+    { num: "04", title: "RAG Pipelines & Vector DBs", icon: Binary, bg: "bg-sky-100/90 border-sky-200 text-sky-700", ring: "ring-sky-200" },
+    { num: "05", title: "AI Agent Building", icon: Bot, bg: "bg-pink-100/90 border-pink-200 text-pink-700", ring: "ring-pink-200" },
+    { num: "06", title: "Chatbot Development", icon: Layers, bg: "bg-violet-100/90 border-violet-200 text-violet-700", ring: "ring-violet-200" },
+    { num: "07", title: "AI Automation Flows", icon: Shield, bg: "bg-emerald-100/90 border-emerald-200 text-emerald-700", ring: "ring-emerald-200" },
+    { num: "08", title: "Ethics & Safety", icon: Cloud, bg: "bg-blue-100/90 border-blue-200 text-blue-700", ring: "ring-blue-200" },
+  ];
+
+  // Projects list
+  const projectsList = course.projects.length >= 6 ? course.projects : [
+    ...course.projects,
+    {
+      name: "SaaS Analytics Dashboard",
+      description: "Build a real-time analytics portal with custom charting, user authentication, and data export.",
+      icon: "bar-chart",
+    },
+    {
+      name: "AI Email & Copywriting Assistant",
+      description: "Smart text generation tool that composes professional marketing emails and social media posts.",
+      icon: "mail",
+    },
+    {
+      name: "Automated Workflow Engine",
+      description: "Task automation platform connecting third-party webhooks, databases, and notification services.",
+      icon: "activity",
+    },
+  ];
 
   return (
-    <main className="min-h-screen" style={{ fontFamily: "'Inter', system-ui, sans-serif", background: "#FFFFFF" }}>
-      {/* Force light mode overrides for dark root layout */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .cd-page { color: #181A2A !important; }
-        .cd-page .text-gray-900 { color: #181A2A !important; }
-        .cd-page .text-gray-500 { color: #6B7280 !important; }
-        .cd-page .text-gray-400 { color: #9CA3AF !important; }
-        .cd-page .text-gray-600 { color: #4B5563 !important; }
-        .cd-page .border-gray-900 { border-color: #111827 !important; }
-      ` }} />
-      <div className="cd-page mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+    <main className="min-h-screen bg-[#F8FAFC] text-slate-800 font-sans antialiased">
+      {/* ─── 0. Top Navigation Bar ──────────────────────────────────────────── */}
+      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <NextLink href="/" className="flex items-center gap-2 text-slate-900 font-black text-lg">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white font-black text-sm shadow-sm">
+              LA
+            </div>
+            <span>Larawans Digital Academy</span>
+          </NextLink>
 
-        {/* ══════════ 1. HERO SECTION ══════════ */}
-        <section className="relative overflow-hidden pt-10 pb-16 sm:pt-14 sm:pb-20 lg:pt-20 lg:pb-28">
-          {/* Soft blur gradients */}
-          <div aria-hidden className="pointer-events-none absolute -right-40 top-0 h-[600px] w-[600px] rounded-full opacity-30 blur-[150px]" style={{ background: "linear-gradient(135deg, #C084FC, #818CF8)" }} />
-          <div aria-hidden className="pointer-events-none absolute -left-40 top-[20%] h-[500px] w-[500px] rounded-full opacity-25 blur-[130px]" style={{ background: "linear-gradient(135deg, #FF8A00, #EC4899)" }} />
-          <div aria-hidden className="pointer-events-none absolute right-[30%] -top-20 h-[300px] w-[300px] rounded-full opacity-20 blur-[100px]" style={{ background: "linear-gradient(135deg, #06B6D4, #10B981)" }} />
+          <nav className="hidden md:flex items-center gap-6 text-xs font-bold text-slate-600">
+            <NextLink href="/" className="hover:text-indigo-600 transition-colors cursor-pointer">Home</NextLink>
+            <NextLink href="/#services" className="hover:text-indigo-600 transition-colors">Services</NextLink>
+            <NextLink href="/courses" className="text-indigo-600 font-extrabold border-b-2 border-indigo-600 pb-0.5">Courses</NextLink>
+            <NextLink href="/#why-larawans" className="hover:text-indigo-600 transition-colors">About Us</NextLink>
+            <NextLink href="/#portfolio" className="hover:text-indigo-600 transition-colors">Portfolio</NextLink>
+            <NextLink href="/#contact" className="hover:text-indigo-600 transition-colors">Contact</NextLink>
+          </nav>
 
-          <div className="relative">
-            {/* Breadcrumb */}
-            <motion.div {...fadeUp(0)} className="mb-6">
-              <NextLink href="/courses" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600 transition-colors">
-                <ArrowLeft className="h-3.5 w-3.5" /> Home / Courses / {course.title}
-              </NextLink>
-            </motion.div>
+          <NextLink
+            href="/#contact"
+            className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-sm hover:bg-indigo-700 transition-colors"
+          >
+            <span>Book Free Consultation</span>
+            <ArrowRight size={14} />
+          </NextLink>
+        </div>
+      </header>
 
-            {/* Two column grid */}
-            <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-              {/* LEFT — Text content */}
-              <motion.div {...fadeUp(0.1)}>
-                {/* Category badge */}
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em]" style={{ background: "#F0EDFF", color: "#6D5BFF", border: "1px solid #E0DBFF" }}>
-                  <span className="text-base">{course.emoji}</span>
-                  {course.category} &middot; {course.level}
-                  {course.badge && <span className="ml-1 rounded-full bg-[#6D5BFF] px-2.5 py-0.5 text-[10px] font-bold text-white">{course.badge}</span>}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 space-y-16">
+        {/* ─── 1. HERO SECTION ───────────────────────────────────────────────── */}
+        <section className="relative rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 lg:p-12 shadow-sm overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            {/* Left Column: Details */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Breadcrumb */}
+              <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
+                <NextLink href="/" className="hover:text-indigo-600 transition-colors inline-flex items-center gap-1 font-bold cursor-pointer">
+                  <Home size={13} />
+                  <span>Home</span>
+                </NextLink>
+                <span>/</span>
+                <NextLink href="/courses" className="hover:text-indigo-600 transition-colors font-bold">
+                  Courses
+                </NextLink>
+                <span>/</span>
+                <span className="text-indigo-600 font-bold">{course.title}</span>
+              </div>
+
+              {/* Category Pill */}
+              <div className="inline-flex items-center gap-2 rounded-full bg-indigo-50 border border-indigo-200/60 px-3.5 py-1 text-xs font-bold text-indigo-700">
+                <Sparkles size={14} />
+                <span className="uppercase tracking-wider text-[11px]">{course.category}</span>
+              </div>
+
+              {/* Title */}
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                {course.title}
+              </h1>
+
+              {/* Description */}
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-medium">
+                {course.longDescription}
+              </p>
+
+              {/* Stats Bar Pills */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+                  <Clock size={18} className="text-indigo-600 shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{course.duration}</p>
+                    <p className="text-[10px] text-slate-500 font-medium">Duration</p>
+                  </div>
                 </div>
 
-                {/* Title */}
-                <h1 className="text-[40px] font-extrabold leading-[1.08] tracking-tight text-[#181A2A] sm:text-[52px] lg:text-[64px]">
-                  {course.title}
-                </h1>
-
-                {/* Description */}
-                <p className="mt-5 max-w-lg text-base leading-relaxed text-gray-500 sm:text-lg" style={{ lineHeight: "1.7" }}>
-                  {course.longDescription}
-                </p>
-
-                {/* Stats row */}
-                <div className="mt-8 flex flex-wrap gap-6">
-                  {[
-                    { icon: Clock, value: course.duration, label: "Duration" },
-                    { icon: BookOpen, value: `${course.modules}+`, label: "Modules" },
-                    { icon: Users, value: course.students, label: "Students" },
-                    { icon: Star, value: "4.9", label: "Rating" },
-                  ].map((s) => (
-                    <div key={s.label} className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl" style={{ background: "#F0EDFF" }}>
-                        <s.icon className="h-[18px] w-[18px]" style={{ color: "#6D5BFF" }} />
-                      </div>
-                      <div>
-                        <span className="block text-sm font-bold text-[#181A2A]">{s.value}</span>
-                        <span className="block text-xs text-gray-400">{s.label}</span>
-                      </div>
-                    </div>
-                  ))}
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+                  <BookOpen size={18} className="text-purple-600 shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{course.modules} Modules</p>
+                    <p className="text-[10px] text-slate-500 font-medium">Curriculum</p>
+                  </div>
                 </div>
 
-                {/* CTA buttons */}
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                  <button className="group inline-flex items-center gap-2.5 rounded-[14px] bg-[#6D5BFF] px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/30 hover:brightness-110">
-                    <Sparkles className="h-4 w-4" />
-                    Enroll Now — {course.price}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                  <button className="group inline-flex items-center gap-2.5 rounded-[14px] border border-[#ECECEC] bg-white px-8 py-4 text-sm font-semibold text-[#181A2A] shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md">
-                    <Play className="h-4 w-4 fill-[#6D5BFF] text-[#6D5BFF]" />
-                    Watch Preview
-                  </button>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+                  <Users size={18} className="text-emerald-600 shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{course.students}</p>
+                    <p className="text-[10px] text-slate-500 font-medium">Students</p>
+                  </div>
                 </div>
-              </motion.div>
 
-              {/* RIGHT — SVG Illustration */}
-              <motion.div {...fadeUp(0.25)} className="relative">
-                <HeroSVG />
-              </motion.div>
+                <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200/80">
+                  <Star size={18} className="text-amber-500 fill-amber-500 shrink-0" />
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">4.9 / 5.0</p>
+                    <p className="text-[10px] text-slate-500 font-medium">Rating</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-600 px-7 py-3.5 text-sm font-black text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 transition-all">
+                  <span>Enroll Now — {course.price}</span>
+                  <ArrowRight size={16} />
+                </button>
+
+                <button className="inline-flex items-center justify-center gap-2 rounded-2xl bg-indigo-50 border border-indigo-200 px-6 py-3.5 text-sm font-bold text-indigo-700 hover:bg-indigo-100 transition-colors">
+                  <Play size={16} className="fill-indigo-700" />
+                  <span>Watch Preview</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Hero Graphic Illustration */}
+            <div className="lg:col-span-5 flex justify-center">
+              <HeroLaptopSVG />
             </div>
           </div>
         </section>
 
-
-        {/* ══════════ 2. ABOUT THIS COURSE ══════════ */}
-        <section className="py-20 lg:py-24" style={{ background: "#FCFCFD" }}>
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_380px]">
-            {/* Left — Long text */}
-            <motion.div {...fadeUp()}>
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#FEF3C7", color: "#92400E", border: "1px solid #FDE68A" }}>
-                <GraduationCap className="h-3.5 w-3.5" />
-                About This Course
+        {/* ─── 2. ABOUT THIS COURSE (EXPANDED & DETAILED) ───────────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm space-y-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+            {/* Left Column: Detailed Course Narrative & Deep-Dive */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="inline-block pb-1 border-b-2 border-indigo-600">
+                <h2 className="text-2xl font-black text-slate-900">About This Course</h2>
               </div>
-              <h2 className="text-[32px] font-bold leading-tight text-[#181A2A] lg:text-[42px]">About This Course</h2>
-              <div className="mt-6 space-y-5 max-w-[650px]" style={{ lineHeight: "1.8" }}>
-                <p className="text-[16px] text-gray-500 lg:text-[18px]">{course.aboutText}</p>
-              </div>
-            </motion.div>
 
-            {/* Right — Checklist + Feature cards */}
-            <motion.div {...fadeUp(0.15)} className="space-y-6">
-              {/* Perfect For card */}
-              <div className="rounded-3xl border p-6" style={{ background: "#FFFFFF", borderColor: "#ECECEC" }}>
-                <h3 className="mb-4 text-[16px] font-bold text-[#181A2A]">This Course is Perfect For</h3>
-                <ul className="space-y-3">
-                  {course.audience.map((item) => (
-                    <li key={item} className="flex items-center gap-3 text-[14px] text-gray-600">
-                      <span className="h-2 w-2 rounded-full bg-[#6D5BFF]" />
-                      {item}
+              {/* Main Course Intro */}
+              <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                {course.aboutText}
+              </p>
+
+              {/* In-depth Skillset Breakdown */}
+              <div className="space-y-3 pt-2">
+                <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <Sparkles size={18} className="text-indigo-600" />
+                  <span>Comprehensive & Industry-Driven Learning</span>
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                  In today's fast-evolving technology landscape, learning theoretical concepts alone is no longer enough to secure top tier engineering roles. The <strong>{course.title}</strong> curriculum is engineered in direct collaboration with lead software architects, CTOs, and senior product engineers. You won't just learn basic syntax; you will master enterprise design patterns, high-performance data structures, API orchestration, and modern cloud deployment pipelines.
+                </p>
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                  Throughout this program, you will actively work with cutting-edge tools including <strong>{course.techStack.map((t) => t.name).join(", ")}</strong>. Starting from foundational building blocks, you will progressively tackle complex challenges such as scalability, state management, security protocols, and automated testing frameworks.
+                </p>
+              </div>
+
+              {/* Practical Hands-on Strategy */}
+              <div className="space-y-3 pt-2">
+                <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <Target size={18} className="text-indigo-600" />
+                  <span>Real-World Projects & Portfolio Strategy</span>
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                  Every module in <strong>{course.title}</strong> culminates in hands-on coding assignments and real-world capstone projects. By the time you graduate, you will possess a verified GitHub portfolio featuring <strong>6+ production-ready applications</strong> deployed live on cloud platforms. This concrete proof of capability demonstrates to recruiters and hiring managers that you possess the practical experience needed to hit the ground running on day one.
+                </p>
+              </div>
+
+              {/* Career Support & Mentorship */}
+              <div className="space-y-3 pt-2">
+                <h3 className="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                  <Briefcase size={18} className="text-indigo-600" />
+                  <span>Personalized 1-on-1 Mentorship & Career Support</span>
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                  You won't be learning in isolation. Our experienced industry mentors provide regular 1-on-1 code reviews, architectural feedback, and dedicated doubt clearance sessions. Additionally, our career service team guides you through resume engineering, LinkedIn profile optimization, salary negotiation, and technical mock interviews to ensure you land your dream job or land high-paying freelance clients.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column: Perfect For Card & Quick Course Specifications */}
+            <div className="lg:col-span-5 space-y-6">
+              {/* Perfect For Card */}
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-6 space-y-4 shadow-2xs">
+                <div className="flex items-center gap-2 border-b border-slate-200 pb-3">
+                  <GraduationCap size={20} className="text-indigo-600 shrink-0" />
+                  <h3 className="text-base font-black text-slate-900">Who This Course Is Perfect For</h3>
+                </div>
+                <ul className="space-y-3 text-xs font-semibold text-slate-700">
+                  {[
+                    "Students & Freshers aiming to land their first high-paying tech job",
+                    "Working IT Professionals seeking rapid promotion or skill upgrades",
+                    "Software Developers updating their stack to modern industry tools",
+                    "Freelancers & Agencies wanting to deliver high-ticket client builds",
+                    "Tech Founders & Entrepreneurs building their own SaaS startups",
+                    "Career Switchers transitioning from non-tech backgrounds to IT",
+                    "Anyone passionate about mastering software engineering & AI",
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <CheckCircle2 size={16} className="text-indigo-600 shrink-0 mt-0.5" />
+                      <span className="leading-snug">{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Feature cards 2x2 */}
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { icon: GraduationCap, title: "Beginner Friendly", desc: "Start from zero, no prior experience needed" },
-                  { icon: Code, title: "Hands-on Projects", desc: "Build real projects throughout the course" },
-                  { icon: Users, title: "Industry Mentor", desc: "Get guidance from experienced professionals" },
-                  { icon: Award, title: "Certificate Included", desc: "Verified certificate on completion" },
-                ].map((f) => (
-                  <div key={f.title} className="rounded-2xl border p-4 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md" style={{ background: "#FFFFFF", borderColor: "#ECECEC" }}>
-                    <div className="mb-2 flex h-9 w-9 items-center justify-center rounded-xl" style={{ background: "#F0EDFF" }}>
-                      <f.icon className="h-4 w-4" style={{ color: "#6D5BFF" }} />
-                    </div>
-                    <h4 className="text-[13px] font-bold text-[#181A2A]">{f.title}</h4>
-                    <p className="mt-0.5 text-[11px] text-gray-400 leading-relaxed">{f.desc}</p>
+              {/* Quick Course Specifications Box */}
+              <div className="rounded-2xl bg-indigo-50/60 border border-indigo-100 p-6 space-y-3">
+                <h3 className="text-xs font-black text-indigo-900 uppercase tracking-wider">
+                  Course Specifications
+                </h3>
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="p-2.5 rounded-xl bg-white border border-indigo-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Skill Level</span>
+                    <span className="font-extrabold text-slate-800">{course.level}</span>
                   </div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-
-        {/* ══════════ 3. WHAT YOU WILL LEARN ══════════ */}
-        <section className="py-20 lg:py-24">
-          <div className="text-center">
-            <motion.div {...fadeUp()}>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#F0EDFF", color: "#6D5BFF", border: "1px solid #E0DBFF" }}>
-                <Zap className="h-3.5 w-3.5" />
-                Learning Roadmap
-              </div>
-              <h2 className="text-[32px] font-bold text-[#181A2A] lg:text-[42px]">What You Will Learn</h2>
-              <p className="mx-auto mt-3 max-w-xl text-[16px] text-gray-500">A step-by-step roadmap from fundamentals to advanced mastery, designed to make you job-ready.</p>
-            </motion.div>
-          </div>
-
-          {/* Horizontal roadmap with dotted connector */}
-          <motion.div {...fadeUp(0.1)} className="relative mt-14">
-            {/* Dotted line connecting all modules */}
-            <div className="absolute top-[36px] left-[6%] right-[6%] hidden lg:block" style={{ borderTop: "2px dashed #E0DBFF" }} />
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-8">
-              {course.topics.map((topic, i) => (
-                <motion.div
-                  key={topic}
-                  {...stagger(i * 0.06)}
-                  className="group flex flex-col items-center text-center"
-                >
-                  {/* Circle icon */}
-                  <div className="relative z-10 flex h-[72px] w-[72px] items-center justify-center rounded-full border-2 transition-all duration-300 group-hover:-translate-y-1 group-hover:shadow-lg group-hover:shadow-purple-500/15" style={{ background: "#FFFFFF", borderColor: "#E0DBFF" }}>
-                    <span className="text-lg font-bold text-[#6D5BFF]">{String(i + 1).padStart(2, "0")}</span>
+                  <div className="p-2.5 rounded-xl bg-white border border-indigo-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Duration</span>
+                    <span className="font-extrabold text-slate-800">{course.duration}</span>
                   </div>
-                  {/* Label */}
-                  <h4 className="mt-3 text-[12px] font-semibold leading-tight text-[#181A2A]">{topic}</h4>
-                </motion.div>
-              ))}
+                  <div className="p-2.5 rounded-xl bg-white border border-indigo-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Modules</span>
+                    <span className="font-extrabold text-slate-800">{course.modules} Modules</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-white border border-indigo-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase block">Language</span>
+                    <span className="font-extrabold text-slate-800">English / Hindi</span>
+                  </div>
+                </div>
+                <div className="p-3 rounded-xl bg-white border border-indigo-100 text-xs">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block mb-1">Primary Learning Outcome</span>
+                  <p className="font-bold text-slate-800 leading-snug">{course.outcome}</p>
+                </div>
+              </div>
             </div>
-          </motion.div>
-        </section>
-
-
-        {/* ══════════ 4. TECH STACK ══════════ */}
-        <section className="py-20 lg:py-24" style={{ background: "#FCFCFD" }}>
-          <div className="text-center">
-            <motion.div {...fadeUp()}>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#CCFBF1", color: "#065F46", border: "1px solid #A7F3D0" }}>
-                <BookOpen className="h-3.5 w-3.5" />
-                Tools &amp; Technologies
-              </div>
-              <h2 className="text-[32px] font-bold text-[#181A2A] lg:text-[42px]">Tech Stack You Will Master</h2>
-              <p className="mx-auto mt-3 max-w-xl text-[16px] text-gray-500">Industry-standard tools used by top companies worldwide.</p>
-            </motion.div>
           </div>
 
-          <motion.div {...fadeUp(0.1)} className="mt-10 flex flex-wrap justify-center gap-3">
-            {course.techStack.map((tech, i) => (
-              <motion.div
-                key={tech.name}
-                {...stagger(i * 0.04)}
-                className="flex items-center gap-3 rounded-full border px-5 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                style={{ background: "#FFFFFF", borderColor: "#ECECEC" }}
-              >
-                <span className="h-3 w-3 rounded-full" style={{ background: tech.color }} />
-                <span className="text-[14px] font-semibold text-[#181A2A]">{tech.name}</span>
-              </motion.div>
-            ))}
-          </motion.div>
-        </section>
-
-
-        {/* ══════════ 5. REAL PROJECTS ══════════ */}
-        <section className="py-20 lg:py-24">
-          <div className="text-center">
-            <motion.div {...fadeUp()}>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#FCE7F3", color: "#9D174D", border: "1px solid #FBCFE8" }}>
-                <Zap className="h-3.5 w-3.5" />
-                Hands-On
+          {/* Core Pillars of Learning Grid */}
+          <div className="pt-6 border-t border-slate-100">
+            <h3 className="text-lg font-black text-slate-900 text-center mb-6">
+              Core Pillars of the {course.title} Program
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-indigo-300 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white font-bold shadow-xs">
+                  <Target size={20} />
+                </div>
+                <h4 className="text-xs font-extrabold text-slate-900">Industry-Aligned Syllabus</h4>
+                <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
+                  Curriculum updated every quarter to match 2026 tech trends, enterprise standards, and hiring criteria.
+                </p>
               </div>
-              <h2 className="text-[32px] font-bold text-[#181A2A] lg:text-[42px]">Real Projects You Will Build</h2>
-              <p className="mx-auto mt-3 max-w-xl text-[16px] text-gray-500">Build a portfolio of real projects that impress employers and clients.</p>
-            </motion.div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-indigo-300 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-600 text-white font-bold shadow-xs">
+                  <Code size={20} />
+                </div>
+                <h4 className="text-xs font-extrabold text-slate-900">Production Capstone Projects</h4>
+                <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
+                  Build 6+ real-world applications with clean code architecture, live cloud hosting, and full documentation.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-indigo-300 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-600 text-white font-bold shadow-xs">
+                  <Users size={20} />
+                </div>
+                <h4 className="text-xs font-extrabold text-slate-900">1-on-1 Code Reviews</h4>
+                <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
+                  Receive personalized feedback from senior software architects to eliminate bad coding habits.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2 hover:border-indigo-300 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500 text-white font-bold shadow-xs">
+                  <Briefcase size={20} />
+                </div>
+                <h4 className="text-xs font-extrabold text-slate-900">Career & Placement Assistance</h4>
+                <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
+                  Resume optimization, LinkedIn branding, mock interviews, and direct referrals to hiring partners.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {course.projects.map((project, i) => {
-              const IconComp = PROJECT_ICONS[project.icon] || FileText;
+          {/* 4 Feature Badges below */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-100">
+            {[
+              { icon: Users, label: "Beginner Friendly", desc: "No prior coding required" },
+              { icon: Layers, label: "Hands-on Projects", desc: "Build real production apps" },
+              { icon: GraduationCap, label: "Industry Mentors", desc: "1-on-1 feedback & reviews" },
+              { icon: Award, label: "Verified Certificate", desc: "LinkedIn shareable badge" },
+            ].map((feat, i) => {
+              const Icon = feat.icon;
               return (
-                <motion.div
-                  key={project.name}
-                  {...stagger(i * 0.06)}
-                  className="group rounded-3xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                  style={{ background: "#FFFFFF", borderColor: "#ECECEC" }}
-                >
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl" style={{ background: "#F0EDFF" }}>
-                    <IconComp className="h-5 w-5" style={{ color: "#6D5BFF" }} />
+                <div key={i} className="flex items-center gap-3 p-3.5 rounded-2xl bg-indigo-50/50 border border-indigo-100">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-indigo-600 shadow-2xs border border-indigo-100 shrink-0">
+                    <Icon size={20} />
                   </div>
-                  <h3 className="text-[16px] font-bold text-[#181A2A]">{project.name}</h3>
-                  <p className="mt-1.5 text-[14px] leading-relaxed text-gray-500">{project.description}</p>
-                </motion.div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{feat.label}</p>
+                    <p className="text-[10px] text-slate-500 font-medium">{feat.desc}</p>
+                  </div>
+                </div>
               );
             })}
           </div>
         </section>
 
+        {/* ─── 3. WHAT YOU WILL LEARN (Numbered Process Path with Dotted Line & Pastel Circles) ────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm text-center">
+          <h2 className="text-2xl font-black text-slate-900 mb-2">What You Will Learn</h2>
+          <p className="text-xs text-slate-500 font-medium mb-10 max-w-xl mx-auto">
+            Step-by-step structured learning path designed to take you from core fundamentals to advanced application architecture.
+          </p>
 
-        {/* ══════════ 6. COURSE HIGHLIGHTS ══════════ */}
-        <section className="py-20 lg:py-24" style={{ background: "#FCFCFD" }}>
-          <div className="text-center">
-            <motion.div {...fadeUp()}>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#EDE9FE", color: "#5B21B6", border: "1px solid #DDD6FE" }}>
-                <Star className="h-3.5 w-3.5" />
-                Highlights
-              </div>
-              <h2 className="text-[32px] font-bold text-[#181A2A] lg:text-[42px]">Why This Course Stands Out</h2>
-            </motion.div>
-          </div>
+          {/* Process Nodes with Dotted Connector Line */}
+          <div className="relative">
+            {/* Dotted connecting line behind nodes on desktop */}
+            <div className="hidden lg:block absolute top-7 left-10 right-10 h-0.5 border-t-2 border-dashed border-slate-200 z-0" />
 
-          {/* Stats row */}
-          <motion.div {...fadeUp(0.1)} className="mt-12 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {course.highlights.map((h) => (
-              <div key={h.label} className="rounded-3xl border bg-white p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ borderColor: "#ECECEC" }}>
-                <p className="text-[36px] font-extrabold text-[#6D5BFF]">{h.value}</p>
-                <p className="mt-1 text-[14px] text-gray-500">{h.label}</p>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Feature icons row */}
-          <motion.div {...fadeUp(0.2)} className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {[
-              { icon: Award, label: "Certificate" },
-              { icon: Infinity, label: "Lifetime Access" },
-              { icon: Headphones, label: "Mentor Support" },
-              { icon: Briefcase, label: "Interview Preparation" },
-            ].map((f) => (
-              <div key={f.label} className="rounded-3xl border bg-white p-6 flex flex-col items-center gap-2 transition-all duration-300 hover:-translate-y-1 hover:shadow-md" style={{ borderColor: "#ECECEC" }}>
-                <f.icon className="h-6 w-6" style={{ color: "#6D5BFF" }} />
-                <span className="text-[14px] font-semibold text-[#181A2A]">{f.label}</span>
-              </div>
-            ))}
-          </motion.div>
-        </section>
-
-
-        {/* ══════════ 7. CTA BANNER ══════════ */}
-        <section className="py-16 lg:py-20">
-          <motion.div
-            {...fadeUp()}
-            className="relative overflow-hidden rounded-[28px] p-8 sm:p-12 lg:p-16"
-            style={{ background: "linear-gradient(135deg, #181A2A 0%, #2D1B69 50%, #181A2A 100%)" }}
-          >
-            {/* Decorative blur */}
-            <div aria-hidden className="pointer-events-none absolute -right-20 top-0 h-[400px] w-[400px] rounded-full opacity-20 blur-[100px]" style={{ background: "#6D5BFF" }} />
-            <div aria-hidden className="pointer-events-none absolute -left-20 bottom-0 h-[300px] w-[300px] rounded-full opacity-15 blur-[80px]" style={{ background: "#FF8A00" }} />
-
-            <div className="relative grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-              {/* Left — Text */}
-              <div>
-                <h2 className="text-[28px] font-bold leading-tight text-white sm:text-[36px] lg:text-[42px]">
-                  Ready to start your journey in <span className="bg-gradient-to-r from-[#A78BFA] to-[#FF8A00] bg-clip-text text-transparent">{course.title}?</span>
-                </h2>
-                <p className="mt-4 max-w-lg text-[16px] leading-relaxed text-gray-400">
-                  Join {course.students} students already building their future with this course. No experience needed — we start from the basics.
-                </p>
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                  <button className="group inline-flex items-center gap-2.5 rounded-[14px] bg-[#6D5BFF] px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-purple-500/30 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:brightness-110">
-                    <Sparkles className="h-4 w-4" />
-                    Enroll Now — {course.price}
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                  <button className="inline-flex items-center gap-2.5 rounded-[14px] border border-white/20 px-8 py-4 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10">
-                    <Download className="h-4 w-4" />
-                    Download Syllabus
-                  </button>
-                </div>
-              </div>
-
-              {/* Right — AI Chip SVG */}
-              <div className="flex justify-center">
-                <CTAChipSVG />
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6 sm:gap-4 relative z-10">
+              {learningSteps.map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <div key={idx} className="flex flex-col items-center text-center group">
+                    <div className="relative mb-3">
+                      <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${step.bg} border ${step.ring} group-hover:scale-110 transition-transform shadow-2xs`}>
+                        <Icon size={24} />
+                      </div>
+                    </div>
+                    <span className="text-[11px] font-extrabold text-slate-400 mb-1 uppercase tracking-wider">
+                      {step.num}
+                    </span>
+                    <h4 className="text-xs font-black text-slate-800 leading-snug max-w-[120px]">
+                      {step.title}
+                    </h4>
+                  </div>
+                );
+              })}
             </div>
-          </motion.div>
+          </div>
         </section>
 
+        {/* ─── 4. TECH STACK YOU WILL MASTER (Colorful Badges) ─────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm text-center">
+          <h2 className="text-2xl font-black text-slate-900 mb-2">Tech Stack You Will Master</h2>
+          <p className="text-xs text-slate-500 font-medium mb-8">
+            Industry-standard frameworks, libraries, databases, and tools used by top tech companies.
+          </p>
 
-        {/* ══════════ 8. FAQ ══════════ */}
-        <section className="py-20 lg:py-24" style={{ background: "#FCFCFD" }}>
-          <div className="text-center">
-            <motion.div {...fadeUp()}>
-              <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em]" style={{ background: "#EDE9FE", color: "#5B21B6", border: "1px solid #DDD6FE" }}>
-                <HelpCircle className="h-3.5 w-3.5" />
-                FAQ
-              </div>
-              <h2 className="text-[32px] font-bold text-[#181A2A] lg:text-[42px]">Frequently Asked Questions</h2>
-            </motion.div>
-          </div>
-
-          <motion.div {...fadeUp(0.1)} className="mt-10 grid grid-cols-1 gap-3 md:grid-cols-2">
-            {FAQ_DATA.map((faq, i) => (
-              <div
-                key={i}
-                className="rounded-2xl border transition-all duration-300 hover:shadow-sm cursor-pointer"
-                style={{ background: "#FFFFFF", borderColor: "#ECECEC" }}
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}
-              >
-                <div className="flex items-center justify-between p-5">
-                  <h3 className="text-[14px] font-semibold text-[#181A2A] pr-4">{faq.q}</h3>
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors" style={{ background: openFaq === i ? "#F0EDFF" : "#F5F5F5" }}>
-                    {openFaq === i ? (
-                      <ChevronUp className="h-4 w-4" style={{ color: "#6D5BFF" }} />
+          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+            {course.techStack.map((tech) => {
+              const IconComp = TECH_ICON_MAP[tech.name];
+              return (
+                <div
+                  key={tech.name}
+                  className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-slate-200/90 hover:border-indigo-300 hover:shadow-md transition-all group cursor-default shadow-2xs"
+                >
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-xl shrink-0 transition-transform group-hover:scale-110"
+                    style={{ backgroundColor: `${tech.color}18` }}
+                  >
+                    {IconComp ? (
+                      <IconComp size={20} color={tech.color} />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-gray-400" />
+                      <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: tech.color }} />
                     )}
                   </div>
+                  <span className="text-xs font-black text-slate-800 tracking-tight">{tech.name}</span>
                 </div>
-                {openFaq === i && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <p className="px-5 pb-5 text-[14px] leading-relaxed text-gray-500">{faq.a}</p>
-                  </motion.div>
-                )}
-              </div>
-            ))}
-          </motion.div>
+              );
+            })}
+          </div>
         </section>
 
+        {/* ─── 5. REAL PROJECTS YOU WILL BUILD (Pastel Color Cards) ────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-black text-slate-900">Real Projects You Will Build</h2>
+            <p className="text-xs text-slate-500 font-medium mt-1">
+              Gain practical hands-on experience by constructing industry-standard capstone applications.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {projectsList.map((proj, idx) => {
+              const IconComponent = PROJECT_ICONS[proj.icon] || Code;
+              const pastelStyles = [
+                { bg: "bg-purple-50/80 border-purple-100", iconBg: "bg-purple-100 text-purple-700" },
+                { bg: "bg-emerald-50/80 border-emerald-100", iconBg: "bg-emerald-100 text-emerald-700" },
+                { bg: "bg-amber-50/80 border-amber-100", iconBg: "bg-amber-100 text-amber-700" },
+                { bg: "bg-blue-50/80 border-blue-100", iconBg: "bg-blue-100 text-blue-700" },
+                { bg: "bg-pink-50/80 border-pink-100", iconBg: "bg-pink-100 text-pink-700" },
+                { bg: "bg-orange-50/80 border-orange-100", iconBg: "bg-orange-100 text-orange-700" },
+                { bg: "bg-violet-50/80 border-violet-100", iconBg: "bg-violet-100 text-violet-700" },
+                { bg: "bg-teal-50/80 border-teal-100", iconBg: "bg-teal-100 text-teal-700" },
+              ];
+              const style = pastelStyles[idx % pastelStyles.length];
+
+              return (
+                <div
+                  key={idx}
+                  className={`p-5 rounded-2xl ${style.bg} border hover:shadow-md transition-all group`}
+                >
+                  <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${style.iconBg} mb-4 group-hover:scale-110 transition-transform shadow-2xs`}>
+                    <IconComponent size={22} />
+                  </div>
+                  <h3 className="text-sm font-black text-slate-900 mb-1.5">{proj.name}</h3>
+                  <p className="text-xs text-slate-600 leading-relaxed font-medium">{proj.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ─── 6. COMPLETE CURRICULUM (Expandable Modules) ──────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl font-black text-slate-900">Complete Course Curriculum</h2>
+              <p className="text-xs text-slate-500 font-medium mt-1">
+                Comprehensive step-by-step syllabus covering {course.modules} modules and hands-on exercises.
+              </p>
+            </div>
+            <span className="text-xs font-bold text-indigo-600 bg-indigo-50 border border-indigo-200 px-3 py-1.5 rounded-xl shrink-0">
+              {course.duration} Total Duration
+            </span>
+          </div>
+
+          <div className="space-y-3">
+            {course.topics.map((topic, idx) => {
+              const isOpen = activeModule === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-slate-200 bg-slate-50/50 overflow-hidden transition-all"
+                >
+                  <button
+                    onClick={() => setActiveModule(isOpen ? null : idx)}
+                    className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-slate-900 hover:bg-slate-100/80 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-white text-xs font-black shrink-0">
+                        {idx + 1}
+                      </span>
+                      <span>{topic}</span>
+                    </div>
+                    {isOpen ? <ChevronUp size={18} className="text-indigo-600" /> : <ChevronDown size={18} className="text-slate-400" />}
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="px-5 pb-4 pt-1 text-xs text-slate-600 space-y-2 border-t border-slate-200/60 bg-white"
+                      >
+                        <p className="font-semibold text-slate-700">In this module, you will cover:</p>
+                        <ul className="list-disc list-inside space-y-1 text-slate-600">
+                          <li>Theoretical foundations and core architecture principles</li>
+                          <li>Guided code walkthroughs and interactive sandbox exercises</li>
+                          <li>Building and deploying a mini-project for your portfolio</li>
+                        </ul>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ─── 7. WHY THIS COURSE STANDS OUT ──────────────────────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm text-center">
+          <h2 className="text-2xl font-black text-slate-900 mb-2">Why This Course Stands Out</h2>
+          <p className="text-xs text-slate-500 font-medium mb-8">
+            Designed to maximize learning efficiency and career transformation.
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-100">
+              <span className="text-3xl font-black text-indigo-600">80+</span>
+              <span className="block text-xs font-bold text-slate-700 mt-1">Learning Hours</span>
+            </div>
+            <div className="p-6 rounded-2xl bg-purple-50/60 border border-purple-100">
+              <span className="text-3xl font-black text-purple-600">30+</span>
+              <span className="block text-xs font-bold text-slate-700 mt-1">Modules</span>
+            </div>
+            <div className="p-6 rounded-2xl bg-amber-50/60 border border-amber-100">
+              <span className="text-3xl font-black text-amber-600">15+</span>
+              <span className="block text-xs font-bold text-slate-700 mt-1">Assignments</span>
+            </div>
+            <div className="p-6 rounded-2xl bg-emerald-50/60 border border-emerald-100">
+              <span className="text-3xl font-black text-emerald-600">8+</span>
+              <span className="block text-xs font-bold text-slate-700 mt-1">Real Projects</span>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 8. FINAL CTA BANNER ────────────────────────────────────────────── */}
+        <section
+          className="relative rounded-3xl p-8 sm:p-12 text-white overflow-hidden shadow-xl"
+          style={{
+            background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 50%, #4338CA 100%)",
+          }}
+        >
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="space-y-3 max-w-2xl text-center md:text-left">
+              <h2 className="text-2xl sm:text-3xl font-black leading-tight">
+                Ready to start your journey in {course.title}?
+              </h2>
+              <p className="text-xs sm:text-sm text-indigo-200 font-medium">
+                Join {course.students} students and advance your career with job-ready tech skills.
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-7 py-3.5 text-xs font-black text-indigo-950 shadow-md hover:bg-indigo-50 transition-colors">
+                <span>Enroll Now — {course.price}</span>
+                <ArrowRight size={15} />
+              </button>
+
+              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-white/10 border border-white/20 px-5 py-3.5 text-xs font-bold text-white hover:bg-white/20 transition-colors">
+                <Download size={15} />
+                <span>Download Syllabus</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        {/* ─── 9. FREQUENTLY ASKED QUESTIONS ─────────────────────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm">
+          <h2 className="text-2xl font-black text-slate-900 mb-6 text-center">Frequently Asked Questions</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {FAQ_DATA.map((faq, idx) => {
+              const isOpen = openFaq === idx;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-slate-200 bg-slate-50/50 p-4 transition-all cursor-pointer hover:border-indigo-200"
+                  onClick={() => setOpenFaq(isOpen ? null : idx)}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-900">{faq.q}</h3>
+                    {isOpen ? <ChevronUp size={16} className="text-indigo-600 shrink-0" /> : <ChevronDown size={16} className="text-slate-400 shrink-0" />}
+                  </div>
+                  {isOpen && (
+                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-medium pt-2 border-t border-slate-200/60">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* ─── 10. RELATED COURSES ────────────────────────────────────────────── */}
+        <section className="rounded-3xl bg-white border border-slate-200/80 p-6 sm:p-10 shadow-sm">
+          <h2 className="text-2xl font-black text-slate-900 mb-6">Explore Related Courses</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {ALL_COURSES.filter((c) => c.slug !== course.slug)
+              .slice(0, 3)
+              .map((rel) => (
+                <NextLink
+                  key={rel.slug}
+                  href={`/courses/${rel.slug}`}
+                  className="group rounded-2xl border border-slate-200 p-5 bg-slate-50/50 hover:bg-white hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-2xl">{rel.emoji}</span>
+                      <span className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider bg-indigo-50 px-2 py-0.5 rounded-md">
+                        {rel.category}
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-black text-slate-900 group-hover:text-indigo-600 transition-colors mb-1">
+                      {rel.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 line-clamp-2 font-medium mb-4">
+                      {rel.description}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between text-xs pt-3 border-t border-slate-200/60">
+                    <span className="font-black text-slate-900">{rel.price}</span>
+                    <span className="text-indigo-600 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      View Course <ArrowRight size={13} />
+                    </span>
+                  </div>
+                </NextLink>
+              ))}
+          </div>
+        </section>
       </div>
     </main>
   );
