@@ -1,0 +1,684 @@
+   505→        <div className="inline-flex flex-wrap gap-1 p-1.5 rounded-2xl bg-slate-100 mb-10">
+   506→              {TABS.map((tab) => {
+   507→                const Ic = tab.icon;
+   508→                const active = activeTab === tab.id;
+   509→                return (
+   510→                  <button
+   511→                    key={tab.id}
+   512→                    onClick={() => setActiveTab(tab.id)}
+   513→                    className={
+   514→                      "flex items-center gap-2 px-5 py-3 rounded-xl text-[0.95rem] font-semibold transition-all duration-200 " +
+   515→                      (active
+   516→                        ? "text-white shadow-lg"
+   517→                        : "text-slate-500 hover:text-slate-800 hover:bg-white/60")
+   518→                    }
+   519→                    style={
+   520→                      active
+   521→                        ? {
+   522→                            background: primary,
+   523→                            boxShadow:
+   524→                              "0 8px 24px " + primary + "50",
+   525→                          }
+   526→                        : {}
+   527→                    }
+   528→                  >
+   529→                    <Ic className="w-[18px] h-[18px]" />
+   530→                    {tab.label}
+   531→                  </button>
+   532→                );
+   533→              })}
+   534→            </div>
+   535→
+   536→            {/* ========== OVERVIEW TAB ========== */}
+   537→            {activeTab === "overview" && (
+   538→              <div className="space-y-8">
+   539→                {/* Course Description */}
+   540→                <section>
+   541→                  <div className="flex items-center gap-3 mb-5">
+   542→                    <div
+   543→                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+   544→                      style={{ background: primary + "15" }}
+   545→                    >
+   546→                      <BookOpen
+   547→                        className="w-5 h-5"
+   548→                        style={{ color: primary }}
+   549→                      />
+   550→                    </div>
+   551→                    <h2 className="text-2xl font-bold text-gray-900">
+   552→                      Course Description
+   553→                    </h2>
+   554→                  </div>
+   555→                  <div className="text-gray-600 space-y-5 leading-[1.8] text-[1.05rem] pl-14">
+   556→                    <p>{course.longDescription}</p>
+   557→                    <p>{course.aboutText}</p>
+   558→                  </div>
+   559→                </section>
+   560→
+   561→                {/* What You Will Learn */}
+   562→                <section>
+   563→                  <div className="flex items-center gap-3 mb-5">
+   564→                    <div
+   565→                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+   566→                      style={{ background: primary + "15" }}
+   567→                    >
+   568→                      <Target
+   569→                        className="w-5 h-5"
+   570→                        style={{ color: primary }}
+   571→                      />
+   572→                    </div>
+   573→                    <h2 className="text-2xl font-bold text-gray-900">
+   574→                      What You Will Learn
+   575→                    </h2>
+   576→                  </div>
+   577→                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 pl-14">
+   578→                    {(() => {
+   579→                      const h = Math.ceil(course.topics.length / 2);
+   580→                      const L = course.topics.slice(0, h);
+   581→                      const R = course.topics.slice(h);
+   582→                      return (
+   583→                        <>
+   584→                          <ul className="space-y-3.5">
+   585→                            {L.map((tp: string, i: number) => (
+   586→                              <li
+   587→                                key={i}
+   588→                                className="flex items-start gap-3.5 text-[0.95rem] text-gray-700 leading-relaxed"
+   589→                              >
+   590→                                <CheckCircle2
+   591→                                  className="w-5 h-5 shrink-0 mt-0.5"
+   592→                                  style={{ color: primary }}
+   593→                                />
+   594→                                {tp}
+   595→                              </li>
+   596→                            ))}
+   597→                          </ul>
+   598→                          <ul className="space-y-3.5">
+   599→                            {R.map((tp: string, i: number) => (
+   600→                              <li
+   601→                                key={i}
+   602→                                className="flex items-start gap-3.5 text-[0.95rem] text-gray-700 leading-relaxed"
+   603→                              >
+   604→                                <CheckCircle2
+   605→                                  className="w-5 h-5 shrink-0 mt-0.5"
+   606→                                  style={{ color: primary }}
+   607→                                />
+   608→                                {tp}
+   609→                              </li>
+   610→                            ))}
+   611→                          </ul>
+   612→                        </>
+   613→                      );
+   614→                    })()}
+   615→                  </div>
+   616→                </section>
+   617→
+   618→                {/* Course Highlights - Bold gradient */}
+   619→                <section
+   620→                  className="rounded-2xl p-8 sm:p-10 text-white relative overflow-hidden"
+   621→                  style={{
+   622→                    background:
+   623→                      "linear-gradient(135deg, " +
+   624→                      primary +
+   625→                      ", #312e81 70%, #0f172a)",
+   626→                  }}
+   627→                >
+   628→                  <div className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-[0.08] pointer-events-none" style={{ background: "radial-gradient(circle, white, transparent 70%)", transform: "translate(30%, -30%)" }} />
+   629→                  <h3 className="text-xl font-bold mb-8 flex items-center gap-2.5">
+   630→                    <TrendingUp className="w-6 h-6" /> Course Highlights
+   631→                  </h3>
+   632→                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+   633→                    {course.highlights.map((h: any, i: number) => (
+   634→                      <div key={i} className="text-center">
+   635→                        <div className="text-4xl font-extrabold mb-1.5">
+   636→                          {h.value}
+   637→                        </div>
+   638→                        <div className="text-[0.95rem] text-white/60 font-medium">
+   639→                          {h.label}
+   640→                        </div>
+   641→                      </div>
+   642→                    ))}
+   643→                  </div>
+   644→                </section>
+   645→
+   646→                {/* Feature Cards */}
+   647→                <section>
+   648→                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+   649→                    {[
+   650→                      { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps" },
+   651→                      { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools" },
+   652→                      { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros" },
+   653→                      { I: Handshake, t: "Career Support", d: "Resume and interview help" },
+   654→                    ].map(({ I, t, d }: any) => (
+   655→                      <div
+   656→                        key={t}
+   657→                        className="group p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white"
+   658→                      >
+   659→                        <div
+   660→                          className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+   661→                          style={{ background: primary + "12" }}
+   662→                        >
+   663→                          <I className="w-6 h-6" style={{ color: primary }} />
+   664→                        </div>
+   665→                        <h4 className="font-bold text-gray-900 text-[0.95rem]">
+   666→                          {t}
+   667→                        </h4>
+   668→                        <p className="text-sm text-gray-500 mt-1.5">{d}</p>
+   669→                      </div>
+   670→                    ))}
+   671→                  </div>
+   672→                </section>
+   673→
+   674→                {/* Tech Stack */}
+   675→                <section>
+   676→                  <div className="flex items-center gap-3 mb-5">
+   677→                    <div
+   678→                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+   679→                      style={{ background: primary + "15" }}
+   680→                    >
+   681→                      <Code2 className="w-5 h-5" style={{ color: primary }} />
+   682→                    </div>
+   683→                    <h2 className="text-2xl font-bold text-gray-900">
+   684→                      Tech Stack You Will Master
+   685→                    </h2>
+   686→                  </div>
+   687→                  <div className="flex flex-wrap gap-3 pl-14">
+   688→                    {course.techStack.map((tech: any, i: number) => (
+   689→                      <div
+   690→                        key={i}
+   691→                        className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-5 py-3 transition-colors"
+   692→                      >
+   693→                        <span
+   694→                          className="w-3.5 h-3.5 rounded-full"
+   695→                          style={{ background: tech.color }}
+   696→                        />
+   697→                        <span className="text-[0.95rem] font-medium text-gray-700">
+   698→                          {tech.name}
+   699→                        </span>
+   700→                      </div>
+   701→                    ))}
+   702→                  </div>
+   703→                </section>
+   704→
+   705→                {/* Who This Course Is For */}
+   706→                <section>
+   707→                  <div className="flex items-center gap-3 mb-5">
+   708→                    <div
+   709→                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+   710→                      style={{ background: primary + "15" }}
+   711→                    >
+   712→                      <Users className="w-5 h-5" style={{ color: primary }} />
+   713→                    </div>
+   714→                    <h2 className="text-2xl font-bold text-gray-900">
+   715→                      Who This Course Is For
+   716→                    </h2>
+   717→                  </div>
+   718→                  <div className="space-y-3.5 pl-14">
+   719→                    {course.audience.map((item: string, i: number) => (
+   720→                      <div
+   721→                        key={i}
+   722→                        className="flex items-start gap-4 p-5 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors"
+   723→                      >
+   724→                        <div
+   725→                          className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 mt-0.5"
+   726→                          style={{ background: primary }}
+   727→                        >
+   728→                          {i + 1}
+   729→                        </div>
+   730→                        <p className="text-[0.95rem] text-gray-600 leading-relaxed">
+   731→                          {item}
+   732→                        </p>
+   733→                      </div>
+   734→                    ))}
+   735→                  </div>
+   736→                </section>
+   737→              </div>
+   738→            )}
+   739→
+   740→            {/* ========== CURRICULUM TAB ========== */}
+   741→            {activeTab === "curriculum" && (
+   742→              <section>
+   743→                <div className="flex flex-wrap justify-between items-end mb-6 gap-3">
+   744→                  <div className="flex items-center gap-3">
+   745→                    <div
+   746→                      className="w-11 h-11 rounded-xl flex items-center justify-center"
+   747→                      style={{ background: primary + "15" }}
+   748→                    >
+   749→                      <FileText className="w-5 h-5" style={{ color: primary }} />
+   750→                    </div>
+   751→                    <h2 className="text-2xl font-bold text-gray-900">
+   752→                      Course Curriculum
+   753→                    </h2>
+   754→                  </div>
+   755→                  <span className="text-sm text-slate-500 bg-slate-100 px-4 py-2 rounded-lg font-medium">
+   756→                    {curriculumModules.length} Sections · {totalLectures} Lectures · {totalDuration}
+   757→                  </span>
+   758→                </div>
+   759→
+   760→                <div className="space-y-3">
+   761→                  {(showAllCurriculum
+   762→                    ? curriculumModules
+   763→                    : curriculumModules.slice(0, 5)
+   764→                  ).map((mod: any, idx: number) => {
+   765→                    const isOpen = expandedSections[idx];
+   766→                    return (
+   767→                      <div
+   768→                        key={idx}
+   769→                        className={
+   770→                          "rounded-xl overflow-hidden transition-all " +
+   771→                          (isOpen
+   772→                            ? "shadow-md bg-white"
+   773→                            : "bg-slate-50 hover:bg-slate-100")
+   774→                        }
+   775→                      >
+   776→                        <button
+   777→                          onClick={() => tog(setExpandedSections, idx)}
+   778→                          className="w-full flex justify-between items-center p-5 text-left font-medium transition-colors"
+   779→                        >
+   780→                          <div className="flex items-center gap-3.5">
+   781→                            <div
+   782→                              className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+   783→                              style={{
+   784→                                background: isOpen ? primary : primary + "40",
+   785→                              }}
+   786→                            >
+   787→                              {idx + 1}
+   788→                            </div>
+   789→                            <span className="text-gray-900 text-[0.95rem]">
+   790→                              {mod.title}
+   791→                            </span>
+   792→                          </div>
+   793→                          <div className="flex items-center gap-4 text-slate-500 font-normal">
+   794→                            <span className="hidden sm:inline text-sm">
+   795→                              {mod.lectures} Lectures · {mod.duration}
+   796→                            </span>
+   797→                            {isOpen ? (
+   798→                              <ChevronUp className="w-5 h-5" style={{ color: primary }} />
+   799→                            ) : (
+   800→                              <ChevronDown className="w-5 h-5" />
+   801→                            )}
+   802→                          </div>
+   803→                        </button>
+   804→                        {isOpen && (
+   805→                          <div className="px-5 pb-4 bg-white">
+   806→                            <ul className="space-y-1">
+   807→                              {mod.topics.map((tp: string, ti: number) => (
+   808→                                <li
+   809→                                  key={ti}
+   810→                                  className="flex items-center gap-3.5 py-3 text-[0.95rem] text-gray-600"
+   811→                                >
+   812→                                  <div
+   813→                                    className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100"
+   814→                                  >
+   815→                                    <Play className="w-3 h-3" style={{ color: primary }} />
+   816→                                  </div>
+   817→                                  {tp}
+   818→                                </li>
+   819→                              ))}
+   820→                            </ul>
+   821→                          </div>
+   822→                        )}
+   823→                      </div>
+   824→                    );
+   825→                  })}
+   826→                </div>
+   827→
+   828→                {curriculumModules.length > 5 && (
+   829→                  <div className="text-center mt-8">
+   830→                    <button
+   831→                      onClick={() => setShowAllCurriculum(!showAllCurriculum)}
+   832→                      className="inline-flex items-center gap-2 text-[0.95rem] font-semibold hover:underline"
+   833→                      style={{ color: primary }}
+   834→                    >
+   835→                      {showAllCurriculum
+   836→                        ? "Show less"
+   837→                        : "Show all " + curriculumModules.length + " sections"}
+   838→                    </button>
+   839→                  </div>
+   840→                )}
+   841→              </section>
+   842→            )}
+   843→
+   844→            {/* ========== INSTRUCTOR TAB ========== */}
+   845→            {activeTab === "instructor" && (
+   846→              <section>
+   847→                <div className="flex items-center gap-3 mb-8">
+   848→                  <div
+   849→                    className="w-11 h-11 rounded-xl flex items-center justify-center"
+   850→                    style={{ background: primary + "15" }}
+   851→                  >
+   852→                    <GraduationCap className="w-5 h-5" style={{ color: primary }} />
+   853→                  </div>
+   854→                  <h2 className="text-2xl font-bold text-gray-900">
+   855→                    Meet Your Instructor
+   856→                  </h2>
+   857→                </div>
+   858→                <div className="flex flex-col sm:flex-row items-start gap-8">
+   859→                  <div className="relative">
+   860→                    <img
+   861→                      src={INSTRUCTOR.avatar}
+   862→                      alt={INSTRUCTOR.name}
+   863→                      className="w-32 h-32 rounded-2xl object-cover shadow-xl"
+   864→                    />
+   865→                    <div
+   866→                      className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-lg"
+   867→                      style={{ background: primary }}
+   868→                    >
+   869→                      <CheckCircle2 className="w-5 h-5" />
+   870→                    </div>
+   871→                  </div>
+   872→                  <div className="flex-1">
+   873→                    <h3 className="text-2xl font-bold text-gray-900">
+   874→                      {INSTRUCTOR.name}
+   875→                    </h3>
+   876→                    <p className="text-lg font-semibold mt-1" style={{ color: primary }}>
+   877→                      {INSTRUCTOR.role}
+   878→                    </p>
+   879→                    <p className="text-gray-600 mt-4 leading-relaxed text-[1.05rem]">
+   880→                      {INSTRUCTOR.bio}
+   881→                    </p>
+   882→                    <div className="flex flex-wrap gap-8 mt-7">
+   883→                      {[
+   884→                        { l: "Students", v: INSTRUCTOR.students },
+   885→                        { l: "Courses", v: INSTRUCTOR.courses },
+   886→                        { l: "Rating", v: INSTRUCTOR.rating + " \u2605" },
+   887→                      ].map((s: any) => (
+   888→                        <div
+   889→                          key={s.l}
+   890→                          className="text-center px-6 py-3.5 rounded-xl bg-slate-50"
+   891→                        >
+   892→                          <div className="text-2xl font-bold text-gray-900">
+   893→                            {s.v}
+   894→                          </div>
+   895→                          <div className="text-sm text-slate-500 mt-0.5 font-medium">
+   896→                            {s.l}
+   897→                          </div>
+   898→                        </div>
+   899→                      ))}
+   900→                    </div>
+   901→                  </div>
+   902→                </div>
+   903→              </section>
+   904→            )}
+   905→
+   906→            {/* ========== REVIEWS TAB ========== */}
+   907→            {activeTab === "reviews" && (
+   908→              <section>
+   909→                <div className="flex items-center gap-3 mb-8">
+   910→                  <div
+   911→                    className="w-11 h-11 rounded-xl flex items-center justify-center"
+   912→                    style={{ background: primary + "15" }}
+   913→                  >
+   914→                    <MessageSquare className="w-5 h-5" style={{ color: primary }} />
+   915→                  </div>
+   916→                  <h2 className="text-2xl font-bold text-gray-900">
+   917→                    Student Reviews
+   918→                  </h2>
+   919→                </div>
+   920→
+   921→                <div className="flex flex-col md:flex-row gap-12">
+   922→                  {/* Rating summary */}
+   923→                  <div className="md:w-1/3 flex flex-col items-center md:items-start">
+   924→                    <div
+   925→                      className="text-7xl font-extrabold mb-3"
+   926→                      style={{ color: primary }}
+   927→                    >
+   928→                      4.8
+   929→                    </div>
+   930→                    <div className="flex text-amber-400 text-2xl mb-3">
+   931→                      <Star className="w-6 h-6 fill-amber-400" />
+   932→                      <Star className="w-6 h-6 fill-amber-400" />
+   933→                      <Star className="w-6 h-6 fill-amber-400" />
+   934→                      <Star className="w-6 h-6 fill-amber-400" />
+   935→                      <Star className="w-6 h-6 fill-amber-400/50" />
+   936→                    </div>
+   937→                    <p className="text-slate-500 mb-7 font-medium">
+   938→                      (2,456 reviews)
+   939→                    </p>
+   940→                    <div className="w-full space-y-3">
+   941→                      {RATING_BARS.map(({ star, pct }: any) => (
+   942→                        <div key={star} className="flex items-center">
+   943→                          <span className="w-4 text-gray-700 font-semibold text-sm">{star}</span>
+   944→                          <Star className="w-3.5 h-3.5 text-amber-400 mx-2 fill-amber-400" />
+   945→                          <div className="w-full bg-slate-100 rounded-full h-2.5 mx-1">
+   946→                            <div
+   947→                              className="h-2.5 rounded-full transition-all"
+   948→                              style={{
+   949→                                width: pct + "%",
+   950→                                background: primary,
+   951→                              }}
+   952→                            />
+   953→                          </div>
+   954→                          <span className="w-10 text-right text-slate-500 text-sm">{pct}%</span>
+   955→                        </div>
+   956→                      ))}
+   957→                    </div>
+   958→                  </div>
+   959→
+   960→                  {/* Review card */}
+   961→                  <div className="md:w-2/3">
+   962→                    <div className="bg-slate-50 rounded-2xl p-7">
+   963→                      <div className="flex items-start gap-4">
+   964→                        <img
+   965→                          alt="Reviewer"
+   966→                          className="w-16 h-16 rounded-xl object-cover shadow-md"
+   967→                          src={REVIEWS[currentReview].avatar}
+   968→                        />
+   969→                        <div className="flex-1">
+   970→                          <div className="flex flex-wrap items-center gap-2.5 mb-2">
+   971→                            <h4 className="font-bold text-gray-900 text-lg">
+   972→                              {REVIEWS[currentReview].name}
+   973→                            </h4>
+   974→                            <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full flex items-center gap-1 font-semibold">
+   975→                              <CheckCircle2 className="w-3 h-3" /> Verified
+   976→                            </span>
+   977→                          </div>
+   978→                          <div className="flex items-center gap-2.5 mb-4">
+   979→                            <div className="flex text-amber-400">
+   980→                              {Array.from({ length: 5 }).map(
+   981→                                (_: any, i: number) => (
+   982→                                  <Star
+   983→                                    key={i}
+   984→                                    className={
+   985→                                      "w-4.5 h-4.5 " +
+   986→                                      (i < REVIEWS[currentReview].rating
+   987→                                        ? "fill-amber-400"
+   988→                                        : "text-slate-200")
+   989→                                    }
+   990→                                  />
+   991→                                )
+   992→                              )}
+   993→                            </div>
+   994→                            <span className="text-slate-400 text-sm">
+   995→                              {REVIEWS[currentReview].time}
+   996→                            </span>
+   997→                          </div>
+   998→                          <p className="text-gray-600 leading-relaxed text-[1.05rem]">
+   999→                            {REVIEWS[currentReview].text}
+  1000→                          </p>
+  1001→                        </div>
+  1002→                      </div>
+  1003→                    </div>
+  1004→                    <div className="flex justify-center mt-6 gap-2.5">
+  1005→                      {REVIEWS.map((_: any, i: number) => (
+  1006→                        <button
+  1007→                          key={i}
+  1008→                          onClick={() => setCurrentReview(i)}
+  1009→                          className="h-2.5 rounded-full transition-all duration-300"
+  1010→                          style={{
+  1011→                            width: i === currentReview ? 28 : 10,
+  1012→                            background:
+  1013→                              i === currentReview ? primary : "#cbd5e1",
+  1014→                          }}
+  1015→                        />
+  1016→                      ))}
+  1017→                    </div>
+  1018→                  </div>
+  1019→                </div>
+  1020→              </section>
+  1021→            )}
+  1022→
+  1023→            {/* ========== FAQ TAB ========== */}
+  1024→            {activeTab === "faq" && (
+  1025→              <section>
+  1026→                <div className="flex items-center gap-3 mb-8">
+  1027→                  <div
+  1028→                    className="w-11 h-11 rounded-xl flex items-center justify-center"
+  1029→                    style={{ background: primary + "15" }}
+  1030→                  >
+  1031→                    <MessageSquare className="w-5 h-5" style={{ color: primary }} />
+  1032→                  </div>
+  1033→                  <h2 className="text-2xl font-bold text-gray-900">
+  1034→                    Frequently Asked Questions
+  1035→                  </h2>
+  1036→                </div>
+  1037→
+  1038→                <div className="space-y-3">
+  1039→                  {FAQS.map((faq: any, idx: number) => {
+  1040→                    const isOpen = expandedFaqs[idx];
+  1041→                    return (
+  1042→                      <div
+  1043→                        key={idx}
+  1044→                        className={
+  1045→                          "rounded-xl overflow-hidden transition-all " +
+  1046→                          (isOpen
+  1047→                            ? "shadow-md bg-white"
+  1048→                            : "bg-slate-50 hover:bg-slate-100")
+  1049→                        }
+  1050→                      >
+  1051→                        <button
+  1052→                          onClick={() => tog(setExpandedFaqs, idx)}
+  1053→                          className="w-full flex justify-between items-center p-5 text-left text-[0.95rem] font-semibold text-gray-900 transition-colors"
+  1054→                        >
+  1055→                          <span>{faq.q}</span>
+  1056→                          {isOpen ? (
+  1057→                            <ChevronUp className="w-5 h-5 shrink-0 ml-4" style={{ color: primary }} />
+  1058→                          ) : (
+  1059→                            <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-slate-400" />
+  1060→                          )}
+  1061→                        </button>
+  1062→                        {isOpen && (
+  1063→                          <div className="px-6 pb-5 bg-white">
+  1064→                            <p className="text-[0.95rem] text-gray-600 leading-relaxed">
+  1065→                              {faq.a}
+  1066→                            </p>
+  1067→                          </div>
+  1068→                        )}
+  1069→                      </div>
+  1070→                    );
+  1071→                  })}
+  1072→                </div>
+  1073→              </section>
+  1074→            )}
+  1075→          </div>
+  1076→
+  1077→          {/* ===== FULL WIDTH: Course Includes ===== */}
+  1078→          <section className="mt-12">
+  1079→            <div className="flex items-center gap-3 mb-6">
+  1080→              <div
+  1081→                className="w-11 h-11 rounded-xl flex items-center justify-center"
+  1082→                style={{ background: primary + "15" }}
+  1083→              >
+  1084→                <CheckCircle2 className="w-5 h-5" style={{ color: primary }} />
+  1085→              </div>
+  1086→              <h2 className="text-2xl font-bold text-gray-900">This Course Includes</h2>
+  1087→            </div>
+  1088→            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+  1089→              {[
+  1090→                { I: Video, t: totalDuration.replace("h ", " hours ") + " on-demand video" },
+  1091→                { I: FileText, t: totalLectures + " lectures" },
+  1092→                { I: Download, t: course.topics.length + " downloadable resources" },
+  1093→                { I: Smartphone, t: "Access on mobile and TV" },
+  1094→                { I: Infinity, t: "Full lifetime access" },
+  1095→                { I: Trophy, t: "Certificate of completion" },
+  1096→              ].map(({ I, t }: any) => (
+  1097→                <div
+  1098→                  key={t}
+  1099→                  className="flex items-center gap-3 p-4 rounded-xl bg-slate-50"
+  1100→                >
+  1101→                  <I className="w-5 h-5 shrink-0" style={{ color: primary }} />
+  1102→                  <span className="text-[0.9rem] text-gray-700 font-medium">{t}</span>
+  1103→                </div>
+  1104→              ))}
+  1105→            </div>
+  1106→          </section>
+  1107→        </div>
+  1108→
+  1109→        {/* ===== INSTRUCTOR + SHARE ROW ===== */}
+  1110→        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+  1111→          <div className="flex items-start gap-5 p-6 rounded-2xl bg-slate-50">
+  1112→            <img alt="Instructor" className="w-20 h-20 rounded-2xl object-cover shadow-md" src={INSTRUCTOR.avatar} />
+  1113→            <div className="flex-1">
+  1114→              <h3 className="text-lg font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+  1115→              <p className="text-sm font-semibold" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+  1116→              <p className="text-[0.9rem] text-slate-500 mt-2 leading-relaxed line-clamp-2">{INSTRUCTOR.bio}</p>
+  1117→              <div className="flex gap-6 mt-3">
+  1118→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.students} Students</span>
+  1119→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.courses} Courses</span>
+  1120→                <span className="text-sm font-bold text-gray-900 flex items-center gap-1">{INSTRUCTOR.rating} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /></span>
+  1121→              </div>
+  1122→            </div>
+  1123→          </div>
+  1124→          <div className="flex flex-col justify-between p-6 rounded-2xl bg-slate-50">
+  1125→            <div>
+  1126→              <h3 className="text-lg font-bold text-gray-900 mb-2">Share This Course</h3>
+  1127→              <p className="text-[0.9rem] text-slate-500 mb-4">Share with friends who might benefit from this course.</p>
+  1128→            </div>
+  1129→            <div className="flex items-center gap-3">
+  1130→              {[{ l: "f", bg: "#1877F2" }, { l: "X", bg: "#000" }, { l: "in", bg: "#0A66C2" }, { l: "WA", bg: "#25D366" }].map(({ l, bg }: any) => (
+  1131→                <button key={l} className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
+  1132→              ))}
+  1133→              <button
+  1134→                onClick={() => navigator.clipboard.writeText(window.location.href)}
+  1135→                className="w-11 h-11 rounded-xl bg-white text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors"
+  1136→              >
+  1137→                <Link2 className="w-[18px] h-[18px]" />
+  1138→              </button>
+  1139→            </div>
+  1140→          </div>
+  1141→        </div>
+  1142→
+  1143→        {/* ===== NEED HELP ===== */}
+  1144→        <div className="mt-8 p-8 rounded-2xl relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + "0c, " + primary + "04)" }}>
+  1145→          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+  1146→            <div>
+  1147→              <h3 className="text-xl font-bold text-gray-900 mb-1">Need help deciding?</h3>
+  1148→              <p className="text-[0.95rem] text-gray-600">Talk to our course advisor and find the perfect course for your goals.</p>
+  1149→            </div>
+  1150→            <button
+  1151→              className="text-white font-semibold py-3 px-8 rounded-xl text-[0.95rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0"
+  1152→              style={{ background: primary, boxShadow: "0 8px 24px " + primary + "40" }}
+  1153→            >
+  1154→              <Headset className="w-5 h-5" /> Contact Advisor
+  1155→            </button>
+  1156→          </div>
+  1157→          <div className="absolute -bottom-4 -right-4 opacity-[0.05]">
+  1158→            <Headset className="w-36 h-36" style={{ color: primary }} />
+  1159→          </div>
+  1160→        </div>
+  1161→      </div>
+  1162→
+  1163→      {/* ==================== FOOTER ==================== */}
+  1164→      <footer className="bg-slate-50 mt-8">
+  1165→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  1166→          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  1167→            {[
+  1168→              { I: Shield, t: "30-Day Money-Back Guarantee", d: "Full refund if you are not satisfied" },
+  1169→              { I: RotateCcw, t: "Lifetime Access", d: "Learn at your own pace, forever" },
+  1170→              { I: Lock, t: "Secure Payment", d: "100% secure checkout process" },
+  1171→            ].map(({ I, t, d }: any) => (
+  1172→              <div key={t} className="flex items-start gap-4 p-5 rounded-xl hover:bg-white transition-colors">
+  1173→                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: primary + "12" }}>
+  1174→                  <I className="w-6 h-6" style={{ color: primary }} />
+  1175→                </div>
+  1176→                <div>
+  1177→                  <h4 className="font-bold text-gray-900">{t}</h4>
+  1178→                  <p className="text-slate-500 mt-1.5">{d}</p>
+  1179→                </div>
+  1180→              </div>
+  1181→            ))}
+  1182→          </div>
+  1183→        </div>
+  1184→      </footer>
+  1185→    </div>
+  1186→  );
+  1187→}
+  1188→
