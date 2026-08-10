@@ -526,25 +526,41 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Course Highlights */}
             <section>
-              <div className="bg-[#f8faff] rounded-2xl p-8 sm:p-10 relative overflow-hidden border border-indigo-50">
-                {/* Decorative dots top-right */}
-                <div className="absolute top-4 right-4 w-24 h-24 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #4f46e5 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 relative">
+              <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+                {/* Dot grid pattern - top right */}
+                <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle, #2563eb 2px, transparent 2px)', backgroundSize: '14px 14px', backgroundPosition: '0 0' }} />
+                {/* Subtle gradient overlay top-right */}
+                <div className="absolute top-0 right-0 w-56 h-56 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(37,99,235,0.06) 0%, transparent 70%)' }} />
+                
+                {/* Header */}
+                <div className="flex items-center gap-3.5 mb-7 px-8 sm:px-10 pt-8 relative">
+                  <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+                    <Sparkle className="w-5 h-5 text-white" fill="white" />
+                  </div>
+                  <div>
+                    <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Highlights</h2>
+                    <div className="w-10 h-[3px] rounded-full bg-blue-600 mt-1.5" />
+                  </div>
+                </div>
+
+                {/* Grid */}
+                <div className="grid grid-cols-2 lg:grid-cols-4 relative">
                   {course.highlights.map((h: any, i: number) => {
                     const cfg = [
-                      { I: FolderOpen, color: "#2563eb", bg: "#eff6ff" },
-                      { I: BookOpen, color: "#4f46e5", bg: "#eef2ff" },
-                      { I: Clock, color: "#10b981", bg: "#ecfdf5" },
-                      { I: Award, color: "#f97316", bg: "#fff7ed" },
+                      { I: FolderOpen, color: '#2563eb', bg: '#2563eb' },
+                      { I: BookOpen, color: '#8b5cf6', bg: '#8b5cf6' },
+                      { I: Clock, color: '#10b981', bg: '#10b981' },
+                      { I: Award, color: '#f59e0b', bg: '#f59e0b' },
                     ][i % 4];
                     const Ic = cfg.I;
                     return (
-                      <div key={i} className={"flex flex-col items-center text-center " + (i < 3 ? "lg:border-r lg:border-slate-200/60" : "")}>
-                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style={{ background: cfg.bg }}>
-                          <Ic className="w-7 h-7" style={{ color: cfg.color }} />
+                      <div key={i} className={"flex flex-col items-center text-center px-6 py-7 " + (i < 3 ? 'lg:border-r' : '') + (i < 2 ? 'sm:border-r' : '')} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+                        <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: cfg.bg }}>
+                          <Ic className="w-6 h-6 text-white" strokeWidth={1.8} />
                         </div>
-                        <div className="text-3xl font-extrabold leading-none mb-1" style={{ color: cfg.color }}>{h.value}</div>
-                        <div className="text-[0.85rem] text-slate-500 font-medium">{h.label}</div>
+                        <div className="text-[1.75rem] font-extrabold leading-none mb-1.5" style={{ color: cfg.color }}>{h.value}</div>
+                        <div className="text-[0.85rem] text-gray-700 font-semibold">{h.label}</div>
+                        <div className="text-[0.78rem] text-gray-400 mt-1 leading-relaxed">{h.value === 'Included' ? 'On completion' : 'Comprehensive coverage'}</div>
                       </div>
                     );
                   })}
