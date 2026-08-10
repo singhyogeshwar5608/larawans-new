@@ -49,6 +49,8 @@ import {
   MonitorSmartphone,
   Megaphone,
   Paintbrush,
+  Gift,
+  Send,
 } from "lucide-react";
 
 type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
@@ -850,95 +852,139 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
         {/* ===== COURSE INCLUDES ===== */}
         <section className="mt-12">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><CheckCircle2 className="w-5 h-5" style={{ color: primary }} /></div>
-            <h2 className="text-2xl font-bold text-gray-900">This Course Includes</h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {[
-              { I: Video, t: totalDuration.replace("h ", " hours ") + " on-demand video" },
-              { I: FileText, t: totalLectures + " lectures" },
-              { I: Download, t: course.topics.length + " downloadable resources" },
-              { I: Smartphone, t: "Access on mobile and TV" },
-              { I: Infinity, t: "Full lifetime access" },
-              { I: Trophy, t: "Certificate of completion" },
-            ].map(({ I, t }: any) => (
-              <div key={t} className="flex items-center gap-3 p-4 rounded-xl bg-slate-50">
-                <I className="w-5 h-5 shrink-0" style={{ color: primary }} />
-                <span className="text-[0.9rem] text-gray-700 font-medium">{t}</span>
+          <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] p-8 sm:p-10">
+            <div className="flex items-center gap-3.5 mb-7">
+              <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                <Gift className="w-5 h-5 text-emerald-600" />
               </div>
-            ))}
+              <div>
+                <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">This Course Includes</h2>
+                <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {[
+                { I: Video, v: totalDuration.replace("h ", "h ").replace("m", "m"), l: "On-demand video" },
+                { I: FileText, v: totalLectures + " lectures", l: "In-depth learning" },
+                { I: Download, v: course.topics.length + " downloadable", l: "Resources" },
+                { I: Smartphone, v: "Access on", l: "Mobile & TV" },
+                { I: Infinity, v: "Full lifetime", l: "Access" },
+                { I: Trophy, v: "Certificate of", l: "Completion" },
+              ].map(({ I, v, l }: any) => (
+                <div key={v} className="flex flex-col items-center text-center p-5 rounded-xl bg-[#F9FAFB]">
+                  <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
+                    <I className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <div className="text-[0.95rem] font-bold text-gray-900 leading-tight">{v}</div>
+                  <div className="text-[0.78rem] text-gray-500 mt-1">{l}</div>
+                  <div className="w-6 h-[3px] rounded-full bg-emerald-500 mt-3" />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         {/* ===== INSTRUCTOR + SHARE ROW ===== */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
-          <div className="flex items-start gap-5 p-6 rounded-2xl bg-slate-50">
-            <img alt="Instructor" className="w-20 h-20 rounded-2xl object-cover shadow-md" src={INSTRUCTOR.avatar} />
-            <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-900">{INSTRUCTOR.name}</h3>
-              <p className="text-sm font-semibold" style={{ color: primary }}>{INSTRUCTOR.role}</p>
-              <p className="text-[0.9rem] text-slate-500 mt-2 leading-relaxed line-clamp-2">{INSTRUCTOR.bio}</p>
-              <div className="flex gap-6 mt-3">
-                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.students} Students</span>
-                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.courses} Courses</span>
-                <span className="text-sm font-bold text-gray-900 flex items-center gap-1">{INSTRUCTOR.rating} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /></span>
+          {/* Instructor Card */}
+          <div className="rounded-2xl overflow-hidden" style={{ background: '#F3EEFF' }}>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#5B4DFF' }}>
+                  <span className="text-white font-bold text-lg">LD</span>
+                </div>
+                <div>
+                  <h3 className="text-[1.1rem] font-bold" style={{ color: '#1A1A2E' }}>{INSTRUCTOR.name}</h3>
+                  <span className="text-[0.8rem] font-semibold px-2.5 py-0.5 rounded-full inline-block mt-1" style={{ background: '#ECFDF5', color: '#10B981' }}>{INSTRUCTOR.role}</span>
+                </div>
+              </div>
+              <p className="text-[0.85rem] leading-relaxed" style={{ color: '#4A4A68' }}>{INSTRUCTOR.bio}</p>
+            </div>
+            <div className="bg-white mx-4 mb-4 rounded-xl px-5 py-4">
+              <div className="grid grid-cols-3 gap-4">
+                {[{ I: Users, v: INSTRUCTOR.students, l: "Students" }, { I: BookOpen, v: INSTRUCTOR.courses, l: "Courses" }, { I: Star, v: INSTRUCTOR.rating, l: "Rating" }].map((s: any, si: number) => (
+                  <div key={s.l} className={"flex flex-col items-center text-center " + (si < 2 ? 'border-r' : '')} style={{ borderColor: 'rgba(99,102,241,0.15)' }}>
+                    <s.I className="w-4 h-4 mb-1.5" style={{ color: '#6366F1' }} />
+                    <span className="text-[0.95rem] font-bold" style={{ color: '#1A1A2E' }}>{s.v}</span>
+                    <span className="text-[0.72rem] mt-0.5" style={{ color: '#6B7280' }}>{s.l}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between p-6 rounded-2xl bg-slate-50">
-            <div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Share This Course</h3>
-              <p className="text-[0.9rem] text-slate-500 mb-4">Share with friends who might benefit from this course.</p>
+
+          {/* Share This Course */}
+          <div className="bg-white rounded-2xl p-7 shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+            <div className="relative z-10">
+              <h3 className="text-[1.2rem] font-bold" style={{ color: '#111827' }}>Share This Course</h3>
+              <p className="text-[0.85rem] mt-2 mb-5" style={{ color: '#6B7280' }}>Share with friends who might benefit from this course.</p>
+              <div className="flex items-center gap-3">
+                {[{ l: 'f', bg: '#1877F2' }, { l: 'X', bg: '#000000' }, { l: 'in', bg: '#0A66C2' }, { l: 'WA', bg: '#25D366' }].map(({ l, bg }: any) => (
+                  <button key={l} className="w-10 h-10 rounded-full flex items-center justify-center text-[0.65rem] font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
+                ))}
+                <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-200" style={{ background: '#F3F4F6', border: '1px solid #E5E7EB' }}>
+                  <Link2 className="w-4 h-4" style={{ color: '#374151' }} />
+                </button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              {[{ l: "f", bg: "#1877F2" }, { l: "X", bg: "#000" }, { l: "in", bg: "#0A66C2" }, { l: "WA", bg: "#25D366" }].map(({ l, bg }: any) => (
-                <button key={l} className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
-              ))}
-              <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-11 h-11 rounded-xl bg-white text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors">
-                <Link2 className="w-[18px] h-[18px]" />
-              </button>
+            {/* Decorative dashed line + paper plane */}
+            <div className="absolute top-6 right-6 pointer-events-none">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="opacity-20">
+                <path d="M10 60 Q30 40 50 30 T70 10" stroke="#10B981" strokeWidth="1.5" strokeDasharray="4 4" />
+                <circle cx="70" cy="10" r="8" fill="#10B981" opacity="0.3" />
+              </svg>
             </div>
           </div>
         </div>
 
         {/* ===== NEED HELP ===== */}
-        <div className="mt-8 p-8 rounded-2xl relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + "0c, " + primary + "04)" }}>
-          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">Need help deciding?</h3>
-              <p className="text-[0.95rem] text-gray-600">Talk to our course advisor and find the perfect course for your goals.</p>
+        <div className="mt-8 rounded-2xl overflow-hidden relative" style={{ background: '#ECFDF5' }}>
+          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-5 px-8 py-6">
+            <div className="flex items-center gap-4">
+              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: '#D1FAE5' }}>
+                <Headset className="w-5 h-5" style={{ color: '#10B981' }} />
+              </div>
+              <div>
+                <h3 className="text-[1.1rem] font-bold" style={{ color: '#064E3B' }}>Need help deciding?</h3>
+                <p className="text-[0.85rem] mt-0.5" style={{ color: '#047857' }}>Talk to our course advisor and find the perfect course for your goals.</p>
+              </div>
             </div>
-            <button className="text-white font-semibold py-3 px-8 rounded-xl text-[0.95rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0" style={{ background: primary, boxShadow: "0 8px 24px " + primary + "40" }}>
-              <Headset className="w-5 h-5" /> Contact Advisor
+            <button className="text-white font-semibold py-2.5 px-7 rounded-full text-[0.9rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0" style={{ background: '#10B981', boxShadow: '0 6px 20px rgba(16,185,129,0.35)' }}>
+              <Headset className="w-4 h-4" /> Contact Advisor
             </button>
-          </div>
-          <div className="absolute -bottom-4 -right-4 opacity-[0.05]">
-            <Headset className="w-36 h-36" style={{ color: primary }} />
           </div>
         </div>
       </div>
 
-      {/* ==================== FOOTER ==================== */}
-      <footer className="bg-slate-50 mt-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* ==================== TRUST / GUARANTEE ==================== */}
+      <div className="mt-8">
+        <div className="rounded-2xl relative overflow-hidden" style={{ background: '#F8FAFC' }}>
+          {/* Bottom gradient accent line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #8B5CF6, #10B981)' }} />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+            <style>{`
+              .trust-item { border-right: 1px solid rgba(0,0,0,0.06); }
+              .trust-item:last-child { border-right: none; }
+              @media (max-width: 767px) {
+                .trust-item { border-right: none; }
+              }
+            `}</style>
             {[
-              { I: Shield, t: "30-Day Money-Back Guarantee", d: "Full refund if you are not satisfied" },
-              { I: RotateCcw, t: "Lifetime Access", d: "Learn at your own pace, forever" },
-              { I: Lock, t: "Secure Payment", d: "100% secure checkout process" },
-            ].map(({ I, t, d }: any) => (
-              <div key={t} className="flex items-start gap-4 p-5 rounded-xl hover:bg-white transition-colors">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: primary + "12" }}><I className="w-6 h-6" style={{ color: primary }} /></div>
+              { I: Shield, t: '30-Day Money-Back Guarantee', d: 'Full refund if you are not satisfied', bg: '#EDE9FE', ic: '#6D28D9' },
+              { I: RotateCcw, t: 'Lifetime Access', d: 'Learn at your own pace, forever', bg: '#E0E7FF', ic: '#4338CA' },
+              { I: Lock, t: 'Secure Payment', d: '100% secure checkout process', bg: '#DBEAFE', ic: '#1D4ED8' },
+            ].map(({ I, t, d, bg, ic }: any) => (
+              <div key={t} className="trust-item flex items-center gap-4 px-8 py-7">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ background: bg }}><I className="w-5 h-5" style={{ color: ic }} /></div>
                 <div>
-                  <h4 className="font-bold text-gray-900">{t}</h4>
-                  <p className="text-slate-500 mt-1.5">{d}</p>
+                  <h4 className="font-bold text-[0.9rem]" style={{ color: '#1E293B' }}>{t}</h4>
+                  <p className="text-[0.8rem] mt-1" style={{ color: '#64748B' }}>{d}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }

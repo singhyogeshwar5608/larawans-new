@@ -1,0 +1,945 @@
+     1→"use client";
+     2→
+     3→import { useState, useEffect, useMemo, useRef } from "react";
+     4→import type { CourseItem } from "@/lib/course-data";
+     5→import {
+     6→  House,
+     7→  ChevronRight,
+     8→  Star,
+     9→  Users,
+    10→  Play,
+    11→  Laptop,
+    12→  Briefcase,
+    13→  GraduationCap,
+    14→  Handshake,
+    15→  CheckCircle2,
+    16→  ChevronDown,
+    17→  ChevronUp,
+    18→  Flame,
+    19→  Clock,
+    20→  Smartphone,
+    21→  Award,
+    22→  Download,
+    23→  ClipboardList,
+    24→  Tag,
+    25→  ShoppingCart,
+    26→  Link2,
+    27→  Headset,
+    28→  Shield,
+    29→  RotateCcw,
+    30→  Lock,
+    31→  Video,
+    32→  FileText,
+    33→  Infinity,
+    34→  Trophy,
+    35→  Zap,
+    36→  BookOpen,
+    37→  TrendingUp,
+    38→  Target,
+    39→  MessageSquare,
+    40→  Code2,
+    41→  BarChart3,
+    42→  Sparkle,
+    43→  Brain,
+    44→  Palette,
+    45→  Eye,
+    46→  FolderOpen,
+    47→  Rocket,
+    48→  Lightbulb,
+    49→  MonitorSmartphone,
+    50→  Megaphone,
+    51→  Paintbrush,
+    52→} from "lucide-react";
+    53→
+    54→type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
+    55→
+    56→const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
+    57→  { id: "overview", label: "Overview", icon: BookOpen },
+    58→  { id: "curriculum", label: "Curriculum", icon: FileText },
+    59→  { id: "instructor", label: "Instructor", icon: GraduationCap },
+    60→  { id: "reviews", label: "Reviews", icon: MessageSquare },
+    61→  { id: "faq", label: "FAQ", icon: MessageSquare },
+    62→];
+    63→
+    64→const INSTRUCTOR = {
+    65→  name: "Larawans Digital",
+    66→  role: "Industry Expert",
+    67→  avatar:
+    68→    "https://ui-avatars.com/api/?name=LD&background=4f46e5&color=fff&size=200&bold=true",
+    69→  bio: "Experienced professional with years of industry expertise. Has trained thousands of students and worked with top organizations worldwide.",
+    70→  students: "50K+",
+    71→  courses: "15+",
+    72→  rating: "4.9",
+    73→};
+    74→
+    75→const REVIEWS = [
+    76→  {
+    77→    name: "Rahul Sharma",
+    78→    avatar: "https://ui-avatars.com/api/?name=RS&background=10b981&color=fff&bold=true",
+    79→    rating: 5,
+    80→    time: "2 weeks ago",
+    81→    text: "Excellent course! The instructor explains everything in a very practical way. Projects are really helpful to understand real-world concepts.",
+    82→  },
+    83→  {
+    84→    name: "Priya Patel",
+    85→    avatar: "https://ui-avatars.com/api/?name=PP&background=8b5cf6&color=fff&bold=true",
+    86→    rating: 5,
+    87→    time: "1 month ago",
+    88→    text: "This course transformed my career. The hands-on projects and real-world examples made learning so effective. Highly recommended!",
+    89→  },
+    90→  {
+    91→    name: "Amit Kumar",
+    92→    avatar: "https://ui-avatars.com/api/?name=AK&background=3b82f6&color=fff&bold=true",
+    93→    rating: 4,
+    94→    time: "3 weeks ago",
+    95→    text: "Great content and well-structured curriculum. The support team is very responsive. Would definitely recommend.",
+    96→  },
+    97→];
+    98→
+    99→const FAQS = [
+   100→  { q: "Who is this course for?", a: "This course is designed for beginners as well as intermediate learners who want to build professional skills." },
+   101→  { q: "Do I need any prior experience?", a: "No prior experience is required. We start from the very basics and gradually progress to advanced topics." },
+   102→  { q: "Will I get a certificate?", a: "Yes! Upon successful completion of all modules and projects, you will receive a certificate of completion." },
+   103→  { q: "How long do I have access?", a: "You get lifetime access to the course content. Learn at your own pace, revisit any module, and access all future updates." },
+   104→  { q: "Is there a money-back guarantee?", a: "Yes, we offer a 30-day money-back guarantee. If you are not satisfied within the first 30 days, you can request a full refund." },
+   105→  { q: "Can I access the course on mobile?", a: "Yes, the course is fully responsive and can be accessed on any device — desktop, tablet, or mobile." },
+   106→];
+   107→
+   108→const RATING_BARS = [
+   109→  { star: 5, pct: 81 },
+   110→  { star: 4, pct: 14 },
+   111→  { star: 3, pct: 3 },
+   112→  { star: 2, pct: 1 },
+   113→  { star: 1, pct: 1 },
+   114→];
+   115→
+   116→export default function CourseDetailClient({ course }: { course: CourseItem }) {
+   117→  const [activeTab, setActiveTab] = useState<TabId>("overview");
+   118→  const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>({ 0: true });
+   119→  const [expandedFaqs, setExpandedFaqs] = useState<Record<number, boolean>>({ 0: true });
+   120→  const [showAllCurriculum, setShowAllCurriculum] = useState(false);
+   121→  const [currentReview, setCurrentReview] = useState(0);
+   122→  const [countdown, setCountdown] = useState({ days: 2, hours: 10, mins: 24, secs: 32 });
+   123→  const [imgLoaded, setImgLoaded] = useState(false);
+   124→  const tabRef = useRef<HTMLDivElement>(null);
+   125→
+   126→  const primary = course.themeColor || "#4f46e5";
+   127→
+   128→  useEffect(() => {
+   129→    const t = setInterval(() => {
+   130→      setCountdown((p) => {
+   131→        let { days, hours, mins, secs } = p;
+   132→        secs--;
+   133→        if (secs < 0) { secs = 59; mins--; }
+   134→        if (mins < 0) { mins = 59; hours--; }
+   135→        if (hours < 0) { hours = 23; days--; }
+   136→        if (days < 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
+   137→        return { days, hours, mins, secs };
+   138→      });
+   139→    }, 1000);
+   140→    return () => clearInterval(t);
+   141→  }, []);
+   142→
+   143→  useEffect(() => {
+   144→    const t = setInterval(() => setCurrentReview((p) => (p + 1) % REVIEWS.length), 5000);
+   145→    return () => clearInterval(t);
+   146→  }, []);
+   147→
+   148→  useEffect(() => {
+   149→    tabRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+   150→  }, [activeTab]);
+   151→
+   152→  const priceNum = parseInt(course.price.replace(/[^\d]/g, "")) || 9999;
+   153→  const originalPrice = String.fromCodePoint(8377) + (priceNum * 3.6).toLocaleString("en-IN");
+   154→  const discount = Math.round((1 - priceNum / (priceNum * 3.6)) * 100);
+   155→
+   156→  const curriculumModules = useMemo(() => {
+   157→    const mc = Math.min(course.modules || 5, 9);
+   158→    const tpm = Math.ceil(course.topics.length / mc);
+   159→    return Array.from({ length: mc }, (_, i) => {
+   160→      const lc = (i + 1) * 3 + 2;
+   161→      const tm = lc * 12 + i * 15;
+   162→      return {
+   163→        title: course.topics[i * tpm] || "Module " + (i + 1),
+   164→        lectures: lc,
+   165→        duration: Math.floor(tm / 60) + "h " + (tm % 60) + "m",
+   166→        topics: course.topics.slice(i * tpm, (i + 1) * tpm),
+   167→      };
+   168→    });
+   169→  }, [course.modules, course.topics]);
+   170→
+   171→  const totalLectures = curriculumModules.reduce((s, m) => s + m.lectures, 0);
+   172→  const totalMins = curriculumModules.reduce((s, m) => {
+   173→    const p = m.duration.match(/(\d+)h (\d+)m/);
+   174→    return s + parseInt(p?.[1] || "0") * 60 + parseInt(p?.[2] || "0");
+   175→  }, 0);
+   176→  const totalDuration = Math.floor(totalMins / 60) + "h " + (totalMins % 60) + "m";
+   177→
+   178→  const getLevelTag = (l: string) => {
+   179→    const lw = l.toLowerCase();
+   180→    if (lw.includes("beginner") || l === "All Levels") return "Beginner Friendly";
+   181→    if (lw.includes("intermediate")) return "Intermediate";
+   182→    return "Advanced";
+   183→  };
+   184→  const tog = (set: React.Dispatch<React.SetStateAction<Record<number, boolean>>>, idx: number) =>
+   185→    set((p) => ({ ...p, [idx]: !p[idx] }));
+   186→  const pad = (n: number) => n.toString().padStart(2, "0");
+   187→
+   188→  return (
+   189→    <div className="min-h-screen bg-white text-gray-900 antialiased" style={{ fontFamily: "'Poppins', sans-serif" }}>
+   190→            {/* ==================== HERO ==================== */}
+   191→      <section className="relative overflow-hidden bg-white">
+   192→        {/* Background decorative blob */}
+   193→        <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, #EDE9FE 0%, #EDE9FE 40%, transparent 70%)" }} />
+   194→        {/* Subtle top-left blob */}
+   195→        <div className="absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full pointer-events-none opacity-40" style={{ background: "radial-gradient(circle, #EEF2FF 0%, transparent 70%)" }} />
+   196→
+   197→        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-14 pb-16 lg:pb-24">
+   198→          {/* Breadcrumbs */}
+   199→          <nav className="flex mb-7">
+   200→            <ol className="inline-flex items-center gap-1.5 text-[13px]">
+   201→              <li>
+   202→                <a href="/" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-indigo-600 transition-colors font-medium">
+   203→                  <House className="w-3.5 h-3.5" /> Home
+   204→                </a>
+   205→              </li>
+   206→              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
+   207→              <li>
+   208→                <a href="/courses" className="text-gray-400 hover:text-indigo-600 transition-colors font-medium">{course.category}</a>
+   209→              </li>
+   210→              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
+   211→              <li className="text-indigo-600 font-semibold truncate max-w-[220px]">{course.title}</li>
+   212→            </ol>
+   213→          </nav>
+   214→
+   215→          {/* Hero two-column */}
+   216→          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+   217→            {/* LEFT COLUMN */}
+   218→            <div className="flex-1 min-w-0">
+   219→              {/* Category Badges */}
+   220→              <div className="flex flex-wrap items-center gap-2.5 mb-5">
+   221→                <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-emerald-50 text-emerald-700">
+   222→                  <Zap className="w-3.5 h-3.5" /> {course.category}
+   223→                </span>
+   224→                <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-blue-50 text-blue-700">
+   225→                  <Users className="w-3.5 h-3.5" /> {getLevelTag(course.level)}
+   226→                </span>
+   227→                {course.badge && (
+   228→                  <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-amber-50 text-amber-700">
+   229→                    <Flame className="w-3.5 h-3.5" /> {course.badge}
+   230→                  </span>
+   231→                )}
+   232→              </div>
+   233→
+   234→              {/* Title */}
+   235→              <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" }}>
+   236→                {course.title}
+   237→              </h1>
+   238→
+   239→              {/* Hand-drawn underline accent */}
+   240→              <div className="mb-6 mt-1">
+   241→                <svg width="120" height="12" viewBox="0 0 120 12" fill="none" className="ml-1">
+   242→                  <path d="M2 8C15 3 35 2 60 5C85 8 100 4 118 7" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" strokeDasharray="4 3" opacity="0.7"/>
+   243→                </svg>
+   244→              </div>
+   245→
+   246→              {/* Description */}
+   247→              <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[580px] mb-7">{course.description}</p>
+   248→
+   249→              {/* Metadata row */}
+   250→              <div className="flex flex-wrap items-center gap-x-7 gap-y-3 mb-8">
+   251→                <div className="flex items-center gap-2">
+   252→                  <div className="flex">
+   253→                    {[1,2,3,4].map(n => <Star key={n} className="w-[18px] h-[18px] text-amber-400 fill-amber-400" />)}
+   254→                    <Star className="w-[18px] h-[18px] text-amber-400/40 fill-amber-400/40" />
+   255→                  </div>
+   256→                  <span className="font-bold text-slate-800">4.8</span>
+   257→                  <span className="text-slate-400 text-[13px]">(2,456)</span>
+   258→                </div>
+   259→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   260→                  <Users className="w-4 h-4 text-indigo-500" /> {course.students}
+   261→                </div>
+   262→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   263→                  <Clock className="w-4 h-4 text-indigo-500" /> {course.duration}
+   264→                </div>
+   265→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   266→                  <BarChart3 className="w-4 h-4 text-indigo-500" /> {course.level}
+   267→                </div>
+   268→              </div>
+   269→
+   270→              {/* Feature Buttons */}
+   271→              <div className="flex flex-wrap items-center gap-3 mb-8">
+   272→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   273→                  <Code2 className="w-4 h-4 text-emerald-500" /> Practical Projects
+   274→                </span>
+   275→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   276→                  <Briefcase className="w-4 h-4 text-violet-500" /> Industry Tools
+   277→                </span>
+   278→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   279→                  <Award className="w-4 h-4 text-emerald-500" /> Certificate
+   280→                </span>
+   281→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   282→                  <Infinity className="w-4 h-4 text-orange-500" /> Lifetime Access
+   283→                </span>
+   284→              </div>
+   285→
+   286→              {/* CTA Buttons */}
+   287→              <div className="flex flex-wrap items-center gap-3.5">
+   288→                <button className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-white px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-200 active:scale-[0.98]" style={{ background: "linear-gradient(135deg, #10B981, #059669)", boxShadow: "0 4px 14px rgba(16,185,129,0.3)" }}>
+   289→                  <GraduationCap className="w-[18px] h-[18px]" /> Enroll Now
+   290→                </button>
+   291→                <button className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-slate-700 px-7 py-3.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md transition-all duration-200 active:scale-[0.98]">
+   292→                  <ShoppingCart className="w-[18px] h-[18px]" /> Add to Cart
+   293→                </button>
+   294→              </div>
+   295→            </div>
+   296→
+   297→            {/* RIGHT COLUMN — Illustration */}
+   298→            <div className="w-full lg:w-[480px] shrink-0 flex items-center justify-center">
+   299→              <div className="relative w-full max-w-[440px]">
+   300→                {/* Floating AI Prompt Card */}
+   301→                <div className="absolute -left-6 top-[30%] z-20 w-[200px] rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl shadow-indigo-100/50 p-4 border border-slate-100">
+   302→                  <div className="flex items-center gap-2 mb-2.5">
+   303→                    <div className="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center">
+   304→                      <Sparkle className="w-4 h-4 text-indigo-600" />
+   305→                    </div>
+   306→                    <span className="text-[12px] font-bold text-slate-800">AI Prompt</span>
+   307→                  </div>
+   308→                  <div className="bg-slate-50 rounded-xl px-3 py-2.5 text-[11px] text-slate-400 leading-relaxed border border-slate-100">
+   309→                    Write a creative marketing headline...<span className="inline-block w-[1.5px] h-3 bg-indigo-500 ml-0.5 animate-pulse align-middle" />
+   310→                  </div>
+   311→                  <button className="mt-2.5 w-full text-[11px] font-bold text-white py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors flex items-center justify-center gap-1.5">
+   312→                    <Zap className="w-3 h-3" /> Generate
+   313→                  </button>
+   314→                </div>
+   315→
+   316→                {/* Floating tech icons */}
+   317→                <div className="absolute -right-2 top-[8%] z-10 w-12 h-12 rounded-xl bg-teal-100 flex items-center justify-center shadow-lg shadow-teal-100/50">
+   318→                  <Brain className="w-6 h-6 text-teal-600" />
+   319→                </div>
+   320→                <div className="absolute -right-4 top-[25%] z-10 w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center shadow-lg shadow-purple-100/50">
+   321→                  <Palette className="w-5.5 h-5.5 text-purple-600" />
+   322→                </div>
+   323→                <div className="absolute left-2 bottom-[18%] z-10 w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shadow-lg shadow-amber-100/50">
+   324→                  <Code2 className="w-5.5 h-5.5 text-amber-600" />
+   325→                </div>
+   326→
+   327→                {/* Main Robot SVG Illustration */}
+   328→                <div className="relative z-0 flex items-center justify-center py-4">
+   329→                  <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-[360px]" style={{ filter: "drop-shadow(0 20px 40px rgba(99,102,241,0.15))" }}>
+   330→                    {/* Background circle */}
+   331→                    <circle cx="200" cy="200" r="190" fill="#F5F3FF" opacity="0.5"/>
+   332→                    <circle cx="200" cy="200" r="160" fill="#EDE9FE" opacity="0.4"/>
+   333→                    {/* Robot body */}
+   334→                    <rect x="140" y="180" width="120" height="130" rx="24" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   335→                    {/* Body accent stripe */}
+   336→                    <rect x="140" y="180" width="120" height="20" rx="24" fill={primary} opacity="0.15"/>
+   337→                    {/* Robot head */}
+   338→                    <rect x="148" y="100" width="104" height="90" rx="22" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   339→                    {/* Visor/Screen */}
+   340→                    <rect x="162" y="115" width="76" height="50" rx="14" fill="#1E1B4B"/>
+   341→                    {/* Eyes - happy curve */}
+   342→                    <path d="M178 142C182 136 190 134 200 134C210 134 218 136 222 142" stroke="#818CF8" strokeWidth="3" strokeLinecap="round"/>
+   343→                    {/* Eye dots */}
+   344→                    <circle cx="188" cy="130" r="3" fill="#818CF8"/>
+   345→                    <circle cx="212" cy="130" r="3" fill="#818CF8"/>
+   346→                    {/* Antenna */}
+   347→                    <line x1="200" y1="100" x2="200" y2="78" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round"/>
+   348→                    <circle cx="200" cy="72" r="8" fill="#8B5CF6" opacity="0.8"/>
+   349→                    <circle cx="200" cy="72" r="4" fill="#A78BFA"/>
+   350→                    {/* Left arm */}
+   351→                    <rect x="108" y="195" width="36" height="16" rx="8" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   352→                    {/* Right arm (raised, pointing up) */}
+   353→                    <rect x="256" y="155" width="16" height="50" rx="8" fill="white" stroke="#E2E8F0" strokeWidth="2" transform="rotate(-15 264 155)"/>
+   354→                    {/* Pointing finger */}
+   355→                    <circle cx="258" cy="148" r="6" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   356→                    {/* Lightbulb above finger */}
+   357→                    <g className="animate-pulse">
+   358→                      <circle cx="258" cy="120" r="18" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="1.5"/>
+   359→                      <path d="M253 118C253 112 258 108 258 108C258 108 263 112 263 118" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" fill="none"/>
+   360→                      <line x1="258" y1="100" x2="258" y2="96" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   361→                      <line x1="272" y1="106" x2="275" y2="103" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   362→                      <line x1="244" y1="106" x2="241" y2="103" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   363→                    </g>
+   364→                    {/* Legs */}
+   365→                    <rect x="162" y="305" width="24" height="40" rx="10" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   366→                    <rect x="214" y="305" width="24" height="40" rx="10" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   367→                    {/* Feet */}
+   368→                    <rect x="155" y="338" width="38" height="14" rx="7" fill="#E2E8F0"/>
+   369→                    <rect x="207" y="338" width="38" height="14" rx="7" fill="#E2E8F0"/>
+   370→                    {/* Body details - buttons */}
+   371→                    <circle cx="175" cy="225" r="5" fill="#8B5CF6" opacity="0.3"/>
+   372→                    <circle cx="200" cy="225" r="5" fill="#10B981" opacity="0.4"/>
+   373→                    <circle cx="225" cy="225" r="5" fill="#F59E0B" opacity="0.3"/>
+   374→                    {/* Heart on chest */}
+   375→                    <path d="M193 255C193 248 200 244 200 244C200 244 207 248 207 255C207 260 200 266 200 266C200 266 193 260 193 255Z" fill={primary} opacity="0.2"/>
+   376→                  </svg>
+   377→                </div>
+   378→              </div>
+   379→            </div>
+   380→          </div>
+   381→        </div>
+   382→
+   383→        {/* Bottom curved wave separator */}
+   384→        <div className="absolute bottom-0 left-0 right-0">
+   385→          <svg viewBox="0 0 1440 60" fill="none" className="w-full block">
+   386→            <path d="M0 60V30C360 0 720 10 1080 30C1260 40 1380 35 1440 30V60H0Z" fill="white"/>
+   387→          </svg>
+   388→        </div>
+   389→
+   390→        {/* Purple swoosh line at bottom */}
+   391→        <div className="absolute bottom-0 left-0 right-0 h-1.5" style={{ background: "linear-gradient(90deg, transparent 5%, #8B5CF6 30%, #6366F1 50%, #8B5CF6 70%, transparent 95%)" }} />
+   392→      </section>
+   393→
+   394→{/* ==================== PRICING CTA BAR ==================== */}
+   395→      <div className="bg-gray-50/60">
+   396→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
+   397→          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] relative overflow-hidden">
+   398→            {/* Thin green accent at top */}
+   399→            <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "linear-gradient(90deg, #10B981, #10B981aa, #10B981)" }} />
+   400→
+   401→            {/* LEFT — Pricing */}
+   402→            <div className="flex items-center gap-6 px-7 py-6 lg:py-7 w-full lg:w-auto">
+   403→              {/* Discount Badge */}
+   404→              <div className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold uppercase tracking-wide px-3 py-1.5 rounded-full border border-emerald-100">
+   405→                <Eye className="w-3.5 h-3.5" /> {discount}% OFF
+   406→              </div>
+   407→              <div>
+   408→                <div className="flex items-baseline gap-3">
+   409→                  <span className="text-[2rem] lg:text-[2.25rem] font-extrabold text-gray-900 leading-none">{course.price}</span>
+   410→                  <span className="text-lg text-slate-400 line-through font-medium">{originalPrice}</span>
+   411→                </div>
+   412→                <p className="text-[13px] text-red-500 font-semibold mt-1.5 flex items-center gap-1.5">
+   413→                  <Flame className="w-3.5 h-3.5" /> Limited Time Offer!
+   414→                </p>
+   415→              </div>
+   416→            </div>
+   417→
+   418→            {/* Vertical separator */}
+   419→            <div className="hidden lg:block w-px h-16 bg-slate-100" />
+   420→
+   421→            {/* CENTER — Countdown */}
+   422→            <div className="flex flex-col items-center gap-3 px-6 py-4">
+   423→              <div className="flex items-center gap-3">
+   424→                <div className="h-px w-8 bg-slate-200" />
+   425→                <span className="text-[13px] font-semibold text-slate-500 uppercase tracking-wider">Offer ends in</span>
+   426→                <div className="h-px w-8 bg-slate-200" />
+   427→              </div>
+   428→              <div className="flex gap-2.5">
+   429→                {["Days", "Hours", "Mins", "Secs"].map((label, i) => {
+   430→                  const val = [countdown.days, countdown.hours, countdown.mins, countdown.secs][i];
+   431→                  return (
+   432→                    <div key={label} className="text-center bg-indigo-50/70 rounded-xl px-3.5 py-2.5 min-w-[58px] border border-indigo-100/60">
+   433→                      <div className="text-xl font-extrabold text-indigo-600 font-mono leading-none">{pad(val)}</div>
+   434→                      <div className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider font-medium">{label}</div>
+   435→                    </div>
+   436→                  );
+   437→                })}
+   438→              </div>
+   439→            </div>
+   440→
+   441→            {/* Vertical separator */}
+   442→            <div className="hidden lg:block w-px h-16 bg-slate-100" />
+   443→
+   444→            {/* RIGHT — CTAs */}
+   445→            <div className="flex flex-col sm:flex-row items-center gap-3 px-7 py-6 lg:py-7 w-full lg:w-auto">
+   446→              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-white font-bold text-[0.95rem] py-3.5 px-8 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-200/60 active:scale-[0.98]" style={{ background: "linear-gradient(135deg, #10B981, #059669)", boxShadow: "0 4px 14px rgba(16,185,129,0.3)" }}>
+   447→                <Zap className="w-5 h-5" /> Enroll Now
+   448→              </button>
+   449→              <button className="w-full sm:w-auto inline-flex items-center justify-center gap-2 font-bold text-[0.95rem] py-3.5 px-8 rounded-xl transition-all duration-200 hover:shadow-md active:scale-[0.98] text-slate-600 bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50">
+   450→                <ShoppingCart className="w-4.5 h-4.5" /> Add to Cart
+   451→              </button>
+   452→              <p className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-0.5">
+   453→                <Shield className="w-3.5 h-3.5" /> 30-Day Money Back Guarantee
+   454→              </p>
+   455→            </div>
+   456→          </div>
+   457→        </div>
+   458→      </div>
+   459→
+   460→      {/* ==================== TABS + CONTENT (FULL WIDTH) ==================== */}
+   461→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+   462→        {/* Tab bar */}
+   463→        <div ref={tabRef} className="inline-flex flex-wrap gap-1 p-1.5 rounded-2xl bg-slate-100 mb-10">
+   464→          {TABS.map((tab) => {
+   465→            const Ic = tab.icon;
+   466→            const active = activeTab === tab.id;
+   467→            return (
+   468→              <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={"flex items-center gap-2 px-5 py-3 rounded-xl text-[0.95rem] font-semibold transition-all duration-200 " + (active ? "text-white shadow-lg" : "text-slate-500 hover:text-slate-800 hover:bg-white/60")} style={active ? { background: primary, boxShadow: "0 8px 24px " + primary + "50" } : {}}>
+   469→                <Ic className="w-[18px] h-[18px]" />
+   470→                {tab.label}
+   471→              </button>
+   472→            );
+   473→          })}
+   474→        </div>
+   475→
+   476→        {/* ========== OVERVIEW TAB ========== */}
+   477→        {activeTab === "overview" && (
+   478→          <div className="space-y-10">
+   479→            {/* Course Description */}
+   480→            <section>
+   481→              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
+   482→                {/* Section Header */}
+   483→                <div className="flex items-center gap-3.5 mb-7">
+   484→                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+   485→                    <BookOpen className="w-5.5 h-5.5 text-emerald-600" />
+   486→                  </div>
+   487→                  <div>
+   488→                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Course Description</h2>
+   489→                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+   490→                  </div>
+   491→                </div>
+   492→                {/* Description Body */}
+   493→                <div className="space-y-5 leading-[1.75] text-[0.975rem] text-slate-600">
+   494→                  <p>{course.longDescription}</p>
+   495→                  <p>{course.aboutText}</p>
+   496→                </div>
+   497→              </div>
+   498→            </section>
+   499→
+   500→            {/* What You Will Learn */}
+   501→            <section>
+   502→              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
+   503→                {/* Section Header */}
+   504→                <div className="flex items-center gap-3.5 mb-7">
+   505→                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+   506→                    <Target className="w-5.5 h-5.5 text-emerald-600" />
+   507→                  </div>
+   508→                  <div>
+   509→                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">What You Will Learn</h2>
+   510→                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+   511→                  </div>
+   512→                </div>
+   513→                {/* Learning Outcomes Grid */}
+   514→                <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+   515→                  {course.topics.map((tp: string, i: number) => (
+   516→                    <div key={i} className="flex items-center gap-3.5 bg-[#FFFEF5] hover:bg-[#FFF9E0] border rounded-lg px-4 py-2.5 transition-all duration-200" style={{ borderColor: "rgba(167,243,208,0.7)" }}>
+   517→                      <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+   518→                        <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+   519→                      </div>
+   520→                      <span className="text-[0.925rem] text-slate-700 font-medium leading-[1.25]">{tp}</span>
+   521→                    </div>
+   522→                  ))}
+   523→                </div>
+   524→              </div>
+   525→            </section>
+   526→
+   527→            {/* Course Highlights */}
+   528→            <section>
+   529→              <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+   530→                {/* Dot grid pattern - top right */}
+   531→                <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle, #2563eb 2px, transparent 2px)', backgroundSize: '14px 14px', backgroundPosition: '0 0' }} />
+   532→                {/* Subtle gradient overlay top-right */}
+   533→                <div className="absolute top-0 right-0 w-56 h-56 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(37,99,235,0.06) 0%, transparent 70%)' }} />
+   534→                
+   535→                {/* Header */}
+   536→                <div className="flex items-center gap-3.5 mb-7 px-8 sm:px-10 pt-8 relative">
+   537→                  <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+   538→                    <Sparkle className="w-5 h-5 text-white" fill="white" />
+   539→                  </div>
+   540→                  <div>
+   541→                    <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Highlights</h2>
+   542→                    <div className="w-10 h-[3px] rounded-full bg-blue-600 mt-1.5" />
+   543→                  </div>
+   544→                </div>
+   545→
+   546→                {/* Grid */}
+   547→                <style>{`
+   548→                  .hl-item { border-right: 1px solid rgba(0,0,0,0.08); }
+   549→                  .hl-item:nth-child(2) { border-right: 1px solid rgba(0,0,0,0.08); }
+   550→                  .hl-item:nth-child(4n) { border-right: none; }
+   551→                  @media (min-width: 640px) and (max-width: 1023px) {
+   552→                    .hl-item:nth-child(odd) { border-right: 1px solid rgba(0,0,0,0.08); }
+   553→                    .hl-item:nth-child(even) { border-right: none; }
+   554→                  }
+   555→                `}</style>
+   556→                <div className="grid grid-cols-2 lg:grid-cols-4 relative">
+   557→                  {course.highlights.map((h: any, i: number) => {
+   558→                    const cfg = [
+   559→                      { I: FolderOpen, color: '#2563eb', bg: '#2563eb' },
+   560→                      { I: BookOpen, color: '#8b5cf6', bg: '#8b5cf6' },
+   561→                      { I: Clock, color: '#10b981', bg: '#10b981' },
+   562→                      { I: Award, color: '#f59e0b', bg: '#f59e0b' },
+   563→                    ][i % 4];
+   564→                    const Ic = cfg.I;
+   565→                    return (
+   566→                      <div key={i} className="hl-item flex flex-col items-center text-center px-6 py-7">
+   567→                        <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: cfg.bg }}>
+   568→                          <Ic className="w-6 h-6 text-white" strokeWidth={1.8} />
+   569→                        </div>
+   570→                        <div className="text-[1.75rem] font-extrabold leading-none mb-1.5" style={{ color: cfg.color }}>{h.value}</div>
+   571→                        <div className="text-[0.85rem] text-gray-700 font-semibold">{h.label}</div>
+   572→                        <div className="text-[0.78rem] text-gray-400 mt-1 leading-relaxed">{h.value === 'Included' ? 'On completion' : 'Comprehensive coverage'}</div>
+   573→                      </div>
+   574→                    );
+   575→                  })}
+   576→                </div>
+   577→              </div>
+   578→            </section>
+   579→
+   580→            {/* Feature Cards */}
+   581→            <section>
+   582→              <div className="rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
+   583→                {[
+   584→                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5" },
+   585→                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff" },
+   586→                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff" },
+   587→                  { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed" },
+   588→                ].map(({ I, t, d, color, bg }: any, idx: number) => (
+   589→                  <div key={t} className={`group p-6 lg:p-7 transition-all duration-300 hover:bg-gray-50/50 ${idx < 3 ? 'lg:border-r' : ''} ${idx < 2 ? 'sm:border-r' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+   590→                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-6 h-6" style={{ color }} /></div>
+   591→                    <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
+   592→                    <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{d}</p>
+   593→                    <div className="w-8 h-[3px] rounded-full mt-4" style={{ background: color }} />
+   594→                  </div>
+   595→                ))}
+   596→              </div>
+   597→            </section>
+   598→
+   599→            {/* Tech Stack */}
+   600→            <section>
+   601→              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgba(0,0,0,0.05)] p-8 sm:p-10">
+   602→                <div className="flex items-center gap-3.5 mb-7">
+   603→                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+   604→                    <Code2 className="w-5.5 h-5.5 text-emerald-600" />
+   605→                  </div>
+   606→                  <div>
+   607→                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Tech Stack You Will Master</h2>
+   608→                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+   609→                  </div>
+   610→                </div>
+   611→                <div className="flex flex-wrap gap-3">
+   612→                  {course.techStack.filter((t: any) => t.name !== "Midjourney").map((tech: any, i: number) => {
+   613→                    const slugMap: Record<string, string> = {
+   614→                      "Laravel": "laravel", "React": "react", "Next.js": "nextdotjs",
+   615→                      "TypeScript": "typescript", "Tailwind CSS": "tailwindcss", "MySQL": "mysql",
+   616→                      "Vercel": "vercel", "Docker": "docker", "ChatGPT": "openai",
+   617→                      "LangChain": "langchain", "Python": "python",
+   618→                      "OpenAI API": "openai", "DALL-E": "openai", "Hugging Face": "huggingface",
+   619→                      "Node.js": "nodedotjs", "MongoDB": "mongodb", "Redis": "redis",
+   620→                      "GraphQL": "graphql", "Git": "git", "GitHub": "github",
+   621→                      "AWS": "amazonaws", "Firebase": "firebase", "Figma": "figma",
+   622→                      "Flutter": "flutter", "Swift": "swift", "Kotlin": "kotlin",
+   623→                    };
+   624→                    const slug = slugMap[tech.name] || tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+   625→                    const iconUrl = `https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/${slug}.svg`;
+   626→                    return (
+   627→                      <div key={i} className="inline-flex items-center gap-2.5 rounded-full pl-1.5 pr-4 py-1.5 transition-all duration-200 border hover:shadow-[0_2px_8px_rgba(0,0,0,0.1)]" style={{ background: tech.color + "10", borderColor: tech.color + "30" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "20" }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "10" }}>
+   628→                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: tech.color + "20" }}>
+   629→                          <div className="w-4 h-4" style={{ backgroundColor: tech.color, WebkitMaskImage: `url(${iconUrl})`, maskImage: `url(${iconUrl})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
+   630→                        </div>
+   631→                        <span className="text-[0.875rem] font-semibold" style={{ color: tech.color }}>{tech.name}</span>
+   632→                      </div>
+   633→                    );
+   634→                  })}
+   635→                </div>
+   636→              </div>
+   637→            </section>
+   638→
+   639→            {/* Who This Course Is For */}
+   640→            <section>
+   641→              <div className="bg-white rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-7 sm:p-8 relative overflow-hidden">
+   642→                {/* Decorative dots top-right */}
+   643→                <div className="absolute top-3 right-3 w-20 h-20 opacity-[0.06] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #6b7280 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
+   644→                <div className="relative">
+   645→                  {/* Header */}
+   646→                  <div className="flex items-center gap-3 mb-2">
+   647→                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+   648→                      <Users className="w-5 h-5 text-emerald-600" strokeWidth={2.5} />
+   649→                    </div>
+   650→                    <h2 className="text-[1.375rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
+   651→                  </div>
+   652→                  <div className="w-12 h-1 rounded-full bg-emerald-500 mb-6 ml-[52px]" />
+   653→
+   654→                  {/* List */}
+   655→                  <div className="space-y-4 relative pl-1">
+   656→                    {/* Vertical timeline line */}
+   657→                    <div className="absolute left-[18px] top-3 bottom-3 w-[2px] bg-emerald-500" />
+   658→                    {course.audience.map((item: string, i: number) => {
+   659→                      const cfg = [
+   660→                        { I: Megaphone, color: "#8B5CF6", bg: "#EDE9FE" },
+   661→                        { I: Laptop, color: "#6366F1", bg: "#EEF2FF" },
+   662→                        { I: Briefcase, color: "#10B981", bg: "#D1FAE5" },
+   663→                        { I: Paintbrush, color: "#A855F7", bg: "#F3E8FF" },
+   664→                        { I: GraduationCap, color: "#6366F1", bg: "#EEF2FF" },
+   665→                      ];
+   666→                      const c = cfg[i % cfg.length];
+   667→                      const Ic = c.I;
+   668→                      return (
+   669→                        <div key={i} className="flex items-center gap-4 relative z-10">
+   670→                          {/* Number Badge - rounded rectangle */}
+   671→                          <div className="w-9 h-7 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-[13px] shrink-0">{String(i + 1).padStart(2, "0")}</div>
+   672→                          {/* Text */}
+   673→                          <p className="text-[0.9375rem] text-gray-700 leading-relaxed flex-1 font-medium">{item}</p>
+   674→                          {/* Right Icon */}
+   675→                          <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: c.bg }}>
+   676→                            <Ic className="w-6 h-6" style={{ color: c.color }} fill={c.color} />
+   677→                          </div>
+   678→                        </div>
+   679→                      );
+   680→                    })}
+   681→                  </div>
+   682→                </div>
+   683→              </div>
+   684→            </section>
+   685→          </div>
+   686→        )}
+   687→
+   688→        {/* ========== CURRICULUM TAB ========== */}
+   689→        {activeTab === "curriculum" && (
+   690→          <section>
+   691→            <div className="flex flex-wrap justify-between items-end mb-6 gap-3">
+   692→              <div className="flex items-center gap-3">
+   693→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><FileText className="w-5 h-5" style={{ color: primary }} /></div>
+   694→                <h2 className="text-2xl font-bold text-gray-900">Course Curriculum</h2>
+   695→              </div>
+   696→              <span className="text-sm text-slate-500 bg-slate-100 px-4 py-2 rounded-lg font-medium">{curriculumModules.length} Sections · {totalLectures} Lectures · {totalDuration}</span>
+   697→            </div>
+   698→            <div className="space-y-3">
+   699→              {(showAllCurriculum ? curriculumModules : curriculumModules.slice(0, 5)).map((mod: any, idx: number) => {
+   700→                const isOpen = expandedSections[idx];
+   701→                return (
+   702→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+   703→                    <button onClick={() => tog(setExpandedSections, idx)} className="w-full flex justify-between items-center p-5 text-left font-medium transition-colors">
+   704→                      <div className="flex items-center gap-3.5">
+   705→                        <div className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm font-bold" style={{ background: isOpen ? primary : primary + "40" }}>{idx + 1}</div>
+   706→                        <span className="text-gray-900 text-[0.95rem]">{mod.title}</span>
+   707→                      </div>
+   708→                      <div className="flex items-center gap-4 text-slate-500 font-normal">
+   709→                        <span className="hidden sm:inline text-sm">{mod.lectures} Lectures · {mod.duration}</span>
+   710→                        {isOpen ? <ChevronUp className="w-5 h-5" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5" />}
+   711→                      </div>
+   712→                    </button>
+   713→                    {isOpen && (
+   714→                      <div className="px-5 pb-4 bg-white">
+   715→                        <ul className="space-y-1">
+   716→                          {mod.topics.map((tp: string, ti: number) => (
+   717→                            <li key={ti} className="flex items-center gap-3.5 py-3 text-[0.95rem] text-gray-600">
+   718→                              <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100"><Play className="w-3 h-3" style={{ color: primary }} /></div>
+   719→                              {tp}
+   720→                            </li>
+   721→                          ))}
+   722→                        </ul>
+   723→                      </div>
+   724→                    )}
+   725→                  </div>
+   726→                );
+   727→              })}
+   728→            </div>
+   729→            {curriculumModules.length > 5 && (
+   730→              <div className="text-center mt-8">
+   731→                <button onClick={() => setShowAllCurriculum(!showAllCurriculum)} className="inline-flex items-center gap-2 text-[0.95rem] font-semibold hover:underline" style={{ color: primary }}>
+   732→                  {showAllCurriculum ? "Show less" : "Show all " + curriculumModules.length + " sections"}
+   733→                </button>
+   734→              </div>
+   735→            )}
+   736→          </section>
+   737→        )}
+   738→
+   739→        {/* ========== INSTRUCTOR TAB ========== */}
+   740→        {activeTab === "instructor" && (
+   741→          <section>
+   742→            <div className="flex items-center gap-3 mb-8">
+   743→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><GraduationCap className="w-5 h-5" style={{ color: primary }} /></div>
+   744→              <h2 className="text-2xl font-bold text-gray-900">Meet Your Instructor</h2>
+   745→            </div>
+   746→            <div className="flex flex-col sm:flex-row items-start gap-8">
+   747→              <div className="relative">
+   748→                <img src={INSTRUCTOR.avatar} alt={INSTRUCTOR.name} className="w-32 h-32 rounded-2xl object-cover shadow-xl" />
+   749→                <div className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-lg" style={{ background: primary }}><CheckCircle2 className="w-5 h-5" /></div>
+   750→              </div>
+   751→              <div className="flex-1">
+   752→                <h3 className="text-2xl font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+   753→                <p className="text-lg font-semibold mt-1" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+   754→                <p className="text-gray-600 mt-4 leading-relaxed text-[1.05rem]">{INSTRUCTOR.bio}</p>
+   755→                <div className="flex flex-wrap gap-8 mt-7">
+   756→                  {[{ l: "Students", v: INSTRUCTOR.students }, { l: "Courses", v: INSTRUCTOR.courses }, { l: "Rating", v: INSTRUCTOR.rating + " \u2605" }].map((s: any) => (
+   757→                    <div key={s.l} className="text-center px-6 py-3.5 rounded-xl bg-slate-50">
+   758→                      <div className="text-2xl font-bold text-gray-900">{s.v}</div>
+   759→                      <div className="text-sm text-slate-500 mt-0.5 font-medium">{s.l}</div>
+   760→                    </div>
+   761→                  ))}
+   762→                </div>
+   763→              </div>
+   764→            </div>
+   765→          </section>
+   766→        )}
+   767→
+   768→        {/* ========== REVIEWS TAB ========== */}
+   769→        {activeTab === "reviews" && (
+   770→          <section>
+   771→            <div className="flex items-center gap-3 mb-8">
+   772→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+   773→              <h2 className="text-2xl font-bold text-gray-900">Student Reviews</h2>
+   774→            </div>
+   775→            <div className="flex flex-col md:flex-row gap-12">
+   776→              <div className="md:w-1/3 flex flex-col items-center md:items-start">
+   777→                <div className="text-7xl font-extrabold mb-3" style={{ color: primary }}>4.8</div>
+   778→                <div className="flex text-amber-400 text-2xl mb-3">
+   779→                  {[1,2,3,4].map(n => <Star key={n} className="w-6 h-6 fill-amber-400" />)}
+   780→                  <Star className="w-6 h-6 fill-amber-400/50" />
+   781→                </div>
+   782→                <p className="text-slate-500 mb-7 font-medium">(2,456 reviews)</p>
+   783→                <div className="w-full space-y-3">
+   784→                  {RATING_BARS.map(({ star, pct }: any) => (
+   785→                    <div key={star} className="flex items-center">
+   786→                      <span className="w-4 text-gray-700 font-semibold text-sm">{star}</span>
+   787→                      <Star className="w-3.5 h-3.5 text-amber-400 mx-2 fill-amber-400" />
+   788→                      <div className="flex-1 bg-slate-100 rounded-full h-2.5 mx-1">
+   789→                        <div className="h-2.5 rounded-full transition-all" style={{ width: pct + "%", background: primary }} />
+   790→                      </div>
+   791→                      <span className="w-10 text-right text-slate-500 text-sm">{pct}%</span>
+   792→                    </div>
+   793→                  ))}
+   794→                </div>
+   795→              </div>
+   796→              <div className="md:w-2/3">
+   797→                <div className="bg-slate-50 rounded-2xl p-7">
+   798→                  <div className="flex items-start gap-4">
+   799→                    <img alt="Reviewer" className="w-16 h-16 rounded-xl object-cover shadow-md" src={REVIEWS[currentReview].avatar} />
+   800→                    <div className="flex-1">
+   801→                      <div className="flex flex-wrap items-center gap-2.5 mb-2">
+   802→                        <h4 className="font-bold text-gray-900 text-lg">{REVIEWS[currentReview].name}</h4>
+   803→                        <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full flex items-center gap-1 font-semibold"><CheckCircle2 className="w-3 h-3" /> Verified</span>
+   804→                      </div>
+   805→                      <div className="flex items-center gap-2.5 mb-4">
+   806→                        <div className="flex text-amber-400">
+   807→                          {Array.from({ length: 5 }).map((_: any, i: number) => (
+   808→                            <Star key={i} className={"w-4.5 h-4.5 " + (i < REVIEWS[currentReview].rating ? "fill-amber-400" : "text-slate-200")} />
+   809→                          ))}
+   810→                        </div>
+   811→                        <span className="text-slate-400 text-sm">{REVIEWS[currentReview].time}</span>
+   812→                      </div>
+   813→                      <p className="text-gray-600 leading-relaxed text-[1.05rem]">{REVIEWS[currentReview].text}</p>
+   814→                    </div>
+   815→                  </div>
+   816→                </div>
+   817→                <div className="flex justify-center mt-6 gap-2.5">
+   818→                  {REVIEWS.map((_: any, i: number) => (
+   819→                    <button key={i} onClick={() => setCurrentReview(i)} className="h-2.5 rounded-full transition-all duration-300" style={{ width: i === currentReview ? 28 : 10, background: i === currentReview ? primary : "#cbd5e1" }} />
+   820→                  ))}
+   821→                </div>
+   822→              </div>
+   823→            </div>
+   824→          </section>
+   825→        )}
+   826→
+   827→        {/* ========== FAQ TAB ========== */}
+   828→        {activeTab === "faq" && (
+   829→          <section>
+   830→            <div className="flex items-center gap-3 mb-8">
+   831→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+   832→              <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+   833→            </div>
+   834→            <div className="space-y-3">
+   835→              {FAQS.map((faq: any, idx: number) => {
+   836→                const isOpen = expandedFaqs[idx];
+   837→                return (
+   838→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+   839→                    <button onClick={() => tog(setExpandedFaqs, idx)} className="w-full flex justify-between items-center p-5 text-left text-[0.95rem] font-semibold text-gray-900 transition-colors">
+   840→                      <span>{faq.q}</span>
+   841→                      {isOpen ? <ChevronUp className="w-5 h-5 shrink-0 ml-4" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-slate-400" />}
+   842→                    </button>
+   843→                    {isOpen && <div className="px-6 pb-5 bg-white"><p className="text-[0.95rem] text-gray-600 leading-relaxed">{faq.a}</p></div>}
+   844→                  </div>
+   845→                );
+   846→              })}
+   847→            </div>
+   848→          </section>
+   849→        )}
+   850→
+   851→        {/* ===== COURSE INCLUDES ===== */}
+   852→        <section className="mt-12">
+   853→          <div className="flex items-center gap-3 mb-6">
+   854→            <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><CheckCircle2 className="w-5 h-5" style={{ color: primary }} /></div>
+   855→            <h2 className="text-2xl font-bold text-gray-900">This Course Includes</h2>
+   856→          </div>
+   857→          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+   858→            {[
+   859→              { I: Video, t: totalDuration.replace("h ", " hours ") + " on-demand video" },
+   860→              { I: FileText, t: totalLectures + " lectures" },
+   861→              { I: Download, t: course.topics.length + " downloadable resources" },
+   862→              { I: Smartphone, t: "Access on mobile and TV" },
+   863→              { I: Infinity, t: "Full lifetime access" },
+   864→              { I: Trophy, t: "Certificate of completion" },
+   865→            ].map(({ I, t }: any) => (
+   866→              <div key={t} className="flex items-center gap-3 p-4 rounded-xl bg-slate-50">
+   867→                <I className="w-5 h-5 shrink-0" style={{ color: primary }} />
+   868→                <span className="text-[0.9rem] text-gray-700 font-medium">{t}</span>
+   869→              </div>
+   870→            ))}
+   871→          </div>
+   872→        </section>
+   873→
+   874→        {/* ===== INSTRUCTOR + SHARE ROW ===== */}
+   875→        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+   876→          <div className="flex items-start gap-5 p-6 rounded-2xl bg-slate-50">
+   877→            <img alt="Instructor" className="w-20 h-20 rounded-2xl object-cover shadow-md" src={INSTRUCTOR.avatar} />
+   878→            <div className="flex-1">
+   879→              <h3 className="text-lg font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+   880→              <p className="text-sm font-semibold" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+   881→              <p className="text-[0.9rem] text-slate-500 mt-2 leading-relaxed line-clamp-2">{INSTRUCTOR.bio}</p>
+   882→              <div className="flex gap-6 mt-3">
+   883→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.students} Students</span>
+   884→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.courses} Courses</span>
+   885→                <span className="text-sm font-bold text-gray-900 flex items-center gap-1">{INSTRUCTOR.rating} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /></span>
+   886→              </div>
+   887→            </div>
+   888→          </div>
+   889→          <div className="flex flex-col justify-between p-6 rounded-2xl bg-slate-50">
+   890→            <div>
+   891→              <h3 className="text-lg font-bold text-gray-900 mb-2">Share This Course</h3>
+   892→              <p className="text-[0.9rem] text-slate-500 mb-4">Share with friends who might benefit from this course.</p>
+   893→            </div>
+   894→            <div className="flex items-center gap-3">
+   895→              {[{ l: "f", bg: "#1877F2" }, { l: "X", bg: "#000" }, { l: "in", bg: "#0A66C2" }, { l: "WA", bg: "#25D366" }].map(({ l, bg }: any) => (
+   896→                <button key={l} className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
+   897→              ))}
+   898→              <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-11 h-11 rounded-xl bg-white text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors">
+   899→                <Link2 className="w-[18px] h-[18px]" />
+   900→              </button>
+   901→            </div>
+   902→          </div>
+   903→        </div>
+   904→
+   905→        {/* ===== NEED HELP ===== */}
+   906→        <div className="mt-8 p-8 rounded-2xl relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + "0c, " + primary + "04)" }}>
+   907→          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+   908→            <div>
+   909→              <h3 className="text-xl font-bold text-gray-900 mb-1">Need help deciding?</h3>
+   910→              <p className="text-[0.95rem] text-gray-600">Talk to our course advisor and find the perfect course for your goals.</p>
+   911→            </div>
+   912→            <button className="text-white font-semibold py-3 px-8 rounded-xl text-[0.95rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0" style={{ background: primary, boxShadow: "0 8px 24px " + primary + "40" }}>
+   913→              <Headset className="w-5 h-5" /> Contact Advisor
+   914→            </button>
+   915→          </div>
+   916→          <div className="absolute -bottom-4 -right-4 opacity-[0.05]">
+   917→            <Headset className="w-36 h-36" style={{ color: primary }} />
+   918→          </div>
+   919→        </div>
+   920→      </div>
+   921→
+   922→      {/* ==================== FOOTER ==================== */}
+   923→      <footer className="bg-slate-50 mt-8">
+   924→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+   925→          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+   926→            {[
+   927→              { I: Shield, t: "30-Day Money-Back Guarantee", d: "Full refund if you are not satisfied" },
+   928→              { I: RotateCcw, t: "Lifetime Access", d: "Learn at your own pace, forever" },
+   929→              { I: Lock, t: "Secure Payment", d: "100% secure checkout process" },
+   930→            ].map(({ I, t, d }: any) => (
+   931→              <div key={t} className="flex items-start gap-4 p-5 rounded-xl hover:bg-white transition-colors">
+   932→                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: primary + "12" }}><I className="w-6 h-6" style={{ color: primary }} /></div>
+   933→                <div>
+   934→                  <h4 className="font-bold text-gray-900">{t}</h4>
+   935→                  <p className="text-slate-500 mt-1.5">{d}</p>
+   936→                </div>
+   937→              </div>
+   938→            ))}
+   939→          </div>
+   940→        </div>
+   941→      </footer>
+   942→    </div>
+   943→  );
+   944→}
+   945→
