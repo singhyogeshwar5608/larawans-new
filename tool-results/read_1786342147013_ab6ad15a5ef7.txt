@@ -1,0 +1,810 @@
+     1→"use client";
+     2→
+     3→import { useState, useEffect, useMemo, useRef } from "react";
+     4→import type { CourseItem } from "@/lib/course-data";
+     5→import {
+     6→  House,
+     7→  ChevronRight,
+     8→  Star,
+     9→  Users,
+    10→  Play,
+    11→  Laptop,
+    12→  Briefcase,
+    13→  GraduationCap,
+    14→  Handshake,
+    15→  CheckCircle2,
+    16→  ChevronDown,
+    17→  ChevronUp,
+    18→  Flame,
+    19→  Clock,
+    20→  Smartphone,
+    21→  Award,
+    22→  Download,
+    23→  ClipboardList,
+    24→  Tag,
+    25→  ShoppingCart,
+    26→  Link2,
+    27→  Headset,
+    28→  Shield,
+    29→  RotateCcw,
+    30→  Lock,
+    31→  Video,
+    32→  FileText,
+    33→  Infinity,
+    34→  Trophy,
+    35→  Zap,
+    36→  BookOpen,
+    37→  TrendingUp,
+    38→  Target,
+    39→  MessageSquare,
+    40→  Code2,
+    41→  BarChart3,
+    42→  Sparkle,
+    43→  Brain,
+    44→  Palette,
+    45→} from "lucide-react";
+    46→
+    47→type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
+    48→
+    49→const TABS: { id: TabId; label: string; icon: React.ElementType }[] = [
+    50→  { id: "overview", label: "Overview", icon: BookOpen },
+    51→  { id: "curriculum", label: "Curriculum", icon: FileText },
+    52→  { id: "instructor", label: "Instructor", icon: GraduationCap },
+    53→  { id: "reviews", label: "Reviews", icon: MessageSquare },
+    54→  { id: "faq", label: "FAQ", icon: MessageSquare },
+    55→];
+    56→
+    57→const INSTRUCTOR = {
+    58→  name: "Larawans Digital",
+    59→  role: "Industry Expert",
+    60→  avatar:
+    61→    "https://ui-avatars.com/api/?name=LD&background=4f46e5&color=fff&size=200&bold=true",
+    62→  bio: "Experienced professional with years of industry expertise. Has trained thousands of students and worked with top organizations worldwide.",
+    63→  students: "50K+",
+    64→  courses: "15+",
+    65→  rating: "4.9",
+    66→};
+    67→
+    68→const REVIEWS = [
+    69→  {
+    70→    name: "Rahul Sharma",
+    71→    avatar: "https://ui-avatars.com/api/?name=RS&background=10b981&color=fff&bold=true",
+    72→    rating: 5,
+    73→    time: "2 weeks ago",
+    74→    text: "Excellent course! The instructor explains everything in a very practical way. Projects are really helpful to understand real-world concepts.",
+    75→  },
+    76→  {
+    77→    name: "Priya Patel",
+    78→    avatar: "https://ui-avatars.com/api/?name=PP&background=8b5cf6&color=fff&bold=true",
+    79→    rating: 5,
+    80→    time: "1 month ago",
+    81→    text: "This course transformed my career. The hands-on projects and real-world examples made learning so effective. Highly recommended!",
+    82→  },
+    83→  {
+    84→    name: "Amit Kumar",
+    85→    avatar: "https://ui-avatars.com/api/?name=AK&background=3b82f6&color=fff&bold=true",
+    86→    rating: 4,
+    87→    time: "3 weeks ago",
+    88→    text: "Great content and well-structured curriculum. The support team is very responsive. Would definitely recommend.",
+    89→  },
+    90→];
+    91→
+    92→const FAQS = [
+    93→  { q: "Who is this course for?", a: "This course is designed for beginners as well as intermediate learners who want to build professional skills." },
+    94→  { q: "Do I need any prior experience?", a: "No prior experience is required. We start from the very basics and gradually progress to advanced topics." },
+    95→  { q: "Will I get a certificate?", a: "Yes! Upon successful completion of all modules and projects, you will receive a certificate of completion." },
+    96→  { q: "How long do I have access?", a: "You get lifetime access to the course content. Learn at your own pace, revisit any module, and access all future updates." },
+    97→  { q: "Is there a money-back guarantee?", a: "Yes, we offer a 30-day money-back guarantee. If you are not satisfied within the first 30 days, you can request a full refund." },
+    98→  { q: "Can I access the course on mobile?", a: "Yes, the course is fully responsive and can be accessed on any device — desktop, tablet, or mobile." },
+    99→];
+   100→
+   101→const RATING_BARS = [
+   102→  { star: 5, pct: 81 },
+   103→  { star: 4, pct: 14 },
+   104→  { star: 3, pct: 3 },
+   105→  { star: 2, pct: 1 },
+   106→  { star: 1, pct: 1 },
+   107→];
+   108→
+   109→export default function CourseDetailClient({ course }: { course: CourseItem }) {
+   110→  const [activeTab, setActiveTab] = useState<TabId>("overview");
+   111→  const [expandedSections, setExpandedSections] = useState<Record<number, boolean>>({ 0: true });
+   112→  const [expandedFaqs, setExpandedFaqs] = useState<Record<number, boolean>>({ 0: true });
+   113→  const [showAllCurriculum, setShowAllCurriculum] = useState(false);
+   114→  const [currentReview, setCurrentReview] = useState(0);
+   115→  const [countdown, setCountdown] = useState({ days: 2, hours: 10, mins: 24, secs: 32 });
+   116→  const [imgLoaded, setImgLoaded] = useState(false);
+   117→  const tabRef = useRef<HTMLDivElement>(null);
+   118→
+   119→  const primary = course.themeColor || "#4f46e5";
+   120→
+   121→  useEffect(() => {
+   122→    const t = setInterval(() => {
+   123→      setCountdown((p) => {
+   124→        let { days, hours, mins, secs } = p;
+   125→        secs--;
+   126→        if (secs < 0) { secs = 59; mins--; }
+   127→        if (mins < 0) { mins = 59; hours--; }
+   128→        if (hours < 0) { hours = 23; days--; }
+   129→        if (days < 0) return { days: 0, hours: 0, mins: 0, secs: 0 };
+   130→        return { days, hours, mins, secs };
+   131→      });
+   132→    }, 1000);
+   133→    return () => clearInterval(t);
+   134→  }, []);
+   135→
+   136→  useEffect(() => {
+   137→    const t = setInterval(() => setCurrentReview((p) => (p + 1) % REVIEWS.length), 5000);
+   138→    return () => clearInterval(t);
+   139→  }, []);
+   140→
+   141→  useEffect(() => {
+   142→    tabRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+   143→  }, [activeTab]);
+   144→
+   145→  const priceNum = parseInt(course.price.replace(/[^\d]/g, "")) || 9999;
+   146→  const originalPrice = String.fromCodePoint(8377) + (priceNum * 3.6).toLocaleString("en-IN");
+   147→  const discount = Math.round((1 - priceNum / (priceNum * 3.6)) * 100);
+   148→
+   149→  const curriculumModules = useMemo(() => {
+   150→    const mc = Math.min(course.modules || 5, 9);
+   151→    const tpm = Math.ceil(course.topics.length / mc);
+   152→    return Array.from({ length: mc }, (_, i) => {
+   153→      const lc = (i + 1) * 3 + 2;
+   154→      const tm = lc * 12 + i * 15;
+   155→      return {
+   156→        title: course.topics[i * tpm] || "Module " + (i + 1),
+   157→        lectures: lc,
+   158→        duration: Math.floor(tm / 60) + "h " + (tm % 60) + "m",
+   159→        topics: course.topics.slice(i * tpm, (i + 1) * tpm),
+   160→      };
+   161→    });
+   162→  }, [course.modules, course.topics]);
+   163→
+   164→  const totalLectures = curriculumModules.reduce((s, m) => s + m.lectures, 0);
+   165→  const totalMins = curriculumModules.reduce((s, m) => {
+   166→    const p = m.duration.match(/(\d+)h (\d+)m/);
+   167→    return s + parseInt(p?.[1] || "0") * 60 + parseInt(p?.[2] || "0");
+   168→  }, 0);
+   169→  const totalDuration = Math.floor(totalMins / 60) + "h " + (totalMins % 60) + "m";
+   170→
+   171→  const getLevelTag = (l: string) => {
+   172→    const lw = l.toLowerCase();
+   173→    if (lw.includes("beginner") || l === "All Levels") return "Beginner Friendly";
+   174→    if (lw.includes("intermediate")) return "Intermediate";
+   175→    return "Advanced";
+   176→  };
+   177→  const tog = (set: React.Dispatch<React.SetStateAction<Record<number, boolean>>>, idx: number) =>
+   178→    set((p) => ({ ...p, [idx]: !p[idx] }));
+   179→  const pad = (n: number) => n.toString().padStart(2, "0");
+   180→
+   181→  return (
+   182→    <div className="min-h-screen bg-white text-gray-900 antialiased">
+   183→            {/* ==================== HERO ==================== */}
+   184→      <section className="relative overflow-hidden bg-white">
+   185→        {/* Background decorative blob */}
+   186→        <div className="absolute -bottom-20 -right-20 w-[600px] h-[600px] rounded-full pointer-events-none" style={{ background: "radial-gradient(ellipse at center, #EDE9FE 0%, #EDE9FE 40%, transparent 70%)" }} />
+   187→        {/* Subtle top-left blob */}
+   188→        <div className="absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full pointer-events-none opacity-40" style={{ background: "radial-gradient(circle, #EEF2FF 0%, transparent 70%)" }} />
+   189→
+   190→        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-14 pb-16 lg:pb-24">
+   191→          {/* Breadcrumbs */}
+   192→          <nav className="flex mb-7">
+   193→            <ol className="inline-flex items-center gap-1.5 text-[13px]">
+   194→              <li>
+   195→                <a href="/" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-indigo-600 transition-colors font-medium">
+   196→                  <House className="w-3.5 h-3.5" /> Home
+   197→                </a>
+   198→              </li>
+   199→              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
+   200→              <li>
+   201→                <a href="/courses" className="text-gray-400 hover:text-indigo-600 transition-colors font-medium">{course.category}</a>
+   202→              </li>
+   203→              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
+   204→              <li className="text-indigo-600 font-semibold truncate max-w-[220px]">{course.title}</li>
+   205→            </ol>
+   206→          </nav>
+   207→
+   208→          {/* Hero two-column */}
+   209→          <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+   210→            {/* LEFT COLUMN */}
+   211→            <div className="flex-1 min-w-0">
+   212→              {/* Category Badges */}
+   213→              <div className="flex flex-wrap items-center gap-2.5 mb-5">
+   214→                <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-emerald-50 text-emerald-700">
+   215→                  <Zap className="w-3.5 h-3.5" /> {course.category}
+   216→                </span>
+   217→                <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-blue-50 text-blue-700">
+   218→                  <Users className="w-3.5 h-3.5" /> {getLevelTag(course.level)}
+   219→                </span>
+   220→                {course.badge && (
+   221→                  <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold px-3.5 py-[7px] rounded-full bg-amber-50 text-amber-700">
+   222→                    <Flame className="w-3.5 h-3.5" /> {course.badge}
+   223→                  </span>
+   224→                )}
+   225→              </div>
+   226→
+   227→              {/* Title */}
+   228→              <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" }}>
+   229→                {course.title}
+   230→              </h1>
+   231→
+   232→              {/* Hand-drawn underline accent */}
+   233→              <div className="mb-6 mt-1">
+   234→                <svg width="120" height="12" viewBox="0 0 120 12" fill="none" className="ml-1">
+   235→                  <path d="M2 8C15 3 35 2 60 5C85 8 100 4 118 7" stroke="#8B5CF6" strokeWidth="3" strokeLinecap="round" strokeDasharray="4 3" opacity="0.7"/>
+   236→                </svg>
+   237→              </div>
+   238→
+   239→              {/* Description */}
+   240→              <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[580px] mb-7">{course.description}</p>
+   241→
+   242→              {/* Metadata row */}
+   243→              <div className="flex flex-wrap items-center gap-x-7 gap-y-3 mb-8">
+   244→                <div className="flex items-center gap-2">
+   245→                  <div className="flex">
+   246→                    {[1,2,3,4].map(n => <Star key={n} className="w-[18px] h-[18px] text-amber-400 fill-amber-400" />)}
+   247→                    <Star className="w-[18px] h-[18px] text-amber-400/40 fill-amber-400/40" />
+   248→                  </div>
+   249→                  <span className="font-bold text-slate-800">4.8</span>
+   250→                  <span className="text-slate-400 text-[13px]">(2,456)</span>
+   251→                </div>
+   252→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   253→                  <Users className="w-4 h-4 text-indigo-500" /> {course.students}
+   254→                </div>
+   255→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   256→                  <Clock className="w-4 h-4 text-indigo-500" /> {course.duration}
+   257→                </div>
+   258→                <div className="flex items-center gap-2 text-[14px] text-slate-500 font-medium">
+   259→                  <BarChart3 className="w-4 h-4 text-indigo-500" /> {course.level}
+   260→                </div>
+   261→              </div>
+   262→
+   263→              {/* Feature Buttons */}
+   264→              <div className="flex flex-wrap items-center gap-3 mb-8">
+   265→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   266→                  <Code2 className="w-4 h-4 text-emerald-500" /> Practical Projects
+   267→                </span>
+   268→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   269→                  <Briefcase className="w-4 h-4 text-violet-500" /> Industry Tools
+   270→                </span>
+   271→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   272→                  <Award className="w-4 h-4 text-emerald-500" /> Certificate
+   273→                </span>
+   274→                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+   275→                  <Infinity className="w-4 h-4 text-orange-500" /> Lifetime Access
+   276→                </span>
+   277→              </div>
+   278→
+   279→              {/* CTA Buttons */}
+   280→              <div className="flex flex-wrap items-center gap-3.5">
+   281→                <button className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-white px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-200 active:scale-[0.98]" style={{ background: "linear-gradient(135deg, #10B981, #059669)", boxShadow: "0 4px 14px rgba(16,185,129,0.3)" }}>
+   282→                  <GraduationCap className="w-[18px] h-[18px]" /> Enroll Now
+   283→                </button>
+   284→                <button className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-slate-700 px-7 py-3.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 hover:shadow-md transition-all duration-200 active:scale-[0.98]">
+   285→                  <ShoppingCart className="w-[18px] h-[18px]" /> Add to Cart
+   286→                </button>
+   287→              </div>
+   288→            </div>
+   289→
+   290→            {/* RIGHT COLUMN — Illustration */}
+   291→            <div className="w-full lg:w-[480px] shrink-0 flex items-center justify-center">
+   292→              <div className="relative w-full max-w-[440px]">
+   293→                {/* Floating AI Prompt Card */}
+   294→                <div className="absolute -left-6 top-[30%] z-20 w-[200px] rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl shadow-indigo-100/50 p-4 border border-slate-100">
+   295→                  <div className="flex items-center gap-2 mb-2.5">
+   296→                    <div className="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center">
+   297→                      <Sparkle className="w-4 h-4 text-indigo-600" />
+   298→                    </div>
+   299→                    <span className="text-[12px] font-bold text-slate-800">AI Prompt</span>
+   300→                  </div>
+   301→                  <div className="bg-slate-50 rounded-xl px-3 py-2.5 text-[11px] text-slate-400 leading-relaxed border border-slate-100">
+   302→                    Write a creative marketing headline...<span className="inline-block w-[1.5px] h-3 bg-indigo-500 ml-0.5 animate-pulse align-middle" />
+   303→                  </div>
+   304→                  <button className="mt-2.5 w-full text-[11px] font-bold text-white py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors flex items-center justify-center gap-1.5">
+   305→                    <Zap className="w-3 h-3" /> Generate
+   306→                  </button>
+   307→                </div>
+   308→
+   309→                {/* Floating tech icons */}
+   310→                <div className="absolute -right-2 top-[8%] z-10 w-12 h-12 rounded-xl bg-teal-100 flex items-center justify-center shadow-lg shadow-teal-100/50">
+   311→                  <Brain className="w-6 h-6 text-teal-600" />
+   312→                </div>
+   313→                <div className="absolute -right-4 top-[25%] z-10 w-11 h-11 rounded-xl bg-purple-100 flex items-center justify-center shadow-lg shadow-purple-100/50">
+   314→                  <Palette className="w-5.5 h-5.5 text-purple-600" />
+   315→                </div>
+   316→                <div className="absolute left-2 bottom-[18%] z-10 w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center shadow-lg shadow-amber-100/50">
+   317→                  <Code2 className="w-5.5 h-5.5 text-amber-600" />
+   318→                </div>
+   319→
+   320→                {/* Main Robot SVG Illustration */}
+   321→                <div className="relative z-0 flex items-center justify-center py-4">
+   322→                  <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full max-w-[360px]" style={{ filter: "drop-shadow(0 20px 40px rgba(99,102,241,0.15))" }}>
+   323→                    {/* Background circle */}
+   324→                    <circle cx="200" cy="200" r="190" fill="#F5F3FF" opacity="0.5"/>
+   325→                    <circle cx="200" cy="200" r="160" fill="#EDE9FE" opacity="0.4"/>
+   326→                    {/* Robot body */}
+   327→                    <rect x="140" y="180" width="120" height="130" rx="24" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   328→                    {/* Body accent stripe */}
+   329→                    <rect x="140" y="180" width="120" height="20" rx="24" fill={primary} opacity="0.15"/>
+   330→                    {/* Robot head */}
+   331→                    <rect x="148" y="100" width="104" height="90" rx="22" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   332→                    {/* Visor/Screen */}
+   333→                    <rect x="162" y="115" width="76" height="50" rx="14" fill="#1E1B4B"/>
+   334→                    {/* Eyes - happy curve */}
+   335→                    <path d="M178 142C182 136 190 134 200 134C210 134 218 136 222 142" stroke="#818CF8" strokeWidth="3" strokeLinecap="round"/>
+   336→                    {/* Eye dots */}
+   337→                    <circle cx="188" cy="130" r="3" fill="#818CF8"/>
+   338→                    <circle cx="212" cy="130" r="3" fill="#818CF8"/>
+   339→                    {/* Antenna */}
+   340→                    <line x1="200" y1="100" x2="200" y2="78" stroke="#CBD5E1" strokeWidth="3" strokeLinecap="round"/>
+   341→                    <circle cx="200" cy="72" r="8" fill="#8B5CF6" opacity="0.8"/>
+   342→                    <circle cx="200" cy="72" r="4" fill="#A78BFA"/>
+   343→                    {/* Left arm */}
+   344→                    <rect x="108" y="195" width="36" height="16" rx="8" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   345→                    {/* Right arm (raised, pointing up) */}
+   346→                    <rect x="256" y="155" width="16" height="50" rx="8" fill="white" stroke="#E2E8F0" strokeWidth="2" transform="rotate(-15 264 155)"/>
+   347→                    {/* Pointing finger */}
+   348→                    <circle cx="258" cy="148" r="6" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   349→                    {/* Lightbulb above finger */}
+   350→                    <g className="animate-pulse">
+   351→                      <circle cx="258" cy="120" r="18" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="1.5"/>
+   352→                      <path d="M253 118C253 112 258 108 258 108C258 108 263 112 263 118" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" fill="none"/>
+   353→                      <line x1="258" y1="100" x2="258" y2="96" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   354→                      <line x1="272" y1="106" x2="275" y2="103" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   355→                      <line x1="244" y1="106" x2="241" y2="103" stroke="#F59E0B" strokeWidth="1.5" strokeLinecap="round"/>
+   356→                    </g>
+   357→                    {/* Legs */}
+   358→                    <rect x="162" y="305" width="24" height="40" rx="10" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   359→                    <rect x="214" y="305" width="24" height="40" rx="10" fill="white" stroke="#E2E8F0" strokeWidth="2"/>
+   360→                    {/* Feet */}
+   361→                    <rect x="155" y="338" width="38" height="14" rx="7" fill="#E2E8F0"/>
+   362→                    <rect x="207" y="338" width="38" height="14" rx="7" fill="#E2E8F0"/>
+   363→                    {/* Body details - buttons */}
+   364→                    <circle cx="175" cy="225" r="5" fill="#8B5CF6" opacity="0.3"/>
+   365→                    <circle cx="200" cy="225" r="5" fill="#10B981" opacity="0.4"/>
+   366→                    <circle cx="225" cy="225" r="5" fill="#F59E0B" opacity="0.3"/>
+   367→                    {/* Heart on chest */}
+   368→                    <path d="M193 255C193 248 200 244 200 244C200 244 207 248 207 255C207 260 200 266 200 266C200 266 193 260 193 255Z" fill={primary} opacity="0.2"/>
+   369→                  </svg>
+   370→                </div>
+   371→              </div>
+   372→            </div>
+   373→          </div>
+   374→        </div>
+   375→
+   376→        {/* Bottom curved wave separator */}
+   377→        <div className="absolute bottom-0 left-0 right-0">
+   378→          <svg viewBox="0 0 1440 60" fill="none" className="w-full block">
+   379→            <path d="M0 60V30C360 0 720 10 1080 30C1260 40 1380 35 1440 30V60H0Z" fill="white"/>
+   380→          </svg>
+   381→        </div>
+   382→
+   383→        {/* Purple swoosh line at bottom */}
+   384→        <div className="absolute bottom-0 left-0 right-0 h-1.5" style={{ background: "linear-gradient(90deg, transparent 5%, #8B5CF6 30%, #6366F1 50%, #8B5CF6 70%, transparent 95%)" }} />
+   385→      </section>
+   386→
+   387→{/* ==================== PRICING CTA BAR ==================== */}
+   388→      <div className="bg-white">
+   389→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   390→          <div className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 md:p-8 rounded-2xl shadow-lg shadow-slate-200/60 relative overflow-hidden">
+   391→            <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: "linear-gradient(90deg, " + primary + ", " + primary + "44, " + primary + ")" }} />
+   392→            <div className="flex flex-wrap items-center gap-4 md:gap-6">
+   393→              <div>
+   394→                <div className="flex items-baseline gap-3">
+   395→                  <span className="text-4xl font-extrabold text-gray-900">{course.price}</span>
+   396→                  <span className="text-xl text-slate-400 line-through">{originalPrice}</span>
+   397→                </div>
+   398→                <div className="inline-flex items-center gap-1.5 bg-red-50 text-red-600 text-sm font-bold px-3 py-1 rounded-lg mt-2">
+   399→                  <Flame className="w-4 h-4" /> {discount}% OFF — Limited Time
+   400→                </div>
+   401→              </div>
+   402→              <div className="hidden md:block w-px h-16 bg-slate-200" />
+   403→              <div className="flex gap-2">
+   404→                {["Days", "Hours", "Mins", "Secs"].map((label, i) => {
+   405→                  const val = [countdown.days, countdown.hours, countdown.mins, countdown.secs][i];
+   406→                  return (
+   407→                    <div key={label} className="text-center bg-slate-900 rounded-xl px-3 py-2.5 min-w-[56px]">
+   408→                      <div className="text-xl font-extrabold text-white font-mono">{pad(val)}</div>
+   409→                      <div className="text-[9px] text-slate-400 mt-0.5 uppercase tracking-wider font-medium">{label}</div>
+   410→                    </div>
+   411→                  );
+   412→                })}
+   413→              </div>
+   414→            </div>
+   415→            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+   416→              <button className="flex-1 md:flex-initial text-white font-bold text-[0.95rem] py-3.5 px-8 rounded-xl transition-all duration-200 hover:shadow-xl active:scale-[0.98] flex items-center justify-center gap-2.5" style={{ background: "linear-gradient(135deg, " + primary + ", " + primary + "bb)", boxShadow: "0 8px 24px " + primary + "40" }}>
+   417→                <Zap className="w-5 h-5" /> Enroll Now
+   418→              </button>
+   419→              <button className="flex-1 md:flex-initial font-bold text-[0.95rem] py-3.5 px-8 rounded-xl transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2 text-gray-700 bg-slate-100 hover:bg-slate-200">
+   420→                <ShoppingCart className="w-4.5 h-4.5" /> Add to Cart
+   421→              </button>
+   422→            </div>
+   423→          </div>
+   424→        </div>
+   425→      </div>
+   426→
+   427→      {/* ==================== TABS + CONTENT (FULL WIDTH) ==================== */}
+   428→      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+   429→        {/* Tab bar */}
+   430→        <div ref={tabRef} className="inline-flex flex-wrap gap-1 p-1.5 rounded-2xl bg-slate-100 mb-10">
+   431→          {TABS.map((tab) => {
+   432→            const Ic = tab.icon;
+   433→            const active = activeTab === tab.id;
+   434→            return (
+   435→              <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={"flex items-center gap-2 px-5 py-3 rounded-xl text-[0.95rem] font-semibold transition-all duration-200 " + (active ? "text-white shadow-lg" : "text-slate-500 hover:text-slate-800 hover:bg-white/60")} style={active ? { background: primary, boxShadow: "0 8px 24px " + primary + "50" } : {}}>
+   436→                <Ic className="w-[18px] h-[18px]" />
+   437→                {tab.label}
+   438→              </button>
+   439→            );
+   440→          })}
+   441→        </div>
+   442→
+   443→        {/* ========== OVERVIEW TAB ========== */}
+   444→        {activeTab === "overview" && (
+   445→          <div className="space-y-10">
+   446→            {/* Course Description */}
+   447→            <section>
+   448→              <div className="flex items-center gap-3 mb-5">
+   449→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><BookOpen className="w-5 h-5" style={{ color: primary }} /></div>
+   450→                <h2 className="text-2xl font-bold text-gray-900">Course Description</h2>
+   451→              </div>
+   452→              <div className="text-gray-600 space-y-5 leading-[1.8] text-[1.05rem] pl-14">
+   453→                <p>{course.longDescription}</p>
+   454→                <p>{course.aboutText}</p>
+   455→              </div>
+   456→            </section>
+   457→
+   458→            {/* What You Will Learn */}
+   459→            <section>
+   460→              <div className="flex items-center gap-3 mb-5">
+   461→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><Target className="w-5 h-5" style={{ color: primary }} /></div>
+   462→                <h2 className="text-2xl font-bold text-gray-900">What You Will Learn</h2>
+   463→              </div>
+   464→              <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10 pl-14">
+   465→                {(() => {
+   466→                  const h = Math.ceil(course.topics.length / 2);
+   467→                  const L = course.topics.slice(0, h);
+   468→                  const R = course.topics.slice(h);
+   469→                  return (
+   470→                    <>
+   471→                      <ul className="space-y-3.5">{L.map((tp, i) => (
+   472→                        <li key={i} className="flex items-start gap-3.5 text-[0.95rem] text-gray-700 leading-relaxed">
+   473→                          <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: primary }} />{tp}
+   474→                        </li>
+   475→                      ))}</ul>
+   476→                      <ul className="space-y-3.5">{R.map((tp, i) => (
+   477→                        <li key={i} className="flex items-start gap-3.5 text-[0.95rem] text-gray-700 leading-relaxed">
+   478→                          <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: primary }} />{tp}
+   479→                        </li>
+   480→                      ))}</ul>
+   481→                    </>
+   482→                  );
+   483→                })()}
+   484→              </div>
+   485→            </section>
+   486→
+   487→            {/* Course Highlights */}
+   488→            <section className="rounded-2xl p-8 sm:p-10 text-white relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + ", #312e81 70%, #0f172a)" }}>
+   489→              <div className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-[0.08] pointer-events-none" style={{ background: "radial-gradient(circle, white, transparent 70%)", transform: "translate(30%, -30%)" }} />
+   490→              <h3 className="text-xl font-bold mb-8 flex items-center gap-2.5"><TrendingUp className="w-6 h-6" /> Course Highlights</h3>
+   491→              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
+   492→                {course.highlights.map((h: any, i: number) => (
+   493→                  <div key={i} className="text-center">
+   494→                    <div className="text-4xl font-extrabold mb-1.5">{h.value}</div>
+   495→                    <div className="text-[0.95rem] text-white/60 font-medium">{h.label}</div>
+   496→                  </div>
+   497→                ))}
+   498→              </div>
+   499→            </section>
+   500→
+   501→            {/* Feature Cards */}
+   502→            <section>
+   503→              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+   504→                {[
+   505→                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps" },
+   506→                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools" },
+   507→                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros" },
+   508→                  { I: Handshake, t: "Career Support", d: "Resume and interview help" },
+   509→                ].map(({ I, t, d }: any) => (
+   510→                  <div key={t} className="group p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white">
+   511→                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: primary + "12" }}><I className="w-6 h-6" style={{ color: primary }} /></div>
+   512→                    <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
+   513→                    <p className="text-sm text-gray-500 mt-1.5">{d}</p>
+   514→                  </div>
+   515→                ))}
+   516→              </div>
+   517→            </section>
+   518→
+   519→            {/* Tech Stack */}
+   520→            <section>
+   521→              <div className="flex items-center gap-3 mb-5">
+   522→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><Code2 className="w-5 h-5" style={{ color: primary }} /></div>
+   523→                <h2 className="text-2xl font-bold text-gray-900">Tech Stack You Will Master</h2>
+   524→              </div>
+   525→              <div className="flex flex-wrap gap-3 pl-14">
+   526→                {course.techStack.map((tech: any, i: number) => (
+   527→                  <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-5 py-3 transition-colors">
+   528→                    <span className="w-3.5 h-3.5 rounded-full" style={{ background: tech.color }} />
+   529→                    <span className="text-[0.95rem] font-medium text-gray-700">{tech.name}</span>
+   530→                  </div>
+   531→                ))}
+   532→              </div>
+   533→            </section>
+   534→
+   535→            {/* Who This Course Is For */}
+   536→            <section>
+   537→              <div className="flex items-center gap-3 mb-5">
+   538→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><Users className="w-5 h-5" style={{ color: primary }} /></div>
+   539→                <h2 className="text-2xl font-bold text-gray-900">Who This Course Is For</h2>
+   540→              </div>
+   541→              <div className="space-y-3.5 pl-14">
+   542→                {course.audience.map((item: string, i: number) => (
+   543→                  <div key={i} className="flex items-start gap-4 p-5 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
+   544→                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 mt-0.5" style={{ background: primary }}>{i + 1}</div>
+   545→                    <p className="text-[0.95rem] text-gray-600 leading-relaxed">{item}</p>
+   546→                  </div>
+   547→                ))}
+   548→              </div>
+   549→            </section>
+   550→          </div>
+   551→        )}
+   552→
+   553→        {/* ========== CURRICULUM TAB ========== */}
+   554→        {activeTab === "curriculum" && (
+   555→          <section>
+   556→            <div className="flex flex-wrap justify-between items-end mb-6 gap-3">
+   557→              <div className="flex items-center gap-3">
+   558→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><FileText className="w-5 h-5" style={{ color: primary }} /></div>
+   559→                <h2 className="text-2xl font-bold text-gray-900">Course Curriculum</h2>
+   560→              </div>
+   561→              <span className="text-sm text-slate-500 bg-slate-100 px-4 py-2 rounded-lg font-medium">{curriculumModules.length} Sections · {totalLectures} Lectures · {totalDuration}</span>
+   562→            </div>
+   563→            <div className="space-y-3">
+   564→              {(showAllCurriculum ? curriculumModules : curriculumModules.slice(0, 5)).map((mod: any, idx: number) => {
+   565→                const isOpen = expandedSections[idx];
+   566→                return (
+   567→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+   568→                    <button onClick={() => tog(setExpandedSections, idx)} className="w-full flex justify-between items-center p-5 text-left font-medium transition-colors">
+   569→                      <div className="flex items-center gap-3.5">
+   570→                        <div className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm font-bold" style={{ background: isOpen ? primary : primary + "40" }}>{idx + 1}</div>
+   571→                        <span className="text-gray-900 text-[0.95rem]">{mod.title}</span>
+   572→                      </div>
+   573→                      <div className="flex items-center gap-4 text-slate-500 font-normal">
+   574→                        <span className="hidden sm:inline text-sm">{mod.lectures} Lectures · {mod.duration}</span>
+   575→                        {isOpen ? <ChevronUp className="w-5 h-5" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5" />}
+   576→                      </div>
+   577→                    </button>
+   578→                    {isOpen && (
+   579→                      <div className="px-5 pb-4 bg-white">
+   580→                        <ul className="space-y-1">
+   581→                          {mod.topics.map((tp: string, ti: number) => (
+   582→                            <li key={ti} className="flex items-center gap-3.5 py-3 text-[0.95rem] text-gray-600">
+   583→                              <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100"><Play className="w-3 h-3" style={{ color: primary }} /></div>
+   584→                              {tp}
+   585→                            </li>
+   586→                          ))}
+   587→                        </ul>
+   588→                      </div>
+   589→                    )}
+   590→                  </div>
+   591→                );
+   592→              })}
+   593→            </div>
+   594→            {curriculumModules.length > 5 && (
+   595→              <div className="text-center mt-8">
+   596→                <button onClick={() => setShowAllCurriculum(!showAllCurriculum)} className="inline-flex items-center gap-2 text-[0.95rem] font-semibold hover:underline" style={{ color: primary }}>
+   597→                  {showAllCurriculum ? "Show less" : "Show all " + curriculumModules.length + " sections"}
+   598→                </button>
+   599→              </div>
+   600→            )}
+   601→          </section>
+   602→        )}
+   603→
+   604→        {/* ========== INSTRUCTOR TAB ========== */}
+   605→        {activeTab === "instructor" && (
+   606→          <section>
+   607→            <div className="flex items-center gap-3 mb-8">
+   608→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><GraduationCap className="w-5 h-5" style={{ color: primary }} /></div>
+   609→              <h2 className="text-2xl font-bold text-gray-900">Meet Your Instructor</h2>
+   610→            </div>
+   611→            <div className="flex flex-col sm:flex-row items-start gap-8">
+   612→              <div className="relative">
+   613→                <img src={INSTRUCTOR.avatar} alt={INSTRUCTOR.name} className="w-32 h-32 rounded-2xl object-cover shadow-xl" />
+   614→                <div className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-lg" style={{ background: primary }}><CheckCircle2 className="w-5 h-5" /></div>
+   615→              </div>
+   616→              <div className="flex-1">
+   617→                <h3 className="text-2xl font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+   618→                <p className="text-lg font-semibold mt-1" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+   619→                <p className="text-gray-600 mt-4 leading-relaxed text-[1.05rem]">{INSTRUCTOR.bio}</p>
+   620→                <div className="flex flex-wrap gap-8 mt-7">
+   621→                  {[{ l: "Students", v: INSTRUCTOR.students }, { l: "Courses", v: INSTRUCTOR.courses }, { l: "Rating", v: INSTRUCTOR.rating + " \u2605" }].map((s: any) => (
+   622→                    <div key={s.l} className="text-center px-6 py-3.5 rounded-xl bg-slate-50">
+   623→                      <div className="text-2xl font-bold text-gray-900">{s.v}</div>
+   624→                      <div className="text-sm text-slate-500 mt-0.5 font-medium">{s.l}</div>
+   625→                    </div>
+   626→                  ))}
+   627→                </div>
+   628→              </div>
+   629→            </div>
+   630→          </section>
+   631→        )}
+   632→
+   633→        {/* ========== REVIEWS TAB ========== */}
+   634→        {activeTab === "reviews" && (
+   635→          <section>
+   636→            <div className="flex items-center gap-3 mb-8">
+   637→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+   638→              <h2 className="text-2xl font-bold text-gray-900">Student Reviews</h2>
+   639→            </div>
+   640→            <div className="flex flex-col md:flex-row gap-12">
+   641→              <div className="md:w-1/3 flex flex-col items-center md:items-start">
+   642→                <div className="text-7xl font-extrabold mb-3" style={{ color: primary }}>4.8</div>
+   643→                <div className="flex text-amber-400 text-2xl mb-3">
+   644→                  {[1,2,3,4].map(n => <Star key={n} className="w-6 h-6 fill-amber-400" />)}
+   645→                  <Star className="w-6 h-6 fill-amber-400/50" />
+   646→                </div>
+   647→                <p className="text-slate-500 mb-7 font-medium">(2,456 reviews)</p>
+   648→                <div className="w-full space-y-3">
+   649→                  {RATING_BARS.map(({ star, pct }: any) => (
+   650→                    <div key={star} className="flex items-center">
+   651→                      <span className="w-4 text-gray-700 font-semibold text-sm">{star}</span>
+   652→                      <Star className="w-3.5 h-3.5 text-amber-400 mx-2 fill-amber-400" />
+   653→                      <div className="flex-1 bg-slate-100 rounded-full h-2.5 mx-1">
+   654→                        <div className="h-2.5 rounded-full transition-all" style={{ width: pct + "%", background: primary }} />
+   655→                      </div>
+   656→                      <span className="w-10 text-right text-slate-500 text-sm">{pct}%</span>
+   657→                    </div>
+   658→                  ))}
+   659→                </div>
+   660→              </div>
+   661→              <div className="md:w-2/3">
+   662→                <div className="bg-slate-50 rounded-2xl p-7">
+   663→                  <div className="flex items-start gap-4">
+   664→                    <img alt="Reviewer" className="w-16 h-16 rounded-xl object-cover shadow-md" src={REVIEWS[currentReview].avatar} />
+   665→                    <div className="flex-1">
+   666→                      <div className="flex flex-wrap items-center gap-2.5 mb-2">
+   667→                        <h4 className="font-bold text-gray-900 text-lg">{REVIEWS[currentReview].name}</h4>
+   668→                        <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full flex items-center gap-1 font-semibold"><CheckCircle2 className="w-3 h-3" /> Verified</span>
+   669→                      </div>
+   670→                      <div className="flex items-center gap-2.5 mb-4">
+   671→                        <div className="flex text-amber-400">
+   672→                          {Array.from({ length: 5 }).map((_: any, i: number) => (
+   673→                            <Star key={i} className={"w-4.5 h-4.5 " + (i < REVIEWS[currentReview].rating ? "fill-amber-400" : "text-slate-200")} />
+   674→                          ))}
+   675→                        </div>
+   676→                        <span className="text-slate-400 text-sm">{REVIEWS[currentReview].time}</span>
+   677→                      </div>
+   678→                      <p className="text-gray-600 leading-relaxed text-[1.05rem]">{REVIEWS[currentReview].text}</p>
+   679→                    </div>
+   680→                  </div>
+   681→                </div>
+   682→                <div className="flex justify-center mt-6 gap-2.5">
+   683→                  {REVIEWS.map((_: any, i: number) => (
+   684→                    <button key={i} onClick={() => setCurrentReview(i)} className="h-2.5 rounded-full transition-all duration-300" style={{ width: i === currentReview ? 28 : 10, background: i === currentReview ? primary : "#cbd5e1" }} />
+   685→                  ))}
+   686→                </div>
+   687→              </div>
+   688→            </div>
+   689→          </section>
+   690→        )}
+   691→
+   692→        {/* ========== FAQ TAB ========== */}
+   693→        {activeTab === "faq" && (
+   694→          <section>
+   695→            <div className="flex items-center gap-3 mb-8">
+   696→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+   697→              <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+   698→            </div>
+   699→            <div className="space-y-3">
+   700→              {FAQS.map((faq: any, idx: number) => {
+   701→                const isOpen = expandedFaqs[idx];
+   702→                return (
+   703→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+   704→                    <button onClick={() => tog(setExpandedFaqs, idx)} className="w-full flex justify-between items-center p-5 text-left text-[0.95rem] font-semibold text-gray-900 transition-colors">
+   705→                      <span>{faq.q}</span>
+   706→                      {isOpen ? <ChevronUp className="w-5 h-5 shrink-0 ml-4" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-slate-400" />}
+   707→                    </button>
+   708→                    {isOpen && <div className="px-6 pb-5 bg-white"><p className="text-[0.95rem] text-gray-600 leading-relaxed">{faq.a}</p></div>}
+   709→                  </div>
+   710→                );
+   711→              })}
+   712→            </div>
+   713→          </section>
+   714→        )}
+   715→
+   716→        {/* ===== COURSE INCLUDES ===== */}
+   717→        <section className="mt-12">
+   718→          <div className="flex items-center gap-3 mb-6">
+   719→            <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><CheckCircle2 className="w-5 h-5" style={{ color: primary }} /></div>
+   720→            <h2 className="text-2xl font-bold text-gray-900">This Course Includes</h2>
+   721→          </div>
+   722→          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+   723→            {[
+   724→              { I: Video, t: totalDuration.replace("h ", " hours ") + " on-demand video" },
+   725→              { I: FileText, t: totalLectures + " lectures" },
+   726→              { I: Download, t: course.topics.length + " downloadable resources" },
+   727→              { I: Smartphone, t: "Access on mobile and TV" },
+   728→              { I: Infinity, t: "Full lifetime access" },
+   729→              { I: Trophy, t: "Certificate of completion" },
+   730→            ].map(({ I, t }: any) => (
+   731→              <div key={t} className="flex items-center gap-3 p-4 rounded-xl bg-slate-50">
+   732→                <I className="w-5 h-5 shrink-0" style={{ color: primary }} />
+   733→                <span className="text-[0.9rem] text-gray-700 font-medium">{t}</span>
+   734→              </div>
+   735→            ))}
+   736→          </div>
+   737→        </section>
+   738→
+   739→        {/* ===== INSTRUCTOR + SHARE ROW ===== */}
+   740→        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+   741→          <div className="flex items-start gap-5 p-6 rounded-2xl bg-slate-50">
+   742→            <img alt="Instructor" className="w-20 h-20 rounded-2xl object-cover shadow-md" src={INSTRUCTOR.avatar} />
+   743→            <div className="flex-1">
+   744→              <h3 className="text-lg font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+   745→              <p className="text-sm font-semibold" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+   746→              <p className="text-[0.9rem] text-slate-500 mt-2 leading-relaxed line-clamp-2">{INSTRUCTOR.bio}</p>
+   747→              <div className="flex gap-6 mt-3">
+   748→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.students} Students</span>
+   749→                <span className="text-sm font-bold text-gray-900">{INSTRUCTOR.courses} Courses</span>
+   750→                <span className="text-sm font-bold text-gray-900 flex items-center gap-1">{INSTRUCTOR.rating} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" /></span>
+   751→              </div>
+   752→            </div>
+   753→          </div>
+   754→          <div className="flex flex-col justify-between p-6 rounded-2xl bg-slate-50">
+   755→            <div>
+   756→              <h3 className="text-lg font-bold text-gray-900 mb-2">Share This Course</h3>
+   757→              <p className="text-[0.9rem] text-slate-500 mb-4">Share with friends who might benefit from this course.</p>
+   758→            </div>
+   759→            <div className="flex items-center gap-3">
+   760→              {[{ l: "f", bg: "#1877F2" }, { l: "X", bg: "#000" }, { l: "in", bg: "#0A66C2" }, { l: "WA", bg: "#25D366" }].map(({ l, bg }: any) => (
+   761→                <button key={l} className="w-11 h-11 rounded-xl flex items-center justify-center text-xs font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
+   762→              ))}
+   763→              <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-11 h-11 rounded-xl bg-white text-slate-500 flex items-center justify-center hover:bg-slate-200 transition-colors">
+   764→                <Link2 className="w-[18px] h-[18px]" />
+   765→              </button>
+   766→            </div>
+   767→          </div>
+   768→        </div>
+   769→
+   770→        {/* ===== NEED HELP ===== */}
+   771→        <div className="mt-8 p-8 rounded-2xl relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + "0c, " + primary + "04)" }}>
+   772→          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+   773→            <div>
+   774→              <h3 className="text-xl font-bold text-gray-900 mb-1">Need help deciding?</h3>
+   775→              <p className="text-[0.95rem] text-gray-600">Talk to our course advisor and find the perfect course for your goals.</p>
+   776→            </div>
+   777→            <button className="text-white font-semibold py-3 px-8 rounded-xl text-[0.95rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0" style={{ background: primary, boxShadow: "0 8px 24px " + primary + "40" }}>
+   778→              <Headset className="w-5 h-5" /> Contact Advisor
+   779→            </button>
+   780→          </div>
+   781→          <div className="absolute -bottom-4 -right-4 opacity-[0.05]">
+   782→            <Headset className="w-36 h-36" style={{ color: primary }} />
+   783→          </div>
+   784→        </div>
+   785→      </div>
+   786→
+   787→      {/* ==================== FOOTER ==================== */}
+   788→      <footer className="bg-slate-50 mt-8">
+   789→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+   790→          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+   791→            {[
+   792→              { I: Shield, t: "30-Day Money-Back Guarantee", d: "Full refund if you are not satisfied" },
+   793→              { I: RotateCcw, t: "Lifetime Access", d: "Learn at your own pace, forever" },
+   794→              { I: Lock, t: "Secure Payment", d: "100% secure checkout process" },
+   795→            ].map(({ I, t, d }: any) => (
+   796→              <div key={t} className="flex items-start gap-4 p-5 rounded-xl hover:bg-white transition-colors">
+   797→                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: primary + "12" }}><I className="w-6 h-6" style={{ color: primary }} /></div>
+   798→                <div>
+   799→                  <h4 className="font-bold text-gray-900">{t}</h4>
+   800→                  <p className="text-slate-500 mt-1.5">{d}</p>
+   801→                </div>
+   802→              </div>
+   803→            ))}
+   804→          </div>
+   805→        </div>
+   806→      </footer>
+   807→    </div>
+   808→  );
+   809→}
+   810→
