@@ -538,8 +538,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
-            <section className="py-2" style={{ background: 'linear-gradient(135deg, #ecfdf5 0%, #f0fdfa 50%, #f5f3ff 100%)' }}>
-              <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] p-8 sm:p-10">
+            <section>
+              <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#F0FDF9' }}>
                 {/* Header — heading left, stats right */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-7">
                   <div className="flex items-center gap-3.5">
