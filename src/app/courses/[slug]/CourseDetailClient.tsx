@@ -733,15 +733,17 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Roadmap Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+                <div className="flex gap-3 mb-10 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0">
                   {roadmapPhases.phases.map((phase: any, i: number) => {
                     const isActive = i === 0;
                     return (
                       <Fragment key={i}>
-                        <div className="rounded-xl p-5 transition-all duration-200 hover:shadow-md"
+                        <div className="rounded-xl p-5 transition-all duration-200 hover:shadow-md shrink-0 w-full lg:w-auto"
                           style={{
                             background: '#FFFFFF',
                             border: isActive ? '1.5px solid rgba(16,185,129,0.35)' : '1px solid rgba(0,0,0,0.06)',
+                            flex: '1 1 0%',
+                            minWidth: '200px',
                           }}
                         >
                           {/* Icon + Week badge */}
@@ -771,7 +773,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                         </div>
                         {/* Arrow between cards — desktop only */}
                         {i < roadmapPhases.phases.length - 1 && (
-                          <div className="hidden lg:flex items-center justify-center">
+                          <div className="hidden lg:flex items-center shrink-0">
                             <div className="w-8 h-8 rounded-full flex items-center justify-center"
                               style={{ background: '#F3F0FF' }}
                             >
@@ -785,8 +787,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Bottom Benefit Strip */}
-                <div className="rounded-xl p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0">
+                <div className="rounded-xl" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+                  <div className="flex flex-col lg:flex-row">
                     {[
                       { I: Footprints, t: 'Step-by-Step Learning', d: 'Follow a structured path designed for effective learning.', color: '#10B981', bg: '#ECFDF5' },
                       { I: Handshake, t: 'Practical & Hands-on', d: 'Work on real projects and build practical skills.', color: '#3B82F6', bg: '#EFF6FF' },
@@ -794,7 +796,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       { I: Rocket, t: 'Industry Ready', d: 'Build in-demand skills and advance your career.', color: '#F59E0B', bg: '#FFF7ED' },
                     ].map((b: any, bi: number) => (
                       <Fragment key={bi}>
-                        <div className="flex items-center gap-3.5 px-5 py-4">
+                        <div className="flex items-center gap-3.5 px-6 py-5 flex-1">
                           <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: b.bg }}>
                             <b.I className="w-5 h-5" style={{ color: b.color }} />
                           </div>
@@ -803,7 +805,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                             <div className="text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{b.d}</div>
                           </div>
                         </div>
-                        {bi < 3 && <div className="hidden lg:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)' }} />}
+                        {bi < 3 && <div className="hidden lg:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', alignSelf: 'stretch' }} />}
                       </Fragment>
                     ))}
                   </div>
