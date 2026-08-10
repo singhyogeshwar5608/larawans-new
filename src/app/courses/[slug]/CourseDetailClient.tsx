@@ -388,7 +388,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 {/* ==================== PRICING CTA BAR ==================== */}
       <div className="bg-gray-50/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.06)] relative overflow-hidden">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] relative overflow-hidden">
             {/* Thin green accent at top */}
             <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "linear-gradient(90deg, #10B981, #10B981aa, #10B981)" }} />
 
@@ -472,7 +472,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
           <div className="space-y-10">
             {/* Course Description */}
             <section>
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.05)] p-8 sm:p-10">
+              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
                 {/* Section Header */}
                 <div className="flex items-center gap-3.5 mb-7">
                   <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
@@ -493,7 +493,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* What You Will Learn */}
             <section>
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_12px_rgba(0,0,0,0.05)] p-8 sm:p-10">
+              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
                 {/* Section Header */}
                 <div className="flex items-center gap-3.5 mb-7">
                   <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
