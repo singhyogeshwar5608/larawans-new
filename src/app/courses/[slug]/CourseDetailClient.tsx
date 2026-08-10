@@ -193,7 +193,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
   // Generate lecture data for overview curriculum
   const curriculumWithLectures = useMemo(() => {
     return curriculumModules.map((mod: any, mi: number) => {
-      const lectures = [];
+      const lectures: { title: string; duration: string }[] = [];
       for (let li = 0; li < mod.lectures; li++) {
         const topicTitle = mod.topics[li] || ("Lecture " + (li + 1));
         const mins = 8 + ((mi * 7 + li * 13) % 20);
