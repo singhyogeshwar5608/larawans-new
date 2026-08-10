@@ -171,14 +171,23 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
   const curriculumModules = useMemo(() => {
     const mc = Math.min(course.modules || 5, 9);
     const tpm = Math.ceil(course.topics.length / mc);
+    const fallbackTopics = [
+      "Introduction & Core Concepts",
+      "Hands-on Practice Exercises",
+      "Real-world Case Studies",
+      "Advanced Techniques & Best Practices",
+      "Module Summary & Quiz",
+    ];
     return Array.from({ length: mc }, (_, i) => {
       const lc = (i + 1) * 3 + 2;
       const tm = lc * 12 + i * 15;
+      const sliced = course.topics.slice(i * tpm, (i + 1) * tpm).filter(Boolean);
+      while (sliced.length < 5) sliced.push(fallbackTopics[sliced.length]);
       return {
         title: course.topics[i * tpm] || "Module " + (i + 1),
         lectures: lc,
         duration: Math.floor(tm / 60) + "h " + (tm % 60) + "m",
-        topics: course.topics.slice(i * tpm, (i + 1) * tpm),
+        topics: sliced,
       };
     });
   }, [course.modules, course.topics]);
@@ -584,11 +593,9 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   {curriculumWithLectures.map((mod: any, idx: number) => {
                     const isExpanded = !!expandedOverviewMods[idx];
                     return (
-                      <div key={idx} className="rounded-xl overflow-hidden transition-all duration-200"
+                      <div key={idx} className="rounded-xl overflow-hidden transition-all duration-200 bg-white"
                         style={{
-                          background: isExpanded ? '#ECFDF5' : '#FFFFFF',
-                          border: isExpanded ? '1.5px solid rgba(16,185,129,0.3)' : '1px solid rgba(0,0,0,0.06)',
-                          boxShadow: isExpanded ? '0 2px 12px rgba(16,185,129,0.08)' : 'none',
+                          border: isExpanded ? '1.5px solid rgba(16,185,129,0.4)' : '1px solid rgba(0,0,0,0.06)',
                         }}
                       >
                         {/* Module Header Row */}
@@ -617,15 +624,14 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                           </div>
                         </button>
 
-                        {/* Expanded Lectures */}
+                        {/* Expanded Topics */}
                         {isExpanded && (
-                          <div className="px-5 pb-4 pt-1">
-                            <div className="border-t pt-3" style={{ borderColor: 'rgba(16,185,129,0.15)' }}>
-                              {mod.lectureItems.map((lec: any, li: number) => (
-                                <div key={li} className="flex items-center gap-3 py-2">
-                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                                  <span className="flex-1 text-[0.85rem] text-gray-600">{lec.title}</span>
-                                  <span className="text-[0.78rem] text-gray-400 font-medium shrink-0 tabular-nums">{lec.duration}</span>
+                          <div className="px-6 pb-5 pt-1">
+                            <div className="border-t pt-4" style={{ borderColor: 'rgba(0,0,0,0.08)' }}>
+                              {(mod.topics || []).filter(Boolean).map((topic: string, ti: number) => (
+                                <div key={ti} className="flex items-start gap-3 py-2">
+                                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-[7px]" />
+                                  <span className="flex-1 text-[0.85rem] text-gray-600 leading-relaxed">{topic}</span>
                                 </div>
                               ))}
                             </div>
