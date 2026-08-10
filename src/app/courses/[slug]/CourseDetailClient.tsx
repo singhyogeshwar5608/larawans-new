@@ -260,6 +260,22 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
               </div>
 
+              {/* Feature Buttons */}
+              <div className="flex flex-wrap items-center gap-3 mb-8">
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm transition-all cursor-default">
+                  <Code2 className="w-4 h-4 text-emerald-500" /> Practical Projects
+                </span>
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm transition-all cursor-default">
+                  <Briefcase className="w-4 h-4 text-violet-500" /> Industry Tools
+                </span>
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm transition-all cursor-default">
+                  <Award className="w-4 h-4 text-emerald-500" /> Certificate
+                </span>
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm transition-all cursor-default">
+                  <Infinity className="w-4 h-4 text-orange-500" /> Lifetime Access
+                </span>
+              </div>
+
               {/* CTA Buttons */}
               <div className="flex flex-wrap items-center gap-3.5">
                 <button className="inline-flex items-center gap-2.5 text-[15px] font-semibold text-white px-7 py-3.5 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-emerald-200 active:scale-[0.98]" style={{ background: "linear-gradient(135deg, #10B981, #059669)", boxShadow: "0 4px 14px rgba(16,185,129,0.3)" }}>
