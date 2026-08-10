@@ -127,6 +127,17 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
   const [imgLoaded, setImgLoaded] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
 
+  // Remove dark class from <html> for light-themed course page
+  useEffect(() => {
+    const html = document.documentElement;
+    html.classList.remove('dark');
+    document.body.style.backgroundColor = '#ffffff';
+    return () => {
+      html.classList.add('dark');
+      document.body.style.backgroundColor = '';
+    };
+  }, []);
+
   const primary = course.themeColor || "#4f46e5";
 
   useEffect(() => {
