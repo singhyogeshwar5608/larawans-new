@@ -47,6 +47,8 @@ import {
   Rocket,
   Lightbulb,
   MonitorSmartphone,
+  Megaphone,
+  Paintbrush,
 } from "lucide-react";
 
 type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
@@ -594,33 +596,42 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Who This Course Is For */}
             <section>
-              <div className="bg-[#f8faff] rounded-2xl p-8 sm:p-10 relative overflow-hidden border border-indigo-50">
+              <div className="bg-white rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-7 sm:p-8 relative overflow-hidden">
                 {/* Decorative dots top-right */}
-                <div className="absolute top-4 right-4 w-24 h-24 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #4f46e5 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
+                <div className="absolute top-3 right-3 w-20 h-20 opacity-[0.06] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #6b7280 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
                 <div className="relative">
-                  <div className="flex items-center gap-3.5 mb-7">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                      <Users className="w-5.5 h-5.5 text-emerald-600" />
+                  {/* Header */}
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                      <Users className="w-5 h-5 text-emerald-600" strokeWidth={2.5} />
                     </div>
-                    <div>
-                      <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
-                      <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
-                    </div>
+                    <h2 className="text-[1.375rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
                   </div>
-                  <div className="space-y-3.5 relative">
-                    {/* Vertical timeline connector */}
-                    <div className="absolute left-[18px] top-6 bottom-6 w-px bg-emerald-200/60" />
+                  <div className="w-12 h-1 rounded-full bg-emerald-500 mb-6 ml-[52px]" />
+
+                  {/* List */}
+                  <div className="space-y-4 relative pl-1">
+                    {/* Vertical timeline line */}
+                    <div className="absolute left-[18px] top-3 bottom-3 w-[2px] bg-emerald-500" />
                     {course.audience.map((item: string, i: number) => {
-                      const icons = [Laptop, Briefcase, MonitorSmartphone, GraduationCap, Rocket];
-                      const iconColors = ["#3b82f6", "#f97316", "#8b5cf6", "#10b981", "#ef4444"];
-                      const iconBgs = ["#eff6ff", "#fff7ed", "#f5f3ff", "#ecfdf5", "#fef2f2"];
-                      const Ic = icons[i % icons.length];
+                      const cfg = [
+                        { I: Megaphone, color: "#8B5CF6", bg: "#EDE9FE" },
+                        { I: Laptop, color: "#6366F1", bg: "#EEF2FF" },
+                        { I: Briefcase, color: "#10B981", bg: "#D1FAE5" },
+                        { I: Paintbrush, color: "#A855F7", bg: "#F3E8FF" },
+                        { I: GraduationCap, color: "#6366F1", bg: "#EEF2FF" },
+                      ];
+                      const c = cfg[i % cfg.length];
+                      const Ic = c.I;
                       return (
-                        <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)] border border-slate-100 relative">
-                          <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs shrink-0 z-10" style={{ boxShadow: "0 0 0 3px #f8faff" }}>{String(i + 1).padStart(2, "0")}</div>
-                          <p className="text-[0.925rem] text-gray-600 leading-relaxed flex-1">{item}</p>
-                          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: iconBgs[i % iconBgs.length] }}>
-                            <Ic className="w-5 h-5" style={{ color: iconColors[i % iconColors.length] }} />
+                        <div key={i} className="flex items-center gap-4 relative z-10">
+                          {/* Number Badge - rounded rectangle */}
+                          <div className="w-9 h-7 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-[13px] shrink-0">{String(i + 1).padStart(2, "0")}</div>
+                          {/* Text */}
+                          <p className="text-[0.9375rem] text-gray-700 leading-relaxed flex-1 font-medium">{item}</p>
+                          {/* Right Icon */}
+                          <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: c.bg }}>
+                            <Ic className="w-6 h-6" style={{ color: c.color }} fill={c.color} />
                           </div>
                         </div>
                       );
