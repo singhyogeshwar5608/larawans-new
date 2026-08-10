@@ -584,12 +584,29 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  {course.techStack.map((tech: any, i: number) => (
-                    <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-4 py-2.5 transition-colors border border-slate-100">
-                      <span className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0" style={{ background: tech.color }}>{tech.name.charAt(0)}</span>
-                      <span className="text-[0.9rem] font-medium text-gray-700">{tech.name}</span>
-                    </div>
-                  ))}
+                  {course.techStack.map((tech: any, i: number) => {
+                    const slugMap: Record<string, string> = {
+                      "Laravel": "laravel", "React": "react", "Next.js": "nextdotjs",
+                      "TypeScript": "typescript", "Tailwind CSS": "tailwindcss", "MySQL": "mysql",
+                      "Vercel": "vercel", "Docker": "docker", "ChatGPT": "openai",
+                      "Midjourney": "midjourney", "LangChain": "langchain", "Python": "python",
+                      "OpenAI API": "openai", "DALL-E": "openai", "Hugging Face": "huggingface",
+                      "Node.js": "nodedotjs", "MongoDB": "mongodb", "Redis": "redis",
+                      "GraphQL": "graphql", "Git": "git", "GitHub": "github",
+                      "AWS": "amazonaws", "Firebase": "firebase", "Figma": "figma",
+                      "Flutter": "flutter", "Swift": "swift", "Kotlin": "kotlin",
+                    };
+                    const slug = slugMap[tech.name] || tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    const iconUrl = `https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/${slug}.svg`;
+                    return (
+                      <div key={i} className="inline-flex items-center gap-2.5 bg-white hover:bg-gray-50 rounded-full pl-1.5 pr-4 py-1.5 transition-all duration-200 border border-gray-200 hover:border-gray-300 hover:shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: tech.color + "15" }}>
+                          <div className="w-4 h-4" style={{ backgroundColor: tech.color, WebkitMaskImage: `url(${iconUrl})`, maskImage: `url(${iconUrl})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
+                        </div>
+                        <span className="text-[0.875rem] font-medium text-gray-800">{tech.name}</span>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </section>
