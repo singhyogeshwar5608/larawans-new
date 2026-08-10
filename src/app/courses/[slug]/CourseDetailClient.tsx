@@ -44,6 +44,9 @@ import {
   Palette,
   Eye,
   FolderOpen,
+  Rocket,
+  Lightbulb,
+  MonitorSmartphone,
 } from "lucide-react";
 
 type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
@@ -580,9 +583,9 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
                 <div className="flex flex-wrap gap-3">
                   {course.techStack.map((tech: any, i: number) => (
-                    <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-5 py-3 transition-colors border border-slate-100">
-                      <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ background: tech.color }} />
-                      <span className="text-[0.925rem] font-medium text-gray-700">{tech.name}</span>
+                    <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-4 py-2.5 transition-colors border border-slate-100">
+                      <span className="w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-bold shrink-0" style={{ background: tech.color }}>{tech.name.charAt(0)}</span>
+                      <span className="text-[0.9rem] font-medium text-gray-700">{tech.name}</span>
                     </div>
                   ))}
                 </div>
@@ -607,12 +610,21 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   <div className="space-y-3.5 relative">
                     {/* Vertical timeline connector */}
                     <div className="absolute left-[18px] top-6 bottom-6 w-px bg-emerald-200/60" />
-                    {course.audience.map((item: string, i: number) => (
-                      <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)] border border-slate-100 relative">
-                        <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs shrink-0 z-10" style={{ boxShadow: "0 0 0 3px #f8faff" }}>{String(i + 1).padStart(2, "0")}</div>
-                        <p className="text-[0.925rem] text-gray-600 leading-relaxed">{item}</p>
-                      </div>
-                    ))}
+                    {course.audience.map((item: string, i: number) => {
+                      const icons = [Laptop, Briefcase, MonitorSmartphone, GraduationCap, Rocket];
+                      const iconColors = ["#3b82f6", "#f97316", "#8b5cf6", "#10b981", "#ef4444"];
+                      const iconBgs = ["#eff6ff", "#fff7ed", "#f5f3ff", "#ecfdf5", "#fef2f2"];
+                      const Ic = icons[i % icons.length];
+                      return (
+                        <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)] border border-slate-100 relative">
+                          <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs shrink-0 z-10" style={{ boxShadow: "0 0 0 3px #f8faff" }}>{String(i + 1).padStart(2, "0")}</div>
+                          <p className="text-[0.925rem] text-gray-600 leading-relaxed flex-1">{item}</p>
+                          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: iconBgs[i % iconBgs.length] }}>
+                            <Ic className="w-5 h-5" style={{ color: iconColors[i % iconColors.length] }} />
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
