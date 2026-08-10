@@ -484,7 +484,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   </div>
                 </div>
                 {/* Description Body */}
-                <div className="max-w-3xl space-y-5 leading-[1.85] text-[0.975rem] text-slate-600">
+                <div className="space-y-5 leading-[1.85] text-[0.975rem] text-slate-600">
                   <p>{course.longDescription}</p>
                   <p>{course.aboutText}</p>
                 </div>
