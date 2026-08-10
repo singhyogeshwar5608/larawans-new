@@ -225,8 +225,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
 
               {/* Title */}
-              <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2 text-slate-900">
-                <span className="bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-600 bg-clip-text text-transparent">{course.title}</span>
+              <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" }}>
+                {course.title}
               </h1>
 
               {/* Hand-drawn underline accent */}
