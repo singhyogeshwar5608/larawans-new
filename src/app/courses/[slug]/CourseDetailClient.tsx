@@ -561,7 +561,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff", border: "rgba(139,92,246,0.15)" },
                   { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed", border: "rgba(249,115,22,0.15)" },
                 ].map(({ I, t, d, color, bg, border }: any) => (
-                  <div key={t} className="group bg-white rounded-2xl p-6 shadow-[0_2px_16px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_24px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 border border-slate-100">
+                  <div key={t} className="group bg-white rounded-2xl p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_4px_24px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.08),0_8px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1" style={{ border: '1px solid rgba(0,0,0,0.06)' }}>
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-6 h-6" style={{ color }} /></div>
                     <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
                     <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{d}</p>
