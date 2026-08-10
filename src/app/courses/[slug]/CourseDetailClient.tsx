@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, Fragment } from "react";
 import type { CourseItem } from "@/lib/course-data";
 import {
   House,
@@ -793,7 +793,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       { I: BarChart3, t: 'Track Your Progress', d: 'Track milestones and measure your growth.', color: '#8B5CF6', bg: '#F5F3FF' },
                       { I: Rocket, t: 'Industry Ready', d: 'Build in-demand skills and advance your career.', color: '#F59E0B', bg: '#FFF7ED' },
                     ].map((b: any, bi: number) => (
-                      <React.Fragment key={bi}>
+                      <Fragment key={bi}>
                         <div className="flex items-center gap-3.5 px-5 py-4">
                           <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: b.bg }}>
                             <b.I className="w-5 h-5" style={{ color: b.color }} />
@@ -805,7 +805,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                         </div>
                         {bi < 3 && <div className="hidden lg:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)' }} />}
                       </Fragment>
-                    )))}
+                    ))}
                   </div>
                 </div>
 
