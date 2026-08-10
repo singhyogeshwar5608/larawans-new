@@ -579,7 +579,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Feature Cards */}
             <section>
-              <div className="bg-white rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
                 {[
                   { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5" },
                   { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff" },
