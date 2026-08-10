@@ -505,7 +505,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   </div>
                 </div>
                 {/* Learning Outcomes Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                   {course.topics.map((tp: string, i: number) => (
                     <div key={i} className="flex items-center gap-3.5 bg-emerald-50/50 hover:bg-emerald-50 border border-emerald-100/60 hover:border-emerald-200/70 rounded-xl px-5 py-3.5 transition-all duration-200">
                       <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
