@@ -262,16 +262,16 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
               {/* Feature Buttons */}
               <div className="flex flex-wrap items-center gap-3 mb-8">
-                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
                   <Code2 className="w-4 h-4 text-emerald-500" /> Practical Projects
                 </span>
-                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
                   <Briefcase className="w-4 h-4 text-violet-500" /> Industry Tools
                 </span>
-                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
                   <Award className="w-4 h-4 text-emerald-500" /> Certificate
                 </span>
-                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
+                <span className="inline-flex items-center gap-2 text-[13.5px] font-medium text-slate-700 px-4 py-2.5 rounded-lg border border-slate-200 bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_0_12px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_4px_10px_rgba(0,0,0,0.1),0_0_18px_rgba(0,0,0,0.12)] hover:border-slate-300 transition-all cursor-default">
                   <Infinity className="w-4 h-4 text-orange-500" /> Lifetime Access
                 </span>
               </div>
