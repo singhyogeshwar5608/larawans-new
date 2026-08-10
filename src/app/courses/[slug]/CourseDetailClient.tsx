@@ -507,7 +507,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 {/* Learning Outcomes Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                   {course.topics.map((tp: string, i: number) => (
-                    <div key={i} className="flex items-center gap-3.5 bg-[#FFFEF5] hover:bg-[#FFF9E0] border border-emerald-200/60 hover:border-emerald-300/70 rounded-lg px-4 py-2.5 transition-all duration-200">
+                    <div key={i} className="flex items-center gap-3.5 bg-[#FFFEF5] hover:bg-[#FFF9E0] border rounded-lg px-4 py-2.5 transition-all duration-200" style={{ borderColor: "rgba(167,243,208,0.7)" }}>
                       <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
                         <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
