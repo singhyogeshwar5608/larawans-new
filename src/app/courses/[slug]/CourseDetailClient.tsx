@@ -544,6 +544,15 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Grid */}
+                <style>{`
+                  .hl-item { border-right: 1px solid rgba(0,0,0,0.08); }
+                  .hl-item:nth-child(2) { border-right: 1px solid rgba(0,0,0,0.08); }
+                  .hl-item:nth-child(4n) { border-right: none; }
+                  @media (min-width: 640px) and (max-width: 1023px) {
+                    .hl-item:nth-child(odd) { border-right: 1px solid rgba(0,0,0,0.08); }
+                    .hl-item:nth-child(even) { border-right: none; }
+                  }
+                `}</style>
                 <div className="grid grid-cols-2 lg:grid-cols-4 relative">
                   {course.highlights.map((h: any, i: number) => {
                     const cfg = [
@@ -554,7 +563,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     ][i % 4];
                     const Ic = cfg.I;
                     return (
-                      <div key={i} className={"flex flex-col items-center text-center px-6 py-7 " + (i < 3 ? 'lg:border-r' : '') + (i < 2 ? 'sm:border-r' : '')} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+                      <div key={i} className="hl-item flex flex-col items-center text-center px-6 py-7">
                         <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: cfg.bg }}>
                           <Ic className="w-6 h-6 text-white" strokeWidth={1.8} />
                         </div>
