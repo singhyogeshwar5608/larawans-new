@@ -43,6 +43,7 @@ import {
   Brain,
   Palette,
   Eye,
+  FolderOpen,
 } from "lucide-react";
 
 type TabId = "overview" | "curriculum" | "instructor" | "reviews" | "faq";
@@ -519,16 +520,30 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* Course Highlights */}
-            <section className="rounded-2xl p-8 sm:p-10 text-white relative overflow-hidden" style={{ background: "linear-gradient(135deg, " + primary + ", #312e81 70%, #0f172a)" }}>
-              <div className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-[0.08] pointer-events-none" style={{ background: "radial-gradient(circle, white, transparent 70%)", transform: "translate(30%, -30%)" }} />
-              <h3 className="text-xl font-bold mb-8 flex items-center gap-2.5"><TrendingUp className="w-6 h-6" /> Course Highlights</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-8">
-                {course.highlights.map((h: any, i: number) => (
-                  <div key={i} className="text-center">
-                    <div className="text-4xl font-extrabold mb-1.5">{h.value}</div>
-                    <div className="text-[0.95rem] text-white/60 font-medium">{h.label}</div>
-                  </div>
-                ))}
+            <section>
+              <div className="bg-[#f8faff] rounded-2xl p-8 sm:p-10 relative overflow-hidden border border-indigo-50">
+                {/* Decorative dots top-right */}
+                <div className="absolute top-4 right-4 w-24 h-24 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #4f46e5 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 relative">
+                  {course.highlights.map((h: any, i: number) => {
+                    const cfg = [
+                      { I: FolderOpen, color: "#2563eb", bg: "#eff6ff" },
+                      { I: BookOpen, color: "#4f46e5", bg: "#eef2ff" },
+                      { I: Clock, color: "#10b981", bg: "#ecfdf5" },
+                      { I: Award, color: "#f97316", bg: "#fff7ed" },
+                    ][i % 4];
+                    const Ic = cfg.I;
+                    return (
+                      <div key={i} className={"flex flex-col items-center text-center " + (i < 3 ? "lg:border-r lg:border-slate-200/60" : "")}>
+                        <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-3" style={{ background: cfg.bg }}>
+                          <Ic className="w-7 h-7" style={{ color: cfg.color }} />
+                        </div>
+                        <div className="text-3xl font-extrabold leading-none mb-1" style={{ color: cfg.color }}>{h.value}</div>
+                        <div className="text-[0.85rem] text-slate-500 font-medium">{h.label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </section>
 
@@ -536,15 +551,16 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             <section>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 {[
-                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps" },
-                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools" },
-                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros" },
-                  { I: Handshake, t: "Career Support", d: "Resume and interview help" },
-                ].map(({ I, t, d }: any) => (
-                  <div key={t} className="group p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: primary + "12" }}><I className="w-6 h-6" style={{ color: primary }} /></div>
+                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5", border: "rgba(16,185,129,0.15)" },
+                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff", border: "rgba(59,130,246,0.15)" },
+                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff", border: "rgba(139,92,246,0.15)" },
+                  { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed", border: "rgba(249,115,22,0.15)" },
+                ].map(({ I, t, d, color, bg, border }: any) => (
+                  <div key={t} className="group bg-white rounded-2xl p-6 shadow-[0_2px_16px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_24px_rgba(0,0,0,0.1)] transition-all duration-300 hover:-translate-y-1 border border-slate-100">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-6 h-6" style={{ color }} /></div>
                     <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
-                    <p className="text-sm text-gray-500 mt-1.5">{d}</p>
+                    <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{d}</p>
+                    <div className="w-8 h-[3px] rounded-full mt-4" style={{ background: color }} />
                   </div>
                 ))}
               </div>
@@ -552,33 +568,53 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Tech Stack */}
             <section>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><Code2 className="w-5 h-5" style={{ color: primary }} /></div>
-                <h2 className="text-2xl font-bold text-gray-900">Tech Stack You Will Master</h2>
-              </div>
-              <div className="flex flex-wrap gap-3 pl-14">
-                {course.techStack.map((tech: any, i: number) => (
-                  <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-5 py-3 transition-colors">
-                    <span className="w-3.5 h-3.5 rounded-full" style={{ background: tech.color }} />
-                    <span className="text-[0.95rem] font-medium text-gray-700">{tech.name}</span>
+              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgba(0,0,0,0.05)] p-8 sm:p-10">
+                <div className="flex items-center gap-3.5 mb-7">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                    <Code2 className="w-5.5 h-5.5 text-emerald-600" />
                   </div>
-                ))}
+                  <div>
+                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Tech Stack You Will Master</h2>
+                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {course.techStack.map((tech: any, i: number) => (
+                    <div key={i} className="flex items-center gap-2.5 bg-slate-50 hover:bg-slate-100 rounded-full px-5 py-3 transition-colors border border-slate-100">
+                      <span className="w-3.5 h-3.5 rounded-full shrink-0" style={{ background: tech.color }} />
+                      <span className="text-[0.925rem] font-medium text-gray-700">{tech.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 
             {/* Who This Course Is For */}
             <section>
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><Users className="w-5 h-5" style={{ color: primary }} /></div>
-                <h2 className="text-2xl font-bold text-gray-900">Who This Course Is For</h2>
-              </div>
-              <div className="space-y-3.5 pl-14">
-                {course.audience.map((item: string, i: number) => (
-                  <div key={i} className="flex items-start gap-4 p-5 rounded-xl bg-slate-50 hover:bg-slate-100 transition-colors">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 mt-0.5" style={{ background: primary }}>{i + 1}</div>
-                    <p className="text-[0.95rem] text-gray-600 leading-relaxed">{item}</p>
+              <div className="bg-[#f8faff] rounded-2xl p-8 sm:p-10 relative overflow-hidden border border-indigo-50">
+                {/* Decorative dots top-right */}
+                <div className="absolute top-4 right-4 w-24 h-24 opacity-[0.07] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #4f46e5 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
+                <div className="relative">
+                  <div className="flex items-center gap-3.5 mb-7">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                      <Users className="w-5.5 h-5.5 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
+                      <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                    </div>
                   </div>
-                ))}
+                  <div className="space-y-3.5 relative">
+                    {/* Vertical timeline connector */}
+                    <div className="absolute left-[18px] top-6 bottom-6 w-px bg-emerald-200/60" />
+                    {course.audience.map((item: string, i: number) => (
+                      <div key={i} className="flex items-center gap-4 bg-white rounded-xl px-5 py-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)] border border-slate-100 relative">
+                        <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center text-white font-bold text-xs shrink-0 z-10" style={{ boxShadow: "0 0 0 3px #f8faff" }}>{String(i + 1).padStart(2, "0")}</div>
+                        <p className="text-[0.925rem] text-gray-600 leading-relaxed">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </section>
           </div>
