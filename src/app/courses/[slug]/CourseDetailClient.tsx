@@ -554,14 +554,14 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Feature Cards */}
             <section>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="bg-white rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
                 {[
-                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5", border: "rgba(16,185,129,0.15)" },
-                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff", border: "rgba(59,130,246,0.15)" },
-                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff", border: "rgba(139,92,246,0.15)" },
-                  { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed", border: "rgba(249,115,22,0.15)" },
-                ].map(({ I, t, d, color, bg, border }: any) => (
-                  <div key={t} className="group bg-white rounded-2xl p-6 shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_2px_6px_rgba(0,0,0,0.06),0_4px_24px_rgba(0,0,0,0.08)] hover:shadow-[0_0_0_1px_rgba(0,0,0,0.04),0_4px_12px_rgba(0,0,0,0.08),0_8px_32px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1" style={{ border: '1px solid rgba(0,0,0,0.06)' }}>
+                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5" },
+                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff" },
+                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff" },
+                  { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed" },
+                ].map(({ I, t, d, color, bg }: any, idx: number) => (
+                  <div key={t} className={`group p-6 lg:p-7 transition-all duration-300 hover:bg-gray-50/50 ${idx < 3 ? 'lg:border-r' : ''} ${idx < 2 ? 'sm:border-r' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-6 h-6" style={{ color }} /></div>
                     <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
                     <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{d}</p>
