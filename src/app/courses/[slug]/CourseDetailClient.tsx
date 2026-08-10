@@ -738,10 +738,11 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     const isActive = i === 0;
                     return (
                       <Fragment key={i}>
-                        <div className="rounded-xl p-5 transition-all duration-200 hover:shadow-md shrink-0 w-full lg:w-auto"
+                        <div className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg shrink-0 w-full lg:w-auto"
                           style={{
                             background: '#FFFFFF',
                             border: isActive ? '1.5px solid rgba(16,185,129,0.35)' : '1px solid rgba(0,0,0,0.06)',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                             flex: '1 1 0%',
                             minWidth: '200px',
                           }}
