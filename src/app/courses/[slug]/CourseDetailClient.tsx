@@ -121,6 +121,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
   const [expandedFaqs, setExpandedFaqs] = useState<Record<number, boolean>>({ 0: true });
   const [showAllCurriculum, setShowAllCurriculum] = useState(false);
   const [currentReview, setCurrentReview] = useState(0);
+  const [expandedOverviewMods, setExpandedOverviewMods] = useState<Record<number, boolean>>({ 0: true });
+  const [overviewExpandAll, setOverviewExpandAll] = useState(false);
   const [countdown, setCountdown] = useState({ days: 2, hours: 10, mins: 24, secs: 32 });
   const [imgLoaded, setImgLoaded] = useState(false);
   const tabRef = useRef<HTMLDivElement>(null);
@@ -176,6 +178,22 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
     return s + parseInt(p?.[1] || "0") * 60 + parseInt(p?.[2] || "0");
   }, 0);
   const totalDuration = Math.floor(totalMins / 60) + "h " + (totalMins % 60) + "m";
+
+  // Generate lecture data for overview curriculum
+  const curriculumWithLectures = useMemo(() => {
+    return curriculumModules.map((mod: any, mi: number) => {
+      const lectures = [];
+      for (let li = 0; li < mod.lectures; li++) {
+        const topicTitle = mod.topics[li] || ("Lecture " + (li + 1));
+        const mins = 8 + ((mi * 7 + li * 13) % 20);
+        lectures.push({
+          title: li === 0 ? mod.title : topicTitle,
+          duration: mins + ":" + String(((mi + li) * 7) % 60).padStart(2, "0"),
+        });
+      }
+      return { ...mod, lectures };
+    });
+  }, [curriculumModules]);
 
   const getLevelTag = (l: string) => {
     const lw = l.toLowerCase();
@@ -495,6 +513,119 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 <div className="space-y-5 leading-[1.75] text-[0.975rem] text-slate-600">
                   <p>{course.longDescription}</p>
                   <p>{course.aboutText}</p>
+                </div>
+              </div>
+            </section>
+
+            {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
+            <section>
+              <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] p-8 sm:p-10">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                  <div>
+                    <div className="flex items-center gap-3.5 mb-2">
+                      <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                        <BookOpen className="w-5 h-5 text-emerald-600" />
+                      </div>
+                      <div>
+                        <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
+                        <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                      </div>
+                    </div>
+                    <p className="text-[0.85rem] text-gray-500 leading-relaxed mt-3 ml-[58px]">Master the skills step by step with our structured learning path.</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      if (overviewExpandAll) {
+                        setExpandedOverviewMods({});
+                      } else {
+                        const all: Record<number, boolean> = {};
+                        curriculumWithLectures.forEach((_: any, i: number) => { all[i] = true; });
+                        setExpandedOverviewMods(all);
+                      }
+                      setOverviewExpandAll(!overviewExpandAll);
+                    }}
+                    className="flex items-center gap-1.5 text-[0.82rem] font-semibold shrink-0 mt-1 transition-colors"
+                    style={{ color: '#10B981' }}
+                  >
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${overviewExpandAll ? 'rotate-180' : ''}`} />
+                    {overviewExpandAll ? 'Collapse All' : 'Expand All'}
+                  </button>
+                </div>
+
+                {/* Stats Row */}
+                <div className="flex flex-wrap gap-3 mb-7">
+                  {[
+                    { icon: <ClipboardList className="w-4 h-4" style={{ color: '#8B5CF6' }} />, v: curriculumWithLectures.length, l: 'Modules', bg: '#F3F4F6' },
+                    { icon: <Play className="w-4 h-4" style={{ color: '#10B981' }} />, v: totalLectures, l: 'Lectures', bg: '#ECFDF5' },
+                    { icon: <Clock className="w-4 h-4" style={{ color: '#F59E0B' }} />, v: totalDuration, l: 'Total', bg: '#FFF7ED' },
+                  ].map((s: any) => (
+                    <div key={s.l} className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl" style={{ background: s.bg }}>
+                      {s.icon}
+                      <span className="text-[0.95rem] font-bold text-gray-900">{s.v}</span>
+                      <span className="text-[0.75rem] text-gray-400">{s.l}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Accordion Modules */}
+                <div className="space-y-3">
+                  {curriculumWithLectures.map((mod: any, idx: number) => {
+                    const isExpanded = !!expandedOverviewMods[idx];
+                    return (
+                      <div key={idx} className="rounded-xl overflow-hidden transition-all duration-200"
+                        style={{
+                          background: isExpanded ? '#ECFDF5' : '#FFFFFF',
+                          border: isExpanded ? '1.5px solid rgba(16,185,129,0.3)' : '1px solid rgba(0,0,0,0.06)',
+                          boxShadow: isExpanded ? '0 2px 12px rgba(16,185,129,0.08)' : 'none',
+                        }}
+                      >
+                        {/* Module Header Row */}
+                        <button
+                          onClick={() => setExpandedOverviewMods((prev: any) => ({ ...prev, [idx]: !prev[idx] }))}
+                          className="w-full flex items-center gap-4 px-5 py-4 text-left"
+                        >
+                          {/* Module Number */}
+                          <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-[0.8rem] font-bold"
+                            style={{ background: isExpanded ? '#D1FAE5' : '#EDE9FE', color: isExpanded ? '#059669' : '#6366F1' }}
+                          >
+                            {String(idx + 1).padStart(2, '0')}
+                          </div>
+                          {/* Title + Desc */}
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[0.95rem] font-semibold text-gray-900 leading-tight truncate">{mod.title}</div>
+                            {mod.topics[1] && <div className="text-[0.78rem] text-gray-400 mt-0.5 truncate">{mod.topics[1]}</div>}
+                          </div>
+                          {/* Right Meta */}
+                          <div className="flex items-center gap-3 shrink-0">
+                            <span className="text-[0.72rem] font-semibold px-2.5 py-1 rounded-full" style={{ background: isExpanded ? '#D1FAE5' : '#EDE9FE', color: isExpanded ? '#059669' : '#6366F1' }}>
+                              {mod.lectures} Lectures
+                            </span>
+                            <span className="text-[0.82rem] text-gray-500 font-medium hidden sm:block">{mod.duration}</span>
+                            <ChevronDown className={`w-4.5 h-4.5 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ color: isExpanded ? '#059669' : '#9CA3AF' }} />
+                          </div>
+                        </button>
+
+                        {/* Expanded Lectures */}
+                        {isExpanded && (
+                          <div className="px-5 pb-4 pt-1">
+                            <div className="border-t pt-3" style={{ borderColor: 'rgba(16,185,129,0.15)' }}>
+                              {mod.lectures.map((lec: any, li: number) => (
+                                <div key={li} className="flex items-center gap-3 py-2.5">
+                                  <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ border: '1.5px solid #10B981' }}>
+                                    <svg className="w-2.5 h-2.5 ml-0.5" fill="#10B981" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+                                  </div>
+                                  <span className="flex-1 text-[0.85rem] text-gray-600 truncate">{lec.title}</span>
+                                  <span className="text-[0.78rem] text-gray-400 font-medium shrink-0 tabular-nums">{lec.duration}</span>
+                                  <FileText className="w-3.5 h-3.5 text-gray-300 shrink-0" />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </section>
