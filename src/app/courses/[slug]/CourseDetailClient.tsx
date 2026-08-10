@@ -180,7 +180,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
   const pad = (n: number) => n.toString().padStart(2, "0");
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 antialiased">
+    <div className="min-h-screen bg-white text-gray-900 antialiased" style={{ fontFamily: "'Poppins', sans-serif" }}>
             {/* ==================== HERO ==================== */}
       <section className="relative overflow-hidden bg-white">
         {/* Background decorative blob */}
@@ -484,7 +484,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   </div>
                 </div>
                 {/* Description Body */}
-                <div className="space-y-5 leading-[1.85] text-[0.975rem] text-slate-600">
+                <div className="space-y-5 leading-[1.75] text-[0.975rem] text-slate-600">
                   <p>{course.longDescription}</p>
                   <p>{course.aboutText}</p>
                 </div>
@@ -511,7 +511,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
                         <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
-                      <span className="text-[0.925rem] text-slate-700 font-medium leading-snug">{tp}</span>
+                      <span className="text-[0.925rem] text-slate-700 font-medium leading-[1.25]">{tp}</span>
                     </div>
                   ))}
                 </div>
