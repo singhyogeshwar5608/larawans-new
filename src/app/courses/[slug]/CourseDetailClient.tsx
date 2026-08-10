@@ -540,52 +540,30 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
             <section>
               <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] p-8 sm:p-10">
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
-                  <div>
-                    <div className="flex items-center gap-3.5 mb-2">
-                      <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
-                        <BookOpen className="w-5 h-5 text-emerald-600" />
-                      </div>
-                      <div>
-                        <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
-                        <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
-                      </div>
+                {/* Header — heading left, stats right */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-7">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                      <BookOpen className="w-5 h-5 text-emerald-600" />
                     </div>
-                    <p className="text-[0.85rem] text-gray-500 leading-relaxed mt-3 ml-[58px]">Master the skills step by step with our structured learning path.</p>
+                    <div>
+                      <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
+                      <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                    </div>
                   </div>
-                  <button
-                    onClick={() => {
-                      if (overviewExpandAll) {
-                        setExpandedOverviewMods({});
-                      } else {
-                        const all: Record<number, boolean> = {};
-                        curriculumWithLectures.forEach((_: any, i: number) => { all[i] = true; });
-                        setExpandedOverviewMods(all);
-                      }
-                      setOverviewExpandAll(!overviewExpandAll);
-                    }}
-                    className="flex items-center gap-1.5 text-[0.82rem] font-semibold shrink-0 mt-1 transition-colors"
-                    style={{ color: '#10B981' }}
-                  >
-                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${overviewExpandAll ? 'rotate-180' : ''}`} />
-                    {overviewExpandAll ? 'Collapse All' : 'Expand All'}
-                  </button>
-                </div>
-
-                {/* Stats Row */}
-                <div className="flex flex-wrap gap-3 mb-7">
-                  {[
-                    { icon: <ClipboardList className="w-4 h-4" style={{ color: '#8B5CF6' }} />, v: curriculumWithLectures.length, l: 'Modules', bg: '#F3F4F6' },
-                    { icon: <Play className="w-4 h-4" style={{ color: '#10B981' }} />, v: totalLectures, l: 'Lectures', bg: '#ECFDF5' },
-                    { icon: <Clock className="w-4 h-4" style={{ color: '#F59E0B' }} />, v: totalDuration, l: 'Total', bg: '#FFF7ED' },
-                  ].map((s: any) => (
-                    <div key={s.l} className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl" style={{ background: s.bg }}>
-                      {s.icon}
-                      <span className="text-[0.95rem] font-bold text-gray-900">{s.v}</span>
-                      <span className="text-[0.75rem] text-gray-400">{s.l}</span>
-                    </div>
-                  ))}
+                  <div className="flex items-center gap-3">
+                    {[
+                      { icon: <ClipboardList className="w-4 h-4" style={{ color: '#8B5CF6' }} />, v: curriculumWithLectures.length, l: 'Modules', bg: '#F3F4F6' },
+                      { icon: <Play className="w-4 h-4" style={{ color: '#10B981' }} />, v: totalLectures, l: 'Lectures', bg: '#ECFDF5' },
+                      { icon: <Clock className="w-4 h-4" style={{ color: '#F59E0B' }} />, v: totalDuration, l: 'Total', bg: '#FFF7ED' },
+                    ].map((s: any) => (
+                      <div key={s.l} className="flex items-center gap-2 px-3.5 py-2 rounded-xl" style={{ background: s.bg }}>
+                        {s.icon}
+                        <span className="text-[0.92rem] font-bold text-gray-900">{s.v}</span>
+                        <span className="text-[0.72rem] text-gray-400">{s.l}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Accordion Modules */}
