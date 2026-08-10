@@ -600,7 +600,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       >
                         {/* Module Header Row */}
                         <button
-                          onClick={() => setExpandedOverviewMods((prev: any) => ({ ...prev, [idx]: !prev[idx] }))}
+                          onClick={() => setExpandedOverviewMods((prev: any) => { const next = prev[idx] ? {} : { [idx]: true }; return next; })}
                           className="w-full flex items-center gap-4 px-5 py-4 text-left"
                         >
                           {/* Module Number */}
