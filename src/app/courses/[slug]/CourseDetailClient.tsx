@@ -202,7 +202,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
           duration: mins + ":" + String(((mi + li) * 7) % 60).padStart(2, "0"),
         });
       }
-      return { ...mod, lectures };
+      return { ...mod, lectureItems: lectures };
     });
   }, [curriculumModules]);
 
@@ -621,7 +621,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                         {isExpanded && (
                           <div className="px-5 pb-4 pt-1">
                             <div className="border-t pt-3" style={{ borderColor: 'rgba(16,185,129,0.15)' }}>
-                              {mod.lectures.map((lec: any, li: number) => (
+                              {mod.lectureItems.map((lec: any, li: number) => (
                                 <div key={li} className="flex items-center gap-3 py-2.5">
                                   <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0" style={{ border: '1.5px solid #10B981' }}>
                                     <svg className="w-2.5 h-2.5 ml-0.5" fill="#10B981" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
