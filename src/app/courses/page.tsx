@@ -537,7 +537,7 @@ export default function CoursesPage() {
       {/* END: Featured Courses */}
 
       {/* BEGIN: Browse By Category */}
-      <section className="py-16 sm:py-20 bg-white relative overflow-hidden" data-purpose="categories">
+      <section className="py-10 sm:py-14 bg-white relative overflow-hidden" data-purpose="categories">
         {/* Decorative dot patterns */}
         <div className="absolute top-1/2 left-8 -translate-y-1/2 hidden lg:grid grid-cols-4 gap-3 opacity-30 pointer-events-none">
           {Array.from({ length: 16 }).map((_, i) => (
@@ -552,24 +552,24 @@ export default function CoursesPage() {
 
         <div className="relative max-w-[1280px] mx-auto px-6">
           {/* Section Header */}
-          <div className="text-center mb-12 sm:mb-14">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5" style={{ backgroundColor: "#EEF2FF", color: "#6366F1", border: "1px solid #E0E7FF" }}>
+          <div className="text-center mb-8 sm:mb-9">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider mb-3" style={{ backgroundColor: "#EEF2FF", color: "#6366F1", border: "1px solid #E0E7FF" }}>
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
               EXPLORE COURSES
             </span>
-            <h2 className="text-[2rem] sm:text-[2.5rem] lg:text-[2.75rem] font-extrabold mb-3" style={{ letterSpacing: "-0.02em" }}>
+            <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.25rem] font-extrabold mb-2" style={{ letterSpacing: "-0.02em" }}>
               Browse by <span style={{ color: "#7C3AED" }}>Category</span>
             </h2>
-            <div className="flex justify-center mb-6">
-              <div className="w-[60px] h-1 rounded-full" style={{ backgroundColor: "#6D28D9" }} />
+            <div className="flex justify-center mb-3">
+              <div className="w-[50px] h-1 rounded-full" style={{ backgroundColor: "#6D28D9" }} />
             </div>
-            <p className="text-base sm:text-[17px] max-w-[620px] mx-auto leading-relaxed" style={{ color: "#6B7280" }}>
+            <p className="text-sm sm:text-[15px] max-w-[500px] mx-auto leading-relaxed" style={{ color: "#6B7280" }}>
               Explore courses by your interested categories and find the perfect course to start learning
             </p>
           </div>
 
           {/* Category Cards Grid — 4 / 2 / 1 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
               {
                 name: "Web Development",
@@ -577,7 +577,7 @@ export default function CoursesPage() {
                 desc: "Build modern websites and web applications with latest frameworks and technologies.",
                 iconBg: "#EDE9FE", iconColor: "#7C3AED", countColor: "#6D28D9",
                 arrowBg: "#F3E8FF",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>,
               },
               {
                 name: "Design",
@@ -585,7 +585,7 @@ export default function CoursesPage() {
                 desc: "Master UI/UX design, Figma, and creative tools to build stunning user experiences.",
                 iconBg: "#ECFDF5", iconColor: "#059669", countColor: "#047857",
                 arrowBg: "#D1FAE5",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
               },
               {
                 name: "Marketing",
@@ -593,7 +593,7 @@ export default function CoursesPage() {
                 desc: "Learn digital marketing, SEO, social media, and growth strategies for businesses.",
                 iconBg: "#FFF7ED", iconColor: "#EA580C", countColor: "#C2410C",
                 arrowBg: "#FED7AA",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" /></svg>,
               },
               {
                 name: "AI & Data",
@@ -601,7 +601,7 @@ export default function CoursesPage() {
                 desc: "Dive into artificial intelligence, machine learning, and data science fundamentals.",
                 iconBg: "#EFF6FF", iconColor: "#2563EB", countColor: "#1D4ED8",
                 arrowBg: "#BFDBFE",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>,
               },
               {
                 name: "Business",
@@ -609,7 +609,7 @@ export default function CoursesPage() {
                 desc: "Develop business acumen, entrepreneurship, and leadership skills for growth.",
                 iconBg: "#FDF2F8", iconColor: "#DB2777", countColor: "#BE185D",
                 arrowBg: "#FBCFE8",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>,
               },
               {
                 name: "Mobile Dev",
@@ -617,7 +617,7 @@ export default function CoursesPage() {
                 desc: "Build cross-platform mobile apps with Flutter, React Native, and Swift.",
                 iconBg: "#F5F3FF", iconColor: "#6366F1", countColor: "#4F46E5",
                 arrowBg: "#E0E7FF",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>,
               },
               {
                 name: "Cloud & DevOps",
@@ -625,7 +625,7 @@ export default function CoursesPage() {
                 desc: "Master AWS, Docker, Kubernetes, and CI/CD pipelines for cloud infrastructure.",
                 iconBg: "#F0FDFA", iconColor: "#0891B2", countColor: "#0E7490",
                 arrowBg: "#A5F3FC",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" /></svg>,
               },
               {
                 name: "Photography",
@@ -633,18 +633,18 @@ export default function CoursesPage() {
                 desc: "Learn photography, videography, and photo editing with professional tools.",
                 iconBg: "#FAF5FF", iconColor: "#A855F7", countColor: "#9333EA",
                 arrowBg: "#E9D5FF",
-                icon: <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg>,
+                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg>,
               },
             ].map((cat) => (
               <a
                 key={cat.name}
                 href="#"
-                className="group relative flex flex-col p-6 sm:p-7 rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="group relative flex flex-col p-4 sm:p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
                 style={{
                   backgroundColor: "#FFFFFF",
                   border: "1px solid #E5E7EB",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
-                  minHeight: "220px",
+                  minHeight: "170px",
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
@@ -659,28 +659,28 @@ export default function CoursesPage() {
               >
                 {/* Icon */}
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
+                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2.5"
                   style={{ backgroundColor: cat.iconBg, color: cat.iconColor }}
                 >
                   {cat.icon}
                 </div>
 
                 {/* Title */}
-                <h4 className="text-lg sm:text-xl font-bold mb-1" style={{ color: "#111827" }}>{cat.name}</h4>
+                <h4 className="text-[13px] sm:text-[15px] font-bold mb-0.5" style={{ color: "#111827" }}>{cat.name}</h4>
 
                 {/* Course Count */}
-                <span className="text-sm font-semibold mb-3" style={{ color: cat.countColor }}>{cat.count}</span>
+                <span className="text-[11px] sm:text-xs font-semibold mb-2" style={{ color: cat.countColor }}>{cat.count}</span>
 
                 {/* Description */}
-                <p className="text-sm leading-relaxed line-clamp-2 mb-4 flex-grow" style={{ color: "#6B7280" }}>{cat.desc}</p>
+                <p className="text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-2 flex-grow" style={{ color: "#6B7280" }}>{cat.desc}</p>
 
                 {/* Arrow Button */}
                 <div className="mt-auto flex justify-end">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
+                    className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
                     style={{ backgroundColor: cat.arrowBg, color: cat.countColor }}
                   >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
                   </div>
                 </div>
               </a>
@@ -688,10 +688,10 @@ export default function CoursesPage() {
           </div>
 
           {/* View All Categories Button */}
-          <div className="flex justify-center mt-10 sm:mt-14">
+          <div className="flex justify-center mt-8 sm:mt-10">
             <a
               href="#"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold transition-all duration-200 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
               style={{
                 color: "#6D28D9",
                 backgroundColor: "#FFFFFF",
