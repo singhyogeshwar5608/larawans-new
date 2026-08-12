@@ -306,19 +306,19 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
         <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8 lg:px-10 pt-8 sm:pt-10 lg:pt-14 pb-16 lg:pb-24">
           {/* Breadcrumbs */}
-          <nav className="flex mb-7">
-            <ol className="inline-flex items-center gap-1.5 text-[13px]">
+          <nav className="flex mb-5 sm:mb-7 -mx-1 sm:mx-0">
+            <ol className="inline-flex items-center gap-1 text-[11px] sm:gap-1.5 sm:text-[13px] flex-wrap">
               <li>
-                <a href="/" className="inline-flex items-center gap-1.5 text-gray-400 hover:text-indigo-600 transition-colors font-medium">
-                  <House className="w-3.5 h-3.5" /> Home
+                <a href="/" className="inline-flex items-center gap-1 sm:gap-1.5 text-gray-400 hover:text-indigo-600 transition-colors font-medium">
+                  <House className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> Home
                 </a>
               </li>
-              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
+              <li><ChevronRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-300" /></li>
               <li>
-                <a href="/courses" className="text-gray-400 hover:text-indigo-600 transition-colors font-medium">{course.category}</a>
+                <a href="/courses" className="text-gray-400 hover:text-indigo-600 transition-colors font-medium truncate max-w-[100px] sm:max-w-none">{course.category}</a>
               </li>
-              <li><ChevronRight className="w-3 h-3 text-gray-300" /></li>
-              <li className="text-indigo-600 font-semibold truncate max-w-[220px]">{course.title}</li>
+              <li><ChevronRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-gray-300" /></li>
+              <li className="text-indigo-600 font-semibold truncate max-w-[140px] sm:max-w-[220px]">{course.title}</li>
             </ol>
           </nav>
 
@@ -342,7 +342,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
 
               {/* Title */}
-              <h1 className="text-[2.6rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" }}>
+              <h1 className="text-[2.4rem] sm:text-[3.2rem] lg:text-[3.75rem] font-extrabold leading-[1.08] tracking-tight mb-2" style={{ backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)", WebkitBackgroundClip: "text", backgroundClip: "text", WebkitTextFillColor: "transparent", color: "transparent" }}>
                 {course.title}
               </h1>
 
@@ -354,7 +354,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
 
               {/* Description */}
-              <p className="text-[17px] leading-[1.7] text-slate-500 max-w-[580px] mb-7">{course.description}</p>
+              <p className="text-[14px] sm:text-[17px] leading-[1.7] text-slate-500 max-w-[580px] mb-5 sm:mb-7 text-center sm:text-left">{course.description}</p>
 
               {/* Metadata row */}
               <div className="flex flex-wrap items-center gap-x-7 gap-y-3 mb-8">
