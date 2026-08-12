@@ -1362,7 +1362,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
                 {/* ===== CAREER OUTCOMES ===== */}
         <section>
-          <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+          <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
@@ -1390,7 +1390,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 { icon: <Globe className="w-5 h-5" />, title: 'Work Anywhere', desc: 'Remote-friendly roles with global opportunities and flexibility.', color: '#3B82F6', bg: '#EFF6FF' },
                 { icon: <Users className="w-5 h-5" />, title: 'Make an Impact', desc: 'Build solutions that solve real-world problems and create value.', color: '#EC4899', bg: '#FDF2F8' },
               ].map((c: any, ci: number) => (
-                <div key={ci} className="rounded-xl p-5 transition-all duration-200 hover:shadow-md relative overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+                <div key={ci} className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg relative overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 6px 24px rgba(0,0,0,0.1)' }}>
                   <div className="w-11 h-11 rounded-full flex items-center justify-center mb-4" style={{ background: c.bg, color: c.color }}>{c.icon}</div>
                   <h3 className="text-[0.95rem] font-bold text-gray-900 mb-1.5">{c.title}</h3>
                   <p className="text-[0.8rem] text-gray-500 leading-relaxed">{c.desc}</p>
