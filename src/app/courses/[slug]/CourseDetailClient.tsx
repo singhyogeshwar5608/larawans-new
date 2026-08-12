@@ -256,6 +256,33 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
     return { phases, weeks, phaseCount: phases.length };
   }, [course.duration]);
 
+  const projectsData = [
+    {
+      num: '01', title: 'AI Content Generator', difficulty: 'Beginner', diffColor: '#10B981', diffBg: '#ECFDF5',
+      desc: 'Build an AI-powered content generator that creates blog posts, social media captions, and marketing content.',
+      tools: ['ChatGPT', 'LangChain', 'Streamlit'], duration: '4–6 Hours', accent: '#10B981',
+      visualBg: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)',
+    },
+    {
+      num: '02', title: 'Customer Support AI Assistant', difficulty: 'Intermediate', diffColor: '#8B5CF6', diffBg: '#F5F3FF',
+      desc: 'Create an intelligent customer support assistant that can understand queries and provide accurate responses.',
+      tools: ['OpenAI API', 'Pinecone', 'FastAPI'], duration: '6–8 Hours', accent: '#8B5CF6',
+      visualBg: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
+    },
+    {
+      num: '03', title: 'AI Research Assistant', difficulty: 'Intermediate', diffColor: '#3B82F6', diffBg: '#EFF6FF',
+      desc: 'Develop a research assistant that can analyze topics, summarize information, and provide source-backed insights.',
+      tools: ['LangChain', 'Web Search', 'OpenAI'], duration: '6–10 Hours', accent: '#3B82F6',
+      visualBg: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
+    },
+    {
+      num: '04', title: 'Automated Marketing Workflow', difficulty: 'Advanced', diffColor: '#F59E0B', diffBg: '#FFF7ED',
+      desc: 'Build an end-to-end automated marketing workflow using AI for content creation, audience analysis, and automation.',
+      tools: ['Make.com', 'OpenAI API', 'Airtable'], duration: '8–12 Hours', accent: '#F59E0B',
+      visualBg: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%)',
+    },
+  ];
+
   const getLevelTag = (l: string) => {
     const lw = l.toLowerCase();
     if (lw.includes("beginner") || l === "All Levels") return "Beginner Friendly";
@@ -954,6 +981,137 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
             </section>
 
+                        {/* ===== PROJECTS YOU'LL BUILD ===== */}
+            <section>
+              <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-8">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+                        <Briefcase className="w-5 h-5 text-emerald-600" />
+                      </div>
+                      <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Projects You'll Build</h2>
+                    </div>
+                    <p className="text-[0.85rem] text-gray-500 leading-relaxed ml-14">Apply your learning with real-world projects and build a strong portfolio that showcases your AI Prompt Engineering skills.</p>
+                  </div>
+                  <span className="text-[0.78rem] font-semibold px-4 py-2 rounded-full shrink-0 flex items-center gap-2" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+                    <Sparkle className="w-3.5 h-3.5" />
+                    Hands-on • Practical • Portfolio Ready
+                  </span>
+                </div>
+
+                {/* Project Cards Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+                  {projectsData.map((p, i) => (
+                    <div key={i} className="rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg"
+                      style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
+                    >
+                      {/* Visual Preview Area */}
+                      <div className="relative h-40 p-4 flex items-center justify-center" style={{ background: p.visualBg }}>
+                        {/* Difficulty badge */}
+                        <span className="absolute top-3 left-3 text-[0.68rem] font-semibold px-2.5 py-1 rounded-full" style={{ background: p.diffBg, color: p.diffColor }}>{p.difficulty}</span>
+                        {/* Visual Illustration */}
+                        <div className="w-4/5 h-3/4 rounded-xl bg-white/70 backdrop-blur flex items-center justify-center" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+                          {i === 0 && <div className="flex flex-col gap-2 w-[85%]">
+                            <div className="h-2.5 rounded-full" style={{ background: p.accent + '40', width: '70%' }} />
+                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '100%' }} />
+                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '85%' }} />
+                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '60%' }} />
+                            <div className="flex gap-1.5 mt-1"><div className="h-5 w-14 rounded-md" style={{ background: p.accent + '25' }} /><div className="h-5 w-14 rounded-md" style={{ background: p.accent + '15' }} /></div>
+                          </div>}
+                          {i === 1 && <div className="flex flex-col gap-2 w-[85%]">
+                            <div className="h-2.5 rounded-full" style={{ background: p.accent + '40', width: '55%' }} />
+                            <div className="flex gap-2 items-end"><div className="h-8 w-2/3 rounded-lg" style={{ background: p.accent + '15' }} /><div className="h-8 w-2/3 rounded-lg self-end" style={{ background: '#F3F4F6' }} /></div>
+                            <div className="h-5 w-1/2 rounded-md" style={{ background: '#E5E7EB' }} />
+                          </div>}
+                          {i === 2 && <div className="flex flex-col gap-2 w-[85%]">
+                            <div className="h-6 rounded-lg flex items-center px-2 gap-1.5" style={{ background: '#F3F4F6' }}><div className="w-3 h-3 rounded-full" style={{ background: '#D1D5DB' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '60%' }} /></div>
+                            <div className="h-3 rounded-full" style={{ background: p.accent + '30', width: '80%' }} />
+                            <div className="h-3 rounded-full" style={{ background: '#E5E7EB', width: '90%' }} />
+                            <div className="h-3 rounded-full" style={{ background: '#E5E7EB', width: '50%' }} />
+                          </div>}
+                          {i === 3 && <div className="flex items-center gap-3 w-[85%]">
+                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '30' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+                            <ArrowRight className="w-4 h-4 text-gray-300" />
+                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '20' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+                            <ArrowRight className="w-4 h-4 text-gray-300" />
+                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '15' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+                          </div>}
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-5">
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-[0.85rem] font-bold" style={{ color: p.accent }}>{p.num}</span>
+                          <h3 className="text-[1rem] font-bold text-gray-900 leading-tight">{p.title}</h3>
+                        </div>
+                        <p className="text-[0.8rem] text-gray-500 leading-relaxed mb-3">{p.desc}</p>
+                        {/* Tools */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {p.tools.map((t, ti) => (
+                            <span key={ti} className="text-[0.7rem] font-medium px-2.5 py-1 rounded-full" style={{ background: '#F3F4F6', color: '#4B5563' }}>{t}</span>
+                          ))}
+                        </div>
+                        {/* Divider */}
+                        <div className="mb-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }} />
+                        {/* Duration + View Details */}
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="w-3.5 h-3.5 text-gray-400" />
+                            <span className="text-[0.78rem] font-medium text-gray-500">{p.duration}</span>
+                          </div>
+                          <span className="text-[0.78rem] font-semibold flex items-center gap-1 transition-colors" style={{ color: p.accent }}>
+                            View Details <ArrowRight className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Bottom Feature Strip */}
+                <div className="rounded-xl overflow-hidden" style={{ background: '#F0FDF9' }}>
+                  <div className="p-6">
+                    {/* Feature Row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mb-0">
+                      {[
+                        { I: Trophy, t: 'Build Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.' },
+                        { I: Briefcase, t: 'Industry Relevant', d: 'Projects designed for real-world industry use cases.' },
+                        { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.' },
+                      ].map((f: any, fi: number) => (
+                        <Fragment key={fi}>
+                          <div className="flex items-start gap-3.5 px-5 py-4">
+                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
+                              <f.I className="w-5 h-5 text-emerald-600" />
+                            </div>
+                            <div>
+                              <div className="text-[0.88rem] font-bold text-gray-900 leading-tight">{f.t}</div>
+                              <div className="text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{f.d}</div>
+                            </div>
+                          </div>
+                          {fi < 2 && <div className="hidden sm:block" style={{ borderLeft: '1px solid rgba(16,185,129,0.15)', alignSelf: 'stretch' }} />}
+                        </Fragment>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Stats Bar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-6 sm:gap-16 px-6 py-5" style={{ background: 'rgba(16,185,129,0.06)' }}>
+                    <div className="text-center">
+                      <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>4</div>
+                      <div className="text-[0.78rem] text-gray-500 font-medium">Practical Projects</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>24–36</div>
+                      <div className="text-[0.78rem] text-gray-500 font-medium">Hands-on Learning</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
             {/* Who This Course Is For */}
             <section>
               <div className="bg-white rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-7 sm:p-8 relative overflow-hidden">
