@@ -381,86 +381,125 @@ export default function CoursesPage() {
       {/* END: Stats Banner */}
 
       {/* BEGIN: Featured Courses */}
-      <section className="py-20 sm:py-24 bg-gradient-to-b from-[#faf9ff] to-white" data-purpose="featured-courses">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <section className="py-16 sm:py-20" style={{ backgroundColor: "#F8F9FE" }} data-purpose="featured-courses">
+        <div className="max-w-[1280px] mx-auto px-6">
           {/* Section Header — Centered */}
-          <div className="text-center mb-14">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-widest bg-amber-50 text-amber-600 border border-amber-100 mb-5">
+          <div className="text-center mb-12 sm:mb-16">
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5" style={{ backgroundColor: "#EDE9FE", color: "#6D28D9" }}>
               🔥 TOP PICKS
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-4" style={{ letterSpacing: "-0.02em" }}>Featured Courses</h2>
-            <p className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            <h2 className="text-3xl sm:text-[3rem] font-extrabold mb-4" style={{ color: "#1E1B4B", letterSpacing: "-0.02em" }}>Featured Courses</h2>
+            <p className="text-base sm:text-lg max-w-[650px] mx-auto leading-relaxed" style={{ color: "#64748B" }}>
               Hand-picked courses from industry leaders to accelerate your career growth.
             </p>
             <div className="flex justify-center mt-6">
-              <div className="w-12 h-[3px] rounded-full" style={{ background: "linear-gradient(90deg, #8B5CF6, #6d5cff)" }} />
+              <div className="w-[60px] h-1 rounded-full" style={{ backgroundColor: "#4F46E5" }} />
             </div>
           </div>
 
           {/* Course Grid — 4 / 2 / 1 */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredCourses.map((course, idx) => {
               const badgeText = idx === 0 ? "BEST SELLER" : idx === 2 ? "TRENDING" : (course.badge || "BEST SELLER").toUpperCase();
+              const accentColors = [
+                { border: "#4F46E5", tagBg: "#EEF2FF", tagText: "#4F46E5" },
+                { border: "#10B981", tagBg: "#ECFDF5", tagText: "#059669" },
+                { border: "#3B82F6", tagBg: "#EFF6FF", tagText: "#2563EB" },
+                { border: "#F97316", tagBg: "#FFF7ED", tagText: "#EA580C" },
+              ];
+              const accent = accentColors[idx % accentColors.length];
               return (
                 <a
                   key={course.slug}
                   href={`/courses/${course.slug}`}
-                  className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-slate-100/80 hover:border-purple-200 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(109,92,255,0.10)] hover:-translate-y-1"
+                  className="group flex flex-col rounded-2xl overflow-hidden bg-white transition-all duration-200 hover:-translate-y-1"
+                  style={{
+                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+                    borderBottom: `3px solid ${accent.border}`,
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 25px -5px rgba(79, 70, 229, 0.15)`; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.05)"; }}
                 >
                   {/* Image Area */}
-                  <div className="relative h-[180px] sm:h-[200px] overflow-hidden">
+                  <div className="relative h-[200px] overflow-hidden">
                     <img
                       alt={course.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
                       src={course.image}
                     />
+                    {/* Gradient overlay at bottom */}
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent 60%)" }} />
+                    
                     {/* Status Badge — top-left */}
                     <span
-                      className={`absolute top-3 left-3 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-lg shadow-sm ${
-                        badgeText === "BEST SELLER"
-                          ? "bg-orange-500 text-white"
-                          : badgeText === "TRENDING"
-                          ? "bg-emerald-500 text-white"
-                          : "bg-purple-500 text-white"
-                      }`}
+                      className="absolute top-3 left-3 text-[11px] font-bold uppercase px-3 py-1.5 rounded-md shadow-sm z-10"
+                      style={{
+                        backgroundColor: badgeText === "BEST SELLER" ? "#F97316" : badgeText === "TRENDING" ? "#10B981" : "#4F46E5",
+                        color: "#fff",
+                        letterSpacing: "0.5px",
+                      }}
                     >
                       {badgeText}
                     </span>
+
+                    {/* Duration badge — bottom-right */}
+                    <span className="absolute bottom-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-md z-10" style={{ backgroundColor: "rgba(0,0,0,0.7)", color: "#fff" }}>
+                      {course.duration}
+                    </span>
+
+                    {/* Bookmark — top-right */}
+                    <div className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center z-10" style={{ backgroundColor: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}>
+                      <svg className="w-4 h-4" style={{ color: "#475569" }} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+                    </div>
                   </div>
 
                   {/* Card Body */}
-                  <div className="flex flex-col flex-grow p-4 sm:p-5">
+                  <div className="flex flex-col flex-grow" style={{ padding: "28px 20px 24px" }}>
                     {/* Rating + Price Row */}
-                    <div className="flex items-center justify-between mb-2.5">
-                      <span className="flex items-center gap-1 text-amber-500 text-sm font-bold">
-                        <svg className="w-4 h-4 fill-amber-400 stroke-amber-400" viewBox="0 0 24 24" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
-                        {course.rating}
-                      </span>
-                      <span className="text-[#6d5cff] font-extrabold text-lg leading-none">{course.price}</span>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-1.5">
+                        <svg className="w-4 h-4" style={{ color: "#FBBF24", fill: "#FBBF24" }} viewBox="0 0 24 24" strokeWidth="0"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
+                        <span className="text-sm font-bold" style={{ color: "#1E293B" }}>{course.rating}</span>
+                        <span className="text-[13px] font-medium" style={{ color: "#64748B" }}>(2.4K)</span>
+                      </div>
+                      <span className="text-xl font-extrabold" style={{ color: "#4F46E5" }}>{course.price}</span>
                     </div>
 
                     {/* Course Title */}
-                    <h4 className="font-bold text-slate-900 text-[15px] sm:text-base leading-snug line-clamp-2 min-h-[2.75rem] mb-3">
+                    <h4 className="font-bold text-[17px] leading-snug line-clamp-2 mb-2" style={{ color: "#0F172A", minHeight: "2.6rem" }}>
                       {course.title}
                     </h4>
 
+                    {/* Description */}
+                    <p className="text-sm leading-relaxed line-clamp-2 mb-4" style={{ color: "#64748B" }}>
+                      {course.description}
+                    </p>
+
                     {/* Tech Tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-5">
                       {course.techStack.slice(0, 2).map((t) => (
                         <span
                           key={t.name}
-                          className="text-[10px] sm:text-[11px] font-medium px-2.5 py-[3px] rounded-full"
-                          style={{ backgroundColor: "#f0edff", color: "#6d5cff" }}
+                          className="text-xs font-semibold px-2.5 py-1 rounded-md"
+                          style={{ backgroundColor: accent.tagBg, color: accent.tagText }}
                         >
                           {t.name}
                         </span>
                       ))}
                     </div>
 
-                    {/* Enroll Button — pushed to bottom */}
+                    {/* Enroll Button */}
                     <div className="mt-auto">
-                      <span className="block w-full text-center py-2.5 rounded-xl border-2 border-[#6d5cff] text-[#6d5cff] font-semibold text-sm group-hover:bg-[#6d5cff] group-hover:text-white transition-all duration-300">
+                      <span
+                        className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-[10px] text-sm font-semibold transition-all duration-200"
+                        style={{
+                          border: `1.5px solid ${accent.border}`,
+                          color: accent.border,
+                          height: "44px",
+                        }}
+                      >
                         Enroll Now
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
                       </span>
                     </div>
                   </div>
