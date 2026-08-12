@@ -937,18 +937,18 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* Tech Stack */}
-            <section>
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgba(0,0,0,0.05)] p-8 sm:p-10">
-                <div className="flex items-center gap-3.5 mb-7">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-                    <Code2 className="w-5.5 h-5.5 text-emerald-600" />
+            <section className="-mx-5 sm:mx-0">
+              <div className="bg-white sm:rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgba(0,0,0,0.05)] p-5 sm:p-10">
+                <div className="flex items-center gap-2.5 sm:gap-3.5 mb-4 sm:mb-7">
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                    <Code2 className="w-4 h-4 sm:w-5.5 sm:h-5.5 text-emerald-600" />
                   </div>
                   <div>
-                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Tech Stack You Will Master</h2>
-                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                    <h2 className="text-[1.05rem] sm:text-[1.4rem] font-bold text-gray-900 leading-tight">Tech Stack You Will Master</h2>
+                    <div className="w-8 h-[2.5px] sm:w-10 sm:h-[3px] rounded-full bg-emerald-500 mt-1 sm:mt-1.5" />
                   </div>
                 </div>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-1.5 sm:gap-3">
                   {course.techStack.filter((t: any) => t.name !== "Midjourney").map((tech: any, i: number) => {
                     const slugMap: Record<string, string> = {
                       "Laravel": "laravel", "React": "react", "Next.js": "nextdotjs",
@@ -964,11 +964,11 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     const slug = slugMap[tech.name] || tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
                     const iconUrl = `https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/${slug}.svg`;
                     return (
-                      <div key={i} className="inline-flex items-center gap-2.5 rounded-full pl-1.5 pr-4 py-1.5 transition-all duration-200 border hover:shadow-[0_2px_8px_rgba(0,0,0,0.1)]" style={{ background: tech.color + "10", borderColor: tech.color + "30" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "20" }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "10" }}>
-                        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: tech.color + "20" }}>
-                          <div className="w-4 h-4" style={{ backgroundColor: tech.color, WebkitMaskImage: `url(${iconUrl})`, maskImage: `url(${iconUrl})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
+                      <div key={i} className="inline-flex items-center gap-1.5 sm:gap-2.5 rounded-full pl-1 sm:pl-1.5 pr-2.5 sm:pr-4 py-1 sm:py-1.5 transition-all duration-200 border hover:shadow-[0_2px_8px_rgba(0,0,0,0.1)]" style={{ background: tech.color + "10", borderColor: tech.color + "30" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "20" }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "10" }}>
+                        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: tech.color + "20" }}>
+                          <div className="w-3 h-3 sm:w-4 sm:h-4" style={{ backgroundColor: tech.color, WebkitMaskImage: `url(${iconUrl})`, maskImage: `url(${iconUrl})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
                         </div>
-                        <span className="text-[0.875rem] font-semibold" style={{ color: tech.color }}>{tech.name}</span>
+                        <span className="text-[0.72rem] sm:text-[0.875rem] font-semibold" style={{ color: tech.color }}>{tech.name}</span>
                       </div>
                     );
                   })}
