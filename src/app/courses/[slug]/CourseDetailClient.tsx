@@ -1072,41 +1072,32 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   ))}
                 </div>
 
-                {/* Bottom Feature Strip */}
-                <div className="rounded-xl overflow-hidden" style={{ background: '#F0FDF9' }}>
-                  <div className="p-6">
-                    {/* Feature Row */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 mb-0">
-                      {[
-                        { I: Trophy, t: 'Build Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.' },
-                        { I: Briefcase, t: 'Industry Relevant', d: 'Projects designed for real-world industry use cases.' },
-                        { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.' },
-                      ].map((f: any, fi: number) => (
-                        <Fragment key={fi}>
-                          <div className="flex items-start gap-3.5 px-5 py-4">
-                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0" style={{ boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>
-                              <f.I className="w-5 h-5 text-emerald-600" />
-                            </div>
-                            <div>
-                              <div className="text-[0.88rem] font-bold text-gray-900 leading-tight">{f.t}</div>
-                              <div className="text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{f.d}</div>
-                            </div>
-                          </div>
-                          {fi < 2 && <div className="hidden sm:block" style={{ borderLeft: '1px solid rgba(16,185,129,0.15)', alignSelf: 'stretch' }} />}
-                        </Fragment>
-                      ))}
+                {/* Bottom Feature Cards + Stats */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                  {[
+                    { I: Trophy, t: 'Build Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.', color: '#10B981', bg: '#ECFDF5', border: 'rgba(16,185,129,0.2)' },
+                    { I: Briefcase, t: 'Industry Relevant', d: 'Projects designed for real-world industry use cases.', color: '#3B82F6', bg: '#EFF6FF', border: 'rgba(59,130,246,0.2)' },
+                    { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.', color: '#8B5CF6', bg: '#F5F3FF', border: 'rgba(139,92,246,0.2)' },
+                  ].map((f: any, fi: number) => (
+                    <div key={fi} className="rounded-xl p-5 transition-all duration-200 hover:shadow-md" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg }}>
+                        <f.I className="w-5 h-5" style={{ color: f.color }} />
+                      </div>
+                      <div className="text-[0.92rem] font-bold text-gray-900 leading-tight mb-1">{f.t}</div>
+                      <div className="text-[0.8rem] text-gray-500 leading-relaxed">{f.d}</div>
                     </div>
+                  ))}
+                </div>
+
+                {/* Stats Bar */}
+                <div className="rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-center gap-6 sm:gap-16 px-6 py-5" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 50%, #EFF6FF 100%)', border: '1px solid rgba(16,185,129,0.1)' }}>
+                  <div className="text-center">
+                    <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>4</div>
+                    <div className="text-[0.78rem] text-gray-500 font-medium">Practical Projects</div>
                   </div>
-                  {/* Stats Bar */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-6 sm:gap-16 px-6 py-5" style={{ background: 'rgba(16,185,129,0.06)' }}>
-                    <div className="text-center">
-                      <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>4</div>
-                      <div className="text-[0.78rem] text-gray-500 font-medium">Practical Projects</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>24–36</div>
-                      <div className="text-[0.78rem] text-gray-500 font-medium">Hands-on Learning</div>
-                    </div>
+                  <div className="text-center">
+                    <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>24–36</div>
+                    <div className="text-[0.78rem] text-gray-500 font-medium">Hands-on Learning</div>
                   </div>
                 </div>
 
