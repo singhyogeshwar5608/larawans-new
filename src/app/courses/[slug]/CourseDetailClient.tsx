@@ -683,8 +683,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
             </section>
             {/* ===== LEARNING JOURNEY / COURSE ROADMAP ===== */}
-            <section>
-              <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+            <section className="-mx-5 sm:mx-0">
+              <div className="sm:rounded-2xl px-6 py-8 sm:px-10 sm:py-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
 
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
