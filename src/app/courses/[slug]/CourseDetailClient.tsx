@@ -1385,12 +1385,12 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
 
               {/* Left — Career Roles */}
-              <div className="rounded-xl p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
-                <div className="flex items-center gap-3 mb-1">
-                  <BarChart3 className="w-5 h-5 text-emerald-600" />
-                  <h3 className="text-[1.05rem] font-bold text-gray-900">Top Career Roles You Can Get</h3>
+              <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+                  <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+                  <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">Top Career Roles You Can Get</h3>
                 </div>
-                <p className="text-[0.8rem] text-gray-500 mb-5 ml-8">Explore the most in-demand roles in AI Prompt Engineering.</p>
+                <p className="text-[0.72rem] sm:text-[0.8rem] text-gray-500 mb-4 sm:mb-5 ml-[22px] sm:ml-8">Explore the most in-demand roles in AI Prompt Engineering.</p>
 
                 <div className="space-y-0">
                   {[
@@ -1401,17 +1401,17 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     { role: 'AI Product Manager', salary: '₹15 – ₹30 LPA' },
                   ].map((r: any, ri: number) => (
                     <Fragment key={ri}>
-                      <div className="flex items-center justify-between py-3.5" style={{ borderBottom: ri < 4 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: '#ECFDF5' }}>
-                            <Code2 className="w-4 h-4 text-emerald-600" />
+                      <div className="flex items-center justify-between py-2.5 sm:py-3.5 gap-2" style={{ borderBottom: ri < 4 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+                        <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+                          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg flex items-center justify-center shrink-0" style={{ background: '#ECFDF5' }}>
+                            <Code2 className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600" />
                           </div>
-                          <span className="text-[0.88rem] font-semibold text-gray-900 truncate">{r.role}</span>
+                          <span className="text-[0.78rem] sm:text-[0.88rem] font-semibold text-gray-900 truncate">{r.role}</span>
                         </div>
-                        <div className="flex items-center gap-3 shrink-0 ml-4">
-                          <span className="text-[0.82rem] font-medium text-gray-600">{r.salary}</span>
-                          <span className="text-[0.68rem] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1" style={{ background: '#ECFDF5', color: '#059669' }}>
-                            <TrendingUp className="w-3 h-3" /> High Demand
+                        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+                          <span className="text-[0.72rem] sm:text-[0.82rem] font-medium text-gray-600 whitespace-nowrap">{r.salary}</span>
+                          <span className="text-[0.58rem] sm:text-[0.68rem] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full flex items-center gap-0.5 sm:gap-1" style={{ background: '#ECFDF5', color: '#059669' }}>
+                            <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> <span className="hidden sm:inline">High Demand</span><span className="sm:hidden">Hot</span>
                           </span>
                         </div>
                       </div>
@@ -1425,14 +1425,14 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
 
               {/* Right — What You'll Achieve */}
-              <div className="rounded-xl p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
-                <div className="flex items-center gap-3 mb-1">
-                  <Trophy className="w-5 h-5 text-emerald-600" />
-                  <h3 className="text-[1.05rem] font-bold text-gray-900">What You'll Achieve</h3>
+              <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+                <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+                  <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+                  <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">What You'll Achieve</h3>
                 </div>
-                <p className="text-[0.8rem] text-gray-500 mb-5 ml-8">Skills and benefits you'll gain from this course.</p>
+                <p className="text-[0.72rem] sm:text-[0.8rem] text-gray-500 mb-4 sm:mb-5 ml-[22px] sm:ml-8">Skills and benefits you'll gain from this course.</p>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-3 mb-5">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-2.5 sm:gap-y-3 mb-5">
                   {[
                     'Master AI prompting techniques and best practices',
                     'Build real-world projects for your portfolio',
@@ -1441,17 +1441,17 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     'Increase your career opportunities and earning potential',
                     'Join a community of AI professionals and learners',
                   ].map((item: string, ii: number) => (
-                    <div key={ii} className="flex items-start gap-2.5">
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#10B981' }}>
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <div key={ii} className="flex items-start gap-2 sm:gap-2.5">
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#10B981' }}>
+                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
-                      <span className="text-[0.82rem] text-gray-700 leading-snug">{item}</span>
+                      <span className="text-[0.73rem] sm:text-[0.82rem] text-gray-700 leading-snug">{item}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* CTA Box */}
-                <div className="rounded-xl p-5" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%)', border: '1px solid rgba(16,185,129,0.15)' }}>
+                {/* CTA Box — hidden on mobile */}
+                <div className="rounded-xl p-5 hidden sm:block" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%)', border: '1px solid rgba(16,185,129,0.15)' }}>
                   <div className="flex items-start gap-3.5">
                     <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: '#10B981' }}>
                       <Award className="w-5 h-5 text-white" />
