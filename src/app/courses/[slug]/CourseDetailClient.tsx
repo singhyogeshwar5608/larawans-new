@@ -977,8 +977,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
                         {/* ===== PROJECTS YOU'LL BUILD ===== */}
-            <section>
-              <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+            <section className="-mx-5 sm:mx-0">
+              <div className="sm:rounded-2xl p-5 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
 
                 {/* Header */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-8">
@@ -987,9 +987,9 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
                         <Briefcase className="w-5 h-5 text-emerald-600" />
                       </div>
-                      <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Projects You'll Build</h2>
+                      <h2 className="text-[1.1rem] sm:text-[1.35rem] font-bold text-gray-900 leading-tight">Projects You'll Build</h2>
                     </div>
-                    <p className="text-[0.85rem] text-gray-500 leading-relaxed ml-14">Apply your learning with real-world projects and build a strong portfolio that showcases your AI Prompt Engineering skills.</p>
+                    <p className="text-[0.78rem] sm:text-[0.85rem] text-gray-500 leading-relaxed ml-14">Apply your learning with real-world projects and build a strong portfolio that showcases your AI Prompt Engineering skills.</p>
                   </div>
                   <span className="text-[0.78rem] font-semibold px-4 py-2 rounded-full shrink-0 flex items-center gap-2" style={{ background: '#EDE9FE', color: '#6366F1' }}>
                     <Sparkle className="w-3.5 h-3.5" />
@@ -998,9 +998,9 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Project Cards Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+                <div className="flex gap-3 mb-6 sm:mb-8 overflow-x-auto no-scrollbar snap-x snap-mandatory sm:grid sm:grid-cols-2 sm:overflow-visible xl:grid-cols-4 sm:gap-5">
                   {projectsData.map((p, i) => (
-                    <div key={i} className="rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg"
+                    <div key={i} className="rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg shrink-0 w-[85%] sm:w-full snap-start"
                       style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
                     >
                       {/* Visual Preview Area */}
@@ -1068,18 +1068,18 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Bottom Feature Cards + Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-5">
+                <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-4 mb-5">
                   {[
                     { I: Trophy, t: 'Build Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.', color: '#10B981', bg: '#ECFDF5', border: 'rgba(16,185,129,0.2)' },
                     { I: Briefcase, t: 'Industry Relevant', d: 'Projects designed for real-world industry use cases.', color: '#3B82F6', bg: '#EFF6FF', border: 'rgba(59,130,246,0.2)' },
                     { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.', color: '#8B5CF6', bg: '#F5F3FF', border: 'rgba(139,92,246,0.2)' },
                   ].map((f: any, fi: number) => (
-                    <div key={fi} className="rounded-xl p-5 transition-all duration-200 hover:shadow-md" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
-                      <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-3" style={{ background: f.bg }}>
-                        <f.I className="w-5 h-5" style={{ color: f.color }} />
+                    <div key={fi} className="rounded-xl p-2.5 sm:p-5 transition-all duration-200 hover:shadow-md text-center" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                      <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center mb-1.5 sm:mb-3 mx-auto" style={{ background: f.bg }}>
+                        <f.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: f.color }} />
                       </div>
-                      <div className="text-[0.92rem] font-bold text-gray-900 leading-tight mb-1">{f.t}</div>
-                      <div className="text-[0.8rem] text-gray-500 leading-relaxed">{f.d}</div>
+                      <div className="text-[0.6rem] sm:text-[0.92rem] font-bold text-gray-900 leading-tight mb-0.5 sm:mb-1">{f.t}</div>
+                      <div className="text-[0.5rem] sm:text-[0.8rem] text-gray-400 sm:text-gray-500 leading-relaxed hidden sm:block">{f.d}</div>
                     </div>
                   ))}
                 </div>
