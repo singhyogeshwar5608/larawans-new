@@ -835,8 +835,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* What You Will Learn */}
-            <section>
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
+            <section className="-mx-5 sm:mx-0">
+              <div className="bg-white sm:rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] px-5 py-6 sm:p-8 sm:px-10">
                 {/* Section Header */}
                 <div className="flex items-center gap-3.5 mb-7">
                   <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
@@ -848,13 +848,13 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   </div>
                 </div>
                 {/* Learning Outcomes Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
                   {course.topics.map((tp: string, i: number) => (
-                    <div key={i} className="flex items-center gap-3.5 bg-white rounded-lg px-4 py-2.5 transition-all duration-200" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
-                      <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
-                        <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    <div key={i} className="flex items-center gap-2.5 sm:gap-3.5 bg-white rounded-lg px-2.5 py-2 sm:px-4 sm:py-2.5 transition-all duration-200" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                       </div>
-                      <span className="text-[0.925rem] text-slate-700 font-medium leading-[1.25]">{tp}</span>
+                      <span className="text-[0.8rem] sm:text-[0.925rem] text-slate-700 font-medium leading-[1.25]">{tp}</span>
                     </div>
                   ))}
                 </div>
