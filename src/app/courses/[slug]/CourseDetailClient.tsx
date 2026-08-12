@@ -571,8 +571,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-10">
             {/* Course Description */}
-            <section>
-              <div className="rounded-2xl p-8 sm:p-10 relative overflow-hidden bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)', fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+            <section className="-mx-5 sm:mx-0">
+              <div className="sm:rounded-2xl p-8 sm:p-10 relative overflow-hidden bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)', fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
 
                 {/* Decorative SVGs */}
                 <svg className="absolute top-0 right-0 w-64 h-64 pointer-events-none opacity-[0.04]" viewBox="0 0 200 200"><circle cx="150" cy="50" r="120" fill="#10B981"/><circle cx="180" cy="150" r="80" fill="#8B5CF6"/></svg>
