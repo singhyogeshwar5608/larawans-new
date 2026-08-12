@@ -807,8 +807,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Bottom Benefit Strip */}
-                <div className="rounded-xl overflow-x-auto lg:overflow-visible no-scrollbar" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
-                  <div className="flex lg:flex-row" style={{ minWidth: 'max-content' }}>
+                <div className="rounded-xl" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+                  <div className="grid grid-cols-4 lg:flex">
                     {[
                       { I: Footprints, t: 'Step-by-Step Learning', d: 'Follow a structured path designed for effective learning.', color: '#10B981', bg: '#ECFDF5' },
                       { I: Handshake, t: 'Practical & Hands-on', d: 'Work on real projects and build practical skills.', color: '#3B82F6', bg: '#EFF6FF' },
@@ -816,13 +816,13 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       { I: Rocket, t: 'Industry Ready', d: 'Build in-demand skills and advance your career.', color: '#F59E0B', bg: '#FFF7ED' },
                     ].map((b: any, bi: number) => (
                       <Fragment key={bi}>
-                        <div className="flex items-center gap-3.5 px-6 py-5 flex-1 shrink-0 w-[200px] lg:w-auto">
-                          <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: b.bg }}>
-                            <b.I className="w-5 h-5" style={{ color: b.color }} />
+                        <div className="flex items-center gap-1.5 sm:gap-3.5 px-2 sm:px-6 py-3 sm:py-5 lg:flex-1 flex-col sm:flex-row items-center sm:items-start">
+                          <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: b.bg }}>
+                            <b.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: b.color }} />
                           </div>
-                          <div>
-                            <div className="text-[0.88rem] font-bold text-gray-900 leading-tight">{b.t}</div>
-                            <div className="text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{b.d}</div>
+                          <div className="text-center sm:text-left">
+                            <div className="text-[0.62rem] sm:text-[0.88rem] font-bold text-gray-900 leading-tight">{b.t}</div>
+                            <div className="hidden sm:block text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{b.d}</div>
                           </div>
                         </div>
                         {bi < 3 && <div className="hidden lg:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', alignSelf: 'stretch' }} />}
