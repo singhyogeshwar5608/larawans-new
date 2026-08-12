@@ -569,24 +569,30 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
       {/* ==================== TABS + CONTENT (FULL WIDTH) ==================== */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* ========== OVERVIEW TAB ========== */}
-        
-          <div className="space-y-10">
+        <div className="space-y-10">
             {/* Course Description */}
             <section>
-              <div className="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] p-8 sm:p-10">
+              <div className="rounded-2xl p-8 sm:p-10 relative overflow-hidden bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)', fontFamily: '"Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+
+                {/* Decorative SVGs */}
+                <svg className="absolute top-0 right-0 w-64 h-64 pointer-events-none opacity-[0.04]" viewBox="0 0 200 200"><circle cx="150" cy="50" r="120" fill="#10B981"/><circle cx="180" cy="150" r="80" fill="#8B5CF6"/></svg>
+                <svg className="absolute bottom-0 left-0 w-48 h-48 pointer-events-none opacity-[0.03]" viewBox="0 0 200 200"><circle cx="50" cy="150" r="100" fill="#3B82F6"/></svg>
+                <svg className="absolute top-8 right-8 pointer-events-none opacity-[0.06]" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <svg className="absolute bottom-6 right-12 pointer-events-none opacity-[0.05]" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+
                 {/* Section Header */}
-                <div className="flex items-center gap-3.5 mb-7">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+                <div className="flex items-center gap-3.5 mb-7 relative z-10">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)' }}>
                     <BookOpen className="w-5.5 h-5.5 text-emerald-600" />
                   </div>
                   <div>
-                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">Course Description</h2>
-                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight" style={{ letterSpacing: '-0.02em' }}>Course Description</h2>
+                    <div className="w-10 h-[3px] rounded-full mt-1.5" style={{ background: 'linear-gradient(90deg, #10B981, #059669)' }} />
                   </div>
                 </div>
+
                 {/* Description Body */}
-                <div className="space-y-5 leading-[1.75] text-[0.975rem] text-slate-600">
+                <div className="space-y-5 leading-[1.8] text-[0.975rem] text-slate-600 relative z-10">
                   <p>{course.longDescription}</p>
                   <p>{course.aboutText}</p>
                 </div>
