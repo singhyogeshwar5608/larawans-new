@@ -1,0 +1,84 @@
+            {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
+            <section>
+              <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#F0FDF9', border: '1px solid rgba(16,185,129,0.08)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+
+                {/* Compact Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                      <BookOpen className="w-4 h-4 text-emerald-600" />
+                    </div>
+                    <div>
+                      <h2 className="text-[1.15rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
+                      <div className="w-8 h-[2.5px] rounded-full bg-emerald-500 mt-1" />
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {[
+                      { v: curriculumWithLectures.length + ' Modules', bg: '#ECFDF5', color: '#059669' },
+                      { v: totalLectures + ' Lectures', bg: '#F5F3FF', color: '#7C3AED' },
+                      { v: totalDuration, bg: '#FFF7ED', color: '#D97706' },
+                    ].map((s: any, si: number) => (
+                      <span key={si} className="text-[0.72rem] font-semibold px-3 py-1.5 rounded-full" style={{ background: s.bg, color: s.color }}>{s.v}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Compact Module Rows */}
+                <div className="space-y-[10px]">
+                  {curriculumWithLectures.map((mod: any, idx: number) => {
+                    const isExpanded = !!expandedOverviewMods[idx];
+                    const colors = ['#10B981','#8B5CF6','#3B82F6','#F59E0B','#EC4899','#14B8A6','#7C3AED','#D97706','#06B6D4'];
+                    const numColor = colors[idx % colors.length];
+                    return (
+                      <div key={idx} className="rounded-lg overflow-hidden transition-all duration-200 bg-white"
+                        style={{
+                          border: isExpanded ? '1px solid rgba(16,185,129,0.3)' : '1px solid rgba(0,0,0,0.05)',
+                          boxShadow: isExpanded ? '0 2px 8px rgba(16,185,129,0.06)' : 'none',
+                        }}
+                      >
+                        <button
+                          onClick={() => setExpandedOverviewMods((prev: any) => { const next = prev[idx] ? {} : { [idx]: true }; return next; })}
+                          className="w-full flex items-center gap-3 px-4 py-3 text-left"
+                        >
+                          {/* Number Badge */}
+                          <div className="w-8 h-8 rounded-md flex items-center justify-center shrink-0 text-[0.75rem] font-bold text-white"
+                            style={{ background: numColor }}
+                          >
+                            {String(idx + 1).padStart(2, '0')}
+                          </div>
+                          {/* Title + Subtitle */}
+                          <div className="flex-1 min-w-0">
+                            <div className="text-[0.88rem] font-semibold text-gray-900 leading-tight truncate">{mod.title}</div>
+                            {mod.topics[1] && <div className="text-[0.73rem] text-gray-400 mt-0.5 truncate">{mod.topics[1]}</div>}
+                          </div>
+                          {/* Right Meta */}
+                          <div className="flex items-center gap-2.5 shrink-0">
+                            <span className="text-[0.68rem] font-semibold px-2.5 py-1 rounded-full" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+                              {mod.lectures} Lectures
+                            </span>
+                            <span className="text-[0.75rem] text-gray-400 font-medium hidden sm:block">{mod.duration}</span>
+                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ color: isExpanded ? '#059669' : '#9CA3AF' }} />
+                          </div>
+                        </button>
+
+                        {/* Expanded Topics — compact */}
+                        {isExpanded && (
+                          <div className="px-4 pb-3 pt-0">
+                            <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                              {(mod.topics || []).filter(Boolean).map((topic: string, ti: number) => (
+                                <div key={ti} className="flex items-center gap-2.5 py-1.5">
+                                  <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+                                  <span className="text-[0.8rem] text-gray-600 leading-snug">{topic}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </section>
+
