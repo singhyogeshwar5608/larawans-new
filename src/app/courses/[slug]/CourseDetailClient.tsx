@@ -1098,8 +1098,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
             </section>
             {/* Who This Course Is For */}
-            <section>
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-7 sm:p-8 relative overflow-hidden">
+            <section className="-mx-5 sm:mx-0">
+              <div className="bg-white sm:rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-5 sm:p-8 relative overflow-hidden">
                 {/* Decorative dots top-right */}
                 <div className="absolute top-3 right-3 w-20 h-20 opacity-[0.06] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #6b7280 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
                 <div className="relative">
@@ -1108,7 +1108,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
                       <Users className="w-5 h-5 text-emerald-600" strokeWidth={2.5} />
                     </div>
-                    <h2 className="text-[1.375rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
+                    <h2 className="text-[1.15rem] sm:text-[1.375rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
                   </div>
                   <div className="w-12 h-1 rounded-full bg-emerald-500 mb-6 ml-[52px]" />
 
@@ -1127,14 +1127,14 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       const c = cfg[i % cfg.length];
                       const Ic = c.I;
                       return (
-                        <div key={i} className="flex items-center gap-4 relative z-10">
+                        <div key={i} className="flex items-center gap-3 sm:gap-4 relative z-10">
                           {/* Number Badge - rounded rectangle */}
-                          <div className="w-9 h-7 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-[13px] shrink-0">{String(i + 1).padStart(2, "0")}</div>
+                          <div className="w-7 h-6 sm:w-9 sm:h-7 rounded-md sm:rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-[11px] sm:text-[13px] shrink-0">{String(i + 1).padStart(2, "0")}</div>
                           {/* Text */}
-                          <p className="text-[0.9375rem] text-gray-700 leading-relaxed flex-1 font-medium">{item}</p>
+                          <p className="text-[0.8125rem] sm:text-[0.9375rem] text-gray-700 leading-relaxed flex-1 font-medium">{item}</p>
                           {/* Right Icon */}
-                          <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ background: c.bg }}>
-                            <Ic className="w-6 h-6" style={{ color: c.color }} fill={c.color} />
+                          <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0" style={{ background: c.bg }}>
+                            <Ic className="w-4 h-4 sm:w-6 sm:h-6" style={{ color: c.color }} fill={c.color} />
                           </div>
                         </div>
                       );
