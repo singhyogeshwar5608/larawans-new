@@ -88,6 +88,59 @@ const JOURNEY_STEPS = [
   },
 ];
 
+const LEARNING_PATHS = [
+  {
+    title: 'Full Stack Development',
+    desc: 'Master both frontend and backend technologies to build complete web applications from scratch.',
+    badge: '★ BEST SELLER',
+    theme: '#7C3AED',
+    iconBg: '#F3E8FF',
+    courses: 12,
+    months: 6,
+    techs: ['React', 'Node.js', 'MongoDB', 'TypeScript'],
+  },
+  {
+    title: 'AI & Data Science',
+    desc: 'Learn machine learning, data analysis, and AI to solve complex real-world problems.',
+    badge: '📈 TRENDING',
+    theme: '#10B981',
+    iconBg: '#D1FAE5',
+    courses: 10,
+    months: 8,
+    techs: ['Python', 'TensorFlow', 'Pandas', 'SQL'],
+  },
+  {
+    title: 'Digital Marketing',
+    desc: 'Build expertise in SEO, social media, and content marketing to grow brands online.',
+    badge: '🔥 POPULAR',
+    theme: '#F97316',
+    iconBg: '#FFEDD5',
+    courses: 8,
+    months: 4,
+    techs: ['SEO', 'Analytics', 'Ads', 'Content'],
+  },
+  {
+    title: 'UI/UX Design',
+    desc: 'Create beautiful, user-centered designs using modern tools and design thinking principles.',
+    badge: '📊 IN DEMAND',
+    theme: '#3B82F6',
+    iconBg: '#DBEAFE',
+    courses: 9,
+    months: 5,
+    techs: ['Figma', 'Prototype', 'Wireframe', 'Research'],
+  },
+];
+
+function PathIcon({ theme }: { theme: string }) {
+  const icons: Record<string, React.ReactNode> = {
+    '#7C3AED': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+    '#10B981': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>,
+    '#F97316': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>,
+    '#3B82F6': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>,
+  };
+  return <>{icons[theme] || icons['#7C3AED']}</>;
+}
+
 function JourneyStepIcon({ color, size = 36 }: { color: string; size?: number }) {
   const s = size;
   const sw = 1.8;
@@ -1130,6 +1183,119 @@ export default function CoursesPage() {
         </div>
       </section>
       {/* END: Your Learning Journey */}
+
+      {/* BEGIN: Popular Learning Paths */}
+      <section style={{ backgroundColor: '#F8F9FC', padding: '64px 0' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <div style={{ display: 'inline-block', backgroundColor: '#EDE9FE', color: '#7C3AED', fontSize: 12, fontWeight: 700, padding: '6px 16px', borderRadius: 50, marginBottom: 16, letterSpacing: '0.5px' }}>
+              🔥 POPULAR PATHS
+            </div>
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
+              <span style={{ color: '#111827' }}>Popular </span>
+              <span style={{ color: '#7C3AED' }}>Learning Paths</span>
+            </h2>
+            <p style={{ color: '#6B7280', fontSize: 'clamp(14px, 1.6vw, 18px)', lineHeight: 1.6, marginTop: 14, maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
+              Structured learning paths designed by experts to help you master in-demand skills and build a successful career.
+            </p>
+            <div style={{ width: 60, height: 4, borderRadius: 2, backgroundColor: '#7C3AED', margin: '20px auto 0' }} />
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 24 }}>
+            {LEARNING_PATHS.map((path) => (
+              <div key={path.title} style={{
+                backgroundColor: '#FFFFFF', borderRadius: 20,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                padding: 28, position: 'relative',
+                transition: 'transform 0.3s, box-shadow 0.3s',
+              }}>
+                {/* Badge top-right */}
+                <div style={{ position: 'absolute', top: 20, right: 20, fontSize: 11, fontWeight: 700, color: path.theme, textTransform: 'uppercase' as const }}>
+                  {path.badge}
+                </div>
+
+                {/* Icon */}
+                <div style={{
+                  width: 60, height: 60, borderRadius: 16,
+                  backgroundColor: path.iconBg,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: 20,
+                }}>
+                  <PathIcon theme={path.theme} />
+                </div>
+
+                {/* Title */}
+                <h4 style={{ fontSize: 19, fontWeight: 700, color: '#111827', margin: '0 0 10px 0', lineHeight: 1.3 }}>{path.title}</h4>
+
+                {/* Description */}
+                <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.6, margin: 0 }}>{path.desc}</p>
+
+                {/* Stats Row */}
+                <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{path.courses}</div>
+                      <div style={{ fontSize: 12, color: '#6B7280' }}>Courses</div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{path.months}</div>
+                      <div style={{ fontSize: 12, color: '#6B7280' }}>Months</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Tech Tags */}
+                <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
+                  {path.techs.map((tech) => (
+                    <span key={tech} style={{
+                      fontSize: 11, fontWeight: 600, color: path.theme,
+                      backgroundColor: path.iconBg,
+                      padding: '4px 10px', borderRadius: 8,
+                    }}>{tech}</span>
+                  ))}
+                </div>
+
+                {/* Explore Button */}
+                <button style={{
+                  width: '100%', marginTop: 20, padding: '11px 0',
+                  border: `2px solid ${path.theme}`, borderRadius: 12,
+                  backgroundColor: 'transparent', color: path.theme,
+                  fontSize: 14, fontWeight: 600, cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                }}>
+                  Explore Path
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </button>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <button style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8,
+              backgroundColor: '#FFFFFF', border: '2px solid #C4B5FD',
+              borderRadius: 50, padding: '13px 28px',
+              color: '#7C3AED', fontSize: 15, fontWeight: 600, cursor: 'pointer',
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+              View All Learning Paths
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+      {/* END: Popular Learning Paths */}
 
       {/* BEGIN: Skills You'll Master */}
       <section className="py-24 bg-surface-variant text-center" data-purpose="skills">
