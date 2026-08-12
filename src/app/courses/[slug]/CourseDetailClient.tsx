@@ -1068,18 +1068,17 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 </div>
 
                 {/* Bottom Feature Cards + Stats */}
-                <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 sm:gap-4 mb-5">
+                <div className="grid grid-cols-3 gap-1.5 sm:gap-4 mb-5">
                   {[
-                    { I: Trophy, t: 'Build Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.', color: '#10B981', bg: '#ECFDF5', border: 'rgba(16,185,129,0.2)' },
-                    { I: Briefcase, t: 'Industry Relevant', d: 'Projects designed for real-world industry use cases.', color: '#3B82F6', bg: '#EFF6FF', border: 'rgba(59,130,246,0.2)' },
+                    { I: Trophy, t: 'Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.', color: '#10B981', bg: '#ECFDF5', border: 'rgba(16,185,129,0.2)' },
+                    { I: Briefcase, t: 'Industry Ready', d: 'Projects designed for real-world industry use cases.', color: '#3B82F6', bg: '#EFF6FF', border: 'rgba(59,130,246,0.2)' },
                     { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.', color: '#8B5CF6', bg: '#F5F3FF', border: 'rgba(139,92,246,0.2)' },
                   ].map((f: any, fi: number) => (
-                    <div key={fi} className="rounded-xl p-2.5 sm:p-5 transition-all duration-200 hover:shadow-md text-center" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
-                      <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center mb-1.5 sm:mb-3 mx-auto" style={{ background: f.bg }}>
-                        <f.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: f.color }} />
+                    <div key={fi} className="rounded-lg sm:rounded-xl p-2 sm:p-5 transition-all duration-200 hover:shadow-md text-center" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+                      <div className="w-6 h-6 sm:w-11 sm:h-11 rounded-md sm:rounded-xl flex items-center justify-center mb-1 sm:mb-3 mx-auto" style={{ background: f.bg }}>
+                        <f.I className="w-3 h-3 sm:w-5 sm:h-5" style={{ color: f.color }} />
                       </div>
-                      <div className="text-[0.6rem] sm:text-[0.92rem] font-bold text-gray-900 leading-tight mb-0.5 sm:mb-1">{f.t}</div>
-                      <div className="text-[0.5rem] sm:text-[0.8rem] text-gray-400 sm:text-gray-500 leading-relaxed hidden sm:block">{f.d}</div>
+                      <div className="text-[0.52rem] sm:text-[0.92rem] font-bold text-gray-900 leading-tight truncate">{f.t}</div>
                     </div>
                   ))}
                 </div>
