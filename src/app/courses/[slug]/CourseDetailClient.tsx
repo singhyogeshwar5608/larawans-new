@@ -1343,8 +1343,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
         </section>
 
                 {/* ===== CAREER OUTCOMES ===== */}
-        <section>
-          <div className="rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
+        <section className="-mx-5 sm:mx-0">
+          <div className="sm:rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
