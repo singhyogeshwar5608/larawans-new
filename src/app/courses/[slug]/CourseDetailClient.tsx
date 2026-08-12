@@ -405,7 +405,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </div>
 
             {/* RIGHT COLUMN — Illustration */}
-            <div className="w-full lg:w-[480px] shrink-0 flex items-center justify-center">
+            <div className="hidden sm:flex w-full lg:w-[480px] shrink-0 items-center justify-center">
               <div className="relative w-full max-w-[440px]">
                 {/* Floating AI Prompt Card */}
                 <div className="absolute -left-6 top-[30%] z-20 w-[200px] rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl shadow-indigo-100/50 p-4 border border-slate-100">
