@@ -49,6 +49,101 @@ const ALL_COURSES: StitchCourse[] = COURSES_DATA.map((c, i) => ({
   image: COURSE_IMAGES[i % COURSE_IMAGES.length],
 }));
 
+const JOURNEY_STEPS = [
+  {
+    num: 1,
+    title: 'Choose Your Path',
+    desc: 'Browse and select the perfect course aligned with your career goals.',
+    numBg: '#4338CA',
+    iconBg: '#EEF2FF',
+    lineColor: '#4338CA',
+    iconColor: '#4338CA',
+  },
+  {
+    num: 2,
+    title: 'Learn & Practice',
+    desc: 'Study with expert-led videos, hands-on exercises, and real projects.',
+    numBg: '#4338CA',
+    iconBg: '#ECFDF5',
+    lineColor: '#10B981',
+    iconColor: '#10B981',
+  },
+  {
+    num: 3,
+    title: 'Get Certified',
+    desc: 'Complete assessments and earn a recognized certificate of achievement.',
+    numBg: '#4338CA',
+    iconBg: '#FFF7ED',
+    lineColor: '#F97316',
+    iconColor: '#F97316',
+  },
+  {
+    num: 4,
+    title: 'Launch Career',
+    desc: 'Apply your new skills and unlock exciting career opportunities.',
+    numBg: '#4338CA',
+    iconBg: '#EFF6FF',
+    lineColor: '#3B82F6',
+    iconColor: '#3B82F6',
+  },
+];
+
+function JourneyStepIcon({ color, size = 36 }: { color: string; size?: number }) {
+  const s = size;
+  const sw = 1.8;
+  const icons: Record<string, React.ReactNode> = {
+    '#4338CA': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>,
+    '#10B981': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>,
+    '#F97316': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>,
+    '#3B82F6': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
+  };
+  return <>{icons[color] || icons['#4338CA']}</>;
+}
+
+function StepCard({ step, compact }: { step: typeof JOURNEY_STEPS[0]; compact?: boolean }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      {/* Step number badge */}
+      <div style={{
+        width: compact ? 42 : 52,
+        height: compact ? 42 : 52,
+        borderRadius: '50%',
+        border: '2px dashed #D1D5DB',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        marginBottom: -16, position: 'relative', zIndex: 3,
+      }}>
+        <div style={{
+          width: compact ? 30 : 38, height: compact ? 30 : 38,
+          borderRadius: '50%', backgroundColor: step.numBg,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: compact ? 13 : 16 }}>{step.num}</span>
+        </div>
+      </div>
+      {/* Card */}
+      <div style={{
+        backgroundColor: '#FFFFFF', borderRadius: compact ? 14 : 20,
+        boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+        padding: compact ? '28px 12px 16px' : '36px 20px 24px',
+        width: '100%', textAlign: 'center',
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+      }}>
+        <div style={{
+          width: compact ? 52 : 72, height: compact ? 52 : 72,
+          borderRadius: '50%', backgroundColor: step.iconBg,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: compact ? 10 : 16,
+        }}>
+          <JourneyStepIcon color={step.iconColor} size={compact ? 28 : 36} />
+        </div>
+        <h4 style={{ fontSize: compact ? 14 : 18, fontWeight: 700, color: '#111827', margin: '0 0 6px 0', lineHeight: 1.3 }}>{step.title}</h4>
+        {!compact && <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{step.desc}</p>}
+        <div style={{ width: compact ? 24 : 30, height: 3, borderRadius: 2, backgroundColor: step.lineColor, marginTop: compact ? 10 : 16 }} />
+      </div>
+    </div>
+  );
+}
+
 export default function CoursesPage() {
   // Filters State
   const [searchQuery, setSearchQuery] = useState("");
@@ -1004,152 +1099,32 @@ export default function CoursesPage() {
             </p>
           </div>
 
-          {/* Steps Grid - Horizontal row with connectors */}
-          <div className="no-scrollbar" style={{ display: 'flex', gap: 20, position: 'relative', alignItems: 'start', overflowX: 'auto', paddingBottom: 8 }}>
-            {/* Dashed connector line */}
-            <div className="hidden sm:block" style={{ position: 'absolute', top: 36, left: 'calc(12.5% + 20px)', right: 'calc(12.5% + 20px)', height: 0, borderTop: '2px dashed #D1D5DB', zIndex: 0 }} />
-
-            {[
-              {
-                num: 1,
-                title: 'Choose Your Path',
-                desc: 'Browse and select the perfect course aligned with your career goals.',
-                numBg: '#4338CA',
-                iconBg: '#EEF2FF',
-                iconColor: '#4338CA',
-                lineColor: '#4338CA',
-                icon: (
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
-                  </svg>
-                ),
-              },
-              {
-                num: 2,
-                title: 'Learn & Practice',
-                desc: 'Study with expert-led videos, hands-on exercises, and real projects.',
-                numBg: '#4338CA',
-                iconBg: '#ECFDF5',
-                iconColor: '#10B981',
-                lineColor: '#10B981',
-                icon: (
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                    <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
-                  </svg>
-                ),
-              },
-              {
-                num: 3,
-                title: 'Get Certified',
-                desc: 'Complete assessments and earn a recognized certificate of achievement.',
-                numBg: '#4338CA',
-                iconBg: '#FFF7ED',
-                iconColor: '#F97316',
-                lineColor: '#F97316',
-                icon: (
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <circle cx="12" cy="8" r="6" />
-                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
-                  </svg>
-                ),
-              },
-              {
-                num: 4,
-                title: 'Launch Career',
-                desc: 'Apply your new skills and unlock exciting career opportunities.',
-                numBg: '#4338CA',
-                iconBg: '#EFF6FF',
-                iconColor: '#3B82F6',
-                lineColor: '#3B82F6',
-                icon: (
-                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                  </svg>
-                ),
-              },
-            ].map((step, idx) => (
-              <div key={step.num} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', minWidth: 240, flexShrink: 0 }}>
-                {/* Arrow connector between cards (not after last) - hidden on mobile */ }
+          {/* Desktop: 4-column grid with dashed connectors */}
+          <div className="hidden sm:grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, position: 'relative', alignItems: 'start' }}>
+            <div style={{ position: 'absolute', top: 26, left: '12.5%', right: '12.5%', height: 0, borderTop: '2px dashed #D1D5DB', zIndex: 0 }} />
+            {JOURNEY_STEPS.map((step, idx) => (
+              <div key={step.num} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {idx < 3 && (
-                  <div className="hidden sm:flex" style={{
-                    position: 'absolute',
-                    top: 28,
-                    right: -26,
-                    width: 32,
-                    height: 32,
-                    borderRadius: '50%',
-                    backgroundColor: '#FFFFFF',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 2,
+                  <div style={{
+                    position: 'absolute', top: 22, right: -28,
+                    width: 32, height: 32, borderRadius: '50%',
+                    backgroundColor: '#FFFFFF', boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2,
                   }}>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M5 12h14" />
-                      <path d="m12 5 7 7-7 7" />
+                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                     </svg>
                   </div>
                 )}
-                {/* Step number badge - dashed ring + colored inner */}
-                <div style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: '50%',
-                  border: '2px dashed #D1D5DB',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: -18,
-                  position: 'relative',
-                  zIndex: 3,
-                }}>
-                  <div style={{
-                    width: 38,
-                    height: 38,
-                    borderRadius: '50%',
-                    backgroundColor: step.numBg,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                    <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 16 }}>{step.num}</span>
-                  </div>
-                </div>
-                {/* Card */}
-                <div style={{
-                  backgroundColor: '#FFFFFF',
-                  borderRadius: 20,
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
-                  padding: '36px 20px 24px',
-                  width: '100%',
-                  textAlign: 'center',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}>
-                  {/* Icon circle */}
-                  <div style={{
-                    width: 72,
-                    height: 72,
-                    borderRadius: '50%',
-                    backgroundColor: step.iconBg,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: 16,
-                  }}>
-                    {step.icon}
-                  </div>
-                  <h4 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: '0 0 8px 0' }}>{step.title}</h4>
-                  <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
-                  {/* Bottom accent line */}
-                  <div style={{ width: 30, height: 3, borderRadius: 2, backgroundColor: step.lineColor, marginTop: 16 }} />
-                </div>
+                <StepCard step={step} />
               </div>
+            ))}
+          </div>
+
+          {/* Mobile: 2-column grid */}
+          <div className="grid grid-cols-2 gap-4 sm:hidden">
+            {JOURNEY_STEPS.map((step) => (
+              <StepCard key={step.num} step={step} compact />
             ))}
           </div>
         </div>
