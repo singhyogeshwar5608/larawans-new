@@ -569,22 +569,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
       {/* ==================== TABS + CONTENT (FULL WIDTH) ==================== */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Tab bar */}
-        <div ref={tabRef} className="inline-flex flex-wrap gap-1 p-1.5 rounded-2xl bg-slate-100 mb-10">
-          {TABS.map((tab) => {
-            const Ic = tab.icon;
-            const active = activeTab === tab.id;
-            return (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={"flex items-center gap-2 px-5 py-3 rounded-xl text-[0.95rem] font-semibold transition-all duration-200 " + (active ? "text-white shadow-lg" : "text-slate-500 hover:text-slate-800 hover:bg-white/60")} style={active ? { background: primary, boxShadow: "0 8px 24px " + primary + "50" } : {}}>
-                <Ic className="w-[18px] h-[18px]" />
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
         {/* ========== OVERVIEW TAB ========== */}
-        {activeTab === "overview" && (
+        
           <div className="space-y-10">
             {/* Course Description */}
             <section>
@@ -1150,7 +1136,6 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
             </section>
           </div>
-        )}
 
         {/* ========== CURRICULUM TAB ========== */}
         {activeTab === "curriculum" && (
