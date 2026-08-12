@@ -964,31 +964,319 @@ export default function CoursesPage() {
       {/* END: All Courses */}
 
       {/* BEGIN: Your Learning Journey */}
-      <section className="py-24" data-purpose="process">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-text-main mb-12">Your Learning Journey</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-border-custom -z-10 -translate-y-1/2"></div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg border-4 border-white">1</div>
-              <h4 className="font-bold text-text-main mb-2">Choose</h4>
-              <p className="text-sm text-text-muted">Find the right course for your career goals.</p>
+      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F8F7FF', position: 'relative', overflow: 'hidden' }}>
+        {/* Decorative dots top-left */}
+        <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'grid', gridTemplateColumns: 'repeat(4, 8px)', gap: '8px', opacity: 0.5 }}>
+          {Array.from({ length: 16 }).map((_, i) => (
+            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#D4D0FF' }} />
+          ))}
+        </div>
+        {/* Decorative arc top-right */}
+        <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: 180, height: 180, borderRadius: '50%', border: '2px solid #EBEAFF', opacity: 0.6 }} />
+        {/* Decorative blob bottom-left */}
+        <div style={{ position: 'absolute', bottom: '-30px', left: '-30px', width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(130,120,255,0.12) 0%, transparent 70%)' }} />
+
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px', position: 'relative', zIndex: 1 }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            {/* STEP BY STEP badge */}
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF', border: '1px solid #EEEFF5', borderRadius: 50, padding: '6px 16px', marginBottom: 16 }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 16v-2.38C4 11.5 2.97 9.5 3 8c.03-1.5.49-3 2-4s3.5-1 4.5-.5S11 5 11.5 6c.5 1.5 1 3 2.5 3s2.5-1.5 3-3c.5-1 1.5-2.5 3-3s3 0 4 .5 2 2.5 2 4c-.03 1.5-1 3.5-1 5.62V16" />
+                <path d="M20 20v-4" />
+                <path d="M4 20v-4" />
+              </svg>
+              <span style={{ fontSize: 12, fontWeight: 600, color: '#4F46E5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Step by Step</span>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg border-4 border-white">2</div>
-              <h4 className="font-bold text-text-main mb-2">Learn</h4>
-              <p className="text-sm text-text-muted">Study at your own pace with expert videos.</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg border-4 border-white">3</div>
-              <h4 className="font-bold text-text-main mb-2">Certify</h4>
-              <p className="text-sm text-text-muted">Complete assignments and earn a certificate.</p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-xl mb-4 shadow-lg border-4 border-white">4</div>
-              <h4 className="font-bold text-text-main mb-2">Start</h4>
-              <p className="text-sm text-text-muted">Apply your skills and advance your career.</p>
-            </div>
+
+            {/* Title */}
+            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
+              <span style={{ color: '#111827' }}>Your </span>
+              <span style={{ color: '#4F46E5', position: 'relative', display: 'inline-block' }}>
+                Learning Journey
+                <span style={{ position: 'absolute', bottom: -4, left: 0, width: '70%', height: 3, backgroundColor: '#4F46E5', borderRadius: 2 }} />
+              </span>
+            </h2>
+
+            {/* Subtitle */}
+            <p style={{ color: '#6B7280', fontSize: 'clamp(14px, 1.8vw, 17px)', lineHeight: 1.6, marginTop: 14, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
+              Follow simple steps to build skills and advance your career with confidence.
+            </p>
+          </div>
+
+          {/* Steps Grid - Desktop: 4 cols with connectors, Mobile: vertical */}
+          <div className="hidden md:grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 20, position: 'relative', alignItems: 'start' }}>
+            {/* Dashed connector lines (desktop only) */}
+            <div style={{ position: 'absolute', top: 36, left: 'calc(12.5% + 20px)', right: 'calc(12.5% + 20px)', height: 0, borderTop: '2px dashed #D1D5DB', zIndex: 0 }} />
+
+            {[
+              {
+                num: 1,
+                title: 'Choose Your Path',
+                desc: 'Browse and select the perfect course aligned with your career goals.',
+                numBg: '#4338CA',
+                iconBg: '#EEF2FF',
+                iconColor: '#4338CA',
+                lineColor: '#4338CA',
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                  </svg>
+                ),
+              },
+              {
+                num: 2,
+                title: 'Learn & Practice',
+                desc: 'Study with expert-led videos, hands-on exercises, and real projects.',
+                numBg: '#4338CA',
+                iconBg: '#ECFDF5',
+                iconColor: '#10B981',
+                lineColor: '#10B981',
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
+                  </svg>
+                ),
+              },
+              {
+                num: 3,
+                title: 'Get Certified',
+                desc: 'Complete assessments and earn a recognized certificate of achievement.',
+                numBg: '#4338CA',
+                iconBg: '#FFF7ED',
+                iconColor: '#F97316',
+                lineColor: '#F97316',
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="8" r="6" />
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                  </svg>
+                ),
+              },
+              {
+                num: 4,
+                title: 'Launch Career',
+                desc: 'Apply your new skills and unlock exciting career opportunities.',
+                numBg: '#4338CA',
+                iconBg: '#EFF6FF',
+                iconColor: '#3B82F6',
+                lineColor: '#3B82F6',
+                icon: (
+                  <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                  </svg>
+                ),
+              },
+            ].map((step, idx) => (
+              <div key={step.num} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {/* Arrow connector between cards (not after last) */}
+                {idx < 3 && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 28,
+                    right: -26,
+                    width: 32,
+                    height: 32,
+                    borderRadius: '50%',
+                    backgroundColor: '#FFFFFF',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 2,
+                  }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </div>
+                )}
+                {/* Step number badge - dashed ring + colored inner */}
+                <div style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: '50%',
+                  border: '2px dashed #D1D5DB',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: -18,
+                  position: 'relative',
+                  zIndex: 3,
+                }}>
+                  <div style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: '50%',
+                    backgroundColor: step.numBg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 16 }}>{step.num}</span>
+                  </div>
+                </div>
+                {/* Card */}
+                <div style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 20,
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                  padding: '36px 20px 24px',
+                  width: '100%',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}>
+                  {/* Icon circle */}
+                  <div style={{
+                    width: 72,
+                    height: 72,
+                    borderRadius: '50%',
+                    backgroundColor: step.iconBg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: 16,
+                  }}>
+                    {step.icon}
+                  </div>
+                  <h4 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: '0 0 8px 0' }}>{step.title}</h4>
+                  <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                  {/* Bottom accent line */}
+                  <div style={{ width: 30, height: 3, borderRadius: 2, backgroundColor: step.lineColor, marginTop: 16 }} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile: Vertical layout */}
+          <div className="md:hidden" style={{ display: 'flex', flexDirection: 'column', gap: 20, position: 'relative' }}>
+            {/* Vertical dashed line */}
+            <div style={{ position: 'absolute', top: 26, left: 25, bottom: 26, width: 0, borderLeft: '2px dashed #D1D5DB', zIndex: 0 }} />
+
+            {[
+              {
+                num: 1,
+                title: 'Choose Your Path',
+                desc: 'Browse and select the perfect course aligned with your career goals.',
+                numBg: '#4338CA',
+                iconBg: '#EEF2FF',
+                iconColor: '#4338CA',
+                lineColor: '#4338CA',
+                icon: (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                  </svg>
+                ),
+              },
+              {
+                num: 2,
+                title: 'Learn & Practice',
+                desc: 'Study with expert-led videos, hands-on exercises, and real projects.',
+                numBg: '#4338CA',
+                iconBg: '#ECFDF5',
+                iconColor: '#10B981',
+                lineColor: '#10B981',
+                icon: (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                    <path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5" />
+                  </svg>
+                ),
+              },
+              {
+                num: 3,
+                title: 'Get Certified',
+                desc: 'Complete assessments and earn a recognized certificate of achievement.',
+                numBg: '#4338CA',
+                iconBg: '#FFF7ED',
+                iconColor: '#F97316',
+                lineColor: '#F97316',
+                icon: (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="8" r="6" />
+                    <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" />
+                  </svg>
+                ),
+              },
+              {
+                num: 4,
+                title: 'Launch Career',
+                desc: 'Apply your new skills and unlock exciting career opportunities.',
+                numBg: '#4338CA',
+                iconBg: '#EFF6FF',
+                iconColor: '#3B82F6',
+                lineColor: '#3B82F6',
+                icon: (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+                    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+                    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                  </svg>
+                ),
+              },
+            ].map((step) => (
+              <div key={step.num} style={{ display: 'flex', gap: 16, alignItems: 'flex-start', position: 'relative', zIndex: 1 }}>
+                {/* Step number - fixed left */}
+                <div style={{
+                  flexShrink: 0,
+                  width: 52,
+                  height: 52,
+                  borderRadius: '50%',
+                  border: '2px dashed #D1D5DB',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                  <div style={{
+                    width: 38,
+                    height: 38,
+                    borderRadius: '50%',
+                    backgroundColor: step.numBg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                    <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: 16 }}>{step.num}</span>
+                  </div>
+                </div>
+                {/* Card */}
+                <div style={{
+                  backgroundColor: '#FFFFFF',
+                  borderRadius: 16,
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+                  padding: '20px',
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 16,
+                }}>
+                  <div style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: '50%',
+                    backgroundColor: step.iconBg,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    {step.icon}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <h4 style={{ fontSize: 16, fontWeight: 700, color: '#111827', margin: '0 0 4px 0' }}>{step.title}</h4>
+                    <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{step.desc}</p>
+                    <div style={{ width: 24, height: 3, borderRadius: 2, backgroundColor: step.lineColor, marginTop: 10 }} />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
