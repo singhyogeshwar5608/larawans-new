@@ -862,20 +862,20 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* Course Highlights */}
-            <section>
-              <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+            <section className="-mx-5 sm:mx-0">
+              <div className="bg-white sm:rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
                 {/* Dot grid pattern - top right */}
                 <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle, #2563eb 2px, transparent 2px)', backgroundSize: '14px 14px', backgroundPosition: '0 0' }} />
                 {/* Subtle gradient overlay top-right */}
                 <div className="absolute top-0 right-0 w-56 h-56 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(37,99,235,0.06) 0%, transparent 70%)' }} />
                 
                 {/* Header */}
-                <div className="flex items-center gap-3.5 mb-7 px-8 sm:px-10 pt-8 relative">
+                <div className="flex items-center gap-3.5 mb-5 sm:mb-7 px-5 sm:px-8 sm:px-10 pt-6 sm:pt-8 relative">
                   <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
                     <Sparkle className="w-5 h-5 text-white" fill="white" />
                   </div>
                   <div>
-                    <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Course Highlights</h2>
+                    <h2 className="text-[1.1rem] sm:text-[1.35rem] font-bold text-gray-900 leading-tight">Course Highlights</h2>
                     <div className="w-10 h-[3px] rounded-full bg-blue-600 mt-1.5" />
                   </div>
                 </div>
@@ -885,12 +885,16 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   .hl-item { border-right: 1px solid rgba(0,0,0,0.08); }
                   .hl-item:nth-child(2) { border-right: 1px solid rgba(0,0,0,0.08); }
                   .hl-item:nth-child(4n) { border-right: none; }
+                  @media (max-width: 639px) {
+                    .hl-item:nth-child(4n) { border-right: 1px solid rgba(0,0,0,0.08); }
+                    .hl-item:last-child { border-right: none; }
+                  }
                   @media (min-width: 640px) and (max-width: 1023px) {
                     .hl-item:nth-child(odd) { border-right: 1px solid rgba(0,0,0,0.08); }
                     .hl-item:nth-child(even) { border-right: none; }
                   }
                 `}</style>
-                <div className="grid grid-cols-2 lg:grid-cols-4 relative">
+                <div className="grid grid-cols-4 lg:grid-cols-4 relative">
                   {course.highlights.map((h: any, i: number) => {
                     const cfg = [
                       { I: FolderOpen, color: '#2563eb', bg: '#2563eb' },
@@ -900,13 +904,13 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                     ][i % 4];
                     const Ic = cfg.I;
                     return (
-                      <div key={i} className="hl-item flex flex-col items-center text-center px-6 py-7">
-                        <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4" style={{ background: cfg.bg }}>
-                          <Ic className="w-6 h-6 text-white" strokeWidth={1.8} />
+                      <div key={i} className="hl-item flex flex-col items-center text-center px-2 sm:px-6 py-3 sm:py-7">
+                        <div className="w-8 h-8 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-1.5 sm:mb-4" style={{ background: cfg.bg }}>
+                          <Ic className="w-3.5 h-3.5 sm:w-6 sm:h-6 text-white" strokeWidth={1.8} />
                         </div>
-                        <div className="text-[1.75rem] font-extrabold leading-none mb-1.5" style={{ color: cfg.color }}>{h.value}</div>
-                        <div className="text-[0.85rem] text-gray-700 font-semibold">{h.label}</div>
-                        <div className="text-[0.78rem] text-gray-400 mt-1 leading-relaxed">{h.value === 'Included' ? 'On completion' : 'Comprehensive coverage'}</div>
+                        <div className="text-[0.95rem] sm:text-[1.75rem] font-extrabold leading-none mb-0.5 sm:mb-1.5" style={{ color: cfg.color }}>{h.value}</div>
+                        <div className="text-[0.58rem] sm:text-[0.85rem] text-gray-700 font-semibold leading-tight">{h.label}</div>
+                        <div className="text-[0.5rem] sm:text-[0.78rem] text-gray-400 mt-0.5 sm:mt-1 leading-relaxed hidden sm:block">{h.value === 'Included' ? 'On completion' : 'Comprehensive coverage'}</div>
                       </div>
                     );
                   })}
@@ -915,19 +919,18 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* Feature Cards */}
-            <section>
-              <div className="rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
+            <section className="-mx-5 sm:mx-0">
+              <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 sm:rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)]" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
                 {[
                   { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5" },
                   { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff" },
                   { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff" },
-                  { I: Handshake, t: "Career Support", d: "Resume and interview help", color: "#f97316", bg: "#fff7ed" },
+                  { I: Handshake, t: "Career Support", d: "Resume & interview help", color: "#f97316", bg: "#fff7ed" },
                 ].map(({ I, t, d, color, bg }: any, idx: number) => (
-                  <div key={t} className={`group p-6 lg:p-7 transition-all duration-300 hover:bg-gray-50/50 ${idx < 3 ? 'lg:border-r' : ''} ${idx < 2 ? 'sm:border-r' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-6 h-6" style={{ color }} /></div>
-                    <h4 className="font-bold text-gray-900 text-[0.95rem]">{t}</h4>
-                    <p className="text-sm text-gray-500 mt-1.5 leading-relaxed">{d}</p>
-                    <div className="w-8 h-[3px] rounded-full mt-4" style={{ background: color }} />
+                  <div key={t} className={`group p-2.5 sm:p-6 lg:p-7 transition-all duration-300 hover:bg-gray-50/50 flex flex-col items-center text-center ${idx < 3 ? 'lg:border-r' : ''} ${idx < 3 ? 'sm:border-r' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+                    <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-1 sm:mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-3.5 h-3.5 sm:w-6 sm:h-6" style={{ color }} /></div>
+                    <h4 className="font-bold text-gray-900 text-[0.55rem] sm:text-[0.95rem] leading-tight">{t}</h4>
+                    <p className="text-[0.48rem] sm:text-sm text-gray-500 mt-0.5 sm:mt-1.5 leading-relaxed hidden sm:block">{d}</p>
                   </div>
                 ))}
               </div>
