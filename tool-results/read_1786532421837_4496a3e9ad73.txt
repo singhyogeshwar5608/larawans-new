@@ -1,0 +1,1932 @@
+     1→"use client";
+     2→
+     3→import React, { useState, useMemo } from "react";
+     4→import { ALL_COURSES as COURSES_DATA, type CourseItem } from "@/lib/course-data";
+     5→
+     6→type StitchCourse = CourseItem & {
+     7→  rating: number;
+     8→  location: string;
+     9→  durationCategory: string;
+    10→  priceCategory: string;
+    11→  badge: string;
+    12→  image: string;
+    13→};
+    14→
+    15→const COURSE_IMAGES = [
+    16→  "https://lh3.googleusercontent.com/aida-public/AB6AXuDz1MLphw5DTmzvEeeFKq028CHnsWDMUAw0PHDZnKDA97NDcMlgiDjpKz7ZEyf7725rvsRS_pshTus_qp2z7_SdNZSTlxePv-30REx_R8Jgx0Ms5gtjZ_jsjGGObHzsLsMlLM4I53kGBQkONAb0s6q9LJqcJgsmPTw5P3QeC4AZGRuC2cuqjkLu2fzC8etXttUvZ_j9lKzm_XBElYcfID9BU4ZliLahwh2ZSmnjTCkqPWT0eBsCAav9",
+    17→  "https://lh3.googleusercontent.com/aida-public/AB6AXuCNSuPUcWQapChSaN2-ZnThWnW_Ry-msCHecejg6jKo5VhCjqp4FKWIA199Z12DJb0QNnHh-F46a7M8aoUQP84hOXoo8P3E5I8MlkWGPnIe409V8uKNPusLJncGOFK2-g0VSK_00XW1LspCkOHMBDxomaperA6cN1ElKv46AMlUWPxocyel2YWpl97AD4GpOILKytPnj94ioJRI_t5xAgudRzQtJ8Oc5ts3-LWTwBOFa9suu8h6_uN-",
+    18→  "https://lh3.googleusercontent.com/aida-public/AB6AXuBHF3135hdftIT0zZiAYVHBQwQjEEkY9wBn55IX_2yk18tJmj9-hkZnadKxaPmsnF9LGTtV4DKnQSFw1UiduemuAg5ATb6jFqi8Lh0uO8BMJC5gQsr5a1sip87UxVR_xJDupuN46IcUAopWH1_8mnK8EQdXkaCpPuyiB-TdACRtdixUVhVHomP-XFCKVZ9mUghRyvM8HFYHxUOfASDv9V0pQEMM7l0ph38mKlmS0WhOVnniqsMeki2T",
+    19→  "https://lh3.googleusercontent.com/aida-public/AB6AXuC-4TDeOSY5JTcb6KGHmCJizZC6yXcHTGi56SJHzsdfsCGtwkxqZD65wmbMkhSAED71bF8-06l8UCNpPm-gUY7-8UAx9qOk7fsoGYu0OpnSjqzo2nr9EN6AV5iw1kPZxSHrTQJqWptmGpFNO2brr0pM7Jxzh-afc9rDr8k3sRAJntqRerZx3SIbcbpFx1R9ZM7Ni44gOX86ZSYoIuQKgHVl0Ev9LIb741sv6jpDmDq5q4Q4rAohouGA",
+    20→];
+    21→
+    22→const RATINGS = [4.9, 4.8, 4.9, 4.7, 4.8, 4.6, 4.8, 4.9, 4.7];
+    23→
+    24→function toDurationCategory(duration: string): string {
+    25→  const weeks = parseInt(duration, 10);
+    26→  if (Number.isNaN(weeks)) return "12+ Weeks";
+    27→  if (weeks <= 4) return "1-4 Weeks";
+    28→  if (weeks <= 8) return "4-8 Weeks";
+    29→  if (weeks <= 12) return "8-12 Weeks";
+    30→  return "12+ Weeks";
+    31→}
+    32→
+    33→function toPriceCategory(price: string): string {
+    34→  const amount = parseInt(price.replace(/[^\d]/g, ""), 10);
+    35→  if (Number.isNaN(amount)) return "₹5,000+";
+    36→  if (amount === 0) return "Free";
+    37→  if (amount <= 999) return "₹0 - ₹999";
+    38→  if (amount <= 4999) return "₹1,000 - ₹4,999";
+    39→  return "₹5,000+";
+    40→}
+    41→
+    42→const ALL_COURSES: StitchCourse[] = COURSES_DATA.map((c, i) => ({
+    43→  ...c,
+    44→  rating: RATINGS[i % RATINGS.length],
+    45→  location: "Online",
+    46→  durationCategory: toDurationCategory(c.duration),
+    47→  priceCategory: toPriceCategory(c.price),
+    48→  badge: c.badge || c.shortTag || c.category,
+    49→  image: COURSE_IMAGES[i % COURSE_IMAGES.length],
+    50→}));
+    51→
+    52→const JOURNEY_STEPS = [
+    53→  {
+    54→    num: 1,
+    55→    title: 'Choose Your Path',
+    56→    desc: 'Browse and select the perfect course aligned with your career goals.',
+    57→    numBg: '#4338CA',
+    58→    iconBg: '#EEF2FF',
+    59→    lineColor: '#4338CA',
+    60→    iconColor: '#4338CA',
+    61→  },
+    62→  {
+    63→    num: 2,
+    64→    title: 'Learn & Practice',
+    65→    desc: 'Study with expert-led videos, hands-on exercises, and real projects.',
+    66→    numBg: '#4338CA',
+    67→    iconBg: '#ECFDF5',
+    68→    lineColor: '#10B981',
+    69→    iconColor: '#10B981',
+    70→  },
+    71→  {
+    72→    num: 3,
+    73→    title: 'Get Certified',
+    74→    desc: 'Complete assessments and earn a recognized certificate of achievement.',
+    75→    numBg: '#4338CA',
+    76→    iconBg: '#FFF7ED',
+    77→    lineColor: '#F97316',
+    78→    iconColor: '#F97316',
+    79→  },
+    80→  {
+    81→    num: 4,
+    82→    title: 'Launch Career',
+    83→    desc: 'Apply your new skills and unlock exciting career opportunities.',
+    84→    numBg: '#4338CA',
+    85→    iconBg: '#EFF6FF',
+    86→    lineColor: '#3B82F6',
+    87→    iconColor: '#3B82F6',
+    88→  },
+    89→];
+    90→
+    91→const LEARNING_PATHS = [
+    92→  {
+    93→    title: 'Full Stack Development',
+    94→    desc: 'Master both frontend and backend technologies to build complete web applications from scratch.',
+    95→    badge: '★ BEST SELLER',
+    96→    theme: '#7C3AED',
+    97→    iconBg: '#F3E8FF',
+    98→    courses: 12,
+    99→    months: 6,
+   100→    techs: ['React', 'Node.js', 'MongoDB', 'TypeScript'],
+   101→  },
+   102→  {
+   103→    title: 'AI & Data Science',
+   104→    desc: 'Learn machine learning, data analysis, and AI to solve complex real-world problems.',
+   105→    badge: '📈 TRENDING',
+   106→    theme: '#10B981',
+   107→    iconBg: '#D1FAE5',
+   108→    courses: 10,
+   109→    months: 8,
+   110→    techs: ['Python', 'TensorFlow', 'Pandas', 'SQL'],
+   111→  },
+   112→  {
+   113→    title: 'Digital Marketing',
+   114→    desc: 'Build expertise in SEO, social media, and content marketing to grow brands online.',
+   115→    badge: '🔥 POPULAR',
+   116→    theme: '#F97316',
+   117→    iconBg: '#FFEDD5',
+   118→    courses: 8,
+   119→    months: 4,
+   120→    techs: ['SEO', 'Analytics', 'Ads', 'Content'],
+   121→  },
+   122→  {
+   123→    title: 'UI/UX Design',
+   124→    desc: 'Create beautiful, user-centered designs using modern tools and design thinking principles.',
+   125→    badge: '📊 IN DEMAND',
+   126→    theme: '#3B82F6',
+   127→    iconBg: '#DBEAFE',
+   128→    courses: 9,
+   129→    months: 5,
+   130→    techs: ['Figma', 'Prototype', 'Wireframe', 'Research'],
+   131→  },
+   132→];
+   133→
+   134→function PathIcon({ theme }: { theme: string }) {
+   135→  const icons: Record<string, React.ReactNode> = {
+   136→    '#7C3AED': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
+   137→    '#10B981': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a8 8 0 0 0-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 0 0-8-8z"/><circle cx="12" cy="10" r="3"/></svg>,
+   138→    '#F97316': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>,
+   139→    '#3B82F6': <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4Z"/></svg>,
+   140→  };
+   141→  return <>{icons[theme] || icons['#7C3AED']}</>;
+   142→}
+   143→
+   144→function JourneyStepIcon({ color, size = 36 }: { color: string; size?: number }) {
+   145→  const s = size;
+   146→  const sw = 1.8;
+   147→  const icons: Record<string, React.ReactNode> = {
+   148→    '#4338CA': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#4338CA" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>,
+   149→    '#10B981': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>,
+   150→    '#F97316': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>,
+   151→    '#3B82F6': <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
+   152→  };
+   153→  return <>{icons[color] || icons['#4338CA']}</>;
+   154→}
+   155→
+   156→function StepCard({ step, compact }: { step: typeof JOURNEY_STEPS[0]; compact?: boolean }) {
+   157→  return (
+   158→    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+   159→      {/* Step number badge */}
+   160→      <div style={{
+   161→        width: compact ? 42 : 52,
+   162→        height: compact ? 42 : 52,
+   163→        borderRadius: '50%',
+   164→        border: '2px dashed #D1D5DB',
+   165→        display: 'flex', alignItems: 'center', justifyContent: 'center',
+   166→        marginBottom: -16, position: 'relative', zIndex: 3,
+   167→      }}>
+   168→        <div style={{
+   169→          width: compact ? 30 : 38, height: compact ? 30 : 38,
+   170→          borderRadius: '50%', backgroundColor: step.numBg,
+   171→          display: 'flex', alignItems: 'center', justifyContent: 'center',
+   172→        }}>
+   173→          <span style={{ color: '#FFFFFF', fontWeight: 700, fontSize: compact ? 13 : 16 }}>{step.num}</span>
+   174→        </div>
+   175→      </div>
+   176→      {/* Card */}
+   177→      <div style={{
+   178→        backgroundColor: '#FFFFFF', borderRadius: compact ? 14 : 20,
+   179→        boxShadow: '0 4px 20px rgba(0,0,0,0.04)',
+   180→        padding: compact ? '28px 12px 16px' : '36px 20px 24px',
+   181→        width: '100%', textAlign: 'center',
+   182→        display: 'flex', flexDirection: 'column', alignItems: 'center',
+   183→      }}>
+   184→        <div style={{
+   185→          width: compact ? 52 : 72, height: compact ? 52 : 72,
+   186→          borderRadius: '50%', backgroundColor: step.iconBg,
+   187→          display: 'flex', alignItems: 'center', justifyContent: 'center',
+   188→          marginBottom: compact ? 10 : 16,
+   189→        }}>
+   190→          <JourneyStepIcon color={step.iconColor} size={compact ? 28 : 36} />
+   191→        </div>
+   192→        <h4 style={{ fontSize: compact ? 14 : 18, fontWeight: 700, color: '#111827', margin: '0 0 6px 0', lineHeight: 1.3 }}>{step.title}</h4>
+   193→        {!compact && <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.5, margin: 0 }}>{step.desc}</p>}
+   194→        <div style={{ width: compact ? 24 : 30, height: 3, borderRadius: 2, backgroundColor: step.lineColor, marginTop: compact ? 10 : 16 }} />
+   195→      </div>
+   196→    </div>
+   197→  );
+   198→}
+   199→
+   200→export default function CoursesPage() {
+   201→  // Filters State
+   202→  const [searchQuery, setSearchQuery] = useState("");
+   203→  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+   204→  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
+   205→  const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
+   206→  const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
+   207→  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+   208→
+   209→  // Accordion & Interactivity State
+   210→  const [openFaq, setOpenFaq] = useState<number | null>(0);
+   211→  const [certId, setCertId] = useState("");
+   212→  const [certStatus, setCertStatus] = useState<string | null>(null);
+   213→  const [newsletterEmail, setNewsletterEmail] = useState("");
+   214→  const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+   215→
+   216→  // Toggle helpers
+   217→  const handleToggleCategory = (category: string) => {
+   218→    setSelectedCategories(prev =>
+   219→      prev.includes(category) ? prev.filter(c => c !== category) : [...prev, category]
+   220→    );
+   221→  };
+   222→
+   223→  const handleToggleLevel = (level: string) => {
+   224→    setSelectedLevels(prev =>
+   225→      prev.includes(level) ? prev.filter(l => l !== level) : [...prev, level]
+   226→    );
+   227→  };
+   228→
+   229→  const handleToggleDuration = (duration: string) => {
+   230→    setSelectedDurations(prev =>
+   231→      prev.includes(duration) ? prev.filter(d => d !== duration) : [...prev, duration]
+   232→    );
+   233→  };
+   234→
+   235→  const handleTogglePrice = (price: string) => {
+   236→    setSelectedPrices(prev =>
+   237→      prev.includes(price) ? prev.filter(p => p !== price) : [...prev, price]
+   238→    );
+   239→  };
+   240→
+   241→  const handleToggleRating = (rating: number) => {
+   242→    setSelectedRatings(prev =>
+   243→      prev.includes(rating) ? prev.filter(r => r !== rating) : [...prev, rating]
+   244→    );
+   245→  };
+   246→
+   247→  const handleResetFilters = () => {
+   248→    setSearchQuery("");
+   249→    setSelectedCategories([]);
+   250→    setSelectedLevels([]);
+   251→    setSelectedDurations([]);
+   252→    setSelectedPrices([]);
+   253→    setSelectedRatings([]);
+   254→  };
+   255→
+   256→  // Filter Logic
+   257→  const filteredCourses = useMemo(() => {
+   258→    return ALL_COURSES.filter(course => {
+   259→      // Search term
+   260→      const query = searchQuery.toLowerCase().trim();
+   261→      if (query) {
+   262→        const matchesSearch =
+   263→          course.title.toLowerCase().includes(query) ||
+   264→          course.category.toLowerCase().includes(query) ||
+   265→          course.badge.toLowerCase().includes(query) ||
+   266→          course.description.toLowerCase().includes(query) ||
+   267→          course.techStack.some(t => t.name.toLowerCase().includes(query));
+   268→        if (!matchesSearch) return false;
+   269→      }
+   270→
+   271→      // Categories
+   272→      if (
+   273→        selectedCategories.length > 0 &&
+   274→        !selectedCategories.some((cat) =>
+   275→          course.category.toLowerCase().includes(cat.toLowerCase())
+   276→        )
+   277→      ) {
+   278→        return false;
+   279→      }
+   280→
+   281→      // Levels
+   282→      if (
+   283→        selectedLevels.length > 0 &&
+   284→        !selectedLevels.some((lvl) =>
+   285→          course.level.toLowerCase().includes(lvl.toLowerCase())
+   286→        )
+   287→      ) {
+   288→        return false;
+   289→      }
+   290→
+   291→      // Durations
+   292→      if (selectedDurations.length > 0 && !selectedDurations.includes(course.durationCategory)) {
+   293→        return false;
+   294→      }
+   295→
+   296→      // Prices
+   297→      if (selectedPrices.length > 0 && !selectedPrices.includes(course.priceCategory)) {
+   298→        return false;
+   299→      }
+   300→
+   301→      // Ratings
+   302→      if (selectedRatings.length > 0) {
+   303→        const minRating = Math.min(...selectedRatings);
+   304→        if (course.rating < minRating) return false;
+   305→      }
+   306→
+   307→      return true;
+   308→    });
+   309→  }, [searchQuery, selectedCategories, selectedLevels, selectedDurations, selectedPrices, selectedRatings]);
+   310→
+   311→  const featuredCourses = ALL_COURSES.slice(0, 4);
+   312→
+   313→  // Certificate Verification
+   314→  const handleVerifyCert = (e: React.FormEvent) => {
+   315→    e.preventDefault();
+   316→    if (!certId.trim()) return;
+   317→    const cleanId = certId.trim().toUpperCase();
+   318→    if (cleanId === "LARA-9842-PRO") {
+   319→      setCertStatus("Verified: Certificate LARA-9842-PRO is authentic and belongs to Dr. Eleanor Vance.");
+   320→    } else {
+   321→      setCertStatus(`No certificate found for ID: "${cleanId}". Please try again.`);
+   322→    }
+   323→  };
+   324→
+   325→  // Newsletter Submit
+   326→  const handleSubscribe = (e: React.FormEvent) => {
+   327→    e.preventDefault();
+   328→    if (!newsletterEmail.trim()) return;
+   329→    setNewsletterSubscribed(true);
+   330→  };
+   331→
+   332→  return (
+   333→    <div className="courses-page-wrapper bg-[#f8f9ff] text-[#1f2937] antialiased min-h-screen">
+   334→      {/* Dynamic Font & Icons */}
+   335→      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+   336→      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+   337→
+   338→      {/* Styled Configuration Overrides */}
+   339→      <style>{`
+   340→        :root {
+   341→          --primary: #3525cd;
+   342→          --primary-hover: #2d1eac;
+   343→          --background-custom: #f8f9ff;
+   344→          --surface: #ffffff;
+   345→          --surface-variant: #f0f2f9;
+   346→          --text-main: #1f2937;
+   347→          --text-muted: #6b7280;
+   348→          --border-custom: #e5e7eb;
+   349→        }
+   350→
+   351→        .courses-page-wrapper {
+   352→          background-color: var(--background-custom) !important;
+   353→          color: var(--text-main) !important;
+   354→          font-family: 'Inter', sans-serif !important;
+   355→        }
+   356→        .courses-page-wrapper * {
+   357→          font-family: 'Inter', sans-serif;
+   358→        }
+   359→
+   360→        .bg-background-custom { background-color: var(--background-custom) !important; }
+   361→        .text-text-main { color: var(--text-main) !important; }
+   362→        .bg-surface { background-color: var(--surface) !important; }
+   363→        .bg-surface-variant { background-color: var(--surface-variant) !important; }
+   364→        .text-text-muted { color: var(--text-muted) !important; }
+   365→        .border-border-custom { border-color: var(--border-custom) !important; }
+   366→        .bg-primary-custom { background-color: var(--primary) !important; }
+   367→        .hover\\:bg-primary-hover-custom:hover { background-color: var(--primary-hover) !important; }
+   368→        .text-primary-custom { color: var(--primary) !important; }
+   369→        .border-primary-custom { border-color: var(--primary) !important; }
+   370→        .hover\\:bg-primary-custom:hover { background-color: var(--primary) !important; }
+   371→
+   372→        .material-icons {
+   373→          font-family: 'Material Icons' !important;
+   374→          font-size: 24px;
+   375→          vertical-align: middle;
+   376→        }
+   377→        .hero-gradient {
+   378→          background: radial-gradient(circle at top, rgba(235, 237, 255, 0.8) 0%, rgba(248, 249, 255, 1) 100%) !important;
+   379→        }
+   380→        .text-primary {
+   381→          color: var(--primary) !important;
+   382→        }
+   383→        .bg-primary {
+   384→          background-color: var(--primary) !important;
+   385→        }
+   386→        .border-primary {
+   387→          border-color: var(--primary) !important;
+   388→        }
+   389→      `}</style>
+   390→
+   391→      {/* BEGIN: Navigation */}
+   392→      <nav className="sticky top-0 z-50 bg-white shadow-sm" data-purpose="main-nav">
+   393→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+   394→          <div className="flex justify-between items-center h-16">
+   395→            <div className="flex items-center">
+   396→              <a className="text-primary font-bold text-xl flex items-center gap-2" href="#">
+   397→                <span className="material-icons">school</span>
+   398→                EduPremium
+   399→              </a>
+   400→            </div>
+   401→            <div className="hidden md:flex space-x-8">
+   402→              <a className="text-text-main font-medium hover:text-primary" href="#">Courses</a>
+   403→              <a className="text-text-muted hover:text-primary" href="#">Mentors</a>
+   404→              <a className="text-text-muted hover:text-primary" href="#">Success Stories</a>
+   405→              <a className="text-text-muted hover:text-primary" href="#">Pricing</a>
+   406→              <a className="text-text-muted hover:text-primary" href="#">About Us</a>
+   407→            </div>
+   408→            <div className="flex items-center space-x-4">
+   409→              <a className="text-text-muted hover:text-primary font-medium" href="#">Log In</a>
+   410→              <a className="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-hover-custom transition-colors" href="#">Sign Up Free</a>
+   411→            </div>
+   412→          </div>
+   413→        </div>
+   414→      </nav>
+   415→      {/* END: Navigation */}
+   416→
+   417→      {/* BEGIN: Hero Section */}
+   418→      <section className="hero-gradient pt-20 pb-16 text-center" data-purpose="hero">
+   419→        <div className="max-w-4xl mx-auto px-4">
+   420→          <span className="text-primary font-semibold text-sm tracking-wider uppercase mb-4 block">Master New Skills</span>
+   421→          <h1 className="text-5xl font-bold text-text-main mb-6 leading-tight">Explore Our Professional Courses</h1>
+   422→          <p className="text-text-muted text-lg mb-8 max-w-2xl mx-auto">Boost your career with expert-led courses designed for today's dynamic job market. Join thousands of successful learners.</p>
+   423→          
+   424→          {/* Search Bar */}
+   425→          <div className="max-w-xl mx-auto relative mb-8">
+   426→            <span className="material-icons absolute left-4 top-3.5 text-text-muted">search</span>
+   427→            <input
+   428→              className="w-full pl-12 pr-4 py-3 rounded-xl border border-border-custom shadow-sm focus:ring-2 focus:ring-primary focus:border-primary outline-none text-[#1f2937] bg-white"
+   429→              placeholder="What do you want to learn today?"
+   430→              type="text"
+   431→              value={searchQuery}
+   432→              onChange={(e) => setSearchQuery(e.target.value)}
+   433→            />
+   434→          </div>
+   435→
+   436→          {/* Filter Chips */}
+   437→          <div className="flex flex-wrap justify-center gap-3 mb-10">
+   438→            <button
+   439→              onClick={() => handleToggleCategory("Web Development")}
+   440→              className={`border border-border-custom px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
+   441→                selectedCategories.includes("Web Development") ? "bg-primary text-white" : "bg-white text-text-main hover:bg-surface-variant"
+   442→              }`}
+   443→            >
+   444→              <span className="material-icons text-[18px]">code</span>
+   445→              Web Development
+   446→            </button>
+   447→            <button
+   448→              onClick={() => handleToggleCategory("Data Science")}
+   449→              className={`border border-border-custom px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
+   450→                selectedCategories.includes("Data Science") ? "bg-primary text-white" : "bg-white text-text-main hover:bg-surface-variant"
+   451→              }`}
+   452→            >
+   453→              <span className="material-icons text-[18px]">brush</span>
+   454→              Data Science
+   455→            </button>
+   456→            <button
+   457→              onClick={() => handleToggleCategory("Design")}
+   458→              className={`border border-border-custom px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
+   459→                selectedCategories.includes("Design") ? "bg-primary text-white" : "bg-white text-text-main hover:bg-surface-variant"
+   460→              }`}
+   461→            >
+   462→              <span className="material-icons text-[18px]">analytics</span>
+   463→              UI/UX Design
+   464→            </button>
+   465→            <button
+   466→              onClick={() => handleToggleCategory("Marketing")}
+   467→              className={`border border-border-custom px-4 py-1.5 rounded-full text-sm font-medium transition-colors flex items-center gap-2 ${
+   468→                selectedCategories.includes("Marketing") ? "bg-primary text-white" : "bg-white text-text-main hover:bg-surface-variant"
+   469→              }`}
+   470→            >
+   471→              <span className="material-icons text-[18px]">campaign</span>
+   472→              Marketing
+   473→            </button>
+   474→          </div>
+   475→        </div>
+   476→      </section>
+   477→      {/* END: Hero Section */}
+   478→
+   479→      {/* BEGIN: Stats Banner */}
+   480→      <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-10" data-purpose="stats">
+   481→        <div className="bg-white rounded-2xl shadow-lg border border-border-custom grid grid-cols-2 md:grid-cols-4 gap-8 text-center p-6">
+   482→          <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 w-full">
+   483→            {/* Stat 1 */}
+   484→            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+   485→              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+   486→                <span className="material-icons">school</span>
+   487→              </div>
+   488→              <div className="text-left">
+   489→                <h3 className="text-xl font-bold text-text-main">50K+</h3>
+   490→                <p className="text-text-muted text-xs font-medium">Happy Students</p>
+   491→              </div>
+   492→            </div>
+   493→            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
+   494→            {/* Stat 2 */}
+   495→            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+   496→              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
+   497→                <span className="material-icons">menu_book</span>
+   498→              </div>
+   499→              <div className="text-left">
+   500→                <h3 className="text-xl font-bold text-text-main">500+</h3>
+   501→                <p className="text-text-muted text-xs font-medium">Courses</p>
+   502→              </div>
+   503→            </div>
+   504→            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
+   505→            {/* Stat 3 */}
+   506→            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+   507→              <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 shrink-0">
+   508→                <span className="material-icons">emoji_events</span>
+   509→              </div>
+   510→              <div className="text-left">
+   511→                <h3 className="text-xl font-bold text-text-main">95%</h3>
+   512→                <p className="text-text-muted text-xs font-medium">Satisfaction Rate</p>
+   513→              </div>
+   514→            </div>
+   515→            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
+   516→            {/* Stat 4 */}
+   517→            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+   518→              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 shrink-0">
+   519→                <span className="material-icons">stars</span>
+   520→              </div>
+   521→              <div className="text-left">
+   522→                <h3 className="text-xl font-bold text-text-main">4.8/5</h3>
+   523→                <p className="text-text-muted text-xs font-medium">Average Rating</p>
+   524→              </div>
+   525→            </div>
+   526→          </div>
+   527→        </div>
+   528→      </section>
+   529→      {/* END: Stats Banner */}
+   530→
+   531→      {/* BEGIN: Featured Courses */}
+   532→      <section className="py-16 sm:py-20" style={{ backgroundColor: "#F8F9FE" }} data-purpose="featured-courses">
+   533→        <div className="max-w-[1280px] mx-auto px-6">
+   534→          {/* Section Header — Centered */}
+   535→          <div className="text-center mb-12 sm:mb-16">
+   536→            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5" style={{ backgroundColor: "#EDE9FE", color: "#6D28D9" }}>
+   537→              🔥 TOP PICKS
+   538→            </span>
+   539→            <h2 className="text-3xl sm:text-[3rem] font-extrabold mb-4" style={{ color: "#1E1B4B", letterSpacing: "-0.02em" }}>Featured Courses</h2>
+   540→            <p className="text-base sm:text-lg max-w-[650px] mx-auto leading-relaxed" style={{ color: "#64748B" }}>
+   541→              Hand-picked courses from industry leaders to accelerate your career growth.
+   542→            </p>
+   543→            <div className="flex justify-center mt-6">
+   544→              <div className="w-[60px] h-1 rounded-full" style={{ backgroundColor: "#4F46E5" }} />
+   545→            </div>
+   546→          </div>
+   547→
+   548→          {/* Category Filter Chips */}
+   549→          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+   550→            {[
+   551→              { label: "All Courses", active: true },
+   552→              { label: "Development", active: false },
+   553→              { label: "Design", active: false },
+   554→              { label: "Marketing", active: false },
+   555→              { label: "AI & Data", active: false },
+   556→              { label: "Business", active: false },
+   557→            ].map((chip) => (
+   558→              <button
+   559→                key={chip.label}
+   560→                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-[10px] text-sm font-semibold transition-all duration-200"
+   561→                style={{
+   562→                  backgroundColor: chip.active ? "#4F46E5" : "#FFFFFF",
+   563→                  color: chip.active ? "#FFFFFF" : "#4F46E5",
+   564→                  border: chip.active ? "none" : "1px solid #E2E8F0",
+   565→                  boxShadow: chip.active ? "0 2px 8px rgba(79,70,229,0.3)" : "none",
+   566→                }}
+   567→              >
+   568→                {chip.label}
+   569→              </button>
+   570→            ))}
+   571→          </div>
+   572→
+   573→          {/* Course Grid — 4 / 2 / 1 */}
+   574→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+   575→            {featuredCourses.map((course, idx) => {
+   576→              const badgeText = idx === 0 ? "BEST SELLER" : idx === 2 ? "TRENDING" : (course.badge || "BEST SELLER").toUpperCase();
+   577→              const accentColors = [
+   578→                { border: "#4F46E5", tagBg: "#EEF2FF", tagText: "#4F46E5" },
+   579→                { border: "#10B981", tagBg: "#ECFDF5", tagText: "#059669" },
+   580→                { border: "#3B82F6", tagBg: "#EFF6FF", tagText: "#2563EB" },
+   581→                { border: "#F97316", tagBg: "#FFF7ED", tagText: "#EA580C" },
+   582→              ];
+   583→              const accent = accentColors[idx % accentColors.length];
+   584→              return (
+   585→                <a
+   586→                  key={course.slug}
+   587→                  href={`/courses/${course.slug}`}
+   588→                  className="group flex flex-col rounded-2xl overflow-hidden bg-white transition-all duration-200 hover:-translate-y-1"
+   589→                  style={{
+   590→                    boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+   591→                    borderBottom: `3px solid ${accent.border}`,
+   592→                  }}
+   593→                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = `0 20px 25px -5px rgba(79, 70, 229, 0.15)`; }}
+   594→                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.05)"; }}
+   595→                >
+   596→                  {/* Image Area */}
+   597→                  <div className="relative h-[200px] overflow-hidden">
+   598→                    <img
+   599→                      alt={course.title}
+   600→                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+   601→                      src={course.image}
+   602→                    />
+   603→                    {/* Gradient overlay at bottom */}
+   604→                    <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.35), transparent 60%)" }} />
+   605→                    
+   606→                    {/* Status Badge — top-left */}
+   607→                    <span
+   608→                      className="absolute top-3 left-3 text-[11px] font-bold uppercase px-3 py-1.5 rounded-md shadow-sm z-10"
+   609→                      style={{
+   610→                        backgroundColor: badgeText === "BEST SELLER" ? "#F97316" : badgeText === "TRENDING" ? "#10B981" : "#4F46E5",
+   611→                        color: "#fff",
+   612→                        letterSpacing: "0.5px",
+   613→                      }}
+   614→                    >
+   615→                      {badgeText}
+   616→                    </span>
+   617→
+   618→                    {/* Duration badge — bottom-right */}
+   619→                    <span className="absolute bottom-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-md z-10" style={{ backgroundColor: "rgba(0,0,0,0.7)", color: "#fff" }}>
+   620→                      {course.duration}
+   621→                    </span>
+   622→
+   623→                    {/* Bookmark — top-right */}
+   624→                    <div className="absolute top-3 right-3 w-8 h-8 rounded-lg flex items-center justify-center z-10" style={{ backgroundColor: "rgba(255,255,255,0.9)", backdropFilter: "blur(4px)" }}>
+   625→                      <svg className="w-4 h-4" style={{ color: "#475569" }} fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" /></svg>
+   626→                    </div>
+   627→                  </div>
+   628→
+   629→                  {/* Card Body */}
+   630→                  <div className="flex flex-col flex-grow" style={{ padding: "28px 20px 24px" }}>
+   631→                    {/* Rating + Price Row */}
+   632→                    <div className="flex items-center justify-between mb-3">
+   633→                      <div className="flex items-center gap-1.5">
+   634→                        <svg className="w-4 h-4" style={{ color: "#FBBF24", fill: "#FBBF24" }} viewBox="0 0 24 24" strokeWidth="0"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
+   635→                        <span className="text-sm font-bold" style={{ color: "#1E293B" }}>{course.rating}</span>
+   636→                        <span className="text-[13px] font-medium" style={{ color: "#64748B" }}>(2.4K)</span>
+   637→                      </div>
+   638→                      <span className="text-xl font-extrabold" style={{ color: "#4F46E5" }}>{course.price}</span>
+   639→                    </div>
+   640→
+   641→                    {/* Course Title */}
+   642→                    <h4 className="font-bold text-[17px] leading-snug line-clamp-2 mb-2" style={{ color: "#0F172A", minHeight: "2.6rem" }}>
+   643→                      {course.title}
+   644→                    </h4>
+   645→
+   646→                    {/* Description */}
+   647→                    <p className="text-sm leading-relaxed line-clamp-2 mb-4" style={{ color: "#64748B" }}>
+   648→                      {course.description}
+   649→                    </p>
+   650→
+   651→                    {/* Tech Tags */}
+   652→                    <div className="flex flex-wrap gap-2 mb-5">
+   653→                      {course.techStack.slice(0, 2).map((t) => (
+   654→                        <span
+   655→                          key={t.name}
+   656→                          className="text-xs font-semibold px-2.5 py-1 rounded-md"
+   657→                          style={{ backgroundColor: accent.tagBg, color: accent.tagText }}
+   658→                        >
+   659→                          {t.name}
+   660→                        </span>
+   661→                      ))}
+   662→                    </div>
+   663→
+   664→                    {/* Enroll Button */}
+   665→                    <div className="mt-auto">
+   666→                      <span
+   667→                        className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-[10px] text-sm font-semibold transition-all duration-200"
+   668→                        style={{
+   669→                          border: `1.5px solid ${accent.border}`,
+   670→                          color: accent.border,
+   671→                          height: "44px",
+   672→                        }}
+   673→                      >
+   674→                        Enroll Now
+   675→                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+   676→                      </span>
+   677→                    </div>
+   678→                  </div>
+   679→                </a>
+   680→              );
+   681→            })}
+   682→          </div>
+   683→        </div>
+   684→      </section>
+   685→      {/* END: Featured Courses */}
+   686→
+   687→      {/* BEGIN: Browse By Category */}
+   688→      <section className="py-10 sm:py-14 bg-white relative overflow-hidden" data-purpose="categories">
+   689→        {/* Decorative dot patterns */}
+   690→        <div className="absolute top-1/2 left-8 -translate-y-1/2 hidden lg:grid grid-cols-4 gap-3 opacity-30 pointer-events-none">
+   691→          {Array.from({ length: 16 }).map((_, i) => (
+   692→            <div key={i} className="w-1 h-1 rounded-full" style={{ backgroundColor: "#C7D2FE" }} />
+   693→          ))}
+   694→        </div>
+   695→        <div className="absolute top-1/2 right-8 -translate-y-1/2 hidden lg:grid grid-cols-4 gap-3 opacity-30 pointer-events-none">
+   696→          {Array.from({ length: 16 }).map((_, i) => (
+   697→            <div key={i} className="w-1 h-1 rounded-full" style={{ backgroundColor: "#C7D2FE" }} />
+   698→          ))}
+   699→        </div>
+   700→
+   701→        <div className="relative max-w-[1280px] mx-auto px-6">
+   702→          {/* Section Header */}
+   703→          <div className="text-center mb-8 sm:mb-9">
+   704→            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider mb-3" style={{ backgroundColor: "#EEF2FF", color: "#6366F1", border: "1px solid #E0E7FF" }}>
+   705→              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
+   706→              EXPLORE COURSES
+   707→            </span>
+   708→            <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.25rem] font-extrabold mb-2" style={{ letterSpacing: "-0.02em" }}>
+   709→              Browse by <span style={{ color: "#7C3AED" }}>Category</span>
+   710→            </h2>
+   711→            <div className="flex justify-center mb-3">
+   712→              <div className="w-[50px] h-1 rounded-full" style={{ backgroundColor: "#6D28D9" }} />
+   713→            </div>
+   714→            <p className="text-sm sm:text-[15px] max-w-[500px] mx-auto leading-relaxed" style={{ color: "#6B7280" }}>
+   715→              Explore courses by your interested categories and find the perfect course to start learning
+   716→            </p>
+   717→          </div>
+   718→
+   719→          {/* Category Cards Grid — 4 / 2 / 1 */}
+   720→          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+   721→            {[
+   722→              {
+   723→                name: "Web Development",
+   724→                count: "120+ Courses",
+   725→                desc: "Build modern websites and web applications with latest frameworks and technologies.",
+   726→                iconBg: "#EDE9FE", iconColor: "#7C3AED", countColor: "#6D28D9",
+   727→                arrowBg: "#F3E8FF",
+   728→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" /></svg>,
+   729→              },
+   730→              {
+   731→                name: "Design",
+   732→                count: "85+ Courses",
+   733→                desc: "Master UI/UX design, Figma, and creative tools to build stunning user experiences.",
+   734→                iconBg: "#ECFDF5", iconColor: "#059669", countColor: "#047857",
+   735→                arrowBg: "#D1FAE5",
+   736→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
+   737→              },
+   738→              {
+   739→                name: "Marketing",
+   740→                count: "90+ Courses",
+   741→                desc: "Learn digital marketing, SEO, social media, and growth strategies for businesses.",
+   742→                iconBg: "#FFF7ED", iconColor: "#EA580C", countColor: "#C2410C",
+   743→                arrowBg: "#FED7AA",
+   744→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46" /></svg>,
+   745→              },
+   746→              {
+   747→                name: "AI & Data",
+   748→                count: "110+ Courses",
+   749→                desc: "Dive into artificial intelligence, machine learning, and data science fundamentals.",
+   750→                iconBg: "#EFF6FF", iconColor: "#2563EB", countColor: "#1D4ED8",
+   751→                arrowBg: "#BFDBFE",
+   752→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>,
+   753→              },
+   754→              {
+   755→                name: "Business",
+   756→                count: "150+ Courses",
+   757→                desc: "Develop business acumen, entrepreneurship, and leadership skills for growth.",
+   758→                iconBg: "#FDF2F8", iconColor: "#DB2777", countColor: "#BE185D",
+   759→                arrowBg: "#FBCFE8",
+   760→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>,
+   761→              },
+   762→              {
+   763→                name: "Mobile Dev",
+   764→                count: "65+ Courses",
+   765→                desc: "Build cross-platform mobile apps with Flutter, React Native, and Swift.",
+   766→                iconBg: "#F5F3FF", iconColor: "#6366F1", countColor: "#4F46E5",
+   767→                arrowBg: "#E0E7FF",
+   768→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>,
+   769→              },
+   770→              {
+   771→                name: "Cloud & DevOps",
+   772→                count: "80+ Courses",
+   773→                desc: "Master AWS, Docker, Kubernetes, and CI/CD pipelines for cloud infrastructure.",
+   774→                iconBg: "#F0FDFA", iconColor: "#0891B2", countColor: "#0E7490",
+   775→                arrowBg: "#A5F3FC",
+   776→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z" /></svg>,
+   777→              },
+   778→              {
+   779→                name: "Photography",
+   780→                count: "45+ Courses",
+   781→                desc: "Learn photography, videography, and photo editing with professional tools.",
+   782→                iconBg: "#FAF5FF", iconColor: "#A855F7", countColor: "#9333EA",
+   783→                arrowBg: "#E9D5FF",
+   784→                icon: <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path strokeLinecap="round" strokeLinejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" /></svg>,
+   785→              },
+   786→            ].map((cat) => (
+   787→              <a
+   788→                key={cat.name}
+   789→                href="#"
+   790→                className="group relative flex flex-col p-4 sm:p-5 rounded-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+   791→                style={{
+   792→                  backgroundColor: "#FFFFFF",
+   793→                  border: "1px solid #E5E7EB",
+   794→                  boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
+   795→                  minHeight: "170px",
+   796→                }}
+   797→                onMouseEnter={(e) => {
+   798→                  const el = e.currentTarget as HTMLElement;
+   799→                  el.style.borderColor = "#C7D2FE";
+   800→                  el.style.boxShadow = "0 10px 25px -5px rgba(109,40,217,0.15)";
+   801→                }}
+   802→                onMouseLeave={(e) => {
+   803→                  const el = e.currentTarget as HTMLElement;
+   804→                  el.style.borderColor = "#E5E7EB";
+   805→                  el.style.boxShadow = "0 1px 3px rgba(0,0,0,0.05)";
+   806→                }}
+   807→              >
+   808→                {/* Icon */}
+   809→                <div
+   810→                  className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-2.5"
+   811→                  style={{ backgroundColor: cat.iconBg, color: cat.iconColor }}
+   812→                >
+   813→                  {cat.icon}
+   814→                </div>
+   815→
+   816→                {/* Title */}
+   817→                <h4 className="text-[13px] sm:text-[15px] font-bold mb-0.5" style={{ color: "#111827" }}>{cat.name}</h4>
+   818→
+   819→                {/* Course Count */}
+   820→                <span className="text-[11px] sm:text-xs font-semibold mb-2" style={{ color: cat.countColor }}>{cat.count}</span>
+   821→
+   822→                {/* Description */}
+   823→                <p className="text-[11px] sm:text-xs leading-relaxed line-clamp-2 mb-2 flex-grow" style={{ color: "#6B7280" }}>{cat.desc}</p>
+   824→
+   825→                {/* Arrow Button */}
+   826→                <div className="mt-auto flex justify-end">
+   827→                  <div
+   828→                    className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
+   829→                    style={{ backgroundColor: cat.arrowBg, color: cat.countColor }}
+   830→                  >
+   831→                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+   832→                  </div>
+   833→                </div>
+   834→              </a>
+   835→            ))}
+   836→          </div>
+   837→
+   838→          {/* View All Categories Button */}
+   839→          <div className="flex justify-center mt-8 sm:mt-10">
+   840→            <a
+   841→              href="#"
+   842→              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
+   843→              style={{
+   844→                color: "#6D28D9",
+   845→                backgroundColor: "#FFFFFF",
+   846→                border: "1.5px solid #DDD6FE",
+   847→              }}
+   848→              onMouseEnter={(e) => {
+   849→                const el = e.currentTarget as HTMLElement;
+   850→                el.style.borderColor = "#6D28D9";
+   851→                el.style.backgroundColor = "#F5F3FF";
+   852→                el.style.boxShadow = "0 4px 12px rgba(109,40,217,0.15)";
+   853→              }}
+   854→              onMouseLeave={(e) => {
+   855→                const el = e.currentTarget as HTMLElement;
+   856→                el.style.borderColor = "#DDD6FE";
+   857→                el.style.backgroundColor = "#FFFFFF";
+   858→                el.style.boxShadow = "none";
+   859→              }}
+   860→            >
+   861→              View All Categories
+   862→              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+   863→            </a>
+   864→          </div>
+   865→        </div>
+   866→      </section>
+   867→      {/* END: Browse By Category */}
+   868→
+   869→      {/* BEGIN: All Courses (Sidebar + Grid) */}
+   870→      <section className="py-24 bg-white" data-purpose="all-courses">
+   871→        <div className="max-w-7xl mx-auto px-4">
+   872→          <h2 className="text-3xl font-bold text-text-main mb-8">All Courses</h2>
+   873→          <div className="flex flex-col md:flex-row gap-8">
+   874→            
+   875→            {/* Sidebar */}
+   876→            <aside className="w-full md:w-1/4 flex flex-col gap-6">
+   877→              <div className="bg-white p-6 rounded-xl border border-border-custom shadow-sm flex flex-col gap-6">
+   878→                
+   879→                {/* Header */}
+   880→                <div className="flex justify-between items-center">
+   881→                  <h3 className="text-xl font-bold text-text-main">Filters</h3>
+   882→                  <button onClick={handleResetFilters} className="text-primary text-sm font-medium flex items-center gap-1 hover:underline">
+   883→                    <span className="material-icons text-sm">refresh</span>
+   884→                    Reset All
+   885→                  </button>
+   886→                </div>
+   887→
+   888→                {/* Search Bar */}
+   889→                <div className="relative">
+   890→                  <input
+   891→                    type="text"
+   892→                    placeholder="Search Courses..."
+   893→                    className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-border-custom focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-[#1f2937] bg-white"
+   894→                    value={searchQuery}
+   895→                    onChange={(e) => setSearchQuery(e.target.value)}
+   896→                  />
+   897→                  <span className="material-icons absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">search</span>
+   898→                </div>
+   899→
+   900→                {/* Categories */}
+   901→                <div className="flex flex-col gap-4">
+   902→                  <div className="flex justify-between items-center cursor-pointer">
+   903→                    <h4 className="font-bold text-text-main">Categories</h4>
+   904→                    <span className="material-icons text-text-muted">expand_less</span>
+   905→                  </div>
+   906→                  <div className="flex flex-col gap-3">
+   907→                    {[
+   908→                      { name: "Web Development", count: 120 },
+   909→                      { name: "Data Science", count: 86 },
+   910→                      { name: "Design", count: 64 },
+   911→                      { name: "Business", count: 45 },
+   912→                      { name: "Marketing", count: 32 }
+   913→                    ].map((cat) => {
+   914→                      const isChecked = selectedCategories.includes(cat.name);
+   915→                      return (
+   916→                        <label key={cat.name} className="flex items-center justify-between cursor-pointer group">
+   917→                          <div className="flex items-center gap-3" onClick={() => handleToggleCategory(cat.name)}>
+   918→                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+   919→                              isChecked ? "border-primary bg-primary" : "border-border-custom bg-white"
+   920→                            }`}>
+   921→                              {isChecked && <span className="material-icons text-white text-xs">check</span>}
+   922→                            </div>
+   923→                            <span className="text-sm text-text-main">{cat.name}</span>
+   924→                          </div>
+   925→                          <span className="text-xs text-text-muted">({cat.count})</span>
+   926→                        </label>
+   927→                      );
+   928→                    })}
+   929→                  </div>
+   930→                </div>
+   931→
+   932→                <div className="h-px bg-border-custom"></div>
+   933→
+   934→                {/* Level */}
+   935→                <div className="flex flex-col gap-4">
+   936→                  <div className="flex justify-between items-center cursor-pointer">
+   937→                    <h4 className="font-bold text-text-main">Level</h4>
+   938→                    <span className="material-icons text-text-muted">expand_less</span>
+   939→                  </div>
+   940→                  <div className="flex flex-col gap-3">
+   941→                    {[
+   942→                      { name: "Beginner", count: 120 },
+   943→                      { name: "Intermediate", count: 96 },
+   944→                      { name: "Advanced", count: 32 }
+   945→                    ].map((lvl) => {
+   946→                      const isChecked = selectedLevels.includes(lvl.name);
+   947→                      return (
+   948→                        <label key={lvl.name} className="flex items-center justify-between cursor-pointer group">
+   949→                          <div className="flex items-center gap-3" onClick={() => handleToggleLevel(lvl.name)}>
+   950→                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+   951→                              isChecked ? "border-primary bg-primary" : "border-border-custom bg-white"
+   952→                            }`}>
+   953→                              {isChecked && <span className="material-icons text-white text-xs">check</span>}
+   954→                            </div>
+   955→                            <span className="text-sm text-text-main">{lvl.name}</span>
+   956→                          </div>
+   957→                          <span className="text-xs text-text-muted">({lvl.count})</span>
+   958→                        </label>
+   959→                      );
+   960→                    })}
+   961→                  </div>
+   962→                </div>
+   963→
+   964→                <div className="h-px bg-border-custom"></div>
+   965→
+   966→                {/* Duration */}
+   967→                <div className="flex flex-col gap-4">
+   968→                  <div className="flex justify-between items-center cursor-pointer">
+   969→                    <h4 className="font-bold text-text-main">Duration</h4>
+   970→                    <span className="material-icons text-text-muted">expand_less</span>
+   971→                  </div>
+   972→                  <div className="flex flex-col gap-3">
+   973→                    {[
+   974→                      { label: "1-4 Weeks", count: 38 },
+   975→                      { label: "4-8 Weeks", count: 76 },
+   976→                      { label: "8-12 Weeks", count: 64 },
+   977→                      { label: "12+ Weeks", count: 70 }
+   978→                    ].map((dur) => {
+   979→                      const isChecked = selectedDurations.includes(dur.label);
+   980→                      return (
+   981→                        <label key={dur.label} className="flex items-center justify-between cursor-pointer group">
+   982→                          <div className="flex items-center gap-3" onClick={() => handleToggleDuration(dur.label)}>
+   983→                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+   984→                              isChecked ? "border-primary bg-primary" : "border-border-custom bg-white"
+   985→                            }`}>
+   986→                              {isChecked && <span className="material-icons text-white text-xs">check</span>}
+   987→                            </div>
+   988→                            <span className="text-sm text-text-main">{dur.label}</span>
+   989→                          </div>
+   990→                          <span className="text-xs text-text-muted">({dur.count})</span>
+   991→                        </label>
+   992→                      );
+   993→                    })}
+   994→                  </div>
+   995→                </div>
+   996→
+   997→                <div className="h-px bg-border-custom"></div>
+   998→
+   999→                {/* Price */}
+  1000→                <div className="flex flex-col gap-4">
+  1001→                  <div className="flex justify-between items-center cursor-pointer">
+  1002→                    <h4 className="font-bold text-text-main">Price</h4>
+  1003→                    <span className="material-icons text-text-muted">expand_less</span>
+  1004→                  </div>
+  1005→                  <div className="flex flex-col gap-3">
+  1006→                    {[
+  1007→                      { label: "Free", count: 32 },
+  1008→                      { label: "₹0 - ₹999", count: 64 },
+  1009→                      { label: "₹1,000 - ₹4,999", count: 96 },
+  1010→                      { label: "₹5,000+", count: 56 }
+  1011→                    ].map((prc) => {
+  1012→                      const isChecked = selectedPrices.includes(prc.label);
+  1013→                      return (
+  1014→                        <label key={prc.label} className="flex items-center justify-between cursor-pointer group">
+  1015→                          <div className="flex items-center gap-3" onClick={() => handleTogglePrice(prc.label)}>
+  1016→                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+  1017→                              isChecked ? "border-primary bg-primary" : "border-border-custom bg-white"
+  1018→                            }`}>
+  1019→                              {isChecked && <span className="material-icons text-white text-xs">check</span>}
+  1020→                            </div>
+  1021→                            <span className="text-sm text-text-main">{prc.label}</span>
+  1022→                          </div>
+  1023→                          <span className="text-xs text-text-muted">({prc.count})</span>
+  1024→                        </label>
+  1025→                      );
+  1026→                    })}
+  1027→                  </div>
+  1028→                </div>
+  1029→
+  1030→                <div className="h-px bg-border-custom"></div>
+  1031→
+  1032→                {/* Rating */}
+  1033→                <div className="flex flex-col gap-4">
+  1034→                  <div className="flex justify-between items-center cursor-pointer">
+  1035→                    <h4 className="font-bold text-text-main">Rating</h4>
+  1036→                    <span className="material-icons text-text-muted">expand_less</span>
+  1037→                  </div>
+  1038→                  <div className="flex flex-col gap-3">
+  1039→                    {[5, 4, 3, 2].map((rating) => {
+  1040→                      const isChecked = selectedRatings.includes(rating);
+  1041→                      return (
+  1042→                        <label key={rating} className="flex items-center justify-between cursor-pointer group">
+  1043→                          <div className="flex items-center gap-3" onClick={() => handleToggleRating(rating)}>
+  1044→                            <div className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+  1045→                              isChecked ? "border-primary bg-primary" : "border-border-custom bg-white"
+  1046→                            }`}>
+  1047→                              {isChecked && <span className="material-icons text-white text-xs">check</span>}
+  1048→                            </div>
+  1049→                            <div className="flex text-yellow-500">
+  1050→                              {[...Array(5)].map((_, i) => (
+  1051→                                <span key={i} className={`material-icons text-sm ${i < rating ? "text-yellow-500" : "text-gray-200"}`}>star</span>
+  1052→                              ))}
+  1053→                            </div>
+  1054→                          </div>
+  1055→                          <span className="text-xs text-text-muted">
+  1056→                            {rating === 5 ? "(120)" : rating === 4 ? "& above (180)" : rating === 3 ? "& above (220)" : "& above (240)"}
+  1057→                          </span>
+  1058→                        </label>
+  1059→                      );
+  1060→                    })}
+  1061→                  </div>
+  1062→                </div>
+  1063→
+  1064→                {/* Reset Button */}
+  1065→                <button onClick={handleResetFilters} className="w-full mt-4 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-hover-custom transition-colors flex items-center justify-center gap-2 shadow-md">
+  1066→                  <span className="material-icons">refresh</span>
+  1067→                  Reset Filters
+  1068→                </button>
+  1069→              </div>
+  1070→            </aside>
+  1071→
+  1072→            {/* Grid */}
+  1073→            <div className="w-full md:w-3/4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  1074→              {filteredCourses.length > 0 ? (
+  1075→                filteredCourses.map((course) => (
+  1076→                  <a key={course.slug} href={`/courses/${course.slug}`} className="block group">
+  1077→                    <div className="p-5 flex flex-col flex-grow">
+  1078→                      <div className="flex items-center justify-between mb-2">
+  1079→                        <span className="flex items-center gap-1 text-yellow-500 text-sm font-bold">
+  1080→                          <span className="material-icons text-[16px]">star</span> {course.rating}
+  1081→                        </span>
+  1082→                        <span className="text-primary font-bold text-lg">{course.price}</span>
+  1083→                      </div>
+  1084→                      <h4 className="font-bold text-text-main mb-1 text-lg leading-tight">{course.title}</h4>
+  1085→                      <div className="flex flex-wrap gap-1 mb-3">
+  1086→                        {course.techStack.slice(0, 3).map((tech) => (
+  1087→                          <span key={tech.name} className="text-[10px] bg-[#3525cd]/10 text-primary px-2 py-0.5 rounded-full font-medium">{tech.name}</span>
+  1088→                        ))}
+  1089→                      </div>
+  1090→                      <div className="flex gap-2 mb-4">
+  1091→                        <span className="text-xs text-text-muted bg-surface-variant px-2 py-0.5 rounded">{course.duration}</span>
+  1092→                        <span className="text-xs text-text-muted bg-surface-variant px-2 py-0.5 rounded">{course.location}</span>
+  1093→                      </div>
+  1094→                      <button className="w-full mt-auto py-2 rounded-xl border border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-colors text-center">
+  1095→                        View Details
+  1096→                      </button>
+  1097→                    </div>
+  1098→                  </a>
+  1099→                ))
+  1100→              ) : (
+  1101→                <div className="col-span-full py-16 text-center text-text-muted">
+  1102→                  <span className="material-icons text-5xl mb-4 text-gray-300">search_off</span>
+  1103→                  <p className="text-lg font-medium">No courses found matching selected filters.</p>
+  1104→                  <button onClick={handleResetFilters} className="mt-4 text-primary font-semibold hover:underline">Clear all filters</button>
+  1105→                </div>
+  1106→              )}
+  1107→            </div>
+  1108→
+  1109→          </div>
+  1110→        </div>
+  1111→      </section>
+  1112→      {/* END: All Courses */}
+  1113→
+  1114→      {/* BEGIN: Your Learning Journey */}
+  1115→      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F8F7FF', position: 'relative', overflow: 'hidden' }}>
+  1116→        {/* Decorative dots top-left */}
+  1117→        <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'grid', gridTemplateColumns: 'repeat(4, 8px)', gap: '8px', opacity: 0.5 }}>
+  1118→          {Array.from({ length: 16 }).map((_, i) => (
+  1119→            <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: '#D4D0FF' }} />
+  1120→          ))}
+  1121→        </div>
+  1122→        {/* Decorative arc top-right */}
+  1123→        <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: 180, height: 180, borderRadius: '50%', border: '2px solid #EBEAFF', opacity: 0.6 }} />
+  1124→        {/* Decorative blob bottom-left */}
+  1125→        <div style={{ position: 'absolute', bottom: '-30px', left: '-30px', width: 200, height: 200, borderRadius: '50%', background: 'radial-gradient(circle, rgba(130,120,255,0.12) 0%, transparent 70%)' }} />
+  1126→
+  1127→        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px', position: 'relative', zIndex: 1 }}>
+  1128→          {/* Header */}
+  1129→          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+  1130→            {/* STEP BY STEP badge */}
+  1131→            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF', border: '1px solid #EEEFF5', borderRadius: 50, padding: '6px 16px', marginBottom: 16 }}>
+  1132→              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  1133→                <path d="M4 16v-2.38C4 11.5 2.97 9.5 3 8c.03-1.5.49-3 2-4s3.5-1 4.5-.5S11 5 11.5 6c.5 1.5 1 3 2.5 3s2.5-1.5 3-3c.5-1 1.5-2.5 3-3s3 0 4 .5 2 2.5 2 4c-.03 1.5-1 3.5-1 5.62V16" />
+  1134→                <path d="M20 20v-4" />
+  1135→                <path d="M4 20v-4" />
+  1136→              </svg>
+  1137→              <span style={{ fontSize: 12, fontWeight: 600, color: '#4F46E5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Step by Step</span>
+  1138→            </div>
+  1139→
+  1140→            {/* Title */}
+  1141→            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
+  1142→              <span style={{ color: '#111827' }}>Your </span>
+  1143→              <span style={{ color: '#4F46E5', position: 'relative', display: 'inline-block' }}>
+  1144→                Learning Journey
+  1145→                <span style={{ position: 'absolute', bottom: -4, left: 0, width: '70%', height: 3, backgroundColor: '#4F46E5', borderRadius: 2 }} />
+  1146→              </span>
+  1147→            </h2>
+  1148→
+  1149→            {/* Subtitle */}
+  1150→            <p style={{ color: '#6B7280', fontSize: 'clamp(14px, 1.8vw, 17px)', lineHeight: 1.6, marginTop: 14, maxWidth: 520, marginLeft: 'auto', marginRight: 'auto' }}>
+  1151→              Follow simple steps to build skills and advance your career with confidence.
+  1152→            </p>
+  1153→          </div>
+  1154→
+  1155→          {/* Desktop: 4-column grid with dashed connectors */}
+  1156→          <div className="hidden sm:grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', gap: 24, position: 'relative', alignItems: 'start' }}>
+  1157→            <div style={{ position: 'absolute', top: 26, left: '12.5%', right: '12.5%', height: 0, borderTop: '2px dashed #D1D5DB', zIndex: 0 }} />
+  1158→            {JOURNEY_STEPS.map((step, idx) => (
+  1159→              <div key={step.num} style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+  1160→                {idx < 3 && (
+  1161→                  <div style={{
+  1162→                    position: 'absolute', top: 22, right: -28,
+  1163→                    width: 32, height: 32, borderRadius: '50%',
+  1164→                    backgroundColor: '#FFFFFF', boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+  1165→                    display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2,
+  1166→                  }}>
+  1167→                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+  1168→                      <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+  1169→                    </svg>
+  1170→                  </div>
+  1171→                )}
+  1172→                <StepCard step={step} />
+  1173→              </div>
+  1174→            ))}
+  1175→          </div>
+  1176→
+  1177→          {/* Mobile: 2-column grid */}
+  1178→          <div className="grid grid-cols-2 gap-4 sm:hidden">
+  1179→            {JOURNEY_STEPS.map((step) => (
+  1180→              <StepCard key={step.num} step={step} compact />
+  1181→            ))}
+  1182→          </div>
+  1183→        </div>
+  1184→      </section>
+  1185→      {/* END: Your Learning Journey */}
+  1186→
+  1187→      {/* BEGIN: Popular Learning Paths */}
+  1188→      <section style={{ backgroundColor: '#F8F9FC', padding: '64px 0' }}>
+  1189→        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
+  1190→          {/* Header */}
+  1191→          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+  1192→            <div style={{ display: 'inline-block', backgroundColor: '#EDE9FE', color: '#7C3AED', fontSize: 12, fontWeight: 700, padding: '6px 16px', borderRadius: 50, marginBottom: 16, letterSpacing: '0.5px' }}>
+  1193→              🔥 POPULAR PATHS
+  1194→            </div>
+  1195→            <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
+  1196→              <span style={{ color: '#111827' }}>Popular </span>
+  1197→              <span style={{ color: '#7C3AED' }}>Learning Paths</span>
+  1198→            </h2>
+  1199→            <p style={{ color: '#6B7280', fontSize: 'clamp(14px, 1.6vw, 18px)', lineHeight: 1.6, marginTop: 14, maxWidth: 700, marginLeft: 'auto', marginRight: 'auto' }}>
+  1200→              Structured learning paths designed by experts to help you master in-demand skills and build a successful career.
+  1201→            </p>
+  1202→            <div style={{ width: 60, height: 4, borderRadius: 2, backgroundColor: '#7C3AED', margin: '20px auto 0' }} />
+  1203→          </div>
+  1204→
+  1205→          {/* Cards Grid */}
+  1206→          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 24 }}>
+  1207→            {LEARNING_PATHS.map((path) => (
+  1208→              <div key={path.title} style={{
+  1209→                backgroundColor: '#FFFFFF', borderRadius: 20,
+  1210→                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+  1211→                padding: 28, position: 'relative',
+  1212→                transition: 'transform 0.3s, box-shadow 0.3s',
+  1213→              }}>
+  1214→                {/* Badge top-right */}
+  1215→                <div style={{ position: 'absolute', top: 20, right: 20, fontSize: 11, fontWeight: 700, color: path.theme, textTransform: 'uppercase' as const }}>
+  1216→                  {path.badge}
+  1217→                </div>
+  1218→
+  1219→                {/* Icon */}
+  1220→                <div style={{
+  1221→                  width: 60, height: 60, borderRadius: 16,
+  1222→                  backgroundColor: path.iconBg,
+  1223→                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+  1224→                  marginBottom: 20,
+  1225→                }}>
+  1226→                  <PathIcon theme={path.theme} />
+  1227→                </div>
+  1228→
+  1229→                {/* Title */}
+  1230→                <h4 style={{ fontSize: 19, fontWeight: 700, color: '#111827', margin: '0 0 10px 0', lineHeight: 1.3 }}>{path.title}</h4>
+  1231→
+  1232→                {/* Description */}
+  1233→                <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.6, margin: 0 }}>{path.desc}</p>
+  1234→
+  1235→                {/* Stats Row */}
+  1236→                <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
+  1237→                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+  1238→                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  1239→                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+  1240→                    </div>
+  1241→                    <div>
+  1242→                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{path.courses}</div>
+  1243→                      <div style={{ fontSize: 12, color: '#6B7280' }}>Courses</div>
+  1244→                    </div>
+  1245→                  </div>
+  1246→                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+  1247→                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+  1248→                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+  1249→                    </div>
+  1250→                    <div>
+  1251→                      <div style={{ fontSize: 16, fontWeight: 700, color: '#111827', lineHeight: 1 }}>{path.months}</div>
+  1252→                      <div style={{ fontSize: 12, color: '#6B7280' }}>Months</div>
+  1253→                    </div>
+  1254→                  </div>
+  1255→                </div>
+  1256→
+  1257→                {/* Tech Tags */}
+  1258→                <div style={{ display: 'flex', gap: 8, marginTop: 20, flexWrap: 'wrap' }}>
+  1259→                  {path.techs.map((tech) => (
+  1260→                    <span key={tech} style={{
+  1261→                      fontSize: 11, fontWeight: 600, color: path.theme,
+  1262→                      backgroundColor: path.iconBg,
+  1263→                      padding: '4px 10px', borderRadius: 8,
+  1264→                    }}>{tech}</span>
+  1265→                  ))}
+  1266→                </div>
+  1267→
+  1268→                {/* Explore Button */}
+  1269→                <button style={{
+  1270→                  width: '100%', marginTop: 20, padding: '11px 0',
+  1271→                  border: `2px solid ${path.theme}`, borderRadius: 12,
+  1272→                  backgroundColor: 'transparent', color: path.theme,
+  1273→                  fontSize: 14, fontWeight: 600, cursor: 'pointer',
+  1274→                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+  1275→                }}>
+  1276→                  Explore Path
+  1277→                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  1278→                </button>
+  1279→              </div>
+  1280→            ))}
+  1281→          </div>
+  1282→
+  1283→          {/* Bottom CTA */}
+  1284→          <div style={{ textAlign: 'center', marginTop: 48 }}>
+  1285→            <button style={{
+  1286→              display: 'inline-flex', alignItems: 'center', gap: 8,
+  1287→              backgroundColor: '#FFFFFF', border: '2px solid #C4B5FD',
+  1288→              borderRadius: 50, padding: '13px 28px',
+  1289→              color: '#7C3AED', fontSize: 15, fontWeight: 600, cursor: 'pointer',
+  1290→            }}>
+  1291→              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+  1292→              View All Learning Paths
+  1293→              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  1294→            </button>
+  1295→          </div>
+  1296→        </div>
+  1297→      </section>
+  1298→      {/* END: Popular Learning Paths */}
+  1299→
+  1300→      {/* BEGIN: Skills You'll Master */}
+  1301→      <section className="py-24 bg-surface-variant text-center" data-purpose="skills">
+  1302→        <div className="max-w-4xl mx-auto px-4">
+  1303→          <h2 className="text-3xl font-bold text-text-main mb-8">Skills You'll Master</h2>
+  1304→          <div className="flex flex-wrap justify-center gap-3">
+  1305→            {[
+  1306→              { name: "Python", color: "bg-blue-100 text-blue-700 border-blue-200", icon: "terminal" },
+  1307→              { name: "JavaScript", color: "bg-yellow-100 text-yellow-700 border-yellow-200", icon: "javascript" },
+  1308→              { name: "React", color: "bg-cyan-100 text-cyan-700 border-cyan-200", icon: "layers" },
+  1309→              { name: "UI/UX Design", color: "bg-purple-100 text-purple-700 border-purple-200", icon: "palette" },
+  1310→              { name: "Data Analysis", color: "bg-indigo-100 text-indigo-700 border-indigo-200", icon: "insights" },
+  1311→              { name: "SEO", color: "bg-green-100 text-green-700 border-green-200", icon: "search" },
+  1312→              { name: "Machine Learning", color: "bg-pink-100 text-pink-700 border-pink-200", icon: "psychology" },
+  1313→              { name: "Leadership", color: "bg-orange-100 text-orange-700 border-orange-200", icon: "groups" },
+  1314→              { name: "Agile", color: "bg-teal-100 text-teal-700 border-teal-200", icon: "sync" },
+  1315→              { name: "Cloud Computing", color: "bg-sky-100 text-sky-700 border-sky-200", icon: "cloud" },
+  1316→              { name: "Cyber Security", color: "bg-red-100 text-red-700 border-red-200", icon: "security" },
+  1317→              { name: "DevOps", color: "bg-slate-100 text-slate-700 border-slate-200", icon: "settings_input_component" },
+  1318→              { name: "Blockchain", color: "bg-violet-100 text-violet-700 border-violet-200", icon: "currency_bitcoin" },
+  1319→              { name: "Mobile Dev", color: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: "smartphone" }
+  1320→            ].map((skill) => (
+  1321→              <span key={skill.name} className={`${skill.color} px-4 py-2 rounded-full border text-sm font-medium flex items-center gap-2 hover:brightness-95 cursor-pointer transition-all`}>
+  1322→                <span className="material-icons text-[18px]">{skill.icon}</span>
+  1323→                {skill.name}
+  1324→              </span>
+  1325→            ))}
+  1326→          </div>
+  1327→        </div>
+  1328→      </section>
+  1329→      {/* END: Skills You'll Master */}
+  1330→
+  1331→      {/* BEGIN: Why Learn With Us Grid */}
+  1332→      <section className="py-24 bg-white relative overflow-hidden" data-purpose="features">
+  1333→        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mt-48 blur-3xl opacity-50 -z-10"></div>
+  1334→        <div className="max-w-7xl mx-auto px-4 relative">
+  1335→          
+  1336→          {/* Header */}
+  1337→          <div className="text-center mb-16">
+  1338→            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-primary mb-4 tracking-widest uppercase">
+  1339→              ✨ Why Students Choose Us
+  1340→            </span>
+  1341→            <h2 className="text-4xl font-bold text-text-main mb-4">Why Learn With Us</h2>
+  1342→            <p className="text-text-muted text-lg max-w-2xl mx-auto mb-4">
+  1343→              We're committed to providing the best learning experience that helps you grow, build skills and achieve your career goals.
+  1344→            </p>
+  1345→            <div className="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+  1346→          </div>
+  1347→
+  1348→          {/* Grid */}
+  1349→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  1350→            {/* Card 01: Expert Mentors */}
+  1351→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1352→              <div className="absolute top-4 left-4 bg-blue-50 text-primary text-xs font-bold px-3 py-1 rounded-lg">01</div>
+  1353→              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+  1354→                <span className="material-icons text-3xl text-blue-500">person_outline</span>
+  1355→              </div>
+  1356→              <h4 className="text-xl font-bold text-text-main mb-2">Expert Mentors</h4>
+  1357→              <p className="text-text-muted text-sm leading-relaxed mb-6">Learn from industry experts who bring real-world experience and practical knowledge to every lesson.</p>
+  1358→              <div className="w-24 h-1.5 bg-blue-500 rounded-full mt-auto"></div>
+  1359→            </div>
+  1360→            {/* Card 02: Practical Projects */}
+  1361→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1362→              <div className="absolute top-4 left-4 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-lg">02</div>
+  1363→              <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mb-4">
+  1364→                <span className="material-icons text-3xl text-emerald-600">code</span>
+  1365→              </div>
+  1366→              <h4 className="text-xl font-bold text-text-main mb-2">Practical Projects</h4>
+  1367→              <p className="text-text-muted text-sm leading-relaxed mb-6">Work on real-world projects that help you apply concepts and build an impressive portfolio.</p>
+  1368→              <div className="w-24 h-1.5 bg-emerald-500 rounded-full mt-auto"></div>
+  1369→            </div>
+  1370→            {/* Card 03: Industry Certificate */}
+  1371→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1372→              <div className="absolute top-4 left-4 bg-violet-50 text-violet-700 text-xs font-bold px-3 py-1 rounded-lg">03</div>
+  1373→              <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mb-4">
+  1374→                <span className="material-icons text-3xl text-violet-600">card_membership</span>
+  1375→              </div>
+  1376→              <h4 className="text-xl font-bold text-text-main mb-2">Industry Certificate</h4>
+  1377→              <p className="text-text-muted text-sm leading-relaxed mb-6">Earn a recognized certificate that validates your skills and boosts your professional credibility.</p>
+  1378→              <div className="w-24 h-1.5 bg-violet-500 rounded-full mt-auto"></div>
+  1379→            </div>
+  1380→            {/* Card 04: Lifetime Access */}
+  1381→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1382→              <div className="absolute top-4 left-4 bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1 rounded-lg">04</div>
+  1383→              <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mb-4">
+  1384→                <span className="material-icons text-3xl text-orange-500">all_inclusive</span>
+  1385→              </div>
+  1386→              <h4 className="text-xl font-bold text-text-main mb-2">Lifetime Access</h4>
+  1387→              <p className="text-text-muted text-sm leading-relaxed mb-6">Get lifetime access to all course materials and future updates at no extra cost.</p>
+  1388→              <div className="w-24 h-1.5 bg-orange-500 rounded-full mt-auto"></div>
+  1389→            </div>
+  1390→            {/* Card 05: Learning Community */}
+  1391→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1392→              <div className="absolute top-4 left-4 bg-blue-50 text-primary text-xs font-bold px-3 py-1 rounded-lg">05</div>
+  1393→              <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
+  1394→                <span className="material-icons text-3xl text-blue-500">groups</span>
+  1395→              </div>
+  1396→              <h4 className="text-xl font-bold text-text-main mb-2">Learning Community</h4>
+  1397→              <p className="text-text-muted text-sm leading-relaxed mb-6">Join a supportive community of learners, collaborate, share ideas and grow together.</p>
+  1398→              <div className="w-24 h-1.5 bg-blue-500 rounded-full mt-auto"></div>
+  1399→            </div>
+  1400→            {/* Card 06: Placement Support */}
+  1401→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+  1402→              <div className="absolute top-4 left-4 bg-pink-50 text-pink-700 text-xs font-bold px-3 py-1 rounded-lg">06</div>
+  1403→              <div className="w-16 h-16 bg-pink-50 rounded-full flex items-center justify-center mb-4">
+  1404→                <span className="material-icons text-3xl text-pink-500">business_center</span>
+  1405→              </div>
+  1406→              <h4 className="text-xl font-bold text-text-main mb-2">Placement Support</h4>
+  1407→              <p className="text-text-muted text-sm leading-relaxed mb-6">Receive career guidance, resume reviews and interview support to kickstart your career.</p>
+  1408→              <div className="w-24 h-1.5 bg-pink-500 rounded-full mt-auto"></div>
+  1409→            </div>
+  1410→          </div>
+  1411→        </div>
+  1412→      </section>
+  1413→      {/* END: Why Learn With Us Grid */}
+  1414→
+  1415→      {/* BEGIN: Secondary Stats Banner */}
+  1416→      <section style={{ backgroundColor: 'transparent' }} className="max-w-4xl mx-auto px-4 -mt-10 relative z-10" data-purpose="stats">
+  1417→        <div className="rounded-2xl p-6 sm:p-8" style={{ backgroundColor: '#FFFFFF', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid #EEEFF5' }}>
+  1418→          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+  1419→            {/* Stat 1 */}
+  1420→            <div className="flex flex-col items-center gap-3">
+  1421→              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+  1422→                <span className="material-icons">school</span>
+  1423→              </div>
+  1424→              <div>
+  1425→                <h3 className="text-xl font-bold text-text-main">50K+</h3>
+  1426→                <p className="text-text-muted text-xs font-medium">Happy Students</p>
+  1427→              </div>
+  1428→            </div>
+  1429→            {/* Stat 2 */}
+  1430→            <div className="flex flex-col items-center gap-3">
+  1431→              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
+  1432→                <span className="material-icons">menu_book</span>
+  1433→              </div>
+  1434→              <div>
+  1435→                <h3 className="text-xl font-bold text-text-main">500+</h3>
+  1436→                <p className="text-text-muted text-xs font-medium">Courses</p>
+  1437→              </div>
+  1438→            </div>
+  1439→            {/* Stat 3 */}
+  1440→            <div className="flex flex-col items-center gap-3">
+  1441→              <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 shrink-0">
+  1442→                <span className="material-icons">emoji_events</span>
+  1443→              </div>
+  1444→              <div>
+  1445→                <h3 className="text-xl font-bold text-text-main">95%</h3>
+  1446→                <p className="text-text-muted text-xs font-medium">Satisfaction Rate</p>
+  1447→              </div>
+  1448→            </div>
+  1449→            {/* Stat 4 */}
+  1450→            <div className="flex flex-col items-center gap-3">
+  1451→              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 shrink-0">
+  1452→                <span className="material-icons">stars</span>
+  1453→              </div>
+  1454→              <div>
+  1455→                <h3 className="text-xl font-bold text-text-main">4.8/5</h3>
+  1456→                <p className="text-text-muted text-xs font-medium">Average Rating</p>
+  1457→              </div>
+  1458→            </div>
+  1459→          </div>
+  1460→        </div>
+  1461→      </section>
+  1462→      {/* END: Secondary Stats Banner */}
+  1463→
+  1464→      {/* BEGIN: Learning Paths Section 1 */}
+  1465→      <section className="bg-white py-24" data-purpose="learning-paths">
+  1466→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  1467→          <div className="text-center mb-16">
+  1468→            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-50 text-blue-600 mb-4">
+  1469→              📚 Learning Paths
+  1470→            </span>
+  1471→            <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
+  1472→            <p className="text-text-muted text-lg max-w-2xl mx-auto">Choose the perfect track tailored to your current expertise and career goals.</p>
+  1473→          </div>
+  1474→
+  1475→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-4 md:pb-0">
+  1476→            {/* Beginner Path */}
+  1477→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1478→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1479→              <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+  1480→                <span className="material-icons text-green-600 text-3xl">rocket_launch</span>
+  1481→              </div>
+  1482→              <h3 className="text-xl font-bold text-text-main mb-2">Beginner</h3>
+  1483→              <p className="text-text-muted text-sm mb-6">Foundational concepts for those starting from scratch.</p>
+  1484→              <ul className="space-y-4 mb-8">
+  1485→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1486→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1487→                  Core Fundamentals
+  1488→                </li>
+  1489→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1490→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1491→                  Guided Projects
+  1492→                </li>
+  1493→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1494→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1495→                  Community Support
+  1496→                </li>
+  1497→              </ul>
+  1498→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Get Started</button>
+  1499→            </div>
+  1500→
+  1501→            {/* Intermediate Path */}
+  1502→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1503→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1504→              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+  1505→                <span className="material-icons text-blue-600 text-3xl">trending_up</span>
+  1506→              </div>
+  1507→              <h3 className="text-xl font-bold text-text-main mb-2">Intermediate</h3>
+  1508→              <p className="text-text-muted text-sm mb-6">Deep dive into specialized tools and frameworks.</p>
+  1509→              <ul className="space-y-4 mb-8">
+  1510→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1511→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1512→                  Advanced Logic
+  1513→                </li>
+  1514→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1515→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1516→                  Real-world Case Studies
+  1517→                </li>
+  1518→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1519→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1520→                  Code Reviews
+  1521→                </li>
+  1522→              </ul>
+  1523→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Level Up</button>
+  1524→            </div>
+  1525→
+  1526→            {/* Advanced Path */}
+  1527→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1528→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1529→              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+  1530→                <span className="material-icons text-purple-600 text-3xl">psychology</span>
+  1531→              </div>
+  1532→              <h3 className="text-xl font-bold text-text-main mb-2">Advanced</h3>
+  1533→              <p className="text-text-muted text-sm mb-6">Mastery of architecture and complex systems.</p>
+  1534→              <ul className="space-y-4 mb-8">
+  1535→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1536→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1537→                  System Design
+  1538→                </li>
+  1539→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1540→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1541→                  Performance Tuning
+  1542→                </li>
+  1543→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1544→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1545→                  1-on-1 Mentorship
+  1546→                </li>
+  1547→              </ul>
+  1548→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Master Now</button>
+  1549→            </div>
+  1550→
+  1551→            {/* Most Popular Path */}
+  1552→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border-2 border-blue-100">
+  1553→              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Most Popular</div>
+  1554→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1555→              <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
+  1556→                <span className="material-icons text-yellow-600 text-3xl">star</span>
+  1557→              </div>
+  1558→              <h3 className="text-xl font-bold text-text-main mb-2">Full-Stack Pro</h3>
+  1559→              <p className="text-text-muted text-sm mb-6">The complete journey from zero to industry-ready.</p>
+  1560→              <ul className="space-y-4 mb-8">
+  1561→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1562→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1563→                  End-to-End Mastery
+  1564→                </li>
+  1565→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1566→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1567→                  Job Placement Help
+  1568→                </li>
+  1569→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1570→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1571→                  Portfolio Building
+  1572→                </li>
+  1573→              </ul>
+  1574→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Join Path</button>
+  1575→            </div>
+  1576→          </div>
+  1577→        </div>
+  1578→      </section>
+  1579→      {/* END: Learning Paths Section 1 */}
+  1580→
+  1581→      {/* BEGIN: Learning Paths Section 2 */}
+  1582→      <section className="py-24 bg-white" data-purpose="learning-paths">
+  1583→        <div className="max-w-7xl mx-auto px-4">
+  1584→          <div className="text-center mb-12">
+  1585→            <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 inline-block">📚 Learning Paths</span>
+  1586→            <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
+  1587→            <p className="text-text-muted text-lg max-w-3xl mx-auto">Not sure where to start? Compare our learning paths and choose the course that best matches your current skills and career goals.</p>
+  1588→          </div>
+  1589→
+  1590→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-x-auto pb-6">
+  1591→            {/* Card 1: Beginner */}
+  1592→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1593→              <div className="text-4xl mb-6">🟢</div>
+  1594→              <h3 className="text-xl font-bold text-text-main mb-4">Beginner</h3>
+  1595→              <p className="text-text-muted text-sm mb-8">Perfect for complete beginners starting their learning journey.</p>
+  1596→              <ul className="space-y-4 mb-10 flex-grow">
+  1597→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> No Prior Experience Required</li>
+  1598→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> 4 Weeks Duration</li>
+  1599→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Beginner Friendly Projects</li>
+  1600→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Community Support</li>
+  1601→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Completion Certificate</li>
+  1602→              </ul>
+  1603→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Start Beginner Path</button>
+  1604→            </div>
+  1605→
+  1606→            {/* Card 2: Intermediate */}
+  1607→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1608→              <div className="text-4xl mb-6">🔵</div>
+  1609→              <h3 className="text-xl font-bold text-text-main mb-4">Intermediate</h3>
+  1610→              <p className="text-text-muted text-sm mb-8">Best for learners with basic knowledge who want to level up.</p>
+  1611→              <ul className="space-y-4 mb-10 flex-grow">
+  1612→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Intermediate Curriculum</li>
+  1613→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Real World Projects</li>
+  1614→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Live Sessions</li>
+  1615→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Mentor Guidance</li>
+  1616→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Industry Certificate</li>
+  1617→              </ul>
+  1618→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Explore Intermediate</button>
+  1619→            </div>
+  1620→
+  1621→            {/* Card 3: Advanced */}
+  1622→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1623→              <div className="text-4xl mb-6">🟣</div>
+  1624→              <h3 className="text-xl font-bold text-text-main mb-4">Advanced</h3>
+  1625→              <p className="text-text-muted text-sm mb-8">Designed for professionals who want to master advanced concepts.</p>
+  1626→              <ul className="space-y-4 mb-10 flex-grow">
+  1627→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Advanced Curriculum</li>
+  1628→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Capstone Projects</li>
+  1629→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Career Guidance</li>
+  1630→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Placement Assistance</li>
+  1631→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Premium Certificate</li>
+  1632→              </ul>
+  1633→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Go Advanced</button>
+  1634→            </div>
+  1635→
+  1636→            {/* Card 4: Most Popular */}
+  1637→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-primary/20">
+  1638→              <div className="text-4xl mb-6">⭐</div>
+  1639→              <h3 className="text-xl font-bold text-text-main mb-4">Most Popular</h3>
+  1640→              <p className="text-text-muted text-sm mb-8">The most recommended learning path chosen by thousands of students.</p>
+  1641→              <ul className="space-y-4 mb-10 flex-grow">
+  1642→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Balanced Curriculum</li>
+  1643→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Live Classes</li>
+  1644→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Hands-on Projects</li>
+  1645→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Mentor Support</li>
+  1646→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Certificate Included</li>
+  1647→              </ul>
+  1648→              <button className="w-full py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover-custom transition-colors">Explore Popular Path</button>
+  1649→            </div>
+  1650→          </div>
+  1651→        </div>
+  1652→      </section>
+  1653→      {/* END: Learning Paths Section 2 */}
+  1654→
+  1655→      {/* BEGIN: Student Success Stories */}
+  1656→      <section className="py-24" data-purpose="testimonials">
+  1657→        <div className="max-w-6xl mx-auto px-4">
+  1658→          <h2 className="text-3xl font-bold text-text-main mb-3 text-center">Student Success Stories</h2>
+  1659→          <p className="text-text-muted mb-12 text-center">Hear from our community of learners.</p>
+  1660→          
+  1661→          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+  1662→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1663→              <div className="flex text-yellow-400 mb-4">
+  1664→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
+  1665→              </div>
+  1666→              <p className="text-text-muted italic mb-6">"EduPremium helped me transition from a non-tech background into a full-stack developer role in just 6 months. The courses are top-notch!"</p>
+  1667→              <div className="flex items-center gap-4">
+  1668→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3otibGzNgGshRKUK1hXPJghc-p3OLSTOrI6HdHjH6xI6lJsGIvP5FTEgPrB9HDAWWmhTAFZPzhKgiA5kunCze-ie0yqv6O6ZDUIkk2nBFFhZCifvlkJH5JIJuX4V4SdcRs40_VNorgA7HKw4PYaRnwRUK7Q1p23X9_xKawPWBORpZ8u2laGalLC5ELSoDI6Y3vNxX8n5oxdYoQybEJ2ZYVSdM8IPZv9CBo__MKS4v2e7eIXQWnWaV" />
+  1669→                <div>
+  1670→                  <h4 className="font-bold text-text-main">Alex Johnson</h4>
+  1671→                  <span className="text-xs text-text-muted">Software Engineer</span>
+  1672→                </div>
+  1673→              </div>
+  1674→            </div>
+  1675→
+  1676→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1677→              <div className="flex text-yellow-400 mb-4">
+  1678→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
+  1679→              </div>
+  1680→              <p className="text-text-muted italic mb-6">"The Data Science bootcamp was incredibly detailed. I loved the hands-on projects, which I added directly to my portfolio."</p>
+  1681→              <div className="flex items-center gap-4">
+  1682→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr2ZmMdIWXcKXmXLMAAx2EZxwqUgBqy8IbzGcfahD3yEG15jJbY_wxvZ2jT_39Xyyl0eZNdrekeSedAs3VymWR174tQ3tQwAIfrQnKdZIG0u0XndBaeyBtRhli1swtzjLYmHrVZ1Q6BY54hXMyB8xClMzjNU9D-D2g7zGuE2kdu3TB6NiFrPwjnYRbd06KC0VoazhUAlUN6rsXeOJz43uTH8HvZ5HzI012QeHGvtjVi5jdIjG5RjUW" />
+  1683→                <div>
+  1684→                  <h4 className="font-bold text-text-main">Sarah Lee</h4>
+  1685→                  <span className="text-xs text-text-muted">Data Analyst</span>
+  1686→                </div>
+  1687→              </div>
+  1688→            </div>
+  1689→
+  1690→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1691→              <div className="flex text-yellow-400 mb-4">
+  1692→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star_half</span>
+  1693→              </div>
+  1694→              <p className="text-text-muted italic mb-6">"Great instructors and fantastic support. I finally learned how to effectively market my small business online."</p>
+  1695→              <div className="flex items-center gap-4">
+  1696→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEMcZaikqIeUk7vWnU5XOofTyd2gzVIhBdpgWUG_4sgEsmWR-eiM52CAqWUEzr7wvfKX-wW8dmC3bIBmoTHTUsjy34bCzFLN-e3kPIVzwMX5bP1u0b_l8dwJa4epjG76zDR6rAjU4X0bp0qVUbnXc0ePlQLnYtMBaqamJcEj9IyA20lmStw_WN3SxZwpAiE66gIlWICn2eUNqnyOYxum-NN--IUpxdS9x7E_h7lbMbkwtYOFSfd-Ok" />
+  1697→                <div>
+  1698→                  <h4 className="font-bold text-text-main">Michael Chen</h4>
+  1699→                  <span className="text-xs text-text-muted">Entrepreneur</span>
+  1700→                </div>
+  1701→              </div>
+  1702→            </div>
+  1703→          </div>
+  1704→        </div>
+  1705→      </section>
+  1706→      {/* END: Student Success Stories */}
+  1707→
+  1708→      {/* BEGIN: Certificate Preview */}
+  1709→      <section className="py-24 bg-white relative overflow-hidden" data-purpose="certificate-preview">
+  1710→        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-50 rounded-full -ml-48 -mt-48 blur-3xl opacity-50 -z-10"></div>
+  1711→        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mb-48 blur-3xl opacity-50 -z-10"></div>
+  1712→        
+  1713→        <div className="max-w-7xl mx-auto px-4 relative">
+  1714→          {/* Section Header */}
+  1715→          <div className="text-center mb-16">
+  1716→            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-primary mb-4 tracking-widest uppercase">
+  1717→              🏅 Recognized &amp; Trusted
+  1718→            </span>
+  1719→            <h2 className="text-4xl font-bold text-text-main mb-4">Certificate Preview</h2>
+  1720→            <p className="text-text-muted text-lg max-w-2xl mx-auto">
+  1721→              Earn an industry-recognized certificate that validates your skills and strengthens your professional profile.
+  1722→            </p>
+  1723→          </div>
+  1724→
+  1725→          {/* Main Content Grid */}
+  1726→          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+  1727→            {/* Left: Certificate Mockup (60%) */}
+  1728→            <div className="lg:col-span-7">
+  1729→              <div className="relative group">
+  1730→                <div className="absolute inset-0 bg-primary/5 rounded-[20px] blur-2xl -z-10 group-hover:scale-105 transition-transform duration-500"></div>
+  1731→                <img alt="Professional Certificate Mockup" className="w-full h-auto rounded-[20px] shadow-2xl hover:-translate-y-2 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5rjtAOmZh4ZG_aaiBHPf0IkzeixuSSNZwMH5k2rE2T7bWYtLsb6vASZhXCg2KQqgr12OGVBuapBJP2t5QVgcFRrHB328ofp5yNGq8JfVCvbWXgniNktkVB_G8K1aT_y4SkQpEOOS72zXx0AkwJ3-CsdNUaSxcG1G5Ls0JUVhOK5fO4bn8S0nEEwCpZWvKiW9_lt11MOK4epCXfkwgkQPQzY4A_PZEoGbHWf_2ADqRNpqeuhQsHi1T" />
+  1732→              </div>
+  1733→            </div>
+  1734→
+  1735→            {/* Right: Feature Cards (40%) */}
+  1736→            <div className="lg:col-span-5 flex flex-col gap-6">
+  1737→              {/* Card 1 */}
+  1738→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1739→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1740→                  <span className="text-2xl">📜</span>
+  1741→                </div>
+  1742→                <div>
+  1743→                  <h4 className="font-bold text-text-main mb-1">Professional Certificate</h4>
+  1744→                  <p className="text-text-muted text-sm">Receive a beautifully designed certificate that enhances your resume and LinkedIn profile.</p>
+  1745→                </div>
+  1746→              </div>
+  1747→              {/* Card 2 */}
+  1748→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1749→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1750→                  <span className="text-2xl">🛡</span>
+  1751→                </div>
+  1752→                <div>
+  1753→                  <h4 className="font-bold text-text-main mb-1">Industry Recognized</h4>
+  1754→                  <p className="text-text-muted text-sm">Our certificates are trusted by recruiters and leading companies.</p>
+  1755→                </div>
+  1756→              </div>
+  1757→              {/* Card 3 */}
+  1758→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1759→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1760→                  <span className="text-2xl">🌍</span>
+  1761→                </div>
+  1762→                <div>
+  1763→                  <h4 className="font-bold text-text-main mb-1">Share &amp; Showcase</h4>
+  1764→                  <p className="text-text-muted text-sm">Share your certificate online and verify its authenticity instantly.</p>
+  1765→                </div>
+  1766→              </div>
+  1767→            </div>
+  1768→          </div>
+  1769→
+  1770→          {/* Bottom Panel: Verification */}
+  1771→          <div className="bg-blue-50/50 rounded-[20px] p-8 border border-blue-100">
+  1772→            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+  1773→              <div className="flex items-center gap-6">
+  1774→                <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-primary shrink-0 border border-blue-100">
+  1775→                  <span className="material-icons text-3xl">verified_user</span>
+  1776→                </div>
+  1777→                <div>
+  1778→                  <h4 className="text-xl font-bold text-text-main">Certificate Verification</h4>
+  1779→                  <p className="text-text-muted text-sm">Every certificate includes a unique verification ID for authenticity.</p>
+  1780→                  {certStatus && (
+  1781→                    <p className={`text-sm font-semibold mt-1 ${certStatus.includes("authentic") ? "text-emerald-600" : "text-red-500"}`}>
+  1782→                      {certStatus}
+  1783→                    </p>
+  1784→                  )}
+  1785→                </div>
+  1786→              </div>
+  1787→              <div className="w-full md:w-auto">
+  1788→                <div className="flex flex-col gap-2">
+  1789→                  <form onSubmit={handleVerifyCert} className="flex">
+  1790→                    <input
+  1791→                      className="w-full md:w-64 px-4 py-3 rounded-l-xl border border-blue-200 focus:ring-2 focus:ring-primary focus:border-primary outline-none text-[#1f2937] bg-white text-sm"
+  1792→                      placeholder="Enter Certificate ID (e.g. LARA-9842-PRO)"
+  1793→                      type="text"
+  1794→                      value={certId}
+  1795→                      onChange={(e) => setCertId(e.target.value)}
+  1796→                    />
+  1797→                    <button type="submit" className="bg-primary text-white px-6 py-3 rounded-r-xl font-bold hover:bg-primary-hover-custom transition-colors whitespace-nowrap text-sm">Verify Now</button>
+  1798→                  </form>
+  1799→                  <p className="text-[10px] text-text-muted flex items-center gap-1">
+  1800→                    <span className="material-icons text-xs">lock</span> This ensures authenticity and prevents any misuse.
+  1801→                  </p>
+  1802→                </div>
+  1803→              </div>
+  1804→            </div>
+  1805→          </div>
+  1806→        </div>
+  1807→      </section>
+  1808→      {/* END: Certificate Preview */}
+  1809→
+  1810→      {/* BEGIN: FAQ */}
+  1811→      <section className="py-24" data-purpose="faq">
+  1812→        <div className="max-w-3xl mx-auto px-4">
+  1813→          <h2 className="text-3xl font-bold text-text-main mb-8 text-center">Frequently Asked Questions</h2>
+  1814→          <div className="flex flex-col gap-4">
+  1815→            
+  1816→            {/* FAQ 1 */}
+  1817→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1818→              <h4 onClick={() => setOpenFaq(openFaq === 0 ? null : 0)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1819→                Do I get lifetime access to the courses?
+  1820→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 0 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1821→              </h4>
+  1822→              {openFaq === 0 && (
+  1823→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1824→                  Yes! Once you purchase a course, you have lifetime access to the materials, including all future updates.
+  1825→                </p>
+  1826→              )}
+  1827→            </div>
+  1828→
+  1829→            {/* FAQ 2 */}
+  1830→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1831→              <h4 onClick={() => setOpenFaq(openFaq === 1 ? null : 1)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1832→                Are there prerequisites for the courses?
+  1833→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 1 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1834→              </h4>
+  1835→              {openFaq === 1 && (
+  1836→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1837→                  We offer courses ranging from Beginner to Advanced levels. Beginners can start directly with zero prior coding knowledge.
+  1838→                </p>
+  1839→              )}
+  1840→            </div>
+  1841→
+  1842→            {/* FAQ 3 */}
+  1843→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1844→              <h4 onClick={() => setOpenFaq(openFaq === 2 ? null : 2)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1845→                Will I receive a certificate upon completion?
+  1846→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 2 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1847→              </h4>
+  1848→              {openFaq === 2 && (
+  1849→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1850→                  Yes! You earn an industry-recognized certificate that you can showcase on LinkedIn, your resume, or personal portfolio.
+  1851→                </p>
+  1852→              )}
+  1853→            </div>
+  1854→
+  1855→          </div>
+  1856→        </div>
+  1857→      </section>
+  1858→      {/* END: FAQ */}
+  1859→
+  1860→      {/* BEGIN: Stay Updated (Newsletter) */}
+  1861→      <section className="py-12 bg-primary text-white" data-purpose="newsletter">
+  1862→        <div className="max-w-4xl mx-auto px-4 text-center">
+  1863→          <h2 className="text-2xl font-bold mb-4">Stay Updated with EduPremium</h2>
+  1864→          <p className="text-gray-200 mb-6">Subscribe to our newsletter to get the latest courses and offers directly to your inbox.</p>
+  1865→          
+  1866→          {newsletterSubscribed ? (
+  1867→            <div className="bg-white/10 text-white font-medium py-3 px-6 rounded-xl inline-block">
+  1868→              🎉 Thank you for subscribing! Check your email for updates.
+  1869→            </div>
+  1870→          ) : (
+  1871→            <form onSubmit={handleSubscribe} className="flex max-w-md mx-auto">
+  1872→              <input
+  1873→                className="w-full px-4 py-3 rounded-l-xl text-text-main focus:outline-none bg-white text-sm"
+  1874→                placeholder="Enter your email"
+  1875→                type="email"
+  1876→                required
+  1877→                value={newsletterEmail}
+  1878→                onChange={(e) => setNewsletterEmail(e.target.value)}
+  1879→              />
+  1880→              <button type="submit" className="bg-gray-900 px-6 py-3 rounded-r-xl font-bold hover:bg-black transition-colors text-sm whitespace-nowrap">Subscribe</button>
+  1881→            </form>
+  1882→          )}
+  1883→        </div>
+  1884→      </section>
+  1885→      {/* END: Stay Updated */}
+  1886→
+  1887→      {/* BEGIN: Final CTA */}
+  1888→      <section className="py-24 text-center" data-purpose="cta">
+  1889→        <div className="max-w-3xl mx-auto px-4">
+  1890→          <h2 className="text-4xl font-bold text-text-main mb-6">Ready To Build Your Future?</h2>
+  1891→          <p className="text-lg text-text-muted mb-8">Join millions of learners worldwide and start advancing your skills today.</p>
+  1892→          <a className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-hover-custom transition-colors inline-block shadow-lg" href="#">Start Learning For Free</a>
+  1893→        </div>
+  1894→      </section>
+  1895→      {/* END: Final CTA */}
+  1896→
+  1897→      {/* BEGIN: Footer */}
+  1898→      <footer className="bg-[#111827] text-white py-12" data-purpose="footer">
+  1899→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+  1900→          <div>
+  1901→            <a className="text-primary font-bold text-xl flex items-center gap-2 mb-4" href="#">
+  1902→              <span className="material-icons text-white">school</span>
+  1903→              EduPremium
+  1904→            </a>
+  1905→            <p className="text-gray-400 text-sm">Empowering careers through quality education.</p>
+  1906→          </div>
+  1907→          <div>
+  1908→            <h4 className="font-semibold mb-4 text-white">Platform</h4>
+  1909→            <ul className="space-y-2 text-sm text-gray-400">
+  1910→              <li><a className="hover:text-white" href="#">Courses</a></li>
+  1911→              <li><a className="hover:text-white" href="#">Mentors</a></li>
+  1912→              <li><a className="hover:text-white" href="#">Pricing</a></li>
+  1913→            </ul>
+  1914→          </div>
+  1915→          <div>
+  1916→            <h4 className="font-semibold mb-4 text-white">Support</h4>
+  1917→            <ul className="space-y-2 text-sm text-gray-400">
+  1918→              <li><a className="hover:text-white" href="#">Contact Us</a></li>
+  1919→              <li><a className="hover:text-white" href="#">FAQ</a></li>
+  1920→              <li><a className="hover:text-white" href="#">Terms of Service</a></li>
+  1921→            </ul>
+  1922→          </div>
+  1923→          <div>
+  1924→            {/* Placeholder for social or other links if needed */}
+  1925→          </div>
+  1926→        </div>
+  1927→      </footer>
+  1928→      {/* END: Footer */}
+  1929→    </div>
+  1930→  );
+  1931→}
+  1932→
