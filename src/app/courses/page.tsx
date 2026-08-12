@@ -205,6 +205,7 @@ export default function CoursesPage() {
   const [selectedDurations, setSelectedDurations] = useState<string[]>([]);
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+  const [filterPopupOpen, setFilterPopupOpen] = useState(false);
 
   // Accordion & Interactivity State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -867,13 +868,42 @@ export default function CoursesPage() {
       {/* END: Browse By Category */}
 
       {/* BEGIN: All Courses (Sidebar + Grid) */}
-      <section className="py-24 bg-white" data-purpose="all-courses">
+      <section className="py-16 sm:py-24 bg-white" data-purpose="all-courses">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-text-main mb-8">All Courses</h2>
+          {/* Section Header with mobile filter button */}
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-main">All Courses</h2>
+            {/* Hamburger Filter Button — mobile only */}
+            <button
+              onClick={() => setFilterPopupOpen(true)}
+              className="md:hidden flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200"
+              style={{
+                backgroundColor: '#4F46E5',
+                color: '#FFFFFF',
+                boxShadow: '0 2px 8px rgba(79,70,229,0.3)',
+              }}
+            >
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+              </svg>
+              Filters
+              {/* Active filter count badge */}
+              {(selectedCategories.length + selectedLevels.length + selectedDurations.length + selectedPrices.length + selectedRatings.length) > 0 && (
+                <span style={{
+                  width: 20, height: 20, borderRadius: '50%',
+                  backgroundColor: '#F97316', color: '#fff',
+                  fontSize: 11, fontWeight: 700,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}>
+                  {selectedCategories.length + selectedLevels.length + selectedDurations.length + selectedPrices.length + selectedRatings.length}
+                </span>
+              )}
+            </button>
+          </div>
           <div className="flex flex-col md:flex-row gap-8">
             
-            {/* Sidebar */}
-            <aside className="w-full md:w-1/4 flex flex-col gap-6">
+            {/* Sidebar — hidden on mobile, shown on md+ */}
+            <aside className="hidden md:flex w-full md:w-1/4 flex-col gap-6">
               <div className="bg-white p-6 rounded-xl border border-border-custom shadow-sm flex flex-col gap-6">
                 
                 {/* Header */}
@@ -1190,6 +1220,218 @@ export default function CoursesPage() {
 
           </div>
         </div>
+
+        {/* Mobile Filter Popup */}
+        {filterPopupOpen && (
+          <>
+            {/* Backdrop */}
+            <div
+              style={{
+                position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 90, backdropFilter: 'blur(4px)',
+                animation: 'fadeIn 0.25s ease-out',
+              }}
+              onClick={() => setFilterPopupOpen(false)}
+            />
+            {/* Popup Sheet */}
+            <div
+              style={{
+                position: 'fixed', bottom: 0, left: 0, right: 0,
+                backgroundColor: '#FFFFFF',
+                borderRadius: '24px 24px 0 0',
+                zIndex: 100,
+                maxHeight: '85vh',
+                overflowY: 'auto',
+                boxShadow: '0 -8px 40px rgba(0,0,0,0.15)',
+                animation: 'slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+              className="no-scrollbar"
+            >
+              {/* Drag Handle */}
+              <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px' }}>
+                <div style={{ width: 40, height: 4, borderRadius: 2, backgroundColor: '#D1D5DB' }} />
+              </div>
+
+              {/* Popup Header */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 20px 16px', borderBottom: '1px solid #F3F4F6' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, backgroundColor: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="#4F46E5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                    </svg>
+                  </div>
+                  <h3 style={{ fontSize: 18, fontWeight: 700, color: '#111827', margin: 0 }}>Filters</h3>
+                </div>
+                <button
+                  onClick={() => setFilterPopupOpen(false)}
+                  style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#F3F4F6', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                >
+                  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="#6B7280">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Popup Body — same filter content */}
+              <div style={{ padding: '16px 20px 24px', display: 'flex', flexDirection: 'column', gap: 20 }}>
+                {/* Search */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search Courses..."
+                    className="w-full pl-4 pr-10 py-2.5 rounded-xl border border-border-custom focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm text-[#1f2937] bg-white"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  <span className="material-icons absolute right-3 top-1/2 -translate-y-1/2 text-text-muted">search</span>
+                </div>
+
+                {/* Categories */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Categories</h4>
+                  {[
+                    { name: 'Web Development', count: 120 },
+                    { name: 'Data Science', count: 86 },
+                    { name: 'Design', count: 64 },
+                    { name: 'Business', count: 45 },
+                    { name: 'Marketing', count: 32 },
+                  ].map((cat) => {
+                    const isChecked = selectedCategories.includes(cat.name);
+                    return (
+                      <label key={cat.name} className="flex items-center justify-between cursor-pointer group" onClick={() => handleToggleCategory(cat.name)}>
+                        <div className="flex items-center gap-3">
+                          <div style={{ width: 20, height: 20, borderRadius: 6, border: isChecked ? 'none' : '2px solid #D1D5DB', backgroundColor: isChecked ? '#4F46E5' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+                            {isChecked && <svg width="12" height="12" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="#FFFFFF"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>}
+                          </div>
+                          <span style={{ fontSize: 14, color: '#374151' }}>{cat.name}</span>
+                        </div>
+                        <span style={{ fontSize: 12, color: '#9CA3AF' }}>({cat.count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <div style={{ height: 1, backgroundColor: '#F3F4F6' }} />
+
+                {/* Level */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Level</h4>
+                  {[{ name: 'Beginner', count: 120 }, { name: 'Intermediate', count: 96 }, { name: 'Advanced', count: 32 }].map((lvl) => {
+                    const isChecked = selectedLevels.includes(lvl.name);
+                    return (
+                      <label key={lvl.name} className="flex items-center justify-between cursor-pointer" onClick={() => handleToggleLevel(lvl.name)}>
+                        <div className="flex items-center gap-3">
+                          <div style={{ width: 20, height: 20, borderRadius: 6, border: isChecked ? 'none' : '2px solid #D1D5DB', backgroundColor: isChecked ? '#4F46E5' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+                            {isChecked && <svg width="12" height="12" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="#FFFFFF"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>}
+                          </div>
+                          <span style={{ fontSize: 14, color: '#374151' }}>{lvl.name}</span>
+                        </div>
+                        <span style={{ fontSize: 12, color: '#9CA3AF' }}>({lvl.count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <div style={{ height: 1, backgroundColor: '#F3F4F6' }} />
+
+                {/* Duration */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Duration</h4>
+                  {[{ label: '1-4 Weeks', count: 38 }, { label: '4-8 Weeks', count: 76 }, { label: '8-12 Weeks', count: 64 }, { label: '12+ Weeks', count: 70 }].map((dur) => {
+                    const isChecked = selectedDurations.includes(dur.label);
+                    return (
+                      <label key={dur.label} className="flex items-center justify-between cursor-pointer" onClick={() => handleToggleDuration(dur.label)}>
+                        <div className="flex items-center gap-3">
+                          <div style={{ width: 20, height: 20, borderRadius: 6, border: isChecked ? 'none' : '2px solid #D1D5DB', backgroundColor: isChecked ? '#4F46E5' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+                            {isChecked && <svg width="12" height="12" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="#FFFFFF"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>}
+                          </div>
+                          <span style={{ fontSize: 14, color: '#374151' }}>{dur.label}</span>
+                        </div>
+                        <span style={{ fontSize: 12, color: '#9CA3AF' }}>({dur.count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <div style={{ height: 1, backgroundColor: '#F3F4F6' }} />
+
+                {/* Price */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Price</h4>
+                  {[{ label: 'Free', count: 32 }, { label: '₹0 - ₹999', count: 64 }, { label: '₹1,000 - ₹4,999', count: 96 }, { label: '₹5,000+', count: 56 }].map((prc) => {
+                    const isChecked = selectedPrices.includes(prc.label);
+                    return (
+                      <label key={prc.label} className="flex items-center justify-between cursor-pointer" onClick={() => handleTogglePrice(prc.label)}>
+                        <div className="flex items-center gap-3">
+                          <div style={{ width: 20, height: 20, borderRadius: 6, border: isChecked ? 'none' : '2px solid #D1D5DB', backgroundColor: isChecked ? '#4F46E5' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+                            {isChecked && <svg width="12" height="12" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="#FFFFFF"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>}
+                          </div>
+                          <span style={{ fontSize: 14, color: '#374151' }}>{prc.label}</span>
+                        </div>
+                        <span style={{ fontSize: 12, color: '#9CA3AF' }}>({prc.count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+
+                <div style={{ height: 1, backgroundColor: '#F3F4F6' }} />
+
+                {/* Rating */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, color: '#111827', margin: 0 }}>Rating</h4>
+                  {[5, 4, 3, 2].map((rating) => {
+                    const isChecked = selectedRatings.includes(rating);
+                    return (
+                      <label key={rating} className="flex items-center justify-between cursor-pointer" onClick={() => handleToggleRating(rating)}>
+                        <div className="flex items-center gap-3">
+                          <div style={{ width: 20, height: 20, borderRadius: 6, border: isChecked ? 'none' : '2px solid #D1D5DB', backgroundColor: isChecked ? '#4F46E5' : '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}>
+                            {isChecked && <svg width="12" height="12" fill="none" viewBox="0 0 24 24" strokeWidth="3" stroke="#FFFFFF"><path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>}
+                          </div>
+                          <div className="flex text-yellow-500">
+                            {[...Array(5)].map((_, i) => (
+                              <span key={i} className={`material-icons text-sm ${i < rating ? 'text-yellow-500' : 'text-gray-200'}`}>star</span>
+                            ))}
+                          </div>
+                        </div>
+                        <span style={{ fontSize: 12, color: '#9CA3AF' }}>{rating === 5 ? '(120)' : rating === 4 ? '& above (180)' : rating === 3 ? '& above (220)' : '& above (240)'}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Popup Footer Buttons */}
+              <div style={{ padding: '16px 20px', paddingTop: 0, display: 'flex', gap: 12 }}>
+                <button
+                  onClick={handleResetFilters}
+                  style={{
+                    flex: 1, padding: '13px 0', borderRadius: 12,
+                    border: '1.5px solid #E5E7EB', backgroundColor: '#FFFFFF',
+                    color: '#374151', fontSize: 14, fontWeight: 600,
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                  }}
+                >
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182" /></svg>
+                  Reset
+                </button>
+                <button
+                  onClick={() => setFilterPopupOpen(false)}
+                  style={{
+                    flex: 2, padding: '13px 0', borderRadius: 12,
+                    border: 'none',
+                    background: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
+                    color: '#FFFFFF', fontSize: 14, fontWeight: 600,
+                    cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                    boxShadow: '0 4px 14px rgba(79,70,229,0.35)',
+                  }}
+                >
+                  Show Results
+                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </section>
       {/* END: All Courses */}
 
