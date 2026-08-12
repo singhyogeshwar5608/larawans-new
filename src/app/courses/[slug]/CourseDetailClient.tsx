@@ -600,8 +600,8 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </section>
 
             {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
-            <section>
-              <div className="rounded-2xl p-5 sm:p-6 bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
+            <section className="-mx-5 sm:mx-0">
+              <div className="sm:rounded-2xl p-4 sm:p-6 bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
 
                 {/* Compact Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
@@ -610,7 +610,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       <BookOpen className="w-4 h-4 text-emerald-600" />
                     </div>
                     <div>
-                      <h2 className="text-[1.15rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
+                      <h2 className="text-[1rem] sm:text-[1.15rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
                       <div className="w-8 h-[2.5px] rounded-full bg-emerald-500 mt-1" />
                     </div>
                   </div>
@@ -620,7 +620,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       { v: totalLectures + ' Lectures', bg: '#F5F3FF', color: '#7C3AED' },
                       { v: totalDuration, bg: '#FFF7ED', color: '#D97706' },
                     ].map((s: any, si: number) => (
-                      <span key={si} className="text-[0.72rem] font-semibold px-3 py-1.5 rounded-full" style={{ background: s.bg, color: s.color }}>{s.v}</span>
+                      <span key={si} className="text-[0.65rem] sm:text-[0.72rem] font-semibold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full" style={{ background: s.bg, color: s.color }}>{s.v}</span>
                     ))}
                   </div>
                 </div>
@@ -640,22 +640,22 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                       >
                         <button
                           onClick={() => setExpandedOverviewMods((prev: any) => { const next = prev[idx] ? {} : { [idx]: true }; return next; })}
-                          className="w-full flex items-center gap-3 px-4 py-3 text-left"
+                          className="w-full flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left"
                         >
                           {/* Number Badge */}
-                          <div className="w-8 h-8 rounded-md flex items-center justify-center shrink-0 text-[0.75rem] font-bold text-white"
+                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center shrink-0 text-[0.68rem] sm:text-[0.75rem] font-bold text-white"
                             style={{ background: numColor }}
                           >
                             {String(idx + 1).padStart(2, '0')}
                           </div>
                           {/* Title + Subtitle */}
                           <div className="flex-1 min-w-0">
-                            <div className="text-[0.88rem] font-semibold text-gray-900 leading-tight truncate">{mod.title}</div>
-                            {mod.topics[1] && <div className="text-[0.73rem] text-gray-400 mt-0.5 truncate">{mod.topics[1]}</div>}
+                            <div className="text-[0.8rem] sm:text-[0.88rem] font-semibold text-gray-900 leading-tight truncate">{mod.title}</div>
+                            {mod.topics[1] && <div className="text-[0.65rem] sm:text-[0.73rem] text-gray-400 mt-0.5 truncate">{mod.topics[1]}</div>}
                           </div>
                           {/* Right Meta */}
                           <div className="flex items-center gap-2.5 shrink-0">
-                            <span className="text-[0.68rem] font-semibold px-2.5 py-1 rounded-full" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+                            <span className="text-[0.6rem] sm:text-[0.68rem] font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
                               {mod.lectures} Lectures
                             </span>
                             <span className="text-[0.75rem] text-gray-400 font-medium hidden sm:block">{mod.duration}</span>
@@ -670,7 +670,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                               {(mod.topics || []).filter(Boolean).map((topic: string, ti: number) => (
                                 <div key={ti} className="flex items-center gap-2.5 py-1.5">
                                   <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
-                                  <span className="text-[0.8rem] text-gray-600 leading-snug">{topic}</span>
+                                  <span className="text-[0.75rem] sm:text-[0.8rem] text-gray-600 leading-snug">{topic}</span>
                                 </div>
                               ))}
                             </div>
