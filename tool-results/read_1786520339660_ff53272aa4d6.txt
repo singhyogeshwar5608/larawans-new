@@ -1,0 +1,1019 @@
+   583→                {/* Section Header */}
+   584→                <div className="flex items-center gap-3.5 mb-7 relative z-10">
+   585→                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)' }}>
+   586→                    <BookOpen className="w-5.5 h-5.5 text-emerald-600" />
+   587→                  </div>
+   588→                  <div>
+   589→                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight" style={{ letterSpacing: '-0.02em' }}>Course Description</h2>
+   590→                    <div className="w-10 h-[3px] rounded-full mt-1.5" style={{ background: 'linear-gradient(90deg, #10B981, #059669)' }} />
+   591→                  </div>
+   592→                </div>
+   593→
+   594→                {/* Description Body */}
+   595→                <div className="space-y-5 leading-[1.8] text-[0.975rem] text-slate-600 relative z-10">
+   596→                  <p>{course.longDescription}</p>
+   597→                  <p>{course.aboutText}</p>
+   598→                </div>
+   599→              </div>
+   600→            </section>
+   601→
+   602→            {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
+   603→            <section className="-mx-5 sm:mx-0">
+   604→              <div className="sm:rounded-2xl p-4 sm:p-6 bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
+   605→
+   606→                {/* Compact Header */}
+   607→                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+   608→                  <div className="flex items-center gap-3">
+   609→                    <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+   610→                      <BookOpen className="w-4 h-4 text-emerald-600" />
+   611→                    </div>
+   612→                    <div>
+   613→                      <h2 className="text-[1rem] sm:text-[1.15rem] font-bold text-gray-900 leading-tight">Course Curriculum</h2>
+   614→                      <div className="w-8 h-[2.5px] rounded-full bg-emerald-500 mt-1" />
+   615→                    </div>
+   616→                  </div>
+   617→                  <div className="flex items-center gap-2">
+   618→                    {[
+   619→                      { v: curriculumWithLectures.length + ' Modules', bg: '#ECFDF5', color: '#059669' },
+   620→                      { v: totalLectures + ' Lectures', bg: '#F5F3FF', color: '#7C3AED' },
+   621→                      { v: totalDuration, bg: '#FFF7ED', color: '#D97706' },
+   622→                    ].map((s: any, si: number) => (
+   623→                      <span key={si} className="text-[0.65rem] sm:text-[0.72rem] font-semibold px-2 sm:px-3 py-1 sm:py-1.5 rounded-full" style={{ background: s.bg, color: s.color }}>{s.v}</span>
+   624→                    ))}
+   625→                  </div>
+   626→                </div>
+   627→
+   628→                {/* Compact Module Rows */}
+   629→                <div className="space-y-[10px]">
+   630→                  {curriculumWithLectures.map((mod: any, idx: number) => {
+   631→                    const isExpanded = !!expandedOverviewMods[idx];
+   632→                    const colors = ['#10B981','#8B5CF6','#3B82F6','#F59E0B','#EC4899','#14B8A6','#7C3AED','#D97706','#06B6D4'];
+   633→                    const numColor = colors[idx % colors.length];
+   634→                    return (
+   635→                      <div key={idx} className="rounded-lg overflow-hidden transition-all duration-200 bg-white"
+   636→                        style={{
+   637→                          border: isExpanded ? '1px solid rgba(16,185,129,0.3)' : '1px solid rgba(0,0,0,0.05)',
+   638→                          boxShadow: isExpanded ? '0 2px 8px rgba(16,185,129,0.06)' : 'none',
+   639→                        }}
+   640→                      >
+   641→                        <button
+   642→                          onClick={() => setExpandedOverviewMods((prev: any) => { const next = prev[idx] ? {} : { [idx]: true }; return next; })}
+   643→                          className="w-full flex items-center gap-2.5 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left"
+   644→                        >
+   645→                          {/* Number Badge */}
+   646→                          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md flex items-center justify-center shrink-0 text-[0.68rem] sm:text-[0.75rem] font-bold text-white"
+   647→                            style={{ background: numColor }}
+   648→                          >
+   649→                            {String(idx + 1).padStart(2, '0')}
+   650→                          </div>
+   651→                          {/* Title + Subtitle */}
+   652→                          <div className="flex-1 min-w-0">
+   653→                            <div className="text-[0.8rem] sm:text-[0.88rem] font-semibold text-gray-900 leading-tight truncate">{mod.title}</div>
+   654→                            {mod.topics[1] && <div className="text-[0.65rem] sm:text-[0.73rem] text-gray-400 mt-0.5 truncate">{mod.topics[1]}</div>}
+   655→                          </div>
+   656→                          {/* Right Meta */}
+   657→                          <div className="flex items-center gap-2.5 shrink-0">
+   658→                            <span className="text-[0.6rem] sm:text-[0.68rem] font-semibold px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+   659→                              {mod.lectures} Lectures
+   660→                            </span>
+   661→                            <span className="text-[0.75rem] text-gray-400 font-medium hidden sm:block">{mod.duration}</span>
+   662→                            <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} style={{ color: isExpanded ? '#059669' : '#9CA3AF' }} />
+   663→                          </div>
+   664→                        </button>
+   665→
+   666→                        {/* Expanded Topics — compact */}
+   667→                        {isExpanded && (
+   668→                          <div className="px-4 pb-3 pt-0">
+   669→                            <div style={{ borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+   670→                              {(mod.topics || []).filter(Boolean).map((topic: string, ti: number) => (
+   671→                                <div key={ti} className="flex items-center gap-2.5 py-1.5">
+   672→                                  <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+   673→                                  <span className="text-[0.75rem] sm:text-[0.8rem] text-gray-600 leading-snug">{topic}</span>
+   674→                                </div>
+   675→                              ))}
+   676→                            </div>
+   677→                          </div>
+   678→                        )}
+   679→                      </div>
+   680→                    );
+   681→                  })}
+   682→                </div>
+   683→              </div>
+   684→            </section>
+   685→            {/* ===== LEARNING JOURNEY / COURSE ROADMAP ===== */}
+   686→            <section className="-mx-5 sm:mx-0">
+   687→              <div className="sm:rounded-2xl px-6 py-8 sm:px-10 sm:py-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+   688→
+   689→                {/* Header */}
+   690→                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+   691→                  <div>
+   692→                    <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Learning Journey / Course Roadmap</h2>
+   693→                    <p className="text-[0.85rem] text-gray-500 mt-1.5 leading-relaxed">Your structured learning path to master the course step by step.</p>
+   694→                  </div>
+   695→                  <span className="text-[0.78rem] font-semibold px-4 py-2 rounded-full shrink-0" style={{ background: '#EDE9FE', color: '#6366F1' }}>{roadmapPhases.weeks} Weeks • {roadmapPhases.phaseCount} Phases • Hands-on Learning</span>
+   696→                </div>
+   697→
+   698→                {/* Horizontal Stepper — hidden on mobile */}
+   699→                <div className="hidden md:flex items-start justify-between mb-10 px-2">
+   700→                  {roadmapPhases.phases.map((phase: any, i: number) => {
+   701→                    const isActive = i === 0;
+   702→                    return (
+   703→                      <Fragment key={i}>
+   704→                        <div className="flex flex-col items-center" style={{ flex: '1 1 0%' }}>
+   705→                          {/* Circle */}
+   706→                          <div className="relative mb-2">
+   707→                            <div className="w-11 h-11 rounded-full flex items-center justify-center text-[0.82rem] font-bold transition-all"
+   708→                              style={{
+   709→                                background: isActive ? '#10B981' : '#F3F0FF',
+   710→                                color: isActive ? '#fff' : '#7C3AED',
+   711→                                boxShadow: isActive ? '0 0 0 4px rgba(16,185,129,0.15)' : 'none',
+   712→                              }}
+   713→                            >{phase.num}</div>
+   714→                            {isActive && <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px] border-l-transparent border-r-transparent border-t-emerald-500" />}
+   715→                          </div>
+   716→                          {/* Title & Week */}
+   717→                          <div className="text-center">
+   718→                            <div className="text-[0.82rem] font-bold" style={{ color: isActive ? '#059669' : '#374151' }}>{phase.title}</div>
+   719→                            <div className="text-[0.72rem] text-gray-400 mt-0.5">{phase.weeks}</div>
+   720→                          </div>
+   721→                        </div>
+   722→                        {/* Dotted connector */}
+   723→                        {i < roadmapPhases.phases.length - 1 && (
+   724→                          <div className="flex-1 flex items-center justify-center pt-5" style={{ minWidth: '40px' }}>
+   725→                            <div className="w-full" style={{ borderTop: '2px dotted #D1D5DB' }} />
+   726→                          </div>
+   727→                        )}
+   728→                      </Fragment>
+   729→                    );
+   730→                  })}
+   731→                </div>
+   732→
+   733→                {/* Mobile Vertical Stepper */}
+   734→                <div className="md:hidden mb-8">
+   735→                  {roadmapPhases.phases.map((phase: any, i: number) => {
+   736→                    const isActive = i === 0;
+   737→                    return (
+   738→                      <div key={i} className="flex items-center gap-4 mb-1">
+   739→                        <div className="flex flex-col items-center">
+   740→                          <div className="w-10 h-10 rounded-full flex items-center justify-center text-[0.78rem] font-bold"
+   741→                            style={{ background: isActive ? '#10B981' : '#F3F0FF', color: isActive ? '#fff' : '#7C3AED' }}
+   742→                          >{phase.num}</div>
+   743→                          {i < roadmapPhases.phases.length - 1 && <div className="w-0.5 h-6 my-1" style={{ background: 'repeating-linear-gradient(to bottom, #D1D5DB 0 3px, transparent 3px 6px)' }} />}
+   744→                        </div>
+   745→                        <div>
+   746→                          <div className="text-[0.85rem] font-bold" style={{ color: isActive ? '#059669' : '#374151' }}>{phase.title}</div>
+   747→                          <div className="text-[0.75rem] text-gray-400">{phase.weeks}</div>
+   748→                        </div>
+   749→                      </div>
+   750→                    );
+   751→                  })}
+   752→                </div>
+   753→
+   754→                {/* Roadmap Cards */}
+   755→                <div className="flex gap-3 mb-10 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 no-scrollbar snap-x snap-mandatory" style={{ WebkitOverflowScrolling: 'touch' }}>
+   756→                  {roadmapPhases.phases.map((phase: any, i: number) => {
+   757→                    const isActive = i === 0;
+   758→                    return (
+   759→                      <Fragment key={i}>
+   760→                        <div className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg shrink-0 w-[85%] sm:w-full lg:w-auto snap-start"
+   761→                          style={{
+   762→                            background: '#FFFFFF',
+   763→                            border: isActive ? '1.5px solid rgba(16,185,129,0.35)' : '1px solid rgba(0,0,0,0.06)',
+   764→                            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+   765→                            flex: '1 1 0%',
+   766→                            minWidth: '200px',
+   767→                          }}
+   768→                        >
+   769→                          {/* Icon + Week badge */}
+   770→                          <div className="flex items-center justify-between mb-3">
+   771→                            <div className="w-10 h-10 rounded-lg flex items-center justify-center"
+   772→                              style={{ background: isActive ? '#ECFDF5' : '#F3F0FF', color: isActive ? '#059669' : '#7C3AED' }}
+   773→                            >{phase.icon}</div>
+   774→                            <span className="text-[0.7rem] font-semibold px-2.5 py-1 rounded-full"
+   775→                              style={{ background: isActive ? '#ECFDF5' : '#F3F0FF', color: isActive ? '#059669' : '#7C3AED' }}
+   776→                            >{phase.weeks}</span>
+   777→                          </div>
+   778→                          {/* Title */}
+   779→                          <h3 className="text-[0.95rem] font-bold text-gray-900 mb-1.5">{phase.title}</h3>
+   780→                          {/* Desc */}
+   781→                          <p className="text-[0.8rem] text-gray-500 leading-relaxed mb-3">{phase.desc}</p>
+   782→                          {/* Divider */}
+   783→                          <div className="mb-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }} />
+   784→                          {/* Outcomes */}
+   785→                          <div className="space-y-2">
+   786→                            {phase.outcomes.map((o: string, oi: number) => (
+   787→                              <div key={oi} className="flex items-center gap-2">
+   788→                                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: '#10B981' }} />
+   789→                                <span className="text-[0.78rem] text-gray-600 leading-snug">{o}</span>
+   790→                              </div>
+   791→                            ))}
+   792→                          </div>
+   793→                        </div>
+   794→                        {/* Arrow between cards — desktop only */}
+   795→                        {i < roadmapPhases.phases.length - 1 && (
+   796→                          <div className="hidden lg:flex items-center shrink-0">
+   797→                            <div className="w-8 h-8 rounded-full flex items-center justify-center"
+   798→                              style={{ background: '#F3F0FF' }}
+   799→                            >
+   800→                              <ArrowRight className="w-3.5 h-3.5" style={{ color: '#7C3AED' }} />
+   801→                            </div>
+   802→                          </div>
+   803→                        )}
+   804→                      </Fragment>
+   805→                    );
+   806→                  })}
+   807→                </div>
+   808→
+   809→                {/* Bottom Benefit Strip */}
+   810→                <div className="rounded-xl" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+   811→                  <div className="grid grid-cols-4 lg:flex">
+   812→                    {[
+   813→                      { I: Footprints, t: 'Step-by-Step Learning', d: 'Follow a structured path designed for effective learning.', color: '#10B981', bg: '#ECFDF5' },
+   814→                      { I: Handshake, t: 'Practical & Hands-on', d: 'Work on real projects and build practical skills.', color: '#3B82F6', bg: '#EFF6FF' },
+   815→                      { I: BarChart3, t: 'Track Your Progress', d: 'Track milestones and measure your growth.', color: '#8B5CF6', bg: '#F5F3FF' },
+   816→                      { I: Rocket, t: 'Industry Ready', d: 'Build in-demand skills and advance your career.', color: '#F59E0B', bg: '#FFF7ED' },
+   817→                    ].map((b: any, bi: number) => (
+   818→                      <Fragment key={bi}>
+   819→                        <div className="flex items-center gap-1.5 sm:gap-3.5 px-2 sm:px-6 py-3 sm:py-5 lg:flex-1 flex-col sm:flex-row items-center sm:items-start">
+   820→                          <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: b.bg }}>
+   821→                            <b.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: b.color }} />
+   822→                          </div>
+   823→                          <div className="text-center sm:text-left">
+   824→                            <div className="text-[0.62rem] sm:text-[0.88rem] font-bold text-gray-900 leading-tight">{b.t}</div>
+   825→                            <div className="hidden sm:block text-[0.78rem] text-gray-500 mt-0.5 leading-relaxed">{b.d}</div>
+   826→                          </div>
+   827→                        </div>
+   828→                        {bi < 3 && <div className="hidden lg:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', alignSelf: 'stretch' }} />}
+   829→                      </Fragment>
+   830→                    ))}
+   831→                  </div>
+   832→                </div>
+   833→
+   834→              </div>
+   835→            </section>
+   836→
+   837→            {/* What You Will Learn */}
+   838→            <section className="-mx-5 sm:mx-0">
+   839→              <div className="bg-white sm:rounded-2xl border border-slate-100 shadow-[0_4px_24px_rgba(0,0,0,0.1)] px-5 py-6 sm:p-8 sm:px-10">
+   840→                {/* Section Header */}
+   841→                <div className="flex items-center gap-3.5 mb-7">
+   842→                  <div className="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+   843→                    <Target className="w-5.5 h-5.5 text-emerald-600" />
+   844→                  </div>
+   845→                  <div>
+   846→                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight">What You Will Learn</h2>
+   847→                    <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+   848→                  </div>
+   849→                </div>
+   850→                {/* Learning Outcomes Grid */}
+   851→                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
+   852→                  {course.topics.map((tp: string, i: number) => (
+   853→                    <div key={i} className="flex items-center gap-2.5 sm:gap-3.5 bg-white rounded-lg px-2.5 py-2 sm:px-4 sm:py-2.5 transition-all duration-200" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.08)' }}>
+   854→                      <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+   855→                        <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+   856→                      </div>
+   857→                      <span className="text-[0.8rem] sm:text-[0.925rem] text-slate-700 font-medium leading-[1.25]">{tp}</span>
+   858→                    </div>
+   859→                  ))}
+   860→                </div>
+   861→              </div>
+   862→            </section>
+   863→
+   864→            {/* Course Highlights */}
+   865→            <section className="-mx-5 sm:mx-0">
+   866→              <div className="bg-white sm:rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+   867→                {/* Dot grid pattern - top right */}
+   868→                <div className="absolute top-0 right-0 w-40 h-40 pointer-events-none opacity-[0.06]" style={{ backgroundImage: 'radial-gradient(circle, #2563eb 2px, transparent 2px)', backgroundSize: '14px 14px', backgroundPosition: '0 0' }} />
+   869→                {/* Subtle gradient overlay top-right */}
+   870→                <div className="absolute top-0 right-0 w-56 h-56 pointer-events-none" style={{ background: 'radial-gradient(circle at top right, rgba(37,99,235,0.06) 0%, transparent 70%)' }} />
+   871→                
+   872→                {/* Header */}
+   873→                <div className="flex items-center gap-3.5 mb-5 sm:mb-7 px-5 sm:px-8 sm:px-10 pt-6 sm:pt-8 relative">
+   874→                  <div className="w-11 h-11 rounded-full bg-blue-600 flex items-center justify-center shrink-0">
+   875→                    <Sparkle className="w-5 h-5 text-white" fill="white" />
+   876→                  </div>
+   877→                  <div>
+   878→                    <h2 className="text-[1.1rem] sm:text-[1.35rem] font-bold text-gray-900 leading-tight">Course Highlights</h2>
+   879→                    <div className="w-10 h-[3px] rounded-full bg-blue-600 mt-1.5" />
+   880→                  </div>
+   881→                </div>
+   882→
+   883→                {/* Grid */}
+   884→                <style>{`
+   885→                  .hl-item { border-right: 1px solid rgba(0,0,0,0.08); }
+   886→                  .hl-item:nth-child(2) { border-right: 1px solid rgba(0,0,0,0.08); }
+   887→                  .hl-item:nth-child(4n) { border-right: none; }
+   888→                  @media (max-width: 639px) {
+   889→                    .hl-item:nth-child(4n) { border-right: 1px solid rgba(0,0,0,0.08); }
+   890→                    .hl-item:last-child { border-right: none; }
+   891→                  }
+   892→                  @media (min-width: 640px) and (max-width: 1023px) {
+   893→                    .hl-item:nth-child(odd) { border-right: 1px solid rgba(0,0,0,0.08); }
+   894→                    .hl-item:nth-child(even) { border-right: none; }
+   895→                  }
+   896→                `}</style>
+   897→                <div className="grid grid-cols-4 lg:grid-cols-4 relative">
+   898→                  {course.highlights.map((h: any, i: number) => {
+   899→                    const cfg = [
+   900→                      { I: FolderOpen, color: '#2563eb', bg: '#2563eb' },
+   901→                      { I: BookOpen, color: '#8b5cf6', bg: '#8b5cf6' },
+   902→                      { I: Clock, color: '#10b981', bg: '#10b981' },
+   903→                      { I: Award, color: '#f59e0b', bg: '#f59e0b' },
+   904→                    ][i % 4];
+   905→                    const Ic = cfg.I;
+   906→                    return (
+   907→                      <div key={i} className="hl-item flex flex-col items-center text-center px-2 sm:px-6 py-3 sm:py-7">
+   908→                        <div className="w-8 h-8 sm:w-14 sm:h-14 rounded-full flex items-center justify-center mb-1.5 sm:mb-4" style={{ background: cfg.bg }}>
+   909→                          <Ic className="w-3.5 h-3.5 sm:w-6 sm:h-6 text-white" strokeWidth={1.8} />
+   910→                        </div>
+   911→                        <div className="text-[0.95rem] sm:text-[1.75rem] font-extrabold leading-none mb-0.5 sm:mb-1.5" style={{ color: cfg.color }}>{h.value}</div>
+   912→                        <div className="text-[0.58rem] sm:text-[0.85rem] text-gray-700 font-semibold leading-tight">{h.label}</div>
+   913→                        <div className="text-[0.5rem] sm:text-[0.78rem] text-gray-400 mt-0.5 sm:mt-1 leading-relaxed hidden sm:block">{h.value === 'Included' ? 'On completion' : 'Comprehensive coverage'}</div>
+   914→                      </div>
+   915→                    );
+   916→                  })}
+   917→                </div>
+   918→              </div>
+   919→            </section>
+   920→
+   921→            {/* Feature Cards */}
+   922→            <section className="-mx-5 sm:mx-0">
+   923→              <div className="grid grid-cols-4 sm:grid-cols-2 lg:grid-cols-4 sm:rounded-2xl shadow-[0_-1px_0_0_rgba(0,0,0,0.04),0_4px_16px_rgba(0,0,0,0.08),0_1px_0_0_rgba(0,0,0,0.04)]" style={{ background: 'linear-gradient(135deg, #f8faff 0%, #f0f4ff 50%, #faf5ff 100%)' }}>
+   924→                {[
+   925→                  { I: Laptop, t: "Hands-on Projects", d: "Build real-world apps", color: "#10b981", bg: "#ecfdf5" },
+   926→                  { I: Briefcase, t: "Job Ready Skills", d: "Industry-relevant tools", color: "#3b82f6", bg: "#eff6ff" },
+   927→                  { I: GraduationCap, t: "Expert Guidance", d: "Learn from industry pros", color: "#8b5cf6", bg: "#f5f3ff" },
+   928→                  { I: Handshake, t: "Career Support", d: "Resume & interview help", color: "#f97316", bg: "#fff7ed" },
+   929→                ].map(({ I, t, d, color, bg }: any, idx: number) => (
+   930→                  <div key={t} className={`group p-2.5 sm:p-6 lg:p-7 transition-all duration-300 hover:bg-gray-50/50 flex flex-col items-center text-center ${idx < 3 ? 'lg:border-r' : ''} ${idx < 3 ? 'sm:border-r' : ''}`} style={{ borderColor: 'rgba(0,0,0,0.07)' }}>
+   931→                    <div className="w-7 h-7 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl flex items-center justify-center mb-1 sm:mb-4 transition-transform group-hover:scale-110" style={{ background: bg }}><I className="w-3.5 h-3.5 sm:w-6 sm:h-6" style={{ color }} /></div>
+   932→                    <h4 className="font-bold text-gray-900 text-[0.55rem] sm:text-[0.95rem] leading-tight">{t}</h4>
+   933→                    <p className="text-[0.48rem] sm:text-sm text-gray-500 mt-0.5 sm:mt-1.5 leading-relaxed hidden sm:block">{d}</p>
+   934→                  </div>
+   935→                ))}
+   936→              </div>
+   937→            </section>
+   938→
+   939→            {/* Tech Stack */}
+   940→            <section className="-mx-5 sm:mx-0">
+   941→              <div className="bg-white sm:rounded-2xl border border-slate-100 shadow-[0_2px_16px_rgba(0,0,0,0.05)] p-5 sm:p-10">
+   942→                <div className="flex items-center gap-2.5 sm:gap-3.5 mb-4 sm:mb-7">
+   943→                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+   944→                    <Code2 className="w-4 h-4 sm:w-5.5 sm:h-5.5 text-emerald-600" />
+   945→                  </div>
+   946→                  <div>
+   947→                    <h2 className="text-[1.05rem] sm:text-[1.4rem] font-bold text-gray-900 leading-tight">Tech Stack You Will Master</h2>
+   948→                    <div className="w-8 h-[2.5px] sm:w-10 sm:h-[3px] rounded-full bg-emerald-500 mt-1 sm:mt-1.5" />
+   949→                  </div>
+   950→                </div>
+   951→                <div className="flex flex-wrap gap-1.5 sm:gap-3">
+   952→                  {course.techStack.filter((t: any) => t.name !== "Midjourney").map((tech: any, i: number) => {
+   953→                    const slugMap: Record<string, string> = {
+   954→                      "Laravel": "laravel", "React": "react", "Next.js": "nextdotjs",
+   955→                      "TypeScript": "typescript", "Tailwind CSS": "tailwindcss", "MySQL": "mysql",
+   956→                      "Vercel": "vercel", "Docker": "docker", "ChatGPT": "openai",
+   957→                      "LangChain": "langchain", "Python": "python",
+   958→                      "OpenAI API": "openai", "DALL-E": "openai", "Hugging Face": "huggingface",
+   959→                      "Node.js": "nodedotjs", "MongoDB": "mongodb", "Redis": "redis",
+   960→                      "GraphQL": "graphql", "Git": "git", "GitHub": "github",
+   961→                      "AWS": "amazonaws", "Firebase": "firebase", "Figma": "figma",
+   962→                      "Flutter": "flutter", "Swift": "swift", "Kotlin": "kotlin",
+   963→                    };
+   964→                    const slug = slugMap[tech.name] || tech.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+   965→                    const iconUrl = `https://cdn.jsdelivr.net/gh/simple-icons/simple-icons@latest/icons/${slug}.svg`;
+   966→                    return (
+   967→                      <div key={i} className="inline-flex items-center gap-1.5 sm:gap-2.5 rounded-full pl-1 sm:pl-1.5 pr-2.5 sm:pr-4 py-1 sm:py-1.5 transition-all duration-200 border hover:shadow-[0_2px_8px_rgba(0,0,0,0.1)]" style={{ background: tech.color + "10", borderColor: tech.color + "30" }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "20" }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = tech.color + "10" }}>
+   968→                        <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center shrink-0" style={{ background: tech.color + "20" }}>
+   969→                          <div className="w-3 h-3 sm:w-4 sm:h-4" style={{ backgroundColor: tech.color, WebkitMaskImage: `url(${iconUrl})`, maskImage: `url(${iconUrl})`, WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskPosition: "center", maskPosition: "center" }} />
+   970→                        </div>
+   971→                        <span className="text-[0.65rem] sm:text-[0.875rem] font-semibold" style={{ color: tech.color }}>{tech.name}</span>
+   972→                      </div>
+   973→                    );
+   974→                  })}
+   975→                </div>
+   976→              </div>
+   977→            </section>
+   978→
+   979→                        {/* ===== PROJECTS YOU'LL BUILD ===== */}
+   980→            <section className="-mx-5 sm:mx-0">
+   981→              <div className="sm:rounded-2xl p-5 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 2px 16px rgba(0,0,0,0.04)' }}>
+   982→
+   983→                {/* Header */}
+   984→                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-8">
+   985→                  <div>
+   986→                    <div className="flex items-center gap-3 mb-2">
+   987→                      <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+   988→                        <Briefcase className="w-5 h-5 text-emerald-600" />
+   989→                      </div>
+   990→                      <h2 className="text-[1.1rem] sm:text-[1.35rem] font-bold text-gray-900 leading-tight">Projects You'll Build</h2>
+   991→                    </div>
+   992→                    <p className="text-[0.78rem] sm:text-[0.85rem] text-gray-500 leading-relaxed ml-14">Apply your learning with real-world projects and build a strong portfolio that showcases your AI Prompt Engineering skills.</p>
+   993→                  </div>
+   994→                  <span className="text-[0.78rem] font-semibold px-4 py-2 rounded-full shrink-0 flex items-center gap-2" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+   995→                    <Sparkle className="w-3.5 h-3.5" />
+   996→                    Hands-on • Practical • Portfolio Ready
+   997→                  </span>
+   998→                </div>
+   999→
+  1000→                {/* Project Cards Grid */}
+  1001→                <div className="flex gap-3 mb-6 sm:mb-8 overflow-x-auto no-scrollbar snap-x snap-mandatory sm:grid sm:grid-cols-2 sm:overflow-visible xl:grid-cols-4 sm:gap-5">
+  1002→                  {projectsData.map((p, i) => (
+  1003→                    <div key={i} className="rounded-2xl overflow-hidden transition-all duration-200 hover:shadow-lg shrink-0 w-[85%] sm:w-full snap-start"
+  1004→                      style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 4px 20px rgba(0,0,0,0.06)' }}
+  1005→                    >
+  1006→                      {/* Visual Preview Area */}
+  1007→                      <div className="relative h-40 p-4 flex items-center justify-center" style={{ background: p.visualBg }}>
+  1008→                        {/* Difficulty badge */}
+  1009→                        <span className="absolute top-3 left-3 text-[0.68rem] font-semibold px-2.5 py-1 rounded-full" style={{ background: p.diffBg, color: p.diffColor }}>{p.difficulty}</span>
+  1010→                        {/* Visual Illustration */}
+  1011→                        <div className="w-4/5 h-3/4 rounded-xl bg-white/70 backdrop-blur flex items-center justify-center" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+  1012→                          {i === 0 && <div className="flex flex-col gap-2 w-[85%]">
+  1013→                            <div className="h-2.5 rounded-full" style={{ background: p.accent + '40', width: '70%' }} />
+  1014→                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '100%' }} />
+  1015→                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '85%' }} />
+  1016→                            <div className="h-2 rounded-full" style={{ background: '#E5E7EB', width: '60%' }} />
+  1017→                            <div className="flex gap-1.5 mt-1"><div className="h-5 w-14 rounded-md" style={{ background: p.accent + '25' }} /><div className="h-5 w-14 rounded-md" style={{ background: p.accent + '15' }} /></div>
+  1018→                          </div>}
+  1019→                          {i === 1 && <div className="flex flex-col gap-2 w-[85%]">
+  1020→                            <div className="h-2.5 rounded-full" style={{ background: p.accent + '40', width: '55%' }} />
+  1021→                            <div className="flex gap-2 items-end"><div className="h-8 w-2/3 rounded-lg" style={{ background: p.accent + '15' }} /><div className="h-8 w-2/3 rounded-lg self-end" style={{ background: '#F3F4F6' }} /></div>
+  1022→                            <div className="h-5 w-1/2 rounded-md" style={{ background: '#E5E7EB' }} />
+  1023→                          </div>}
+  1024→                          {i === 2 && <div className="flex flex-col gap-2 w-[85%]">
+  1025→                            <div className="h-6 rounded-lg flex items-center px-2 gap-1.5" style={{ background: '#F3F4F6' }}><div className="w-3 h-3 rounded-full" style={{ background: '#D1D5DB' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '60%' }} /></div>
+  1026→                            <div className="h-3 rounded-full" style={{ background: p.accent + '30', width: '80%' }} />
+  1027→                            <div className="h-3 rounded-full" style={{ background: '#E5E7EB', width: '90%' }} />
+  1028→                            <div className="h-3 rounded-full" style={{ background: '#E5E7EB', width: '50%' }} />
+  1029→                          </div>}
+  1030→                          {i === 3 && <div className="flex items-center gap-3 w-[85%]">
+  1031→                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '30' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+  1032→                            <ArrowRight className="w-4 h-4 text-gray-300" />
+  1033→                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '20' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+  1034→                            <ArrowRight className="w-4 h-4 text-gray-300" />
+  1035→                            <div className="flex flex-col items-center gap-1"><div className="w-8 h-8 rounded-lg" style={{ background: p.accent + '15' }} /><div className="h-2 rounded-full" style={{ background: '#D1D5DB', width: '28px' }} /></div>
+  1036→                          </div>}
+  1037→                        </div>
+  1038→                      </div>
+  1039→
+  1040→                      {/* Content */}
+  1041→                      <div className="p-5">
+  1042→                        <div className="flex items-center gap-2 mb-1.5">
+  1043→                          <span className="text-[0.85rem] font-bold" style={{ color: p.accent }}>{p.num}</span>
+  1044→                          <h3 className="text-[1rem] font-bold text-gray-900 leading-tight">{p.title}</h3>
+  1045→                        </div>
+  1046→                        <p className="text-[0.8rem] text-gray-500 leading-relaxed mb-3">{p.desc}</p>
+  1047→                        {/* Tools */}
+  1048→                        <div className="flex flex-wrap gap-1.5 mb-4">
+  1049→                          {p.tools.map((t, ti) => (
+  1050→                            <span key={ti} className="text-[0.7rem] font-medium px-2.5 py-1 rounded-full" style={{ background: '#F3F4F6', color: '#4B5563' }}>{t}</span>
+  1051→                          ))}
+  1052→                        </div>
+  1053→                        {/* Divider */}
+  1054→                        <div className="mb-3" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }} />
+  1055→                        {/* Duration + View Details */}
+  1056→                        <div className="flex items-center justify-between">
+  1057→                          <div className="flex items-center gap-1.5">
+  1058→                            <Clock className="w-3.5 h-3.5 text-gray-400" />
+  1059→                            <span className="text-[0.78rem] font-medium text-gray-500">{p.duration}</span>
+  1060→                          </div>
+  1061→                          <span className="text-[0.78rem] font-semibold flex items-center gap-1 transition-colors" style={{ color: p.accent }}>
+  1062→                            View Details <ArrowRight className="w-3.5 h-3.5" />
+  1063→                          </span>
+  1064→                        </div>
+  1065→                      </div>
+  1066→                    </div>
+  1067→                  ))}
+  1068→                </div>
+  1069→
+  1070→                {/* Bottom Feature Cards + Stats */}
+  1071→                <div className="grid grid-cols-3 gap-1.5 sm:gap-4 mb-5">
+  1072→                  {[
+  1073→                    { I: Trophy, t: 'Real Projects', d: 'Hands-on projects to strengthen your portfolio and practical skills.', color: '#10B981', bg: '#ECFDF5', border: 'rgba(16,185,129,0.2)' },
+  1074→                    { I: Briefcase, t: 'Industry Ready', d: 'Projects designed for real-world industry use cases.', color: '#3B82F6', bg: '#EFF6FF', border: 'rgba(59,130,246,0.2)' },
+  1075→                    { I: BarChart3, t: 'Portfolio Ready', d: 'Showcase your work and stand out in the job market.', color: '#8B5CF6', bg: '#F5F3FF', border: 'rgba(139,92,246,0.2)' },
+  1076→                  ].map((f: any, fi: number) => (
+  1077→                    <div key={fi} className="rounded-lg sm:rounded-xl p-2 sm:p-5 transition-all duration-200 hover:shadow-md text-center" style={{ background: '#FFFFFF', border: '1px solid ' + f.border, boxShadow: '0 4px 16px rgba(0,0,0,0.06)' }}>
+  1078→                      <div className="w-6 h-6 sm:w-11 sm:h-11 rounded-md sm:rounded-xl flex items-center justify-center mb-1 sm:mb-3 mx-auto" style={{ background: f.bg }}>
+  1079→                        <f.I className="w-3 h-3 sm:w-5 sm:h-5" style={{ color: f.color }} />
+  1080→                      </div>
+  1081→                      <div className="text-[0.52rem] sm:text-[0.92rem] font-bold text-gray-900 leading-tight truncate">{f.t}</div>
+  1082→                    </div>
+  1083→                  ))}
+  1084→                </div>
+  1085→
+  1086→                {/* Stats Bar */}
+  1087→                <div className="rounded-xl flex flex-col sm:flex-row sm:items-center sm:justify-center gap-6 sm:gap-16 px-6 py-5" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 50%, #EFF6FF 100%)', border: '1px solid rgba(16,185,129,0.1)' }}>
+  1088→                  <div className="text-center">
+  1089→                    <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>4</div>
+  1090→                    <div className="text-[0.78rem] text-gray-500 font-medium">Practical Projects</div>
+  1091→                  </div>
+  1092→                  <div className="text-center">
+  1093→                    <div className="text-[1.6rem] font-extrabold" style={{ color: '#059669' }}>24–36</div>
+  1094→                    <div className="text-[0.78rem] text-gray-500 font-medium">Hands-on Learning</div>
+  1095→                  </div>
+  1096→                </div>
+  1097→
+  1098→              </div>
+  1099→            </section>
+  1100→            {/* Who This Course Is For */}
+  1101→            <section className="-mx-5 sm:mx-0">
+  1102→              <div className="bg-white sm:rounded-2xl border border-slate-200 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05),0_10px_15px_-3px_rgba(0,0,0,0.03)] p-5 sm:p-8 relative overflow-hidden">
+  1103→                {/* Decorative dots top-right */}
+  1104→                <div className="absolute top-3 right-3 w-20 h-20 opacity-[0.06] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #6b7280 1.5px, transparent 1.5px)", backgroundSize: "10px 10px" }} />
+  1105→                <div className="relative">
+  1106→                  {/* Header */}
+  1107→                  <div className="flex items-center gap-3 mb-2">
+  1108→                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+  1109→                      <Users className="w-5 h-5 text-emerald-600" strokeWidth={2.5} />
+  1110→                    </div>
+  1111→                    <h2 className="text-[1.15rem] sm:text-[1.375rem] font-bold text-gray-900 leading-tight">Who This Course Is For</h2>
+  1112→                  </div>
+  1113→                  <div className="w-12 h-1 rounded-full bg-emerald-500 mb-6 ml-[52px]" />
+  1114→
+  1115→                  {/* List */}
+  1116→                  <div className="space-y-4 relative pl-1">
+  1117→                    {/* Vertical timeline line */}
+  1118→                    <div className="absolute left-[18px] top-3 bottom-3 w-[2px] bg-emerald-500" />
+  1119→                    {course.audience.map((item: string, i: number) => {
+  1120→                      const cfg = [
+  1121→                        { I: Megaphone, color: "#8B5CF6", bg: "#EDE9FE" },
+  1122→                        { I: Laptop, color: "#6366F1", bg: "#EEF2FF" },
+  1123→                        { I: Briefcase, color: "#10B981", bg: "#D1FAE5" },
+  1124→                        { I: Paintbrush, color: "#A855F7", bg: "#F3E8FF" },
+  1125→                        { I: GraduationCap, color: "#6366F1", bg: "#EEF2FF" },
+  1126→                      ];
+  1127→                      const c = cfg[i % cfg.length];
+  1128→                      const Ic = c.I;
+  1129→                      return (
+  1130→                        <div key={i} className="flex items-center gap-3 sm:gap-4 relative z-10">
+  1131→                          {/* Number Badge - rounded rectangle */}
+  1132→                          <div className="w-7 h-6 sm:w-9 sm:h-7 rounded-md sm:rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-[11px] sm:text-[13px] shrink-0">{String(i + 1).padStart(2, "0")}</div>
+  1133→                          {/* Text */}
+  1134→                          <p className="text-[0.8125rem] sm:text-[0.9375rem] text-gray-700 leading-relaxed flex-1 font-medium">{item}</p>
+  1135→                          {/* Right Icon */}
+  1136→                          <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0" style={{ background: c.bg }}>
+  1137→                            <Ic className="w-4 h-4 sm:w-6 sm:h-6" style={{ color: c.color }} fill={c.color} />
+  1138→                          </div>
+  1139→                        </div>
+  1140→                      );
+  1141→                    })}
+  1142→                  </div>
+  1143→                </div>
+  1144→              </div>
+  1145→            </section>
+  1146→          </div>
+  1147→
+  1148→        {/* ========== CURRICULUM TAB ========== */}
+  1149→        {activeTab === "curriculum" && (
+  1150→          <section>
+  1151→            <div className="flex flex-wrap justify-between items-end mb-6 gap-3">
+  1152→              <div className="flex items-center gap-3">
+  1153→                <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><FileText className="w-5 h-5" style={{ color: primary }} /></div>
+  1154→                <h2 className="text-2xl font-bold text-gray-900">Course Curriculum</h2>
+  1155→              </div>
+  1156→              <span className="text-sm text-slate-500 bg-slate-100 px-4 py-2 rounded-lg font-medium">{curriculumModules.length} Sections · {totalLectures} Lectures · {totalDuration}</span>
+  1157→            </div>
+  1158→            <div className="space-y-3">
+  1159→              {(showAllCurriculum ? curriculumModules : curriculumModules.slice(0, 5)).map((mod: any, idx: number) => {
+  1160→                const isOpen = expandedSections[idx];
+  1161→                return (
+  1162→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+  1163→                    <button onClick={() => tog(setExpandedSections, idx)} className="w-full flex justify-between items-center p-5 text-left font-medium transition-colors">
+  1164→                      <div className="flex items-center gap-3.5">
+  1165→                        <div className="w-9 h-9 rounded-lg flex items-center justify-center text-white text-sm font-bold" style={{ background: isOpen ? primary : primary + "40" }}>{idx + 1}</div>
+  1166→                        <span className="text-gray-900 text-[0.95rem]">{mod.title}</span>
+  1167→                      </div>
+  1168→                      <div className="flex items-center gap-4 text-slate-500 font-normal">
+  1169→                        <span className="hidden sm:inline text-sm">{mod.lectures} Lectures · {mod.duration}</span>
+  1170→                        {isOpen ? <ChevronUp className="w-5 h-5" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5" />}
+  1171→                      </div>
+  1172→                    </button>
+  1173→                    {isOpen && (
+  1174→                      <div className="px-5 pb-4 bg-white">
+  1175→                        <ul className="space-y-1">
+  1176→                          {mod.topics.map((tp: string, ti: number) => (
+  1177→                            <li key={ti} className="flex items-center gap-3.5 py-3 text-[0.95rem] text-gray-600">
+  1178→                              <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100"><Play className="w-3 h-3" style={{ color: primary }} /></div>
+  1179→                              {tp}
+  1180→                            </li>
+  1181→                          ))}
+  1182→                        </ul>
+  1183→                      </div>
+  1184→                    )}
+  1185→                  </div>
+  1186→                );
+  1187→              })}
+  1188→            </div>
+  1189→            {curriculumModules.length > 5 && (
+  1190→              <div className="text-center mt-8">
+  1191→                <button onClick={() => setShowAllCurriculum(!showAllCurriculum)} className="inline-flex items-center gap-2 text-[0.95rem] font-semibold hover:underline" style={{ color: primary }}>
+  1192→                  {showAllCurriculum ? "Show less" : "Show all " + curriculumModules.length + " sections"}
+  1193→                </button>
+  1194→              </div>
+  1195→            )}
+  1196→          </section>
+  1197→        )}
+  1198→
+  1199→        {/* ========== INSTRUCTOR TAB ========== */}
+  1200→        {activeTab === "instructor" && (
+  1201→          <section>
+  1202→            <div className="flex items-center gap-3 mb-8">
+  1203→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><GraduationCap className="w-5 h-5" style={{ color: primary }} /></div>
+  1204→              <h2 className="text-2xl font-bold text-gray-900">Meet Your Instructor</h2>
+  1205→            </div>
+  1206→            <div className="flex flex-col sm:flex-row items-start gap-8">
+  1207→              <div className="relative">
+  1208→                <img src={INSTRUCTOR.avatar} alt={INSTRUCTOR.name} className="w-32 h-32 rounded-2xl object-cover shadow-xl" />
+  1209→                <div className="absolute -bottom-2 -right-2 w-9 h-9 rounded-lg flex items-center justify-center text-white shadow-lg" style={{ background: primary }}><CheckCircle2 className="w-5 h-5" /></div>
+  1210→              </div>
+  1211→              <div className="flex-1">
+  1212→                <h3 className="text-2xl font-bold text-gray-900">{INSTRUCTOR.name}</h3>
+  1213→                <p className="text-lg font-semibold mt-1" style={{ color: primary }}>{INSTRUCTOR.role}</p>
+  1214→                <p className="text-gray-600 mt-4 leading-relaxed text-[1.05rem]">{INSTRUCTOR.bio}</p>
+  1215→                <div className="flex flex-wrap gap-8 mt-7">
+  1216→                  {[{ l: "Students", v: INSTRUCTOR.students }, { l: "Courses", v: INSTRUCTOR.courses }, { l: "Rating", v: INSTRUCTOR.rating + " \u2605" }].map((s: any) => (
+  1217→                    <div key={s.l} className="text-center px-6 py-3.5 rounded-xl bg-slate-50">
+  1218→                      <div className="text-2xl font-bold text-gray-900">{s.v}</div>
+  1219→                      <div className="text-sm text-slate-500 mt-0.5 font-medium">{s.l}</div>
+  1220→                    </div>
+  1221→                  ))}
+  1222→                </div>
+  1223→              </div>
+  1224→            </div>
+  1225→          </section>
+  1226→        )}
+  1227→
+  1228→        {/* ========== REVIEWS TAB ========== */}
+  1229→        {activeTab === "reviews" && (
+  1230→          <section>
+  1231→            <div className="flex items-center gap-3 mb-8">
+  1232→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+  1233→              <h2 className="text-2xl font-bold text-gray-900">Student Reviews</h2>
+  1234→            </div>
+  1235→            <div className="flex flex-col md:flex-row gap-12">
+  1236→              <div className="md:w-1/3 flex flex-col items-center md:items-start">
+  1237→                <div className="text-7xl font-extrabold mb-3" style={{ color: primary }}>4.8</div>
+  1238→                <div className="flex text-amber-400 text-2xl mb-3">
+  1239→                  {[1,2,3,4].map(n => <Star key={n} className="w-6 h-6 fill-amber-400" />)}
+  1240→                  <Star className="w-6 h-6 fill-amber-400/50" />
+  1241→                </div>
+  1242→                <p className="text-slate-500 mb-7 font-medium">(2,456 reviews)</p>
+  1243→                <div className="w-full space-y-3">
+  1244→                  {RATING_BARS.map(({ star, pct }: any) => (
+  1245→                    <div key={star} className="flex items-center">
+  1246→                      <span className="w-4 text-gray-700 font-semibold text-sm">{star}</span>
+  1247→                      <Star className="w-3.5 h-3.5 text-amber-400 mx-2 fill-amber-400" />
+  1248→                      <div className="flex-1 bg-slate-100 rounded-full h-2.5 mx-1">
+  1249→                        <div className="h-2.5 rounded-full transition-all" style={{ width: pct + "%", background: primary }} />
+  1250→                      </div>
+  1251→                      <span className="w-10 text-right text-slate-500 text-sm">{pct}%</span>
+  1252→                    </div>
+  1253→                  ))}
+  1254→                </div>
+  1255→              </div>
+  1256→              <div className="md:w-2/3">
+  1257→                <div className="bg-slate-50 rounded-2xl p-7">
+  1258→                  <div className="flex items-start gap-4">
+  1259→                    <img alt="Reviewer" className="w-16 h-16 rounded-xl object-cover shadow-md" src={REVIEWS[currentReview].avatar} />
+  1260→                    <div className="flex-1">
+  1261→                      <div className="flex flex-wrap items-center gap-2.5 mb-2">
+  1262→                        <h4 className="font-bold text-gray-900 text-lg">{REVIEWS[currentReview].name}</h4>
+  1263→                        <span className="text-xs text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full flex items-center gap-1 font-semibold"><CheckCircle2 className="w-3 h-3" /> Verified</span>
+  1264→                      </div>
+  1265→                      <div className="flex items-center gap-2.5 mb-4">
+  1266→                        <div className="flex text-amber-400">
+  1267→                          {Array.from({ length: 5 }).map((_: any, i: number) => (
+  1268→                            <Star key={i} className={"w-4.5 h-4.5 " + (i < REVIEWS[currentReview].rating ? "fill-amber-400" : "text-slate-200")} />
+  1269→                          ))}
+  1270→                        </div>
+  1271→                        <span className="text-slate-400 text-sm">{REVIEWS[currentReview].time}</span>
+  1272→                      </div>
+  1273→                      <p className="text-gray-600 leading-relaxed text-[1.05rem]">{REVIEWS[currentReview].text}</p>
+  1274→                    </div>
+  1275→                  </div>
+  1276→                </div>
+  1277→                <div className="flex justify-center mt-6 gap-2.5">
+  1278→                  {REVIEWS.map((_: any, i: number) => (
+  1279→                    <button key={i} onClick={() => setCurrentReview(i)} className="h-2.5 rounded-full transition-all duration-300" style={{ width: i === currentReview ? 28 : 10, background: i === currentReview ? primary : "#cbd5e1" }} />
+  1280→                  ))}
+  1281→                </div>
+  1282→              </div>
+  1283→            </div>
+  1284→          </section>
+  1285→        )}
+  1286→
+  1287→        {/* ========== FAQ TAB ========== */}
+  1288→        {activeTab === "faq" && (
+  1289→          <section>
+  1290→            <div className="flex items-center gap-3 mb-8">
+  1291→              <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: primary + "15" }}><MessageSquare className="w-5 h-5" style={{ color: primary }} /></div>
+  1292→              <h2 className="text-2xl font-bold text-gray-900">Frequently Asked Questions</h2>
+  1293→            </div>
+  1294→            <div className="space-y-3">
+  1295→              {FAQS.map((faq: any, idx: number) => {
+  1296→                const isOpen = expandedFaqs[idx];
+  1297→                return (
+  1298→                  <div key={idx} className={"rounded-xl overflow-hidden transition-all " + (isOpen ? "shadow-md bg-white" : "bg-slate-50 hover:bg-slate-100")}>
+  1299→                    <button onClick={() => tog(setExpandedFaqs, idx)} className="w-full flex justify-between items-center p-5 text-left text-[0.95rem] font-semibold text-gray-900 transition-colors">
+  1300→                      <span>{faq.q}</span>
+  1301→                      {isOpen ? <ChevronUp className="w-5 h-5 shrink-0 ml-4" style={{ color: primary }} /> : <ChevronDown className="w-5 h-5 shrink-0 ml-4 text-slate-400" />}
+  1302→                    </button>
+  1303→                    {isOpen && <div className="px-6 pb-5 bg-white"><p className="text-[0.95rem] text-gray-600 leading-relaxed">{faq.a}</p></div>}
+  1304→                  </div>
+  1305→                );
+  1306→              })}
+  1307→            </div>
+  1308→          </section>
+  1309→        )}
+  1310→
+  1311→        {/* ===== COURSE INCLUDES ===== */}
+  1312→        <section className="mt-12">
+  1313→          <div className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.07)] p-8 sm:p-10">
+  1314→            <div className="flex items-center gap-3.5 mb-7">
+  1315→              <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+  1316→                <Gift className="w-5 h-5 text-emerald-600" />
+  1317→              </div>
+  1318→              <div>
+  1319→                <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">This Course Includes</h2>
+  1320→                <div className="w-10 h-[3px] rounded-full bg-emerald-500 mt-1.5" />
+  1321→              </div>
+  1322→            </div>
+  1323→            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+  1324→              {[
+  1325→                { I: Video, v: totalDuration.replace("h ", "h ").replace("m", "m"), l: "On-demand video" },
+  1326→                { I: FileText, v: totalLectures + " lectures", l: "In-depth learning" },
+  1327→                { I: Download, v: course.topics.length + " downloadable", l: "Resources" },
+  1328→                { I: Smartphone, v: "Access on", l: "Mobile & TV" },
+  1329→                { I: Infinity, v: "Full lifetime", l: "Access" },
+  1330→                { I: Trophy, v: "Certificate of", l: "Completion" },
+  1331→              ].map(({ I, v, l }: any) => (
+  1332→                <div key={v} className="flex flex-col items-center text-center p-5 rounded-xl bg-[#F9FAFB]" style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+  1333→                  <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
+  1334→                    <I className="w-5 h-5 text-emerald-600" />
+  1335→                  </div>
+  1336→                  <div className="text-[0.95rem] font-bold text-gray-900 leading-tight">{v}</div>
+  1337→                  <div className="text-[0.78rem] text-gray-500 mt-1">{l}</div>
+  1338→                  <div className="w-6 h-[3px] rounded-full bg-emerald-500 mt-3" />
+  1339→                </div>
+  1340→              ))}
+  1341→            </div>
+  1342→          </div>
+  1343→        </section>
+  1344→
+  1345→                {/* ===== CAREER OUTCOMES ===== */}
+  1346→        <section className="-mx-5 sm:mx-0">
+  1347→          <div className="sm:rounded-2xl p-8 sm:p-10" style={{ background: '#FAFBFF', border: '1px solid rgba(0,0,0,0.04)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
+  1348→
+  1349→            {/* Header */}
+  1350→            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
+  1351→              <div>
+  1352→                <div className="flex items-center gap-3 mb-2">
+  1353→                  <div className="w-11 h-11 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0">
+  1354→                    <Briefcase className="w-5 h-5 text-emerald-600" />
+  1355→                  </div>
+  1356→                  <h2 className="text-[1.35rem] font-bold text-gray-900 leading-tight">Career Outcomes</h2>
+  1357→                </div>
+  1358→                <p className="text-[0.85rem] text-gray-500 leading-relaxed ml-14">This course prepares you for in-demand roles in AI and opens doors to exciting career opportunities.</p>
+  1359→              </div>
+  1360→              <div className="flex items-center gap-2.5 px-4 py-3 rounded-xl shrink-0" style={{ background: '#F3F4F6' }}>
+  1361→                <TrendingUp className="w-5 h-5 text-emerald-500" />
+  1362→                <span className="text-[0.8rem] text-gray-600 leading-snug">AI Jobs are growing <span className="font-bold text-emerald-600">4X faster</span> than the average tech roles.</span>
+  1363→              </div>
+  1364→            </div>
+  1365→
+  1366→            {/* 5 Outcome Cards */}
+  1367→            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
+  1368→              {[
+  1369→                { icon: <Target className="w-5 h-5" />, title: 'High Demand', desc: 'AI Prompt Engineering skills are in high demand across industries.', color: '#10B981', bg: '#ECFDF5' },
+  1370→                { icon: <Wallet className="w-5 h-5" />, title: 'Lucrative Salaries', desc: 'Competitive salaries with excellent growth potential.', color: '#8B5CF6', bg: '#F5F3FF' },
+  1371→                { icon: <Rocket className="w-5 h-5" />, title: 'Future-Proof Career', desc: 'Stay ahead in the AI era with future-proof skills and knowledge.', color: '#F59E0B', bg: '#FFF7ED' },
+  1372→                { icon: <Globe className="w-5 h-5" />, title: 'Work Anywhere', desc: 'Remote-friendly roles with global opportunities and flexibility.', color: '#3B82F6', bg: '#EFF6FF' },
+  1373→                { icon: <Users className="w-5 h-5" />, title: 'Make an Impact', desc: 'Build solutions that solve real-world problems and create value.', color: '#EC4899', bg: '#FDF2F8' },
+  1374→              ].map((c: any, ci: number) => (
+  1375→                <div key={ci} className="rounded-xl p-5 transition-all duration-200 hover:shadow-lg relative overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.06)', boxShadow: '0 6px 24px rgba(0,0,0,0.1)' }}>
+  1376→                  <div className="w-11 h-11 rounded-full flex items-center justify-center mb-4" style={{ background: c.bg, color: c.color }}>{c.icon}</div>
+  1377→                  <h3 className="text-[0.95rem] font-bold text-gray-900 mb-1.5">{c.title}</h3>
+  1378→                  <p className="text-[0.8rem] text-gray-500 leading-relaxed">{c.desc}</p>
+  1379→                  <div className="absolute bottom-0 left-0 right-0 h-1 rounded-b-xl" style={{ background: c.color }} />
+  1380→                </div>
+  1381→              ))}
+  1382→            </div>
+  1383→
+  1384→            {/* Two-Column: Career Roles + What You'll Achieve */}
+  1385→            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8 -mx-5 sm:mx-0 px-[10px] sm:px-0">
+  1386→
+  1387→              {/* Left — Career Roles */}
+  1388→              <div className="sm:rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+  1389→                <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+  1390→                  <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+  1391→                  <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">Top Career Roles You Can Get</h3>
+  1392→                </div>
+  1393→                <p className="text-[0.72rem] sm:text-[0.8rem] text-gray-500 mb-4 sm:mb-5 ml-[22px] sm:ml-8">Explore the most in-demand roles in AI Prompt Engineering.</p>
+  1394→
+  1395→                <div className="space-y-0">
+  1396→                  {[
+  1397→                    { role: 'AI Prompt Engineer', salary: '₹8 – ₹20 LPA' },
+  1398→                    { role: 'AI Content Strategist', salary: '₹6 – ₹15 LPA' },
+  1399→                    { role: 'AI Solutions Consultant', salary: '₹10 – ₹22 LPA' },
+  1400→                    { role: 'Generative AI Specialist', salary: '₹12 – ₹25 LPA' },
+  1401→                    { role: 'AI Product Manager', salary: '₹15 – ₹30 LPA' },
+  1402→                  ].map((r: any, ri: number) => (
+  1403→                    <Fragment key={ri}>
+  1404→                      <div className="flex items-center justify-between py-2.5 sm:py-3.5 gap-2" style={{ borderBottom: ri < 4 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+  1405→                        <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+  1406→                          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg flex items-center justify-center shrink-0" style={{ background: '#ECFDF5' }}>
+  1407→                            <Code2 className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-600" />
+  1408→                          </div>
+  1409→                          <span className="text-[0.78rem] sm:text-[0.88rem] font-semibold text-gray-900 truncate">{r.role}</span>
+  1410→                        </div>
+  1411→                        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+  1412→                          <span className="text-[0.72rem] sm:text-[0.82rem] font-medium text-gray-600 whitespace-nowrap">{r.salary}</span>
+  1413→                          <span className="text-[0.58rem] sm:text-[0.68rem] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full flex items-center gap-0.5 sm:gap-1" style={{ background: '#ECFDF5', color: '#059669' }}>
+  1414→                            <TrendingUp className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> <span className="hidden sm:inline">High Demand</span><span className="sm:hidden">Hot</span>
+  1415→                          </span>
+  1416→                        </div>
+  1417→                      </div>
+  1418→                    </Fragment>
+  1419→                  ))}
+  1420→                </div>
+  1421→                <div className="flex items-center gap-2 mt-3">
+  1422→                  <Star className="w-3.5 h-3.5 text-gray-400" />
+  1423→                  <span className="text-[0.72rem] text-gray-400">Salaries vary based on experience, location, and company.</span>
+  1424→                </div>
+  1425→              </div>
+  1426→
+  1427→              {/* Right — What You'll Achieve */}
+  1428→              <div className="sm:rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+  1429→                <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
+  1430→                  <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
+  1431→                  <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">What You'll Achieve</h3>
+  1432→                </div>
+  1433→                <p className="text-[0.72rem] sm:text-[0.8rem] text-gray-500 mb-4 sm:mb-5 ml-[22px] sm:ml-8">Skills and benefits you'll gain from this course.</p>
+  1434→
+  1435→                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-2.5 sm:gap-y-3 mb-5">
+  1436→                  {[
+  1437→                    'Master AI prompting techniques and best practices',
+  1438→                    'Build real-world projects for your portfolio',
+  1439→                    'Work with cutting-edge AI tools and technologies',
+  1440→                    'Enhance problem-solving and critical thinking',
+  1441→                    'Increase your career opportunities and earning potential',
+  1442→                    'Join a community of AI professionals and learners',
+  1443→                  ].map((item: string, ii: number) => (
+  1444→                    <div key={ii} className="flex items-start gap-2 sm:gap-2.5">
+  1445→                      <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#10B981' }}>
+  1446→                        <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+  1447→                      </div>
+  1448→                      <span className="text-[0.73rem] sm:text-[0.82rem] text-gray-700 leading-snug">{item}</span>
+  1449→                    </div>
+  1450→                  ))}
+  1451→                </div>
+  1452→
+  1453→                {/* CTA Box — hidden on mobile */}
+  1454→                <div className="rounded-xl p-5 hidden sm:block" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%)', border: '1px solid rgba(16,185,129,0.15)' }}>
+  1455→                  <div className="flex items-start gap-3.5">
+  1456→                    <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0" style={{ background: '#10B981' }}>
+  1457→                      <Award className="w-5 h-5 text-white" />
+  1458→                    </div>
+  1459→                    <div>
+  1460→                      <div className="text-[0.92rem] font-bold text-gray-900 mb-1">Invest in your future and unlock endless opportunities</div>
+  1461→                      <div className="text-[0.8rem] text-gray-500 leading-relaxed">Become a valuable AI professional in today's competitive job market.</div>
+  1462→                    </div>
+  1463→                  </div>
+  1464→                </div>
+  1465→              </div>
+  1466→            </div>
+  1467→
+  1468→            {/* Bottom Statistics Strip */}
+  1469→            <div className="rounded-xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+  1470→              <div className="grid grid-cols-4 sm:flex">
+  1471→                {[
+  1472→                  { I: Users, stat: '2M+', label: 'Job Openings', desc: 'AI & ML related roles worldwide', color: '#10B981', bg: '#ECFDF5' },
+  1473→                  { I: TrendingUp, stat: '35%', label: 'Higher Salary', desc: 'Compared to traditional roles', color: '#8B5CF6', bg: '#F5F3FF' },
+  1474→                  { I: Zap, stat: '4X', label: 'Faster Growth', desc: 'Than average tech jobs', color: '#F59E0B', bg: '#FFF7ED' },
+  1475→                  { I: Globe, stat: '150+', label: 'Countries Hiring', desc: 'Global opportunities await', color: '#3B82F6', bg: '#EFF6FF' },
+  1476→                ].map((s: any, si: number) => (
+  1477→                  <Fragment key={si}>
+  1478→                    <div className="flex flex-col items-center text-center gap-1 px-1.5 py-3 sm:py-5 sm:flex-row sm:text-left sm:items-center sm:gap-4 sm:px-6 sm:flex-1">
+  1479→                      <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: s.bg }}>
+  1480→                        <s.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: s.color }} />
+  1481→                      </div>
+  1482→                      <div>
+  1483→                        <div className="text-[0.9rem] sm:text-[1.4rem] font-extrabold leading-none" style={{ color: s.color }}>{s.stat}</div>
+  1484→                        <div className="text-[0.55rem] sm:text-[0.85rem] font-bold text-gray-900 mt-0.5 leading-tight">{s.label}</div>
+  1485→                        <div className="text-[0.48rem] sm:text-[0.75rem] text-gray-500 mt-0.5 leading-relaxed hidden sm:block">{s.desc}</div>
+  1486→                      </div>
+  1487→                    </div>
+  1488→                    {si < 3 && <div className="hidden sm:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', alignSelf: 'stretch' }} />}
+  1489→                  </Fragment>
+  1490→                ))}
+  1491→              </div>
+  1492→            </div>
+  1493→
+  1494→          </div>
+  1495→        </section>
+  1496→
+  1497→{/* ===== INSTRUCTOR + SHARE ROW ===== */}
+  1498→        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+  1499→          {/* Instructor Card */}
+  1500→          <div className="rounded-2xl overflow-hidden" style={{ background: '#F3EEFF' }}>
+  1501→            <div className="p-6">
+  1502→              <div className="flex items-center gap-4 mb-4">
+  1503→                <div className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0" style={{ background: '#5B4DFF' }}>
+  1504→                  <span className="text-white font-bold text-lg">LD</span>
+  1505→                </div>
+  1506→                <div>
+  1507→                  <h3 className="text-[1.1rem] font-bold" style={{ color: '#1A1A2E' }}>{INSTRUCTOR.name}</h3>
+  1508→                  <span className="text-[0.8rem] font-semibold px-2.5 py-0.5 rounded-full inline-block mt-1" style={{ background: '#ECFDF5', color: '#10B981' }}>{INSTRUCTOR.role}</span>
+  1509→                </div>
+  1510→              </div>
+  1511→              <p className="text-[0.85rem] leading-relaxed" style={{ color: '#4A4A68' }}>{INSTRUCTOR.bio}</p>
+  1512→            </div>
+  1513→            <div className="bg-white mx-4 mb-4 rounded-xl px-5 py-4">
+  1514→              <div className="grid grid-cols-3 gap-4">
+  1515→                {[{ I: Users, v: INSTRUCTOR.students, l: "Students" }, { I: BookOpen, v: INSTRUCTOR.courses, l: "Courses" }, { I: Star, v: INSTRUCTOR.rating, l: "Rating" }].map((s: any, si: number) => (
+  1516→                  <div key={s.l} className={"flex flex-col items-center text-center " + (si < 2 ? 'border-r' : '')} style={{ borderColor: 'rgba(99,102,241,0.15)' }}>
+  1517→                    <s.I className="w-4 h-4 mb-1.5" style={{ color: '#6366F1' }} />
+  1518→                    <span className="text-[0.95rem] font-bold" style={{ color: '#1A1A2E' }}>{s.v}</span>
+  1519→                    <span className="text-[0.72rem] mt-0.5" style={{ color: '#6B7280' }}>{s.l}</span>
+  1520→                  </div>
+  1521→                ))}
+  1522→              </div>
+  1523→            </div>
+  1524→          </div>
+  1525→
+  1526→          {/* Share This Course */}
+  1527→          <div className="bg-white rounded-2xl p-7 shadow-[0_4px_20px_rgba(0,0,0,0.07)] relative overflow-hidden">
+  1528→            <div className="relative z-10">
+  1529→              <h3 className="text-[1.2rem] font-bold" style={{ color: '#111827' }}>Share This Course</h3>
+  1530→              <p className="text-[0.85rem] mt-2 mb-5" style={{ color: '#6B7280' }}>Share with friends who might benefit from this course.</p>
+  1531→              <div className="flex items-center gap-3">
+  1532→                {[{ l: 'f', bg: '#1877F2' }, { l: 'X', bg: '#000000' }, { l: 'in', bg: '#0A66C2' }, { l: 'WA', bg: '#25D366' }].map(({ l, bg }: any) => (
+  1533→                  <button key={l} className="w-10 h-10 rounded-full flex items-center justify-center text-[0.65rem] font-bold text-white transition-transform hover:scale-110 hover:shadow-lg" style={{ background: bg }}>{l}</button>
+  1534→                ))}
+  1535→                <button onClick={() => navigator.clipboard.writeText(window.location.href)} className="w-10 h-10 rounded-full flex items-center justify-center transition-colors hover:bg-gray-200" style={{ background: '#F3F4F6', border: '1px solid #E5E7EB' }}>
+  1536→                  <Link2 className="w-4 h-4" style={{ color: '#374151' }} />
+  1537→                </button>
+  1538→              </div>
+  1539→            </div>
+  1540→            {/* Decorative dashed line + paper plane */}
+  1541→            <div className="absolute top-6 right-6 pointer-events-none">
+  1542→              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" className="opacity-20">
+  1543→                <path d="M10 60 Q30 40 50 30 T70 10" stroke="#10B981" strokeWidth="1.5" strokeDasharray="4 4" />
+  1544→                <circle cx="70" cy="10" r="8" fill="#10B981" opacity="0.3" />
+  1545→              </svg>
+  1546→            </div>
+  1547→          </div>
+  1548→        </div>
+  1549→
+  1550→        {/* ===== NEED HELP ===== */}
+  1551→        <div className="mt-8 rounded-2xl overflow-hidden relative" style={{ background: '#ECFDF5' }}>
+  1552→          <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-5 px-8 py-6">
+  1553→            <div className="flex items-center gap-4">
+  1554→              <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: '#D1FAE5' }}>
+  1555→                <Headset className="w-5 h-5" style={{ color: '#10B981' }} />
+  1556→              </div>
+  1557→              <div>
+  1558→                <h3 className="text-[1.1rem] font-bold" style={{ color: '#064E3B' }}>Need help deciding?</h3>
+  1559→                <p className="text-[0.85rem] mt-0.5" style={{ color: '#047857' }}>Talk to our course advisor and find the perfect course for your goals.</p>
+  1560→              </div>
+  1561→            </div>
+  1562→            <button className="text-white font-semibold py-2.5 px-7 rounded-full text-[0.9rem] transition-all duration-200 hover:shadow-lg flex items-center gap-2.5 shrink-0" style={{ background: '#10B981', boxShadow: '0 6px 20px rgba(16,185,129,0.35)' }}>
+  1563→              <Headset className="w-4 h-4" /> Contact Advisor
+  1564→            </button>
+  1565→          </div>
+  1566→        </div>
+  1567→      </div>
+  1568→
+  1569→      {/* ==================== TRUST / GUARANTEE ==================== */}
+  1570→      <div className="mt-8">
+  1571→        <div className="rounded-2xl relative overflow-hidden" style={{ background: '#F8FAFC' }}>
+  1572→          {/* Bottom gradient accent line */}
+  1573→          <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: 'linear-gradient(to right, #8B5CF6, #10B981)' }} />
+  1574→          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+  1575→            <style>{`
+  1576→              .trust-item { border-right: 1px solid rgba(0,0,0,0.06); }
+  1577→              .trust-item:last-child { border-right: none; }
+  1578→              @media (max-width: 767px) {
+  1579→                .trust-item { border-right: none; }
+  1580→              }
+  1581→            `}</style>
+  1582→            {[
+  1583→              { I: Shield, t: '30-Day Money-Back Guarantee', d: 'Full refund if you are not satisfied', bg: '#EDE9FE', ic: '#6D28D9' },
+  1584→              { I: RotateCcw, t: 'Lifetime Access', d: 'Learn at your own pace, forever', bg: '#E0E7FF', ic: '#4338CA' },
+  1585→              { I: Lock, t: 'Secure Payment', d: '100% secure checkout process', bg: '#DBEAFE', ic: '#1D4ED8' },
+  1586→            ].map(({ I, t, d, bg, ic }: any) => (
+  1587→              <div key={t} className="trust-item flex items-center gap-4 px-8 py-7">
+  1588→                <div className="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style={{ background: bg }}><I className="w-5 h-5" style={{ color: ic }} /></div>
+  1589→                <div>
+  1590→                  <h4 className="font-bold text-[0.9rem]" style={{ color: '#1E293B' }}>{t}</h4>
+  1591→                  <p className="text-[0.8rem] mt-1" style={{ color: '#64748B' }}>{d}</p>
+  1592→                </div>
+  1593→              </div>
+  1594→            ))}
+  1595→          </div>
+  1596→        </div>
+  1597→      </div>
+  1598→    </div>
+  1599→  );
+  1600→}
+  1601→

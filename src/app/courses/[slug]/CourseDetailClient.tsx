@@ -581,18 +581,18 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 <svg className="absolute bottom-6 right-12 pointer-events-none opacity-[0.05]" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" strokeWidth="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
 
                 {/* Section Header */}
-                <div className="flex items-center gap-3.5 mb-7 relative z-10">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)' }}>
-                    <BookOpen className="w-5.5 h-5.5 text-emerald-600" />
+                <div className="flex items-center gap-2.5 sm:gap-3.5 mb-5 sm:mb-7 relative z-10">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%)' }}>
+                    <BookOpen className="w-4.5 h-4.5 sm:w-5.5 sm:h-5.5 text-emerald-600" />
                   </div>
                   <div>
-                    <h2 className="text-[1.4rem] font-bold text-gray-900 leading-tight" style={{ letterSpacing: '-0.02em' }}>Course Description</h2>
+                    <h2 className="text-[1.2rem] sm:text-[1.4rem] font-bold text-gray-900 leading-tight" style={{ letterSpacing: '-0.02em' }}>Course Description</h2>
                     <div className="w-10 h-[3px] rounded-full mt-1.5" style={{ background: 'linear-gradient(90deg, #10B981, #059669)' }} />
                   </div>
                 </div>
 
                 {/* Description Body */}
-                <div className="space-y-5 leading-[1.8] text-[0.975rem] text-slate-600 relative z-10">
+                <div className="space-y-4 sm:space-y-5 leading-[1.8] text-[0.856rem] sm:text-[0.975rem] text-slate-600 relative z-10">
                   <p>{course.longDescription}</p>
                   <p>{course.aboutText}</p>
                 </div>
