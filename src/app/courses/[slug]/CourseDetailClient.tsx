@@ -1347,7 +1347,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                 { I: Infinity, v: "Full lifetime", l: "Access" },
                 { I: Trophy, v: "Certificate of", l: "Completion" },
               ].map(({ I, v, l }: any) => (
-                <div key={v} className="flex flex-col items-center text-center p-5 rounded-xl bg-[#F9FAFB]">
+                <div key={v} className="flex flex-col items-center text-center p-5 rounded-xl bg-[#F9FAFB]" style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
                   <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
                     <I className="w-5 h-5 text-emerald-600" />
                   </div>
