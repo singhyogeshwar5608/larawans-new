@@ -1382,10 +1382,10 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
             </div>
 
             {/* Two-Column: Career Roles + What You'll Achieve */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8 -mx-5 sm:mx-0 px-[10px] sm:px-0">
 
               {/* Left — Career Roles */}
-              <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <div className="sm:rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
                 <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
                   <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                   <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">Top Career Roles You Can Get</h3>
@@ -1425,7 +1425,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
               </div>
 
               {/* Right — What You'll Achieve */}
-              <div className="rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
+              <div className="sm:rounded-xl p-4 sm:p-6" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
                 <div className="flex items-center gap-2.5 sm:gap-3 mb-1">
                   <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600" />
                   <h3 className="text-[0.9rem] sm:text-[1.05rem] font-bold text-gray-900">What You'll Achieve</h3>
@@ -1467,7 +1467,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* Bottom Statistics Strip */}
             <div className="rounded-xl overflow-hidden" style={{ background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.05)' }}>
-              <div className="flex flex-col sm:flex-row">
+              <div className="grid grid-cols-4 sm:flex">
                 {[
                   { I: Users, stat: '2M+', label: 'Job Openings', desc: 'AI & ML related roles worldwide', color: '#10B981', bg: '#ECFDF5' },
                   { I: TrendingUp, stat: '35%', label: 'Higher Salary', desc: 'Compared to traditional roles', color: '#8B5CF6', bg: '#F5F3FF' },
@@ -1475,14 +1475,14 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
                   { I: Globe, stat: '150+', label: 'Countries Hiring', desc: 'Global opportunities await', color: '#3B82F6', bg: '#EFF6FF' },
                 ].map((s: any, si: number) => (
                   <Fragment key={si}>
-                    <div className="flex items-center gap-4 px-6 py-5 flex-1">
-                      <div className="w-11 h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: s.bg }}>
-                        <s.I className="w-5 h-5" style={{ color: s.color }} />
+                    <div className="flex flex-col items-center text-center gap-1 px-1.5 py-3 sm:py-5 sm:flex-row sm:text-left sm:items-center sm:gap-4 sm:px-6 sm:flex-1">
+                      <div className="w-7 h-7 sm:w-11 sm:h-11 rounded-full flex items-center justify-center shrink-0" style={{ background: s.bg }}>
+                        <s.I className="w-3.5 h-3.5 sm:w-5 sm:h-5" style={{ color: s.color }} />
                       </div>
                       <div>
-                        <div className="text-[1.4rem] font-extrabold leading-none" style={{ color: s.color }}>{s.stat}</div>
-                        <div className="text-[0.85rem] font-bold text-gray-900 mt-0.5">{s.label}</div>
-                        <div className="text-[0.75rem] text-gray-500 mt-0.5">{s.desc}</div>
+                        <div className="text-[0.9rem] sm:text-[1.4rem] font-extrabold leading-none" style={{ color: s.color }}>{s.stat}</div>
+                        <div className="text-[0.55rem] sm:text-[0.85rem] font-bold text-gray-900 mt-0.5 leading-tight">{s.label}</div>
+                        <div className="text-[0.48rem] sm:text-[0.75rem] text-gray-500 mt-0.5 leading-relaxed hidden sm:block">{s.desc}</div>
                       </div>
                     </div>
                     {si < 3 && <div className="hidden sm:block" style={{ borderLeft: '1px solid rgba(0,0,0,0.06)', alignSelf: 'stretch' }} />}
