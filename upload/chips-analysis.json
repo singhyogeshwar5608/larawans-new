@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Based on the image provided, here is the detailed breakdown of all visible chips/tags:\n\n### **Chips/Tags List**\n\n| # | Exact Text | Background Color | Text Color | Belongs to Card |\n|---|------------|------------------|------------|-----------------|\n| 1 | **All Courses** | **Purple** (Indigo/Violet) | **White** | 1st (Active/Selected) |\n| 2 | **Development** | **White** (or very light gray) | **Dark Purple/Indigo** | 2nd |\n| 3 | **Design** | **White** (or very light gray) | **Dark Purple/Indigo** | 3rd |\n| 4 | **Marketing** | **White** (or very light gray) | **Dark Purple/Indigo** | 4th |\n| 5 | **AI & Data** | **White** (or very light gray) | **Dark Purple/Indigo** | 5th |\n| 6 | **Business** | **White** (or very light gray) | **Dark Purple/Indigo** | 6th |\n\n---\n\n### **Missing Elements from a Typical Course Card Design**\n\nThe image shows a **filter/navigation bar** rather than actual course cards. Compared to a standard \"Featured Courses\" grid layout, this image is missing:\n\n1.  **Course Cards Themselves:** There are no individual course cards displayed below the filter bar. A typical design would show 3–4 cards in a row, each containing:\n    *   Course thumbnail/image\n    *   Course title\n    *   Instructor name or avatar\n    *   Rating (stars) and review count\n    *   Price (or \"Free\" label)\n    *   \"Bestseller\" or \"New\" badges\n    *   Duration/level indicators (e.g., \"Beginner · 2h 30m\")\n    *   Enroll/Buy button or bookmark icon\n\n2.  **Section Header:** There is no visible heading like \"Featured Courses,\" \"Popular Right Now,\" or \"Recommended for You.\"\n\n3.  **View All / Pagination:** No link to view more courses or pagination controls.\n\n4.  **Card Metadata:** No information about course progress (for logged-in users), last updated dates, or certificate availability.\n\n**Note:** The image appears to capture only the **category filter row** at the top of a course listing page, with the actual course content either cropped out or not yet loaded/rendered in the viewport.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1786529693,
+  "id": "2026081218144476f9b710339c4432",
+  "model": "glm-5v-turbo",
+  "object": "chat.completion",
+  "request_id": "2026081218144476f9b710339c4432",
+  "usage": {
+    "completion_tokens": 527,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 261,
+    "prompt_tokens_details": {
+      "cached_tokens": 2
+    },
+    "total_tokens": 788
+  }
+}

@@ -397,6 +397,31 @@ export default function CoursesPage() {
             </div>
           </div>
 
+          {/* Category Filter Chips */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10 sm:mb-12">
+            {[
+              { label: "All Courses", active: true },
+              { label: "Development", active: false },
+              { label: "Design", active: false },
+              { label: "Marketing", active: false },
+              { label: "AI & Data", active: false },
+              { label: "Business", active: false },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                className="px-4 sm:px-5 py-2 sm:py-2.5 rounded-[10px] text-sm font-semibold transition-all duration-200"
+                style={{
+                  backgroundColor: chip.active ? "#4F46E5" : "#FFFFFF",
+                  color: chip.active ? "#FFFFFF" : "#4F46E5",
+                  border: chip.active ? "none" : "1px solid #E2E8F0",
+                  boxShadow: chip.active ? "0 2px 8px rgba(79,70,229,0.3)" : "none",
+                }}
+              >
+                {chip.label}
+              </button>
+            ))}
+          </div>
+
           {/* Course Grid — 4 / 2 / 1 */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredCourses.map((course, idx) => {
