@@ -1272,48 +1272,45 @@ export default function CoursesPage() {
       {/* END: Why Learn With Us Grid */}
 
       {/* BEGIN: Secondary Stats Banner */}
-      <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-10" data-purpose="stats">
-        <div className="bg-white rounded-2xl shadow-lg border border-border-custom grid grid-cols-2 md:grid-cols-4 gap-8 text-center p-6">
-          <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 w-full">
+      <section style={{ backgroundColor: 'transparent' }} className="max-w-4xl mx-auto px-4 -mt-10 relative z-10" data-purpose="stats">
+        <div className="rounded-2xl p-6 sm:p-8" style={{ backgroundColor: '#FFFFFF', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', border: '1px solid #EEEFF5' }}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             {/* Stat 1 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+            <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
                 <span className="material-icons">school</span>
               </div>
-              <div className="text-left">
+              <div>
                 <h3 className="text-xl font-bold text-text-main">50K+</h3>
                 <p className="text-text-muted text-xs font-medium">Happy Students</p>
               </div>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
             {/* Stat 2 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+            <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
                 <span className="material-icons">menu_book</span>
               </div>
-              <div className="text-left">
+              <div>
                 <h3 className="text-xl font-bold text-text-main">500+</h3>
                 <p className="text-text-muted text-xs font-medium">Courses</p>
               </div>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
             {/* Stat 3 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+            <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 shrink-0">
                 <span className="material-icons">emoji_events</span>
               </div>
-              <div className="text-left">
+              <div>
                 <h3 className="text-xl font-bold text-text-main">95%</h3>
                 <p className="text-text-muted text-xs font-medium">Satisfaction Rate</p>
               </div>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
             {/* Stat 4 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
+            <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 shrink-0">
                 <span className="material-icons">stars</span>
               </div>
-              <div className="text-left">
+              <div>
                 <h3 className="text-xl font-bold text-text-main">4.8/5</h3>
                 <p className="text-text-muted text-xs font-medium">Average Rating</p>
               </div>

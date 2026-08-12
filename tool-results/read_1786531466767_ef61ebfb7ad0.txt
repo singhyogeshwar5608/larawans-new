@@ -1,0 +1,475 @@
+  1320→            </div>
+  1321→          </div>
+  1322→        </div>
+  1323→      </section>
+  1324→      {/* END: Secondary Stats Banner */}
+  1325→
+  1326→      {/* BEGIN: Learning Paths Section 1 */}
+  1327→      <section className="bg-white py-24" data-purpose="learning-paths">
+  1328→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  1329→          <div className="text-center mb-16">
+  1330→            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-50 text-blue-600 mb-4">
+  1331→              📚 Learning Paths
+  1332→            </span>
+  1333→            <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
+  1334→            <p className="text-text-muted text-lg max-w-2xl mx-auto">Choose the perfect track tailored to your current expertise and career goals.</p>
+  1335→          </div>
+  1336→
+  1337→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-4 md:pb-0">
+  1338→            {/* Beginner Path */}
+  1339→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1340→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1341→              <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+  1342→                <span className="material-icons text-green-600 text-3xl">rocket_launch</span>
+  1343→              </div>
+  1344→              <h3 className="text-xl font-bold text-text-main mb-2">Beginner</h3>
+  1345→              <p className="text-text-muted text-sm mb-6">Foundational concepts for those starting from scratch.</p>
+  1346→              <ul className="space-y-4 mb-8">
+  1347→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1348→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1349→                  Core Fundamentals
+  1350→                </li>
+  1351→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1352→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1353→                  Guided Projects
+  1354→                </li>
+  1355→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1356→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1357→                  Community Support
+  1358→                </li>
+  1359→              </ul>
+  1360→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Get Started</button>
+  1361→            </div>
+  1362→
+  1363→            {/* Intermediate Path */}
+  1364→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1365→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1366→              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+  1367→                <span className="material-icons text-blue-600 text-3xl">trending_up</span>
+  1368→              </div>
+  1369→              <h3 className="text-xl font-bold text-text-main mb-2">Intermediate</h3>
+  1370→              <p className="text-text-muted text-sm mb-6">Deep dive into specialized tools and frameworks.</p>
+  1371→              <ul className="space-y-4 mb-8">
+  1372→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1373→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1374→                  Advanced Logic
+  1375→                </li>
+  1376→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1377→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1378→                  Real-world Case Studies
+  1379→                </li>
+  1380→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1381→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1382→                  Code Reviews
+  1383→                </li>
+  1384→              </ul>
+  1385→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Level Up</button>
+  1386→            </div>
+  1387→
+  1388→            {/* Advanced Path */}
+  1389→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
+  1390→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1391→              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
+  1392→                <span className="material-icons text-purple-600 text-3xl">psychology</span>
+  1393→              </div>
+  1394→              <h3 className="text-xl font-bold text-text-main mb-2">Advanced</h3>
+  1395→              <p className="text-text-muted text-sm mb-6">Mastery of architecture and complex systems.</p>
+  1396→              <ul className="space-y-4 mb-8">
+  1397→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1398→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1399→                  System Design
+  1400→                </li>
+  1401→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1402→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1403→                  Performance Tuning
+  1404→                </li>
+  1405→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1406→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1407→                  1-on-1 Mentorship
+  1408→                </li>
+  1409→              </ul>
+  1410→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Master Now</button>
+  1411→            </div>
+  1412→
+  1413→            {/* Most Popular Path */}
+  1414→            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border-2 border-blue-100">
+  1415→              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Most Popular</div>
+  1416→              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+  1417→              <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
+  1418→                <span className="material-icons text-yellow-600 text-3xl">star</span>
+  1419→              </div>
+  1420→              <h3 className="text-xl font-bold text-text-main mb-2">Full-Stack Pro</h3>
+  1421→              <p className="text-text-muted text-sm mb-6">The complete journey from zero to industry-ready.</p>
+  1422→              <ul className="space-y-4 mb-8">
+  1423→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1424→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1425→                  End-to-End Mastery
+  1426→                </li>
+  1427→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1428→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1429→                  Job Placement Help
+  1430→                </li>
+  1431→                <li className="flex items-center gap-3 text-sm text-text-main">
+  1432→                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
+  1433→                  Portfolio Building
+  1434→                </li>
+  1435→              </ul>
+  1436→              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Join Path</button>
+  1437→            </div>
+  1438→          </div>
+  1439→        </div>
+  1440→      </section>
+  1441→      {/* END: Learning Paths Section 1 */}
+  1442→
+  1443→      {/* BEGIN: Learning Paths Section 2 */}
+  1444→      <section className="py-24 bg-white" data-purpose="learning-paths">
+  1445→        <div className="max-w-7xl mx-auto px-4">
+  1446→          <div className="text-center mb-12">
+  1447→            <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 inline-block">📚 Learning Paths</span>
+  1448→            <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
+  1449→            <p className="text-text-muted text-lg max-w-3xl mx-auto">Not sure where to start? Compare our learning paths and choose the course that best matches your current skills and career goals.</p>
+  1450→          </div>
+  1451→
+  1452→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-x-auto pb-6">
+  1453→            {/* Card 1: Beginner */}
+  1454→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1455→              <div className="text-4xl mb-6">🟢</div>
+  1456→              <h3 className="text-xl font-bold text-text-main mb-4">Beginner</h3>
+  1457→              <p className="text-text-muted text-sm mb-8">Perfect for complete beginners starting their learning journey.</p>
+  1458→              <ul className="space-y-4 mb-10 flex-grow">
+  1459→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> No Prior Experience Required</li>
+  1460→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> 4 Weeks Duration</li>
+  1461→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Beginner Friendly Projects</li>
+  1462→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Community Support</li>
+  1463→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Completion Certificate</li>
+  1464→              </ul>
+  1465→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Start Beginner Path</button>
+  1466→            </div>
+  1467→
+  1468→            {/* Card 2: Intermediate */}
+  1469→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1470→              <div className="text-4xl mb-6">🔵</div>
+  1471→              <h3 className="text-xl font-bold text-text-main mb-4">Intermediate</h3>
+  1472→              <p className="text-text-muted text-sm mb-8">Best for learners with basic knowledge who want to level up.</p>
+  1473→              <ul className="space-y-4 mb-10 flex-grow">
+  1474→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Intermediate Curriculum</li>
+  1475→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Real World Projects</li>
+  1476→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Live Sessions</li>
+  1477→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Mentor Guidance</li>
+  1478→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Industry Certificate</li>
+  1479→              </ul>
+  1480→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Explore Intermediate</button>
+  1481→            </div>
+  1482→
+  1483→            {/* Card 3: Advanced */}
+  1484→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
+  1485→              <div className="text-4xl mb-6">🟣</div>
+  1486→              <h3 className="text-xl font-bold text-text-main mb-4">Advanced</h3>
+  1487→              <p className="text-text-muted text-sm mb-8">Designed for professionals who want to master advanced concepts.</p>
+  1488→              <ul className="space-y-4 mb-10 flex-grow">
+  1489→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Advanced Curriculum</li>
+  1490→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Capstone Projects</li>
+  1491→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Career Guidance</li>
+  1492→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Placement Assistance</li>
+  1493→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Premium Certificate</li>
+  1494→              </ul>
+  1495→              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Go Advanced</button>
+  1496→            </div>
+  1497→
+  1498→            {/* Card 4: Most Popular */}
+  1499→            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-primary/20">
+  1500→              <div className="text-4xl mb-6">⭐</div>
+  1501→              <h3 className="text-xl font-bold text-text-main mb-4">Most Popular</h3>
+  1502→              <p className="text-text-muted text-sm mb-8">The most recommended learning path chosen by thousands of students.</p>
+  1503→              <ul className="space-y-4 mb-10 flex-grow">
+  1504→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Balanced Curriculum</li>
+  1505→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Live Classes</li>
+  1506→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Hands-on Projects</li>
+  1507→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Mentor Support</li>
+  1508→                <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Certificate Included</li>
+  1509→              </ul>
+  1510→              <button className="w-full py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover-custom transition-colors">Explore Popular Path</button>
+  1511→            </div>
+  1512→          </div>
+  1513→        </div>
+  1514→      </section>
+  1515→      {/* END: Learning Paths Section 2 */}
+  1516→
+  1517→      {/* BEGIN: Student Success Stories */}
+  1518→      <section className="py-24" data-purpose="testimonials">
+  1519→        <div className="max-w-6xl mx-auto px-4">
+  1520→          <h2 className="text-3xl font-bold text-text-main mb-3 text-center">Student Success Stories</h2>
+  1521→          <p className="text-text-muted mb-12 text-center">Hear from our community of learners.</p>
+  1522→          
+  1523→          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+  1524→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1525→              <div className="flex text-yellow-400 mb-4">
+  1526→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
+  1527→              </div>
+  1528→              <p className="text-text-muted italic mb-6">"EduPremium helped me transition from a non-tech background into a full-stack developer role in just 6 months. The courses are top-notch!"</p>
+  1529→              <div className="flex items-center gap-4">
+  1530→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3otibGzNgGshRKUK1hXPJghc-p3OLSTOrI6HdHjH6xI6lJsGIvP5FTEgPrB9HDAWWmhTAFZPzhKgiA5kunCze-ie0yqv6O6ZDUIkk2nBFFhZCifvlkJH5JIJuX4V4SdcRs40_VNorgA7HKw4PYaRnwRUK7Q1p23X9_xKawPWBORpZ8u2laGalLC5ELSoDI6Y3vNxX8n5oxdYoQybEJ2ZYVSdM8IPZv9CBo__MKS4v2e7eIXQWnWaV" />
+  1531→                <div>
+  1532→                  <h4 className="font-bold text-text-main">Alex Johnson</h4>
+  1533→                  <span className="text-xs text-text-muted">Software Engineer</span>
+  1534→                </div>
+  1535→              </div>
+  1536→            </div>
+  1537→
+  1538→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1539→              <div className="flex text-yellow-400 mb-4">
+  1540→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
+  1541→              </div>
+  1542→              <p className="text-text-muted italic mb-6">"The Data Science bootcamp was incredibly detailed. I loved the hands-on projects, which I added directly to my portfolio."</p>
+  1543→              <div className="flex items-center gap-4">
+  1544→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr2ZmMdIWXcKXmXLMAAx2EZxwqUgBqy8IbzGcfahD3yEG15jJbY_wxvZ2jT_39Xyyl0eZNdrekeSedAs3VymWR174tQ3tQwAIfrQnKdZIG0u0XndBaeyBtRhli1swtzjLYmHrVZ1Q6BY54hXMyB8xClMzjNU9D-D2g7zGuE2kdu3TB6NiFrPwjnYRbd06KC0VoazhUAlUN6rsXeOJz43uTH8HvZ5HzI012QeHGvtjVi5jdIjG5RjUW" />
+  1545→                <div>
+  1546→                  <h4 className="font-bold text-text-main">Sarah Lee</h4>
+  1547→                  <span className="text-xs text-text-muted">Data Analyst</span>
+  1548→                </div>
+  1549→              </div>
+  1550→            </div>
+  1551→
+  1552→            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+  1553→              <div className="flex text-yellow-400 mb-4">
+  1554→                <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star_half</span>
+  1555→              </div>
+  1556→              <p className="text-text-muted italic mb-6">"Great instructors and fantastic support. I finally learned how to effectively market my small business online."</p>
+  1557→              <div className="flex items-center gap-4">
+  1558→                <img alt="Student" className="w-12 h-12 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEMcZaikqIeUk7vWnU5XOofTyd2gzVIhBdpgWUG_4sgEsmWR-eiM52CAqWUEzr7wvfKX-wW8dmC3bIBmoTHTUsjy34bCzFLN-e3kPIVzwMX5bP1u0b_l8dwJa4epjG76zDR6rAjU4X0bp0qVUbnXc0ePlQLnYtMBaqamJcEj9IyA20lmStw_WN3SxZwpAiE66gIlWICn2eUNqnyOYxum-NN--IUpxdS9x7E_h7lbMbkwtYOFSfd-Ok" />
+  1559→                <div>
+  1560→                  <h4 className="font-bold text-text-main">Michael Chen</h4>
+  1561→                  <span className="text-xs text-text-muted">Entrepreneur</span>
+  1562→                </div>
+  1563→              </div>
+  1564→            </div>
+  1565→          </div>
+  1566→        </div>
+  1567→      </section>
+  1568→      {/* END: Student Success Stories */}
+  1569→
+  1570→      {/* BEGIN: Certificate Preview */}
+  1571→      <section className="py-24 bg-white relative overflow-hidden" data-purpose="certificate-preview">
+  1572→        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-50 rounded-full -ml-48 -mt-48 blur-3xl opacity-50 -z-10"></div>
+  1573→        <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mb-48 blur-3xl opacity-50 -z-10"></div>
+  1574→        
+  1575→        <div className="max-w-7xl mx-auto px-4 relative">
+  1576→          {/* Section Header */}
+  1577→          <div className="text-center mb-16">
+  1578→            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-primary mb-4 tracking-widest uppercase">
+  1579→              🏅 Recognized &amp; Trusted
+  1580→            </span>
+  1581→            <h2 className="text-4xl font-bold text-text-main mb-4">Certificate Preview</h2>
+  1582→            <p className="text-text-muted text-lg max-w-2xl mx-auto">
+  1583→              Earn an industry-recognized certificate that validates your skills and strengthens your professional profile.
+  1584→            </p>
+  1585→          </div>
+  1586→
+  1587→          {/* Main Content Grid */}
+  1588→          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
+  1589→            {/* Left: Certificate Mockup (60%) */}
+  1590→            <div className="lg:col-span-7">
+  1591→              <div className="relative group">
+  1592→                <div className="absolute inset-0 bg-primary/5 rounded-[20px] blur-2xl -z-10 group-hover:scale-105 transition-transform duration-500"></div>
+  1593→                <img alt="Professional Certificate Mockup" className="w-full h-auto rounded-[20px] shadow-2xl hover:-translate-y-2 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5rjtAOmZh4ZG_aaiBHPf0IkzeixuSSNZwMH5k2rE2T7bWYtLsb6vASZhXCg2KQqgr12OGVBuapBJP2t5QVgcFRrHB328ofp5yNGq8JfVCvbWXgniNktkVB_G8K1aT_y4SkQpEOOS72zXx0AkwJ3-CsdNUaSxcG1G5Ls0JUVhOK5fO4bn8S0nEEwCpZWvKiW9_lt11MOK4epCXfkwgkQPQzY4A_PZEoGbHWf_2ADqRNpqeuhQsHi1T" />
+  1594→              </div>
+  1595→            </div>
+  1596→
+  1597→            {/* Right: Feature Cards (40%) */}
+  1598→            <div className="lg:col-span-5 flex flex-col gap-6">
+  1599→              {/* Card 1 */}
+  1600→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1601→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1602→                  <span className="text-2xl">📜</span>
+  1603→                </div>
+  1604→                <div>
+  1605→                  <h4 className="font-bold text-text-main mb-1">Professional Certificate</h4>
+  1606→                  <p className="text-text-muted text-sm">Receive a beautifully designed certificate that enhances your resume and LinkedIn profile.</p>
+  1607→                </div>
+  1608→              </div>
+  1609→              {/* Card 2 */}
+  1610→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1611→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1612→                  <span className="text-2xl">🛡</span>
+  1613→                </div>
+  1614→                <div>
+  1615→                  <h4 className="font-bold text-text-main mb-1">Industry Recognized</h4>
+  1616→                  <p className="text-text-muted text-sm">Our certificates are trusted by recruiters and leading companies.</p>
+  1617→                </div>
+  1618→              </div>
+  1619→              {/* Card 3 */}
+  1620→              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
+  1621→                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+  1622→                  <span className="text-2xl">🌍</span>
+  1623→                </div>
+  1624→                <div>
+  1625→                  <h4 className="font-bold text-text-main mb-1">Share &amp; Showcase</h4>
+  1626→                  <p className="text-text-muted text-sm">Share your certificate online and verify its authenticity instantly.</p>
+  1627→                </div>
+  1628→              </div>
+  1629→            </div>
+  1630→          </div>
+  1631→
+  1632→          {/* Bottom Panel: Verification */}
+  1633→          <div className="bg-blue-50/50 rounded-[20px] p-8 border border-blue-100">
+  1634→            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+  1635→              <div className="flex items-center gap-6">
+  1636→                <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center text-primary shrink-0 border border-blue-100">
+  1637→                  <span className="material-icons text-3xl">verified_user</span>
+  1638→                </div>
+  1639→                <div>
+  1640→                  <h4 className="text-xl font-bold text-text-main">Certificate Verification</h4>
+  1641→                  <p className="text-text-muted text-sm">Every certificate includes a unique verification ID for authenticity.</p>
+  1642→                  {certStatus && (
+  1643→                    <p className={`text-sm font-semibold mt-1 ${certStatus.includes("authentic") ? "text-emerald-600" : "text-red-500"}`}>
+  1644→                      {certStatus}
+  1645→                    </p>
+  1646→                  )}
+  1647→                </div>
+  1648→              </div>
+  1649→              <div className="w-full md:w-auto">
+  1650→                <div className="flex flex-col gap-2">
+  1651→                  <form onSubmit={handleVerifyCert} className="flex">
+  1652→                    <input
+  1653→                      className="w-full md:w-64 px-4 py-3 rounded-l-xl border border-blue-200 focus:ring-2 focus:ring-primary focus:border-primary outline-none text-[#1f2937] bg-white text-sm"
+  1654→                      placeholder="Enter Certificate ID (e.g. LARA-9842-PRO)"
+  1655→                      type="text"
+  1656→                      value={certId}
+  1657→                      onChange={(e) => setCertId(e.target.value)}
+  1658→                    />
+  1659→                    <button type="submit" className="bg-primary text-white px-6 py-3 rounded-r-xl font-bold hover:bg-primary-hover-custom transition-colors whitespace-nowrap text-sm">Verify Now</button>
+  1660→                  </form>
+  1661→                  <p className="text-[10px] text-text-muted flex items-center gap-1">
+  1662→                    <span className="material-icons text-xs">lock</span> This ensures authenticity and prevents any misuse.
+  1663→                  </p>
+  1664→                </div>
+  1665→              </div>
+  1666→            </div>
+  1667→          </div>
+  1668→        </div>
+  1669→      </section>
+  1670→      {/* END: Certificate Preview */}
+  1671→
+  1672→      {/* BEGIN: FAQ */}
+  1673→      <section className="py-24" data-purpose="faq">
+  1674→        <div className="max-w-3xl mx-auto px-4">
+  1675→          <h2 className="text-3xl font-bold text-text-main mb-8 text-center">Frequently Asked Questions</h2>
+  1676→          <div className="flex flex-col gap-4">
+  1677→            
+  1678→            {/* FAQ 1 */}
+  1679→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1680→              <h4 onClick={() => setOpenFaq(openFaq === 0 ? null : 0)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1681→                Do I get lifetime access to the courses?
+  1682→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 0 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1683→              </h4>
+  1684→              {openFaq === 0 && (
+  1685→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1686→                  Yes! Once you purchase a course, you have lifetime access to the materials, including all future updates.
+  1687→                </p>
+  1688→              )}
+  1689→            </div>
+  1690→
+  1691→            {/* FAQ 2 */}
+  1692→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1693→              <h4 onClick={() => setOpenFaq(openFaq === 1 ? null : 1)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1694→                Are there prerequisites for the courses?
+  1695→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 1 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1696→              </h4>
+  1697→              {openFaq === 1 && (
+  1698→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1699→                  We offer courses ranging from Beginner to Advanced levels. Beginners can start directly with zero prior coding knowledge.
+  1700→                </p>
+  1701→              )}
+  1702→            </div>
+  1703→
+  1704→            {/* FAQ 3 */}
+  1705→            <div className="border border-border-custom rounded-xl p-4 bg-white">
+  1706→              <h4 onClick={() => setOpenFaq(openFaq === 2 ? null : 2)} className="font-bold text-text-main flex justify-between items-center cursor-pointer select-none">
+  1707→                Will I receive a certificate upon completion?
+  1708→                <span className="material-icons transition-transform duration-200" style={{ transform: openFaq === 2 ? "rotate(180deg)" : "rotate(0)" }}>expand_more</span>
+  1709→              </h4>
+  1710→              {openFaq === 2 && (
+  1711→                <p className="text-text-muted text-sm mt-2 leading-relaxed">
+  1712→                  Yes! You earn an industry-recognized certificate that you can showcase on LinkedIn, your resume, or personal portfolio.
+  1713→                </p>
+  1714→              )}
+  1715→            </div>
+  1716→
+  1717→          </div>
+  1718→        </div>
+  1719→      </section>
+  1720→      {/* END: FAQ */}
+  1721→
+  1722→      {/* BEGIN: Stay Updated (Newsletter) */}
+  1723→      <section className="py-12 bg-primary text-white" data-purpose="newsletter">
+  1724→        <div className="max-w-4xl mx-auto px-4 text-center">
+  1725→          <h2 className="text-2xl font-bold mb-4">Stay Updated with EduPremium</h2>
+  1726→          <p className="text-gray-200 mb-6">Subscribe to our newsletter to get the latest courses and offers directly to your inbox.</p>
+  1727→          
+  1728→          {newsletterSubscribed ? (
+  1729→            <div className="bg-white/10 text-white font-medium py-3 px-6 rounded-xl inline-block">
+  1730→              🎉 Thank you for subscribing! Check your email for updates.
+  1731→            </div>
+  1732→          ) : (
+  1733→            <form onSubmit={handleSubscribe} className="flex max-w-md mx-auto">
+  1734→              <input
+  1735→                className="w-full px-4 py-3 rounded-l-xl text-text-main focus:outline-none bg-white text-sm"
+  1736→                placeholder="Enter your email"
+  1737→                type="email"
+  1738→                required
+  1739→                value={newsletterEmail}
+  1740→                onChange={(e) => setNewsletterEmail(e.target.value)}
+  1741→              />
+  1742→              <button type="submit" className="bg-gray-900 px-6 py-3 rounded-r-xl font-bold hover:bg-black transition-colors text-sm whitespace-nowrap">Subscribe</button>
+  1743→            </form>
+  1744→          )}
+  1745→        </div>
+  1746→      </section>
+  1747→      {/* END: Stay Updated */}
+  1748→
+  1749→      {/* BEGIN: Final CTA */}
+  1750→      <section className="py-24 text-center" data-purpose="cta">
+  1751→        <div className="max-w-3xl mx-auto px-4">
+  1752→          <h2 className="text-4xl font-bold text-text-main mb-6">Ready To Build Your Future?</h2>
+  1753→          <p className="text-lg text-text-muted mb-8">Join millions of learners worldwide and start advancing your skills today.</p>
+  1754→          <a className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-hover-custom transition-colors inline-block shadow-lg" href="#">Start Learning For Free</a>
+  1755→        </div>
+  1756→      </section>
+  1757→      {/* END: Final CTA */}
+  1758→
+  1759→      {/* BEGIN: Footer */}
+  1760→      <footer className="bg-[#111827] text-white py-12" data-purpose="footer">
+  1761→        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+  1762→          <div>
+  1763→            <a className="text-primary font-bold text-xl flex items-center gap-2 mb-4" href="#">
+  1764→              <span className="material-icons text-white">school</span>
+  1765→              EduPremium
+  1766→            </a>
+  1767→            <p className="text-gray-400 text-sm">Empowering careers through quality education.</p>
+  1768→          </div>
+  1769→          <div>
+  1770→            <h4 className="font-semibold mb-4 text-white">Platform</h4>
+  1771→            <ul className="space-y-2 text-sm text-gray-400">
+  1772→              <li><a className="hover:text-white" href="#">Courses</a></li>
+  1773→              <li><a className="hover:text-white" href="#">Mentors</a></li>
+  1774→              <li><a className="hover:text-white" href="#">Pricing</a></li>
+  1775→            </ul>
+  1776→          </div>
+  1777→          <div>
+  1778→            <h4 className="font-semibold mb-4 text-white">Support</h4>
+  1779→            <ul className="space-y-2 text-sm text-gray-400">
+  1780→              <li><a className="hover:text-white" href="#">Contact Us</a></li>
+  1781→              <li><a className="hover:text-white" href="#">FAQ</a></li>
+  1782→              <li><a className="hover:text-white" href="#">Terms of Service</a></li>
+  1783→            </ul>
+  1784→          </div>
+  1785→          <div>
+  1786→            {/* Placeholder for social or other links if needed */}
+  1787→          </div>
+  1788→        </div>
+  1789→      </footer>
+  1790→      {/* END: Footer */}
+  1791→    </div>
+  1792→  );
+  1793→}
+  1794→
