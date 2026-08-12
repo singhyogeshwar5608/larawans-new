@@ -609,7 +609,7 @@ export default function CourseDetailClient({ course }: { course: CourseItem }) {
 
             {/* ===== COURSE CURRICULUM (OVERVIEW) ===== */}
             <section>
-              <div className="rounded-2xl p-5 sm:p-6" style={{ background: '#F0FDF9', border: '1px solid rgba(16,185,129,0.08)', boxShadow: '0 2px 12px rgba(0,0,0,0.04)' }}>
+              <div className="rounded-2xl p-5 sm:p-6 bg-white" style={{ border: '1px solid rgba(0,0,0,0.05)', boxShadow: '0 6px 32px rgba(0,0,0,0.1)' }}>
 
                 {/* Compact Header */}
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
