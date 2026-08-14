@@ -58,12 +58,17 @@ export function Services() {
   }, [displayedText, wordIndex, isDeleting]);
 
   return (
-    <section id="services" className="relative overflow-hidden py-[50px]">
+    <section id="services" className="relative overflow-hidden bg-[#050614] py-[50px]">
       {/* Dark gradient orbs — hero-style background */}
       <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-        <div className="absolute -left-20 top-0 h-[350px] w-[350px] rounded-full" style={{ background: 'rgba(124,92,255,0.2)', filter: 'blur(100px)' }} />
-        <div className="absolute -right-16 top-1/3 h-[300px] w-[300px] rounded-full" style={{ background: 'rgba(0,224,198,0.15)', filter: 'blur(100px)' }} />
-        <div className="absolute bottom-0 left-1/3 h-[280px] w-[280px] rounded-full" style={{ background: 'rgba(255,77,210,0.1)', filter: 'blur(90px)' }} />
+        {/* Large violet orb */}
+        <div className="absolute -left-20 -top-10 h-[500px] w-[500px] rounded-full" style={{ background: 'rgba(124,92,255,0.25)', filter: 'blur(120px)' }} />
+        {/* Cyan orb */}
+        <div className="absolute -right-16 top-1/4 h-[420px] w-[420px] rounded-full" style={{ background: 'rgba(0,224,198,0.2)', filter: 'blur(110px)' }} />
+        {/* Magenta orb */}
+        <div className="absolute bottom-0 left-1/3 h-[350px] w-[350px] rounded-full" style={{ background: 'rgba(255,77,210,0.12)', filter: 'blur(100px)' }} />
+        {/* Central aurora glow */}
+        <div className="absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: 'radial-gradient(ellipse at center, rgba(124,92,255,0.35) 0%, rgba(0,224,198,0.2) 40%, rgba(255,77,210,0.1) 65%, transparent 85%)', filter: 'blur(60px)' }} />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6">
