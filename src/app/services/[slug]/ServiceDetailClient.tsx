@@ -58,6 +58,25 @@ import type { ServiceDetail } from "@/lib/service-data";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/sections/footer";
 
+/** Maps Tailwind color names to hex for inline gradient conversion */
+const TW_COLOR: Record<string, string> = {
+  'indigo-600': '#4f46e5', 'violet-600': '#7c3aed', 'violet-800': '#6d28d9',
+  'purple-600': '#9333ea', 'purple-800': '#6b21a8', 'pink-700': '#be185d',
+  'pink-800': '#9d174d', 'blue-600': '#2563eb', 'blue-800': '#1e40af',
+  'indigo-800': '#3730a3', 'indigo-900': '#312e81', 'emerald-600': '#059669',
+  'teal-800': '#115e59', 'teal-600': '#0d9488', 'cyan-600': '#0891b2',
+  'slate-700': '#334155', 'fuchsia-600': '#c026d3', 'rose-600': '#e11d48',
+};
+
+function twGradientCSS(classes: string, direction = 'to bottom right'): string {
+  let from = '#4f46e5', to = '#6d28d9';
+  for (const p of classes.trim().split(/\s+/)) {
+    if (p.startsWith('from-')) from = TW_COLOR[p.slice(5)] || from;
+    if (p.startsWith('to-')) to = TW_COLOR[p.slice(3)] || to;
+  }
+  return `linear-gradient(${direction}, ${from}, ${to})`;
+}
+
 const ICON_MAP: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
   Rocket,
   Building2,
@@ -111,7 +130,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
 
       {/* Atmospheric Background Lights */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-linear-to-b from-[#7c5cff]/20 via-[#00e0c6]/10 to-transparent blur-[120px] rounded-full" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[400px] blur-[120px] rounded-full" style={{ background: 'linear-gradient(to bottom, rgba(124,92,255,0.2), rgba(0,224,198,0.1), transparent)' }} />
         <div className="absolute top-1/2 -right-40 w-[450px] h-[450px] bg-[#7c5cff]/10 blur-[150px] rounded-full" />
         <div className="absolute bottom-10 -left-40 w-[450px] h-[450px] bg-[#00e0c6]/10 blur-[150px] rounded-full" />
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff04_1px,transparent_1px),linear-gradient(to_bottom,#ffffff04_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_80%,transparent_100%)]" />
@@ -148,9 +167,9 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         </div>
 
         {/* ─── HERO SECTION: ULTRA STYLISH DUAL PANEL ──────────────────────── */}
-        <section className="relative rounded-3xl bg-linear-to-br from-[#0c0f28]/95 via-[#090b1e]/90 to-[#060814]/95 border border-white/10 p-6 sm:p-8 lg:p-10 shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-xl overflow-hidden">
+        <section className="relative rounded-3xl border border-white/10 p-6 sm:p-8 lg:p-10 shadow-[0_0_60px_rgba(0,0,0,0.6)] backdrop-blur-xl overflow-hidden" style={{ background: 'linear-gradient(to bottom right, rgba(12,15,40,0.95), rgba(9,11,30,0.9), rgba(6,8,20,0.95))' }}>
           {/* Animated Neon Top Glow Accent */}
-          <div className="absolute top-0 left-0 right-0 h-[2px] bg-linear-to-r from-transparent via-[#7c5cff] via-[#00e0c6] to-transparent" />
+          <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: 'linear-gradient(to right, transparent, #7c5cff, #00e0c6, transparent)' }} />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
@@ -160,7 +179,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-linear-to-r from-[#7c5cff]/20 to-[#00e0c6]/20 border border-[#7c5cff]/30 text-white text-[11px] font-extrabold uppercase tracking-widest shadow-[0_0_20px_rgba(124,92,255,0.25)]"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#7c5cff]/30 text-white text-[11px] font-extrabold uppercase tracking-widest shadow-[0_0_20px_rgba(124,92,255,0.25)]" style={{ background: 'linear-gradient(to right, rgba(124,92,255,0.2), rgba(0,224,198,0.2))' }}
               >
                 <Sparkles size={12} className="text-[#00e0c6]" />
                 <span className="text-[#00e0c6] font-bold">
@@ -222,7 +241,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
               >
                 <a
                   href="/#contact"
-                  className="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-linear-to-r from-[#7c5cff] to-[#00e0c6] hover:from-[#8c6fff] hover:to-[#1fe8d0] text-white font-extrabold text-xs shadow-[0_0_30px_rgba(124,92,255,0.35)] hover:shadow-[0_0_45px_rgba(0,224,198,0.5)] transition-all cursor-pointer overflow-hidden"
+                  className="group relative inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-white font-extrabold text-xs shadow-[0_0_30px_rgba(124,92,255,0.35)] hover:shadow-[0_0_45px_rgba(0,224,198,0.5)] transition-all cursor-pointer overflow-hidden" style={{ background: 'linear-gradient(to right, #7c5cff, #00e0c6)' }}
                 >
                   <span>Start Project Consultation</span>
                   <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
@@ -245,13 +264,13 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
               transition={{ duration: 0.6, delay: 0.15 }}
               className="lg:col-span-5 relative"
             >
-              <div className="relative rounded-2xl bg-linear-to-br from-[#121538] via-[#0d0f2b] to-[#080a1d] border border-white/15 p-6 space-y-5 shadow-2xl overflow-hidden group">
+              <div className="relative rounded-2xl border border-white/15 p-6 space-y-5 shadow-2xl overflow-hidden group" style={{ background: 'linear-gradient(to bottom right, #121538, #0d0f2b, #080a1d)' }}>
                 <div className="absolute top-0 right-0 h-36 w-36 bg-[#7c5cff]/20 rounded-full blur-2xl pointer-events-none group-hover:bg-[#00e0c6]/20 transition-all duration-500" />
 
                 {/* Card Header */}
                 <div className="flex items-center justify-between border-b border-white/10 pb-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-tr from-[#7c5cff] to-[#00e0c6] text-white shadow-md shadow-[#7c5cff]/30">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl text-white shadow-md shadow-[#7c5cff]/30" style={{ background: 'linear-gradient(to top right, #7c5cff, #00e0c6)' }}>
                       <DynamicIcon name={service.whoIsThisFor[0]?.iconName || "Bot"} size={22} />
                     </div>
                     <div>
@@ -316,9 +335,10 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
                 }}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   isActive
-                    ? "bg-linear-to-r from-[#7c5cff] to-[#00e0c6] text-white shadow-md shadow-[#7c5cff]/30"
+                    ? "text-white shadow-md shadow-[#7c5cff]/30"
                     : "text-slate-400 hover:text-white hover:bg-white/[0.05]"
                 }`}
+                style={isActive ? { background: 'linear-gradient(to right, #7c5cff, #00e0c6)' } : undefined}
               >
                 <IconComp size={14} />
                 <span>{tab.label}</span>
@@ -330,7 +350,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         {/* ─── 3. ARCHITECTURE OVERVIEW & TARGET AUDIENCE ───────────────────── */}
         <section id="section-overview" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: Solution Architecture */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4 flex flex-col justify-between">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4 flex flex-col justify-between" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="h-3 w-1 rounded-full bg-[#00e0c6]" />
@@ -368,7 +388,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
           </div>
 
           {/* Right: Who Is This Built For? */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-1 rounded-full bg-[#7c5cff]" />
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
@@ -396,7 +416,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         {/* ─── 4. DELIVERABLES & KEY CAPABILITIES ───────────────────────────── */}
         <section id="section-features" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left: What You'll Receive */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-1 rounded-full bg-[#00e0c6]" />
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
@@ -423,7 +443,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
           </div>
 
           {/* Right: Key Capabilities */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-1 rounded-full bg-[#7c5cff]" />
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
@@ -449,7 +469,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         </section>
 
         {/* ─── 5. EXECUTION PIPELINE (HIGH DENSITY STEPPER) ──────────────────── */}
-        <section id="section-process" className="rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-6">
+        <section id="section-process" className="rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-6" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
@@ -469,7 +489,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
                 className="rounded-xl bg-white/[0.03] border border-white/[0.08] p-3 space-y-2 flex flex-col justify-between hover:border-[#7c5cff]/50 hover:bg-white/[0.06] transition-all group"
               >
                 <div className="flex items-center justify-between">
-                  <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-linear-to-tr from-[#7c5cff] to-[#00e0c6] text-white font-black text-[11px] shadow-sm">
+                  <span className="flex h-6 w-6 items-center justify-center rounded-lg text-white font-black text-[11px] shadow-sm" style={{ background: 'linear-gradient(to top right, #7c5cff, #00e0c6)' }}>
                     {stepItem.step}
                   </span>
                   {idx < service.process.length - 1 && (
@@ -491,7 +511,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         {/* ─── 6. TECH STACK & WHY LARAWANS ─────────────────────────────────── */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Tech Ecosystem */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-1 rounded-full bg-[#00e0c6]" />
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
@@ -515,7 +535,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
           </div>
 
           {/* Why Partner With Us */}
-          <div className="lg:col-span-6 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-6 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div className="flex items-center gap-2">
               <span className="h-3 w-1 rounded-full bg-[#7c5cff]" />
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
@@ -541,7 +561,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         </section>
 
         {/* ─── 7. RECENT CASE STUDIES ────────────────────────────────────────── */}
-        <section id="section-cases" className="rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-5">
+        <section id="section-cases" className="rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-5" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
           <div className="flex items-center justify-between border-b border-white/10 pb-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
@@ -565,7 +585,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
                 key={idx}
                 className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:bg-white/[0.05] hover:border-[#7c5cff]/40 transition-all flex flex-col justify-between group"
               >
-                <div className={`h-24 w-full bg-linear-to-br ${proj.gradient} p-3 flex flex-col justify-end text-white relative`}>
+                <div className="h-24 w-full p-3 flex flex-col justify-end text-white relative" style={{ background: twGradientCSS(proj.gradient) }}>
                   <span className="text-[9px] font-black uppercase tracking-wider bg-black/50 backdrop-blur-md border border-white/10 px-2 py-0.5 rounded w-fit">
                     Case Study
                   </span>
@@ -593,7 +613,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
         {/* ─── 8. FAQS & CONVERSION LAUNCHPAD ────────────────────────────────── */}
         <section id="section-faq" className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* FAQ Accordion */}
-          <div className="lg:col-span-7 rounded-2xl bg-linear-to-b from-[#0e112e]/90 to-[#080a1d]/90 border border-white/10 p-5 sm:p-7 shadow-xl space-y-4">
+          <div className="lg:col-span-7 rounded-2xl border border-white/10 p-5 sm:p-7 shadow-xl space-y-4" style={{ background: 'linear-gradient(to bottom, rgba(14,17,46,0.9), rgba(8,10,29,0.9))' }}>
             <div>
               <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
                 Frequently <span className="text-[#00e0c6]">Asked Questions</span>
@@ -640,9 +660,9 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
           </div>
 
           {/* High Conversion CTA Box */}
-          <div className="lg:col-span-5 rounded-2xl bg-linear-to-br from-[#121538] via-[#0d0f2b] to-[#080a1d] border border-white/15 p-5 sm:p-7 text-white space-y-5 flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+          <div className="lg:col-span-5 rounded-2xl border border-white/15 p-5 sm:p-7 text-white space-y-5 flex flex-col justify-between shadow-2xl relative overflow-hidden group" style={{ background: 'linear-gradient(to bottom right, #121538, #0d0f2b, #080a1d)' }}>
             <div className="space-y-3 relative z-10">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-tr from-[#7c5cff] to-[#00e0c6] text-white shadow-md">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-md" style={{ background: 'linear-gradient(to top right, #7c5cff, #00e0c6)' }}>
                 <Calendar size={20} />
               </div>
 
@@ -657,7 +677,7 @@ export default function ServiceDetailClient({ service }: { service: ServiceDetai
               <div className="space-y-2 pt-2">
                 <a
                   href="/#contact"
-                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-linear-to-r from-[#7c5cff] to-[#00e0c6] hover:from-[#8c6fff] hover:to-[#1fe8d0] text-white text-xs font-black shadow-lg shadow-[#7c5cff]/30 transition-all cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-white text-xs font-black shadow-lg shadow-[#7c5cff]/30 transition-all cursor-pointer" style={{ background: 'linear-gradient(to right, #7c5cff, #00e0c6)' }}
                 >
                   <span>Book Free Consultation</span>
                   <ArrowRight size={15} />

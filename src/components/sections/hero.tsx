@@ -212,11 +212,13 @@ export function Hero() {
       {/* ── Layer 6: Gradient masks for smooth section transitions ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-40 bg-linear-to-b from-transparent to-[#050614]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[4] h-40"
+        style={{ background: 'linear-gradient(to bottom, transparent, #050614)' }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-32 bg-linear-to-b from-[#050614]/80 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 z-[4] h-32"
+        style={{ background: 'linear-gradient(to bottom, rgba(5,6,20,0.8), transparent)' }}
       />
 
       {/* ── Main Content ── */}

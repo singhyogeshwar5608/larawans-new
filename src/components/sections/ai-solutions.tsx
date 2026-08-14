@@ -202,8 +202,8 @@ export function AISolutions() {
           {aiSolutions.map((sol, i) => (
             <article
               key={sol.title}
-              className="ai-card group relative w-[82vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] bg-linear-to-br from-[#0d1030] via-[#0a0c24] to-[#0a0c24] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:w-[72vw] md:w-full sm:p-7"
-              style={{ animationDelay: `${(i % 3) * 0.1}s` }}
+              className="ai-card group relative w-[82vw] flex-shrink-0 snap-center overflow-hidden rounded-3xl border border-white/[0.08] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-[#00e0c6]/40 interactive sm:w-[72vw] md:w-full sm:p-7"
+              style={{ background: 'linear-gradient(to bottom right, #0d1030, #0a0c24, #0a0c24)', animationDelay: `${(i % 3) * 0.1}s` }}
             >
               {/* Animated conic border glow on hover */}
               <div
@@ -217,7 +217,7 @@ export function AISolutions() {
               />
 
               <div className="relative">
-                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10 bg-linear-to-br from-[#7c5cff]/30 to-[#00e0c6]/20">
+                <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-white/10" style={{ background: 'linear-gradient(to bottom right, rgba(124,92,255,0.3), rgba(0,224,198,0.2))' }}>
                   {(() => { const Icon = AIIconMap[sol.title]; return Icon ? <Icon className="h-7 w-7 text-[#00e0c6]" /> : null; })()}
                 </div>
 

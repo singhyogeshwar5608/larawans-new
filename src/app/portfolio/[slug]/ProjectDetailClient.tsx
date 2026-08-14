@@ -170,7 +170,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               {project.impactMetrics.map((m, idx) => (
                 <div
                   key={idx}
-                  className="relative overflow-hidden rounded-2xl border border-white/10 bg-linear-to-br from-white/[0.06] to-white/[0.02] p-5 backdrop-blur group hover:border-cyan-500/40 transition-all duration-300"
+                  className="relative overflow-hidden rounded-2xl border border-white/10 p-5 backdrop-blur group hover:border-cyan-500/40 transition-all duration-300" style={{ background: 'linear-gradient(to bottom right, rgba(255,255,255,0.06), rgba(255,255,255,0.02))' }}
                 >
                   <div className="text-[10.5px] font-semibold uppercase tracking-wider text-neutral-400">
                     {m.label}
@@ -262,7 +262,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     key={wf.step}
                     className="flex items-start gap-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 backdrop-blur hover:border-cyan-500/40 transition-colors"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-linear-to-tr from-violet-600 to-cyan-500 text-xs font-bold text-white shadow-md">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white shadow-md" style={{ background: 'linear-gradient(to top right, #7c3aed, #06b6d4)' }}>
                       {wf.step}
                     </span>
                     <div>
@@ -293,7 +293,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               return (
                 <div
                   key={i}
-                  className="rounded-2xl border border-white/10 bg-linear-to-b from-white/[0.05] to-white/[0.02] p-6 backdrop-blur hover:border-cyan-500/50 hover:bg-white/[0.08] transition-all duration-300"
+                  className="rounded-2xl border border-white/10 p-6 backdrop-blur hover:border-cyan-500/50 hover:bg-white/[0.08] transition-all duration-300" style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(255,255,255,0.02))' }}
                 >
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-4">
                     <IconComponent className="h-5 w-5" />
@@ -409,7 +409,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
         {/* ── CONSULTATION CTA ── */}
         <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-8">
-          <div className="relative overflow-hidden rounded-3xl border border-cyan-500/30 bg-linear-to-r from-violet-950/80 via-[#0b0f24] to-cyan-950/80 p-8 sm:p-12 text-center backdrop-blur">
+          <div className="relative overflow-hidden rounded-3xl border border-cyan-500/30 p-8 sm:p-12 text-center backdrop-blur" style={{ background: 'linear-gradient(to right, rgba(139,92,246,0.08), #0b0f24, rgba(22,78,99,0.08))' }}>
             <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-white">
               Want to build a platform like {project.title}?
             </h2>
