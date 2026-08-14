@@ -56,7 +56,7 @@ export function TechStack() {
         <SectionHeading
           title="Built on the"
           highlight="right tools for the job"
-          description={undefined}
+          titleStyle={{ color: '#eef1ff' }}
         />
 
         <div className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
