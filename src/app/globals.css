@@ -179,33 +179,6 @@ body {
   display: inline-block;
 }
 
-/* ============== Tailwind v4 Compatibility Utilities for Linear Gradients ============== */
-/* Tailwind v4 renamed these to bg-linear-to-*; we re-add bg-gradient-to-* as aliases */
-@utility bg-gradient-to-r {
-  background-image: linear-gradient(to right, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-br {
-  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-b {
-  background-image: linear-gradient(to bottom, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-t {
-  background-image: linear-gradient(to top, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-l {
-  background-image: linear-gradient(to left, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-tr {
-  background-image: linear-gradient(to top right, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-tl {
-  background-image: linear-gradient(to top left, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-@utility bg-gradient-to-bl {
-  background-image: linear-gradient(to bottom left, var(--tw-gradient-stops, var(--tw-gradient-from), var(--tw-gradient-to)));
-}
-
 /* ============== Glassmorphism ============== */
 .glass {
   background: linear-gradient(135deg, rgba(124, 92, 255, 0.08) 0%, rgba(0, 224, 198, 0.04) 100%);

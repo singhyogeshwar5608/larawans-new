@@ -81,7 +81,7 @@ export function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-              className="relative rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.04] to-transparent p-6 backdrop-blur-xl sm:p-8"
+              className="relative rounded-3xl border border-white/10 bg-linear-to-b from-white/[0.04] to-transparent p-6 backdrop-blur-xl sm:p-8"
             >
               <div className="flex flex-col gap-4">
                 <Field
@@ -159,7 +159,7 @@ function ContactItem({
 }) {
   const inner = (
     <div className="group flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.02] px-4 py-3 transition-colors hover:border-white/20 hover:bg-white/[0.04] interactive">
-      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-gradient-to-br from-[#7c5cff]/30 to-[#00e0c6]/20 text-[#00e0c6]">
+      <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-linear-to-br from-[#7c5cff]/30 to-[#00e0c6]/20 text-[#00e0c6]">
         <Icon className="h-4 w-4" />
       </div>
       <span className="text-[13.5px] font-medium">{label}</span>

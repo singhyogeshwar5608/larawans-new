@@ -19,12 +19,12 @@ export function DevelopmentProcess() {
           {/* Center vertical line (desktop) */}
           <div
             aria-hidden
-            className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[2px] -translate-x-1/2 bg-gradient-to-b from-transparent via-[#7c5cff]/40 to-transparent lg:block"
+            className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-[2px] -translate-x-1/2 bg-linear-to-b from-transparent via-[#7c5cff]/40 to-transparent lg:block"
           />
           {/* Left vertical line (mobile) */}
           <div
             aria-hidden
-            className="pointer-events-none absolute left-6 top-0 h-full w-[2px] bg-gradient-to-b from-transparent via-[#7c5cff]/40 to-transparent lg:hidden"
+            className="pointer-events-none absolute left-6 top-0 h-full w-[2px] bg-linear-to-b from-transparent via-[#7c5cff]/40 to-transparent lg:hidden"
           />
 
           <ol className="relative space-y-6 lg:space-y-2">

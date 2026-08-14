@@ -48,7 +48,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
             onClick={() => setViewMode("desktop")}
             className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "desktop"
-                ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
+                ? "bg-linear-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
           >
@@ -59,7 +59,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
             onClick={() => setViewMode("mobile")}
             className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "mobile"
-                ? "bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
+                ? "bg-linear-to-r from-violet-600 to-cyan-500 text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
           >
@@ -111,7 +111,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
                 <div className="flex items-center gap-2 text-neutral-400">
                   <Bell className="h-4 w-4 hover:text-white cursor-pointer" />
-                  <div className="h-6 w-6 rounded-full bg-gradient-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[10px] font-bold text-white">
+                  <div className="h-6 w-6 rounded-full bg-linear-to-tr from-violet-500 to-cyan-400 flex items-center justify-center text-[10px] font-bold text-white">
                     AD
                   </div>
                 </div>
@@ -137,7 +137,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                         onClick={() => setActiveTab(idx)}
                         className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex items-center justify-between ${
                           activeTab === idx
-                            ? "bg-gradient-to-r from-violet-600/30 to-cyan-500/20 text-cyan-300 border border-cyan-500/30"
+                            ? "bg-linear-to-r from-violet-600/30 to-cyan-500/20 text-cyan-300 border border-cyan-500/30"
                             : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
                         }`}
                       >

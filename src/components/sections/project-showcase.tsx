@@ -208,7 +208,7 @@ export function ProjectShowcase() {
                     }}
                   >
                     {/* shimmer effect on all tabs */}
-                    <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-gradient-to-r from-transparent via-white/[0.07] to-transparent" />
+                    <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_3s_infinite] bg-linear-to-r from-transparent via-white/[0.07] to-transparent" />
                     <span className="relative">{tab.label}</span>
                   </button>
                 ))}
@@ -238,7 +238,7 @@ export function ProjectShowcase() {
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a
                   href={`/portfolio/${project.slug}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-cyan-500 px-6 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-[0_0_24px_rgba(0,224,198,0.4)]"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-linear-to-r from-violet-600 to-cyan-500 px-6 py-3.5 text-[14px] font-semibold text-white shadow-lg transition-all hover:scale-105 hover:shadow-[0_0_24px_rgba(0,224,198,0.4)]"
                 >
                   View Full Case Study
                   <ArrowUpRight className="h-4 w-4" />
@@ -305,7 +305,7 @@ export function ProjectShowcase() {
             </div>
 
             {/* Monitor stand — neck */}
-            <div className="mx-auto h-8 w-20 bg-gradient-to-b from-neutral-700 to-neutral-800" />
+            <div className="mx-auto h-8 w-20 bg-linear-to-b from-neutral-700 to-neutral-800" />
 
             {/* Monitor stand — base */}
             <div className="mx-auto h-2 w-36 rounded-b-lg bg-neutral-700/80" />

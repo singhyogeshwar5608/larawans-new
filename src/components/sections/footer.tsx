@@ -52,9 +52,9 @@ const SOCIALS = [
     href: "#",
     label: "Instagram",
     color: "text-[#E1306C]",
-    bg: "bg-gradient-to-tr from-[#f09433]/20 via-[#dc2743]/20 to-[#bc1888]/20",
+    bg: "bg-linear-to-tr from-[#f09433]/20 via-[#dc2743]/20 to-[#bc1888]/20",
     border: "border-[#E1306C]/40",
-    glow: "hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:shadow-[0_0_20px_rgba(225,48,108,0.6)]",
+    glow: "hover:bg-linear-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent hover:shadow-[0_0_20px_rgba(225,48,108,0.6)]",
   },
   {
     icon: Github,
@@ -112,7 +112,7 @@ export function Footer() {
             className="lg:col-span-4"
           >
             <a href="#hero" className="group inline-flex items-center gap-2.5 interactive">
-              <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-gradient-to-br from-[#7c5cff] to-[#00e0c6] p-[1.5px] shadow-[0_0_24px_rgba(124,92,255,0.5)]">
+              <div className="relative h-10 w-10 overflow-hidden rounded-xl bg-linear-to-br from-[#7c5cff] to-[#00e0c6] p-[1.5px] shadow-[0_0_24px_rgba(124,92,255,0.5)]">
                 <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#080a1c]">
                   <span className="font-display text-lg font-extrabold text-gradient-aurora">L</span>
                 </div>

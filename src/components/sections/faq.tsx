@@ -30,7 +30,7 @@ export function FAQ() {
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: i * 0.04 }}
                 className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 interactive ${
                   isOpen
-                    ? "border-[#7c5cff]/40 bg-gradient-to-b from-[#7c5cff]/[0.08] to-transparent"
+                    ? "border-[#7c5cff]/40 bg-linear-to-b from-[#7c5cff]/[0.08] to-transparent"
                     : "border-white/[0.08] bg-white/[0.02] hover:border-white/15"
                 }`}
               >

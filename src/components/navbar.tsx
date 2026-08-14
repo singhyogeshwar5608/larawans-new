@@ -173,7 +173,7 @@ export function Navbar() {
         >
           {/* Logo */}
           <a href="/" className="group flex items-center gap-2.5 interactive">
-            <div className="relative h-9 w-9 overflow-hidden rounded-xl bg-gradient-to-br from-[#7c5cff] to-[#00e0c6] p-[1.5px] shadow-[0_0_24px_rgba(124,92,255,0.5)]">
+            <div className="relative h-9 w-9 overflow-hidden rounded-xl bg-linear-to-br from-[#7c5cff] to-[#00e0c6] p-[1.5px] shadow-[0_0_24px_rgba(124,92,255,0.5)]">
               <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#080a1c]">
                 <span className="font-display text-base font-extrabold text-gradient-aurora">L</span>
               </div>
@@ -197,7 +197,7 @@ export function Navbar() {
                 className="interactive relative rounded-full px-4 py-2 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 {l.label}
-                <span className="absolute inset-x-4 bottom-1 h-px scale-x-0 bg-gradient-to-r from-[#7c5cff] to-[#00e0c6] transition-transform duration-300 hover:scale-x-100" />
+                <span className="absolute inset-x-4 bottom-1 h-px scale-x-0 bg-linear-to-r from-[#7c5cff] to-[#00e0c6] transition-transform duration-300 hover:scale-x-100" />
               </a>
             ))}
           </div>
@@ -338,7 +338,7 @@ export function Navbar() {
                 animate={{ scaleX: 1, opacity: 1 }}
                 exit={{ scaleX: 0, opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                className="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-white/20 to-transparent"
               />
 
               {/* Corner accent dots */}
@@ -380,10 +380,10 @@ export function Navbar() {
                       className="group relative flex items-center gap-4 rounded-2xl px-5 py-[14px] transition-colors duration-300"
                     >
                       {/* Animated gradient hover background */}
-                      <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#7c5cff]/0 via-[#7c5cff]/0 to-[#00e0c6]/0 opacity-0 transition-all duration-500 group-hover:from-[#7c5cff]/20 group-hover:via-[#7c5cff]/10 group-hover:to-transparent group-hover:opacity-100" />
+                      <span className="absolute inset-0 rounded-2xl bg-linear-to-r from-[#7c5cff]/0 via-[#7c5cff]/0 to-[#00e0c6]/0 opacity-0 transition-all duration-500 group-hover:from-[#7c5cff]/20 group-hover:via-[#7c5cff]/10 group-hover:to-transparent group-hover:opacity-100" />
 
                       {/* Animated underline sweep */}
-                      <span className="absolute bottom-0 left-5 right-5 h-px bg-gradient-to-r from-[#7c5cff]/60 via-[#00e0c6]/40 to-transparent origin-left scale-x-0 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-x-100" />
+                      <span className="absolute bottom-0 left-5 right-5 h-px bg-linear-to-r from-[#7c5cff]/60 via-[#00e0c6]/40 to-transparent origin-left scale-x-0 transition-transform duration-500 ease-[0.22,1,0.36,1] group-hover:scale-x-100" />
 
                       {/* Dot indicator */}
                       <motion.span
@@ -419,7 +419,7 @@ export function Navbar() {
                 animate="visible"
                 exit="exit"
                 aria-hidden
-                className="mx-6 h-px bg-gradient-to-r from-transparent via-[#7c5cff]/30 to-transparent"
+                className="mx-6 h-px bg-linear-to-r from-transparent via-[#7c5cff]/30 to-transparent"
               />
 
               {/* Bottom CTA section */}
@@ -434,11 +434,11 @@ export function Navbar() {
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                  className="interactive relative flex items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-gradient-to-r from-[#7c5cff] to-[#00e0c6] px-6 py-4 text-[15px] font-bold text-white shadow-[0_0_40px_rgba(124,92,255,0.35)] transition-shadow duration-500 hover:shadow-[0_0_60px_rgba(124,92,255,0.55)]"
+                  className="interactive relative flex items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-linear-to-r from-[#7c5cff] to-[#00e0c6] px-6 py-4 text-[15px] font-bold text-white shadow-[0_0_40px_rgba(124,92,255,0.35)] transition-shadow duration-500 hover:shadow-[0_0_60px_rgba(124,92,255,0.55)]"
                 >
                   {/* Multi-layer shimmer */}
-                  <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_linear_infinite] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
-                  <span className="pointer-events-none absolute inset-0 translate-x-full animate-[shimmer_2.5s_linear_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full animate-[shimmer_2s_linear_infinite] bg-linear-to-r from-transparent via-white/25 to-transparent" />
+                  <span className="pointer-events-none absolute inset-0 translate-x-full animate-[shimmer_2.5s_linear_infinite] bg-linear-to-r from-transparent via-white/10 to-transparent" />
 
                   <Sparkles className="relative h-4 w-4" />
                   <span className="relative">Book Free Consultation</span>
@@ -453,9 +453,9 @@ export function Navbar() {
                   exit="exit"
                   className="mt-4 flex items-center justify-center gap-2 text-[11px] tracking-widest text-white/20 uppercase"
                 >
-                  <span className="h-px w-6 bg-gradient-to-r from-transparent to-white/15" />
+                  <span className="h-px w-6 bg-linear-to-r from-transparent to-white/15" />
                   Building the future, one pixel at a time
-                  <span className="h-px w-6 bg-gradient-to-l from-transparent to-white/15" />
+                  <span className="h-px w-6 bg-linear-to-l from-transparent to-white/15" />
                 </motion.p>
               </div>
 
@@ -466,7 +466,7 @@ export function Navbar() {
                 animate={{ scaleX: 1, opacity: 1 }}
                 exit={{ scaleX: 0, opacity: 0 }}
                 transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                className="absolute inset-x-8 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+                className="absolute inset-x-8 bottom-0 h-px bg-linear-to-r from-transparent via-white/15 to-transparent"
               />
             </motion.div>
           </>
