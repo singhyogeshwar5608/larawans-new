@@ -39,7 +39,7 @@ const ICON_MAP: Record<string, IconType> = {
 
 export function TechStack() {
   return (
-    <section id="tech-stack" className="relative py-[30px]">
+    <section id="tech-stack" className="relative py-[30px]" style={{ background: "linear-gradient(180deg, rgba(124,92,255,0.06) 0%, rgba(0,224,198,0.04) 50%, transparent 100%)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <SectionHeading
           title="Built on the"
