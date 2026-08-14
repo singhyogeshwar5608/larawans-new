@@ -137,6 +137,7 @@ export function ProjectShowcase() {
         <SectionHeading
           title="See our work"
           highlight="in action"
+          titleStyle={{ color: '#eef1ff' }}
           description="Real products. Real users. Real results. Explore live demos of platforms we've shipped — watch them breathe, navigate, and perform."
         />
 
