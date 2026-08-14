@@ -81,6 +81,7 @@ export function Services() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
             className="font-display text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]"
+            style={{ color: '#eef1ff' }}
           >
             Full-stack services for{" "}
             <br className="hidden sm:block" />
