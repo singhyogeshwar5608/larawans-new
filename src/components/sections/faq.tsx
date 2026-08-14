@@ -11,8 +11,20 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative pt-[30px] pb-[30px]" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(124,92,255,0.05) 30%, rgba(0,224,198,0.03) 70%, transparent 100%)" }}>
-      <div className="mx-auto w-[97%] px-4 sm:px-6 md:w-[70%]">
+    <section id="faq" className="relative overflow-hidden bg-[#050614] pt-[30px] pb-[30px]">
+      {/* Dark gradient orbs — hero-style background */}
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        {/* Large violet orb */}
+        <div className="absolute -left-20 -top-10 h-[500px] w-[500px] rounded-full" style={{ background: 'rgba(124,92,255,0.25)', filter: 'blur(120px)' }} />
+        {/* Cyan orb */}
+        <div className="absolute -right-16 top-1/4 h-[420px] w-[420px] rounded-full" style={{ background: 'rgba(0,224,198,0.2)', filter: 'blur(110px)' }} />
+        {/* Magenta orb */}
+        <div className="absolute bottom-0 left-1/3 h-[350px] w-[350px] rounded-full" style={{ background: 'rgba(255,77,210,0.12)', filter: 'blur(100px)' }} />
+        {/* Central aurora glow */}
+        <div className="absolute left-1/2 top-1/2 h-[400px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: 'radial-gradient(ellipse at center, rgba(124,92,255,0.35) 0%, rgba(0,224,198,0.2) 40%, rgba(255,77,210,0.1) 65%, transparent 85%)', filter: 'blur(60px)' }} />
+      </div>
+
+      <div className="relative z-10 mx-auto w-[97%] px-4 sm:px-6 md:w-[70%]">
         <SectionHeading
           title="Answers to the"
           highlight="questions that matter"
