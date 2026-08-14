@@ -116,7 +116,7 @@ export function Contact() {
                     required
                     rows={4}
                     placeholder="A short paragraph about your project, timeline, and goals…"
-                    className="interactive resize-none rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors"
+                    className="interactive resize-none rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors placeholder:text-gray-400"
                     style={{ background: "#FFFFFF", color: "#1A1A2E" }}
                   />
                 </div>
@@ -195,7 +195,7 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         required={required}
         placeholder={placeholder}
-        className="interactive rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors"
+        className="interactive rounded-2xl border border-white/10 px-4 py-3 text-sm outline-none transition-colors placeholder:text-gray-400"
         style={{ background: "#FFFFFF", color: "#1A1A2E" }}
       />
     </div>
