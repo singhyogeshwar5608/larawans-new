@@ -24,7 +24,7 @@ export function DevelopmentProcess() {
           eyebrow="How We Work"
           title="A proven process from"
           highlight="idea to impact"
-          description={undefined}
+          titleStyle={{ color: '#eef1ff' }}
         />
 
         <div className="relative mx-auto mt-16 max-w-4xl">

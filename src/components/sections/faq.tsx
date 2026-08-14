@@ -28,6 +28,7 @@ export function FAQ() {
         <SectionHeading
           title="Answers to the"
           highlight="questions that matter"
+          titleStyle={{ color: '#eef1ff' }}
         />
 
         <div className="mt-14 flex flex-col gap-3">
