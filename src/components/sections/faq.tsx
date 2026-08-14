@@ -11,7 +11,7 @@ export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative pt-[30px] pb-[30px]">
+    <section id="faq" className="relative pt-[30px] pb-[30px]" style={{ background: "linear-gradient(180deg, transparent 0%, rgba(124,92,255,0.05) 30%, rgba(0,224,198,0.03) 70%, transparent 100%)" }}>
       <div className="mx-auto w-[97%] px-4 sm:px-6 md:w-[70%]">
         <SectionHeading
           title="Answers to the"

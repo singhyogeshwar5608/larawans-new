@@ -58,7 +58,7 @@ export function Services() {
   }, [displayedText, wordIndex, isDeleting]);
 
   return (
-    <section id="services" className="relative py-[50px]">
+    <section id="services" className="relative py-[50px]" style={{ background: "linear-gradient(180deg, rgba(124,92,255,0.07) 0%, rgba(0,224,198,0.04) 50%, transparent 100%)" }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         {/* Custom heading with typewriter */}
         <div className="flex flex-col items-center gap-5 text-center">
