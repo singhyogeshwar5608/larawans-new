@@ -1022,9 +1022,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                         {step.icon}
                       </div>
                       {/* Title */}
-                      <h3 className="text-[17px] font-bold text-center mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
-                      {/* Description */}
-                      <p className="text-[13px] text-center leading-[1.6] mb-5" style={{ color: '#64748B' }}>{step.desc}</p>
+                      <h3 className="text-[17px] font-bold text-center mb-4" style={{ color: '#1E293B' }}>{step.title}</h3>
                       {/* Checklist */}
                       <ul className="space-y-2.5 mt-auto">
                         {step.items.map((item, fi) => (
@@ -1106,8 +1104,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       {step.icon}
                     </div>
                   </div>
-                  <h3 className="text-[16px] font-bold mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
-                  <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
+                  <h3 className="text-[16px] font-bold mb-3" style={{ color: '#1E293B' }}>{step.title}</h3>
                   <ul className="space-y-2 mt-auto">
                     {step.items.map((item, fi) => (
                       <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
@@ -1191,7 +1188,6 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       </div>
                       <h3 className="text-[16px] font-bold" style={{ color: '#1E293B' }}>{step.title}</h3>
                     </div>
-                    <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
                     <ul className="space-y-2 mt-auto">
                       {step.items.map((item, fi) => (
                         <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
