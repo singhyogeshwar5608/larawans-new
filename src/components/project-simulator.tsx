@@ -41,43 +41,43 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
   return (
     <div className="w-full">
-      {/* View Switcher Controls */}
-      <div className="mb-4 sm:mb-6 flex items-center justify-between flex-wrap gap-2 sm:gap-4 rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.04] p-1.5 sm:p-2 backdrop-blur">
-        <div className="flex items-center gap-1 sm:gap-2">
+      {/* View Switcher Controls - hidden on mobile, only desktop simulator shown */}
+      <div className="mb-6 hidden sm:flex items-center justify-between flex-wrap gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-2 backdrop-blur">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setViewMode("desktop")}
-            className={`flex items-center gap-1 sm:gap-2 rounded-lg sm:rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-[10px] sm:text-xs font-semibold tracking-wide transition-all duration-300 ${
+            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "desktop"
                 ? "text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
             style={viewMode === "desktop" ? { background: 'linear-gradient(to right, #7c3aed, #06b6d4)' } : undefined}
           >
-            <Monitor className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="hidden xs:inline sm:inline">Desktop</span>
+            <Monitor className="h-4 w-4" />
+            <span>Desktop Console View</span>
           </button>
           <button
             onClick={() => setViewMode("mobile")}
-            className={`flex items-center gap-1 sm:gap-2 rounded-lg sm:rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-[10px] sm:text-xs font-semibold tracking-wide transition-all duration-300 ${
+            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "mobile"
                 ? "text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
             style={viewMode === "mobile" ? { background: 'linear-gradient(to right, #7c3aed, #06b6d4)' } : undefined}
           >
-            <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="hidden xs:inline sm:inline">Mobile</span>
+            <Smartphone className="h-4 w-4" />
+            <span>Mobile App Simulator</span>
           </button>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-neutral-400 px-2 sm:px-3 py-0.5 sm:py-1">
-          <span className="inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-mono text-[9px] sm:text-[11px] text-cyan-300/80 hidden sm:inline">Interactive Live Simulator</span>
+        <div className="flex items-center gap-3 text-xs text-neutral-400 px-3 py-1">
+          <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-mono text-[11px] text-cyan-300/80">Interactive Live Simulator</span>
         </div>
       </div>
 
       {/* Simulator Container */}
-      <div className="relative w-[98%] sm:w-full flex items-center justify-center rounded-2xl border border-white/10 bg-[#050716] p-2 sm:p-6 overflow-hidden">
+      <div className="relative w-full sm:w-full flex items-center justify-center sm:rounded-2xl sm:border sm:border-white/10 sm:bg-[#050716] sm:p-6 overflow-hidden">
         {/* Glow backdrop - hidden on mobile */}
         <div
           aria-hidden
