@@ -21,6 +21,14 @@ import {
   CloudCog,
   ShieldCheck,
   Check,
+  Heart,
+  FlaskConical,
+  Pill,
+  CreditCard,
+  Link,
+  RefreshCw,
+  Layers,
+  Building2,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -498,6 +506,285 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ── INTEGRATIONS & CONNECTED SYSTEMS ── */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[700px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+              <Link className="h-3.5 w-3.5" />
+              <span>Integrations</span>
+            </div>
+            {/* Heading with partial gradient */}
+            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
+              <span style={{ color: '#111827' }}>Integrations &amp; </span>
+              <span style={{ backgroundImage: 'linear-gradient(to right, #6366F1, #818CF8)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Connected Systems</span>
+            </h2>
+            {/* Description */}
+            <p className="mt-4 text-[15px] sm:text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+              {project.title} seamlessly integrates with all critical systems to streamline workflows and improve operational efficiency.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-5 flex items-center justify-center gap-2">
+              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#6366F1' }} />
+            </div>
+          </div>
+
+          {/* Integration Cards + Central Hub Layout */}
+          <div className="mt-14 relative">
+            {/* Desktop: 3-col grid with center hub | Mobile: single column */}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-y-8 gap-x-6 xl:gap-x-10 items-start">
+
+              {/* ── LEFT COLUMN (3 cards) ── */}
+              <div className="flex flex-col gap-6">
+                {[
+                  {
+                    icon: <Heart className="h-6 w-6" style={{ color: '#1D4ED8' }} />,
+                    iconBg: '#DBEAFE',
+                    title: 'EMR / EHR Systems',
+                    desc: 'Seamless patient data synchronization with existing EMR/EHR platforms.',
+                    tag: 'Real-time Sync',
+                    tagBg: '#DBEAFE',
+                    tagColor: '#1D4ED8',
+                    dotColor: '#3B82F6',
+                  },
+                  {
+                    icon: <FlaskConical className="h-6 w-6" style={{ color: '#047857' }} />,
+                    iconBg: '#D1FAE5',
+                    title: 'Laboratory Systems',
+                    desc: 'Bi-directional integration with lab systems for test orders & results.',
+                    tag: 'HL7 / FHIR Ready',
+                    tagBg: '#D1FAE5',
+                    tagColor: '#047857',
+                    dotColor: '#10B981',
+                  },
+                  {
+                    icon: <ShieldCheck className="h-6 w-6" style={{ color: '#7E22CE' }} />,
+                    iconBg: '#F3E8FF',
+                    title: 'Insurance & TPAs',
+                    desc: 'Verify insurance, manage claims and approvals in real-time.',
+                    tag: 'Secure API Integration',
+                    tagBg: '#F3E8FF',
+                    tagColor: '#7E22CE',
+                    dotColor: '#8B5CF6',
+                  },
+                ].map((card, i) => (
+                  <div
+                    key={`l-${i}`}
+                    className="flex items-start gap-4 rounded-2xl bg-white p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+                    style={{
+                      border: '1px solid #E2E8F0',
+                      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05)',
+                    }}
+                  >
+                    {/* Icon Box */}
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                      style={{ background: card.iconBg }}
+                    >
+                      {card.icon}
+                    </div>
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-[16px] sm:text-[17px] font-bold" style={{ color: '#1E293B' }}>{card.title}</h3>
+                      <p className="mt-1.5 text-[13px] sm:text-[14px] leading-[1.55]" style={{ color: '#64748B' }}>{card.desc}</p>
+                      {/* Tag Pill */}
+                      <span
+                        className="mt-3 inline-block rounded-full px-3 py-1 text-[11px] font-semibold"
+                        style={{ background: card.tagBg, color: card.tagColor }}
+                      >
+                        {card.tag}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* ── CENTER HUB (desktop only) ── */}
+              <div className="hidden lg:flex items-center justify-center">
+                <div className="relative">
+                  {/* Connecting dotted lines - left side */}
+                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[70%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="0" cy="0" r="4" fill="#3B82F6" />
+                  </svg>
+                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[6%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="0" cy="0" r="4" fill="#10B981" />
+                  </svg>
+                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] translate-y-[58%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="0" cy="0" r="4" fill="#8B5CF6" />
+                  </svg>
+                  {/* Connecting dotted lines - right side */}
+                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[70%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="100%" cy="0" r="4" fill="#F97316" />
+                  </svg>
+                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[6%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="100%" cy="0" r="4" fill="#6366F1" />
+                  </svg>
+                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] translate-y-[58%]" style={{ overflow: 'visible' }}>
+                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+                    <circle cx="100%" cy="0" r="4" fill="#EAB308" />
+                  </svg>
+
+                  {/* Hub Circle */}
+                  <div
+                    className="flex flex-col items-center justify-center w-[240px] xl:w-[280px] h-[240px] xl:h-[280px] rounded-full"
+                    style={{ background: '#EEF2FF', border: '2px solid #C7D2FE' }}
+                  >
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl mb-3" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+                      <Building2 className="h-7 w-7" />
+                    </div>
+                    <span className="text-[15px] sm:text-[16px] font-bold text-center px-4" style={{ color: '#1E293B' }}>
+                      {project.title}
+                    </span>
+                    <span
+                      className="mt-2.5 rounded-full px-3 py-1 text-[10px] font-semibold tracking-wide"
+                      style={{ background: '#6366F1', color: '#FFFFFF' }}
+                    >
+                      Centralized &bull; Secure &bull; Connected
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── RIGHT COLUMN (3 cards) ── */}
+              <div className="flex flex-col gap-6">
+                {[
+                  {
+                    icon: <Pill className="h-6 w-6" style={{ color: '#C2410C' }} />,
+                    iconBg: '#FFEDD5',
+                    title: 'Pharmacy Management',
+                    desc: 'Real-time inventory, prescriptions and drug interaction checks.',
+                    tag: 'Auto Sync',
+                    tagBg: '#FFEDD5',
+                    tagColor: '#C2410C',
+                  },
+                  {
+                    icon: <CreditCard className="h-6 w-6" style={{ color: '#6D28D9' }} />,
+                    iconBg: '#EDE9FE',
+                    title: 'Billing & Payments',
+                    desc: 'Integrated billing, invoicing and multiple payment gateways.',
+                    tag: '100% Reconciled',
+                    tagBg: '#EDE9FE',
+                    tagColor: '#6D28D9',
+                  },
+                  {
+                    icon: <BarChart className="h-6 w-6" style={{ color: '#A16207' }} />,
+                    iconBg: '#FEF9C3',
+                    title: 'Reporting & Analytics',
+                    desc: 'Unified data analytics and reporting across all departments.',
+                    tag: 'Real-time Insights',
+                    tagBg: '#FEF9C3',
+                    tagColor: '#A16207',
+                  },
+                ].map((card, i) => (
+                  <div
+                    key={`r-${i}`}
+                    className="flex items-start gap-4 rounded-2xl bg-white p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+                    style={{
+                      border: '1px solid #E2E8F0',
+                      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05)',
+                    }}
+                  >
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                      style={{ background: card.iconBg }}
+                    >
+                      {card.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-[16px] sm:text-[17px] font-bold" style={{ color: '#1E293B' }}>{card.title}</h3>
+                      <p className="mt-1.5 text-[13px] sm:text-[14px] leading-[1.55]" style={{ color: '#64748B' }}>{card.desc}</p>
+                      <span
+                        className="mt-3 inline-block rounded-full px-3 py-1 text-[11px] font-semibold"
+                        style={{ background: card.tagBg, color: card.tagColor }}
+                      >
+                        {card.tag}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile-only center hub (shown below cards on mobile) */}
+            <div className="mt-8 flex lg:hidden justify-center">
+              <div
+                className="flex flex-col items-center justify-center w-[200px] h-[200px] rounded-full"
+                style={{ background: '#EEF2FF', border: '2px solid #C7D2FE' }}
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl mb-2" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+                  <Building2 className="h-6 w-6" />
+                </div>
+                <span className="text-[14px] font-bold text-center px-4" style={{ color: '#1E293B' }}>
+                  {project.title}
+                </span>
+                <span
+                  className="mt-2 rounded-full px-3 py-1 text-[9px] font-semibold tracking-wide"
+                  style={{ background: '#6366F1', color: '#FFFFFF' }}
+                >
+                  Centralized &bull; Secure &bull; Connected
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Feature Bar */}
+          <div
+            className="mt-12 rounded-2xl p-6 sm:p-8"
+            style={{ background: '#F8FAFC' }}
+          >
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+              {[
+                {
+                  icon: <Link className="h-5 w-5" style={{ color: '#3B82F6' }} />,
+                  title: 'Seamless Connectivity',
+                  desc: 'Connect and sync data across all hospital systems effortlessly.',
+                },
+                {
+                  icon: <ShieldCheck className="h-5 w-5" style={{ color: '#10B981' }} />,
+                  title: 'Standard Protocols',
+                  desc: 'Supports HL7, FHIR and other industry-standard protocols.',
+                },
+                {
+                  icon: <Lock className="h-5 w-5" style={{ color: '#6366F1' }} />,
+                  title: 'Secure Data Exchange',
+                  desc: 'Encrypted, secure and compliant data exchange between systems.',
+                },
+                {
+                  icon: <RefreshCw className="h-5 w-5" style={{ color: '#F97316' }} />,
+                  title: 'Real-time Sync',
+                  desc: 'Real-time data synchronization to ensure accuracy and timely updates.',
+                },
+                {
+                  icon: <Layers className="h-5 w-5" style={{ color: '#3B82F6' }} />,
+                  title: 'Scalable Integrations',
+                  desc: 'Built to scale and integrate with new systems as your hospital grows.',
+                },
+              ].map((feat, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 py-3 lg:py-0 px-4 lg:border-r last:lg:border-r-0"
+                  style={{ borderColor: '#E2E8F0', borderRightStyle: i < 4 ? 'solid' : 'none' }}
+                >
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ background: '#EEF2FF' }}>
+                    {feat.icon}
+                  </div>
+                  <div className="min-w-0">
+                    <h4 className="text-[13px] sm:text-[14px] font-bold" style={{ color: '#1E293B' }}>{feat.title}</h4>
+                    <p className="mt-1 text-[11.5px] sm:text-[12.5px] leading-[1.5]" style={{ color: '#64748B' }}>{feat.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
