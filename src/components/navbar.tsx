@@ -10,8 +10,9 @@ const NAV_LINKS = [
   { label: "Services", href: "/#services" },
   { label: "Industries", href: "/#industries" },
   { label: "AI Solutions", href: "/#ai-solutions" },
-  { label: "Process", href: "/#process" },
   { label: "Portfolio", href: "/#portfolio" },
+  { label: "Courses", href: "/courses" },
+  { label: "Process", href: "/#process" },
   { label: "Tech", href: "/#tech-stack" },
   { label: "FAQ", href: "/#faq" },
 ];
