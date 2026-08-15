@@ -124,7 +124,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700">
+    <div className="min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
       <Navbar />
 
       {/* ── MOBILE HAMBURGER BUTTON (light theme) ── */}
