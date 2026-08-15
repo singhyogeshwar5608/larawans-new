@@ -77,11 +77,11 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
       </div>
 
       {/* Simulator Container */}
-      <div className="relative w-full flex items-center justify-center rounded-2xl border border-white/10 bg-[#050716] p-3 sm:p-6 overflow-hidden">
-        {/* Glow backdrop */}
+      <div className="relative w-[98%] sm:w-full flex items-center justify-center rounded-2xl border border-white/10 bg-[#050716] p-2 sm:p-6 overflow-hidden">
+        {/* Glow backdrop - hidden on mobile */}
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full opacity-30 blur-3xl"
+          className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 h-96 w-96 rounded-full opacity-30 blur-3xl hidden sm:block"
           style={{ background: project.accent }}
         />
 
@@ -94,7 +94,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.4 }}
-              className="w-full max-w-5xl"
+              className="w-full max-w-5xl mx-auto"
             >
               {/* Monitor Frame */}
               <div className="overflow-hidden rounded-t-xl rounded-b-none border border-neutral-700/80 border-b-0 bg-[#0b0f19] shadow-2xl"
