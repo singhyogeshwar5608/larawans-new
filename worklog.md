@@ -19,3 +19,20 @@ Stage Summary:
 - CourseDetailClient.tsx completely rewritten with: no right sidebar, full-width content, clean JSX (no syntax errors), hero with gradient + video preview, pricing CTA bar, 5 tabs (Overview/Curriculum/Instructor/Reviews/FAQ), Course Includes section, Instructor + Share row, Need Help section, Footer
 - globals.css: Changed `--font-sans` and `--font-display` from hardcoded "Helvetica Neue" to system font stack fallback
 - Vite server restarted with cleared cache — all changes now served fresh
+
+---
+Task ID: 1
+Agent: main
+Task: Convert portfolio detail page from dark to light theme
+
+Work Log:
+- Read current ProjectDetailClient.tsx (dark theme)
+- Read CourseDetailClient.tsx for light theme reference patterns
+- Rewrote entire file with light theme colors matching course page
+- Added dark class removal useEffect
+- Converted all dark cards/borders/text to light equivalents
+- Used indigo primary, gray backgrounds, white cards
+
+Stage Summary:
+- Portfolio detail page converted to light theme
+- File: /home/z/my-project/src/app/portfolio/[slug]/ProjectDetailClient.tsx
