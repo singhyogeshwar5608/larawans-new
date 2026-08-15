@@ -612,8 +612,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
           </div>
 
-          {/* Feature Cards Grid */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Feature Cards Grid - Desktop/Tablet (hidden on mobile) */}
+          <div className="mt-12 hidden md:block">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               { icon: <Shield className="h-8 w-8" />, title: 'HIPAA Compliant', desc: 'Fully compliant with HIPAA standards to ensure the privacy and security of patient data.' },
               { icon: <UserCheck className="h-8 w-8" />, title: 'Role-Based Access', desc: 'Granular role-based access control ensures users only access the data and features they need.' },
@@ -648,6 +649,37 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   <h3 className="text-[18px] font-bold" style={{ color: '#111827' }}>{card.title}</h3>
                   <p className="mt-3 text-[14.5px] leading-[1.6]" style={{ color: '#6B7280' }}>{card.desc}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+          </div>
+
+          {/* Feature Cards Grid - Mobile Only (2 per row) */}
+          <div className="mt-8 grid grid-cols-2 gap-2 md:hidden">
+            {[
+              { icon: <Shield className="h-5 w-5" />, title: 'HIPAA Compliant', desc: 'Fully compliant with HIPAA standards to ensure privacy and security of patient data.' },
+              { icon: <UserCheck className="h-5 w-5" />, title: 'Role-Based Access', desc: 'Granular role-based access control ensures users only access needed data and features.' },
+              { icon: <Lock className="h-5 w-5" />, title: 'Data Encryption', desc: 'End-to-end encryption for data in transit and at rest using standard protocols.' },
+              { icon: <FileCheck className="h-5 w-5" />, title: 'Audit Logs', desc: 'Comprehensive audit logs track all system activities for transparency.' },
+              { icon: <CloudCog className="h-5 w-5" />, title: 'Backup & Recovery', desc: 'Automated backups and disaster recovery ensure business continuity.' },
+              { icon: <ShieldCheck className="h-5 w-5" />, title: 'Secure Infrastructure', desc: 'Hosted on secure, certified infrastructure with 24/7 monitoring.' },
+            ].map((card, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center text-center rounded-xl p-3"
+                style={{ border: '1px solid #F3F4F6', background: '#F5F3FF' }}
+              >
+                {/* Icon Circle */}
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full mb-2"
+                  style={{ background: '#EEF2FF', color: '#4F46E5' }}
+                >
+                  {card.icon}
+                </div>
+                {/* Title */}
+                <h3 className="text-[12px] font-bold" style={{ color: '#111827' }}>{card.title}</h3>
+                {/* Desc */}
+                <p className="mt-1 text-[10px] leading-[1.5]" style={{ color: '#6B7280' }}>{card.desc}</p>
               </div>
             ))}
           </div>
