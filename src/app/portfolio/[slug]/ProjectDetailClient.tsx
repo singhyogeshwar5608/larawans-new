@@ -414,7 +414,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </h2>
 
               {/* Desktop: vertical cards with light bg */}
-              <div className="hidden lg:block space-y-4 rounded-2xl p-4 sm:p-5" style={{ background: '#F8FAFC' }}>
+              <div className="hidden lg:block space-y-4 rounded-2xl p-4 sm:p-5" style={{ background: '#EEF2FF' }}>
                 {project.workflowSteps.map((wf) => (
                   <div
                     key={wf.step}
@@ -435,7 +435,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </div>
 
               {/* Mobile: 2x2 grid tabs with light bg */}
-              <div className="grid grid-cols-2 gap-2 rounded-2xl p-3 lg:hidden" style={{ background: '#F8FAFC' }}>
+              <div className="grid grid-cols-2 gap-2 rounded-2xl p-3 lg:hidden" style={{ background: '#EEF2FF' }}>
                 {project.workflowSteps.map((wf) => (
                   <div
                     key={wf.step}
