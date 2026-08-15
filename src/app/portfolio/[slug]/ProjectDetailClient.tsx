@@ -376,8 +376,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             ].map((card, i) => (
               <div
                 key={i}
-                className="flex items-start gap-5 rounded-2xl bg-white p-7 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_6px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300"
-                style={{ border: '1px solid #F3F4F6' }}
+                className="flex items-start gap-5 rounded-2xl p-7 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_6px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300"
+                style={{ border: '1px solid #F3F4F6', background: '#F5F3FF' }}
               >
                 {/* Icon Circle */}
                 <div className="relative shrink-0">
