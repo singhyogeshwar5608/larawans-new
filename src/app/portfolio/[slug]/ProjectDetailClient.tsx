@@ -341,7 +341,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── SECURITY & COMPLIANCE ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 my-6 rounded-3xl bg-white" style={{ boxShadow: '0 4px 30px rgba(0,0,0,0.10), 0 1px 8px rgba(0,0,0,0.06)' }}>
           {/* Section Header */}
           <div className="text-center max-w-[650px] mx-auto">
             {/* Badge Pill */}
