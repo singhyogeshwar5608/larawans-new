@@ -1281,22 +1281,71 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           </div>
 
           {/* Role Tabs - Mobile Only */}
-          <div className="mt-8 flex gap-2 overflow-x-auto scrollbar-hide sm:hidden pb-2">
+          <div className="mt-8 flex gap-3 overflow-x-auto scrollbar-hide sm:hidden pb-2">
             {[
-              { icon: <Stethoscope className="h-4 w-4" />, title: 'Doctors', bg: '#DBEAFE', color: '#2563EB' },
-              { icon: <Users className="h-4 w-4" />, title: 'Nurses', bg: '#D1FAE5', color: '#059669' },
-              { icon: <Microscope className="h-4 w-4" />, title: 'Lab Staff', bg: '#F3E8FF', color: '#7C3AED' },
-              { icon: <Pill className="h-4 w-4" />, title: 'Pharmacy', bg: '#FFEDD5', color: '#EA580C' },
-              { icon: <Receipt className="h-4 w-4" />, title: 'Billing', bg: '#CFFAFE', color: '#0891B2' },
-              { icon: <UserCog className="h-4 w-4" />, title: 'Admin', bg: '#FCE7F3', color: '#DB2777' },
+              {
+                icon: <Stethoscope className="h-5 w-5" />, title: 'Doctors', bg: '#DBEAFE', color: '#2563EB',
+                features: ['Patient Consultation', 'Medical History', 'Prescriptions', 'Reports & Analytics'],
+                badge: 'Role-Based Access',
+              },
+              {
+                icon: <Users className="h-5 w-5" />, title: 'Nurses', bg: '#D1FAE5', color: '#059669',
+                features: ['Patient Care', 'Vitals Monitoring', 'Medicine Admin', 'Task Management'],
+                badge: 'Role-Based Access',
+              },
+              {
+                icon: <Microscope className="h-5 w-5" />, title: 'Lab Staff', bg: '#F3E8FF', color: '#7C3AED',
+                features: ['Lab Orders', 'Test Results', 'Inventory Mgmt', 'Reports'],
+                badge: 'Role-Based Access',
+              },
+              {
+                icon: <Pill className="h-5 w-5" />, title: 'Pharmacy', bg: '#FFEDD5', color: '#EA580C',
+                features: ['Prescription Mgmt', 'Inventory Tracking', 'Drug Interaction', 'Stock Alerts'],
+                badge: 'Role-Based Access',
+              },
+              {
+                icon: <Receipt className="h-5 w-5" />, title: 'Billing', bg: '#CFFAFE', color: '#0891B2',
+                features: ['Invoice Generation', 'Payment Processing', 'Insurance Claims', 'Statements'],
+                badge: 'Role-Based Access',
+              },
+              {
+                icon: <UserCog className="h-5 w-5" />, title: 'Admin', bg: '#FCE7F3', color: '#DB2777',
+                features: ['User Management', 'Role & Permissions', 'System Settings', 'Audit Logs'],
+                badge: 'Full System Access',
+              },
             ].map((role, i) => (
               <div
                 key={i}
-                className="flex shrink-0 flex-col items-center gap-1.5 rounded-xl px-4 py-3"
-                style={{ background: role.bg }}
+                className="flex shrink-0 flex-col items-center rounded-2xl px-4 py-4 w-[150px]"
+                style={{ background: role.bg, boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}
               >
-                <div style={{ color: role.color }}>{role.icon}</div>
-                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: role.color }}>{role.title}</span>
+                {/* Icon */}
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full mb-2 bg-white"
+                  style={{ color: role.color }}
+                >
+                  {role.icon}
+                </div>
+                {/* Title */}
+                <h3 className="text-[13px] font-bold text-center mb-2" style={{ color: role.color }}>
+                  {role.title}
+                </h3>
+                {/* Feature List */}
+                <ul className="w-full space-y-1 mb-2">
+                  {role.features.map((feat, fi) => (
+                    <li key={fi} className="flex items-center gap-1.5 text-[10px]" style={{ color: '#4B5563' }}>
+                      <CheckCircle2 className="h-3 w-3 shrink-0" style={{ color: role.color }} />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+                {/* Badge */}
+                <span
+                  className="inline-block rounded-full px-3 py-1 text-[9px] font-semibold bg-white mt-auto"
+                  style={{ color: role.color }}
+                >
+                  {role.badge}
+                </span>
               </div>
             ))}
           </div>
