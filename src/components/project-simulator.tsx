@@ -77,7 +77,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
       </div>
 
       {/* Simulator Container */}
-      <div className="relative min-h-[520px] w-full flex items-center justify-center rounded-2xl border border-white/10 bg-[#050716] p-4 sm:p-8 overflow-hidden">
+      <div className="relative w-full flex items-center justify-center rounded-2xl border border-white/10 bg-[#050716] p-4 sm:p-6 overflow-hidden">
         {/* Glow backdrop */}
         <div
           aria-hidden
@@ -94,10 +94,13 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.4 }}
-              className="w-full max-w-5xl overflow-hidden rounded-xl border border-neutral-700/80 bg-[#0b0f19] shadow-2xl"
+              className="w-full max-w-5xl"
             >
-              {/* Browser Header Bar */}
-              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-4 py-3">
+              {/* Monitor Frame */}
+              <div className="overflow-hidden rounded-t-xl rounded-b-none border border-neutral-700/80 border-b-0 bg-[#0b0f19] shadow-2xl"
+              style={{ boxShadow: '0 25px 60px -12px rgba(0,0,0,0.7)' }}>
+              {/* Monitor Top Bezel */}
+              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-4 py-2.5">
                 <div className="flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-rose-500/80" />
                   <span className="h-3 w-3 rounded-full bg-amber-500/80" />
@@ -120,24 +123,24 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               </div>
 
               {/* Console Body */}
-              <div className="grid grid-cols-1 md:grid-cols-5 min-h-[420px]">
+              <div className="grid grid-cols-1 md:grid-cols-5">
                 {/* Sidebar */}
-                <div className="hidden md:block md:col-span-1 border-r border-neutral-800 bg-[#0f1422] p-4 space-y-6">
+                <div className="hidden md:block md:col-span-1 border-r border-neutral-800 bg-[#0f1422] p-3 space-y-4">
                   <div>
-                    <div className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 mb-2">
+                    <div className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 mb-1.5">
                       Platform Console
                     </div>
-                    <div className="font-display text-sm font-bold text-white truncate">
+                    <div className="font-display text-xs font-bold text-white truncate">
                       {project.title}
                     </div>
                   </div>
 
-                  <nav className="space-y-1">
+                  <nav className="space-y-0.5">
                     {ds.sidebar.map((item, idx) => (
                       <button
                         key={item}
                         onClick={() => setActiveTab(idx)}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex items-center justify-between ${
+                        className={`w-full text-left px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all duration-200 flex items-center justify-between ${
                           activeTab === idx
                             ? "text-cyan-300 border border-cyan-500/30"
                             : "text-neutral-400 hover:bg-white/5 hover:text-neutral-200"
@@ -150,13 +153,13 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                     ))}
                   </nav>
 
-                  <div className="pt-4 border-t border-neutral-800/80">
-                    <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-3">
+                  <div className="pt-3 border-t border-neutral-800/80">
+                    <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-2.5">
                       <div className="flex items-center gap-1.5 text-[11px] font-semibold text-cyan-300">
                         <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
                         <span>AI Assistant</span>
                       </div>
-                      <p className="mt-1 text-[10px] text-neutral-400 leading-tight">
+                      <p className="mt-0.5 text-[9.5px] text-neutral-400 leading-tight">
                         Real-time telemetry active
                       </p>
                     </div>
@@ -164,16 +167,16 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                 </div>
 
                 {/* Main Dashboard Workspace */}
-                <div className="col-span-1 md:col-span-4 p-4 sm:p-6 bg-[#0b0f19] space-y-6">
+                <div className="col-span-1 md:col-span-4 p-3 sm:p-4 bg-[#0b0f19] space-y-4">
                   {/* Top Executive Stats */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     {ds.stats.map((st, i) => (
                       <div
                         key={i}
-                        className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
+                        className="rounded-xl border border-white/10 bg-white/[0.03] p-2.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
                       >
-                        <div className="text-[11px] font-medium text-neutral-400">{st.title}</div>
-                        <div className="mt-1 font-display text-xl font-bold text-white">{st.val}</div>
+                        <div className="text-[10px] font-medium text-neutral-400">{st.title}</div>
+                        <div className="mt-0.5 font-display text-lg font-bold text-white">{st.val}</div>
                         <div className="mt-1 inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                           <Zap className="h-2.5 w-2.5" />
                           {st.change}
@@ -183,7 +186,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                   </div>
 
                   {/* Search and Action Bar */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1">
                     <div className="relative w-full sm:w-64">
                       <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-neutral-500" />
                       <input
@@ -205,12 +208,12 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                   </div>
 
                   {/* Data Table */}
-                  <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/30">
+                  <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/30 max-h-[200px] overflow-y-auto">
                     <table className="w-full text-left text-xs">
                       <thead className="border-b border-white/10 bg-white/[0.02] text-neutral-400 text-[11px] uppercase tracking-wider">
                         <tr>
                           {ds.tableHeader.map((h) => (
-                            <th key={h} className="px-4 py-3 font-semibold">
+                            <th key={h} className="px-3 py-2 font-semibold">
                               {h}
                             </th>
                           ))}
@@ -219,12 +222,12 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                       <tbody className="divide-y divide-white/5 text-neutral-200">
                         {filteredRows.map((row, idx) => (
                           <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="px-4 py-3 font-mono text-cyan-300 font-semibold">
+                            <td className="px-3 py-2 font-mono text-cyan-300 font-semibold">
                               {row.col1}
                             </td>
-                            <td className="px-4 py-3 font-medium text-white">{row.col2}</td>
-                            <td className="px-4 py-3 font-semibold text-neutral-300">{row.col3}</td>
-                            <td className="px-4 py-3">
+                            <td className="px-3 py-2 font-medium text-white">{row.col2}</td>
+                            <td className="px-3 py-2 font-semibold text-neutral-300">{row.col3}</td>
+                            <td className="px-3 py-2">
                               <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-300">
                                 <CheckCircle2 className="h-3 w-3 text-emerald-400" />
                                 {row.status}
@@ -236,6 +239,21 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                     </table>
                   </div>
                 </div>
+              </div>{/* close console body grid */}
+              {/* Monitor Chin - Bottom Bezel */}
+              <div className="flex items-center justify-center border-x border-b border-neutral-700/80 bg-[#121826] py-1.5">
+                <div className="h-1 w-16 rounded-full bg-neutral-600/60" />
+              </div>
+              </div>{/* close monitor frame */}
+
+              {/* Monitor Stand Neck */}
+              <div className="hidden md:flex justify-center">
+                <div className="w-24 h-4 bg-gradient-to-b from-neutral-700 to-neutral-800" />
+              </div>
+
+              {/* Monitor Base */}
+              <div className="hidden md:flex justify-center">
+                <div className="w-40 h-2 rounded-b-xl bg-gradient-to-b from-neutral-700 to-neutral-900" style={{ boxShadow: '0 8px 20px rgba(0,0,0,0.5)' }} />
               </div>
             </motion.div>
           ) : (
