@@ -42,37 +42,37 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
   return (
     <div className="w-full">
       {/* View Switcher Controls */}
-      <div className="mb-6 flex items-center justify-between flex-wrap gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-2 backdrop-blur">
-        <div className="flex items-center gap-2">
+      <div className="mb-4 sm:mb-6 flex items-center justify-between flex-wrap gap-2 sm:gap-4 rounded-xl sm:rounded-2xl border border-white/10 bg-white/[0.04] p-1.5 sm:p-2 backdrop-blur">
+        <div className="flex items-center gap-1 sm:gap-2">
           <button
             onClick={() => setViewMode("desktop")}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
+            className={`flex items-center gap-1 sm:gap-2 rounded-lg sm:rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-[10px] sm:text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "desktop"
                 ? "text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
             style={viewMode === "desktop" ? { background: 'linear-gradient(to right, #7c3aed, #06b6d4)' } : undefined}
           >
-            <Monitor className="h-4 w-4" />
-            <span>Desktop Console View</span>
+            <Monitor className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden xs:inline sm:inline">Desktop</span>
           </button>
           <button
             onClick={() => setViewMode("mobile")}
-            className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold tracking-wide transition-all duration-300 ${
+            className={`flex items-center gap-1 sm:gap-2 rounded-lg sm:rounded-xl px-2.5 sm:px-4 py-1.5 sm:py-2.5 text-[10px] sm:text-xs font-semibold tracking-wide transition-all duration-300 ${
               viewMode === "mobile"
                 ? "text-white shadow-[0_0_20px_rgba(0,224,198,0.3)]"
                 : "text-neutral-400 hover:text-white hover:bg-white/5"
             }`}
             style={viewMode === "mobile" ? { background: 'linear-gradient(to right, #7c3aed, #06b6d4)' } : undefined}
           >
-            <Smartphone className="h-4 w-4" />
-            <span>Mobile App Simulator</span>
+            <Smartphone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="hidden xs:inline sm:inline">Mobile</span>
           </button>
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-neutral-400 px-3 py-1">
-          <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-mono text-[11px] text-cyan-300/80">Interactive Live Simulator</span>
+        <div className="flex items-center gap-2 sm:gap-3 text-[10px] sm:text-xs text-neutral-400 px-2 sm:px-3 py-0.5 sm:py-1">
+          <span className="inline-flex h-1.5 w-1.5 sm:h-2 sm:w-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="font-mono text-[9px] sm:text-[11px] text-cyan-300/80 hidden sm:inline">Interactive Live Simulator</span>
         </div>
       </div>
 
@@ -100,23 +100,23 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               <div className="overflow-hidden rounded-t-xl rounded-b-none border border-neutral-700/80 border-b-0 bg-[#0b0f19] shadow-2xl"
               style={{ boxShadow: '0 25px 60px -12px rgba(0,0,0,0.7)' }}>
               {/* Monitor Top Bezel */}
-              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-4 py-2.5">
-                <div className="flex items-center gap-2">
-                  <span className="h-3 w-3 rounded-full bg-rose-500/80" />
-                  <span className="h-3 w-3 rounded-full bg-amber-500/80" />
-                  <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
+              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-2 sm:px-4 py-1.5 sm:py-2.5">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-rose-500/80" />
+                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-amber-500/80" />
+                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-emerald-500/80" />
                 </div>
 
                 {/* URL Bar */}
-                <div className="flex max-w-md flex-1 items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-1.5 text-xs text-neutral-300 mx-4">
-                  <Lock className="h-3 w-3 text-emerald-400 shrink-0" />
-                  <span className="truncate font-mono text-[11px] text-neutral-300">{ds.url}</span>
-                  <RotateCw className="h-3 w-3 text-neutral-500 ml-auto shrink-0 hover:text-white cursor-pointer" />
+                <div className="flex max-w-md flex-1 items-center gap-1.5 sm:gap-2 rounded-md sm:rounded-lg border border-white/10 bg-black/40 px-2 sm:px-3 py-1 sm:py-1.5 text-xs text-neutral-300 mx-1.5 sm:mx-4">
+                  <Lock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-400 shrink-0" />
+                  <span className="truncate font-mono text-[9px] sm:text-[11px] text-neutral-300">{ds.url}</span>
+                  <RotateCw className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-neutral-500 ml-auto shrink-0 hover:text-white cursor-pointer" />
                 </div>
 
-                <div className="flex items-center gap-2 text-neutral-400">
-                  <Bell className="h-4 w-4 hover:text-white cursor-pointer" />
-                  <div className="h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style={{ background: 'linear-gradient(to top right, #8b5cf6, #22d3ee)' }}>
+                <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400">
+                  <Bell className="h-3 w-3 sm:h-4 sm:w-4 hover:text-white cursor-pointer" />
+                  <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-white" style={{ background: 'linear-gradient(to top right, #8b5cf6, #22d3ee)' }}>
                     AD
                   </div>
                 </div>
@@ -167,19 +167,19 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                 </div>
 
                 {/* Main Dashboard Workspace */}
-                <div className="col-span-1 md:col-span-4 p-2 sm:p-4 bg-[#0b0f19] space-y-2.5 sm:space-y-4">
+                <div className="col-span-1 md:col-span-4 p-1.5 sm:p-4 bg-[#0b0f19] space-y-1.5 sm:space-y-4">
                   {/* Top Executive Stats */}
-                  <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                  <div className="grid grid-cols-3 gap-1 sm:gap-2">
                     {ds.stats.map((st, i) => (
                       <div
                         key={i}
-                        className="rounded-lg border border-white/10 bg-white/[0.03] p-1.5 sm:p-2.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
+                        className="rounded-md sm:rounded-lg border border-white/10 bg-white/[0.03] p-1 sm:p-2.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
                       >
-                        <div className="text-[9px] sm:text-[10px] font-medium text-neutral-400 leading-tight">{st.title}</div>
-                        <div className="mt-0.5 font-display text-sm sm:text-lg font-bold text-white">{st.val}</div>
-                        <div className="mt-0.5 sm:mt-1 inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded-full">
-                          <Zap className="h-2.5 w-2.5" />
-                          {st.change}
+                        <div className="text-[8px] sm:text-[10px] font-medium text-neutral-400 leading-tight">{st.title}</div>
+                        <div className="mt-0.5 font-display text-xs sm:text-lg font-bold text-white">{st.val}</div>
+                        <div className="mt-0.5 inline-flex items-center gap-0.5 sm:gap-1 text-[8px] sm:text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1 sm:px-2 py-0.5 rounded-full">
+                          <Zap className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
+                          <span className="truncate">{st.change}</span>
                         </div>
                       </div>
                     ))}
@@ -208,29 +208,28 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                   </div>
 
                   {/* Data Table */}
-                  <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/30 max-h-[140px] sm:max-h-[200px] overflow-y-auto">
-                    <table className="w-full text-left text-xs">
-                      <thead className="border-b border-white/10 bg-white/[0.02] text-neutral-400 text-[11px] uppercase tracking-wider">
+                  <div className="rounded-lg sm:rounded-xl border border-white/10 bg-black/30 max-h-[130px] sm:max-h-[200px] overflow-y-auto overflow-x-hidden">
+                    <table className="w-full text-left" style={{ tableLayout: 'fixed' }}>
+                      <thead className="border-b border-white/10 bg-white/[0.02] text-neutral-400 text-[8px] sm:text-[11px] uppercase tracking-wider">
                         <tr>
-                          {ds.tableHeader.map((h) => (
-                            <th key={h} className="px-2 sm:px-3 py-1.5 sm:py-2 font-semibold">
-                              {h}
-                            </th>
-                          ))}
+                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '22%' }}>ID</th>
+                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '30%' }}>Name</th>
+                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '25%' }}>Type</th>
+                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '23%' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 text-neutral-200">
                         {filteredRows.map((row, idx) => (
                           <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="px-2 sm:px-3 py-1.5 sm:py-2 font-mono text-cyan-300 font-semibold text-[11px] sm:text-xs">
+                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-mono text-cyan-300 font-semibold text-[9px] sm:text-xs truncate">
                               {row.col1}
                             </td>
-                            <td className="px-2 sm:px-3 py-1.5 sm:py-2 font-medium text-white text-[11px] sm:text-xs">{row.col2}</td>
-                            <td className="px-2 sm:px-3 py-1.5 sm:py-2 font-semibold text-neutral-300 text-[11px] sm:text-xs">{row.col3}</td>
-                            <td className="px-2 sm:px-3 py-1.5 sm:py-2">
-                              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-300">
-                                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                                {row.status}
+                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-medium text-white text-[9px] sm:text-xs truncate">{row.col2}</td>
+                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold text-neutral-300 text-[9px] sm:text-xs truncate">{row.col3}</td>
+                            <td className="px-1.5 sm:px-3 py-1 sm:py-2">
+                              <span className="inline-flex items-center gap-0.5 sm:gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-1.5 sm:px-2.5 py-0.5 text-[8px] sm:text-[10.5px] font-semibold text-emerald-300">
+                                <CheckCircle2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-400" />
+                                <span className="truncate">{row.status}</span>
                               </span>
                             </td>
                           </tr>
@@ -241,8 +240,8 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                 </div>
               </div>{/* close console body grid */}
               {/* Monitor Chin - Bottom Bezel */}
-              <div className="flex items-center justify-center border-x border-b border-neutral-700/80 bg-[#121826] py-1 sm:py-1.5">
-                <div className="h-1 w-16 rounded-full bg-neutral-600/60" />
+              <div className="flex items-center justify-center border-x border-b border-neutral-700/80 bg-[#121826] py-0.5 sm:py-1.5">
+                <div className="h-0.5 sm:h-1 w-12 sm:w-16 rounded-full bg-neutral-600/60" />
               </div>
               </div>{/* close monitor frame */}
 
