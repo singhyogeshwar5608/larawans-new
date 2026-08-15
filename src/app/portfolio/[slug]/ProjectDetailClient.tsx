@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -45,6 +45,8 @@ import {
   Infinity,
   Mic,
   BedDouble,
+  Menu,
+  X,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -94,8 +96,21 @@ const TECH_ICON_MAP: Record<string, any> = {
   Stripe: SiStripe,
 };
 
+const MOBILE_NAV_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Services", href: "/#services" },
+  { label: "Industries", href: "/#industries" },
+  { label: "AI Solutions", href: "/#ai-solutions" },
+  { label: "Process", href: "/#process" },
+  { label: "Portfolio", href: "/#portfolio" },
+  { label: "Tech Stack", href: "/#tech-stack" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Contact", href: "/#contact" },
+];
+
 export default function ProjectDetailClient({ project }: { project: Project }) {
   const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Remove dark class from <html> for light-themed page
   useEffect(() => {
@@ -111,6 +126,92 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
   return (
     <div className="min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700">
       <Navbar />
+
+      {/* ── MOBILE HAMBURGER BUTTON (light theme) ── */}
+      <button
+        onClick={() => setMobileMenuOpen(true)}
+        className="fixed top-4 right-4 z-[60] flex h-10 w-10 items-center justify-center rounded-full bg-white border border-gray-200 shadow-lg sm:hidden"
+        style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.1)' }}
+        aria-label="Open menu"
+      >
+        <Menu className="h-5 w-5" style={{ color: '#4F46E5' }} />
+      </button>
+
+      {/* ── MOBILE ANIMATED MENU PANEL ── */}
+      {mobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-[70] bg-black/40 backdrop-blur-sm sm:hidden"
+            onClick={() => setMobileMenuOpen(false)}
+            style={{ animation: 'fadeIn 0.3s ease forwards' }}
+          />
+          {/* Slide-in Panel */}
+          <div
+            className="fixed top-0 right-0 bottom-0 z-[80] w-[280px] bg-white shadow-2xl flex flex-col sm:hidden"
+            style={{ animation: 'slideInRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards' }}
+          >
+            {/* Panel Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+              <a href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: 'linear-gradient(135deg, #7c5cff, #00e0c6)' }}>
+                  <span className="text-white font-extrabold text-sm">L</span>
+                </div>
+                <span className="font-display text-sm font-bold text-gray-900">Larawans<span style={{ color: '#00e0c6' }}>.</span></span>
+              </a>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100"
+                aria-label="Close menu"
+              >
+                <X className="h-4 w-4 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Nav Links */}
+            <nav className="flex-1 overflow-y-auto py-3 px-3">
+              {MOBILE_NAV_LINKS.map((link, i) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium transition-all duration-200"
+                  style={{
+                    color: '#334155',
+                    animation: `fadeSlideUp 0.35s ${0.05 + i * 0.04}s cubic-bezier(0.22, 1, 0.36, 1) both`,
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#F5F3FF'; (e.currentTarget as HTMLElement).style.color = '#4F46E5'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = '#334155'; }}
+                >
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#C4B5FD' }} />
+                  <span>{link.label}</span>
+                  <ArrowUpRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100" style={{ color: '#A78BFA' }} />
+                </a>
+              ))}
+            </nav>
+
+            {/* Bottom CTA */}
+            <div className="px-5 py-4 border-t border-gray-100">
+              <a
+                href="/#contact"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 w-full rounded-xl py-3 text-[14px] font-bold text-white"
+                style={{ background: 'linear-gradient(to right, #6366F1, #A855F7)' }}
+              >
+                <Sparkles className="h-4 w-4" />
+                Book Consultation
+              </a>
+            </div>
+          </div>
+
+          {/* Keyframe animations */}
+          <style>{`
+            @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+            @keyframes slideInRight { from { transform: translateX(100%) } to { transform: translateX(0) } }
+            @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }
+          `}</style>
+        </>
+      )}
 
       <main className="relative pt-16 pb-12">
         {/* Background decorative blob - bottom right */}
