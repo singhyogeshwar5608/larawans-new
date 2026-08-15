@@ -472,51 +472,286 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── TECH STACK BREAKDOWN ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
-          <div className="mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
-              Technology Stack
-            </span>
-            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
-              Frameworks & Infrastructure
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[700px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
+              <Layers className="h-3.5 w-3.5" />
+              <span>Tech Stack</span>
+            </div>
+            {/* Heading with partial color */}
+            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
+              <span style={{ color: '#1E293B' }}>Frameworks & </span>
+              <span style={{ color: '#7C3AED' }}>Infrastructure</span>
             </h2>
+            {/* Description */}
+            <p className="mt-4 text-[15px] sm:text-[18px] leading-[1.6]" style={{ color: '#64748B' }}>
+              A powerful combination of modern technologies engineered for security, scalability and enterprise-grade performance.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <span className="block h-1 w-20 rounded-full" style={{ background: '#7C3AED' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#7C3AED' }} />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {project.techStackDetailed.map((cat, i) => (
-              <div
-                key={i}
-                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm space-y-4"
-              >
-                <h3 className="font-display text-sm font-bold uppercase tracking-wider text-indigo-600 border-b border-gray-100 pb-3">
-                  {cat.category}
-                </h3>
-
-                <div className="space-y-3">
-                  {cat.items.map((item) => {
-                    const Icon = TECH_ICON_MAP[item.name] || Zap;
-                    return (
-                      <div key={item.name} className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50 text-indigo-600">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-gray-900 flex items-center gap-2">
-                            <span>{item.name}</span>
-                            {item.version && (
-                              <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[9.5px] font-mono text-slate-500">
-                                {item.version}
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-[11px] text-gray-400">{item.role}</div>
-                        </div>
+          {/* Timeline + Cards */}
+          <div className="mt-14">
+            {/* Desktop: 6-col horizontal timeline */}
+            <div className="hidden xl:block relative">
+              {/* Dashed connector line */}
+              <div className="absolute top-6 left-[8.33%] right-[8.33%]" style={{ borderTop: '2px dashed #CBD5E1' }} />
+              <div className="grid grid-cols-6 gap-5 items-stretch">
+                {[
+                  {
+                    num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                    icon: <Layers className="h-8 w-8" />,
+                    title: 'Frontend',
+                    desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
+                    items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
+                  },
+                  {
+                    num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                    icon: <PenTool className="h-8 w-8" />,
+                    title: 'UI Design System',
+                    desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
+                    items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
+                  },
+                  {
+                    num: '03', color: '#059669', iconBg: '#ECFDF5',
+                    icon: <Code2 className="h-8 w-8" />,
+                    title: 'Backend API',
+                    desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
+                    items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
+                  },
+                  {
+                    num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                    icon: <Database className="h-8 w-8" />,
+                    title: 'Database Layer',
+                    desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
+                    items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
+                  },
+                  {
+                    num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                    icon: <CloudCog className="h-8 w-8" />,
+                    title: 'Cloud & DevOps',
+                    desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
+                    items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
+                  },
+                  {
+                    num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                    icon: <ShieldCheck className="h-8 w-8" />,
+                    title: 'Security & Compliance',
+                    desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
+                    items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
+                  },
+                ].map((step, i) => (
+                  <div key={i} className="relative flex flex-col items-center">
+                    {/* Number Circle */}
+                    <div
+                      className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-[15px] font-bold text-white"
+                      style={{ background: step.color }}
+                    >
+                      {step.num}
+                    </div>
+                    {/* Card */}
+                    <div
+                      className="mt-5 w-full h-full rounded-2xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                      style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                    >
+                      {/* Bottom accent bar */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                      {/* Icon Circle */}
+                      <div
+                        className="flex h-16 w-16 items-center justify-center rounded-full mx-auto mb-4"
+                        style={{ background: step.iconBg, color: step.color }}
+                      >
+                        {step.icon}
                       </div>
-                    );
-                  })}
-                </div>
+                      {/* Title */}
+                      <h3 className="text-[17px] font-bold text-center mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
+                      {/* Description */}
+                      <p className="text-[13px] text-center leading-[1.6] mb-5" style={{ color: '#64748B' }}>{step.desc}</p>
+                      {/* Checklist */}
+                      <ul className="space-y-2.5 mt-auto">
+                        {step.items.map((item, fi) => (
+                          <li key={fi} className="flex items-center gap-2.5 text-[13px] font-medium" style={{ color: '#334155' }}>
+                            <CheckCircle2 className="h-[18px] w-[18px] shrink-0" style={{ color: step.color }} />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Tablet: 3-col grid (no timeline) */}
+            <div className="hidden sm:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+              {[
+                {
+                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <Layers className="h-7 w-7" />,
+                  title: 'Frontend',
+                  desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
+                  items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
+                },
+                {
+                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                  icon: <PenTool className="h-7 w-7" />,
+                  title: 'UI Design System',
+                  desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
+                  items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
+                },
+                {
+                  num: '03', color: '#059669', iconBg: '#ECFDF5',
+                  icon: <Code2 className="h-7 w-7" />,
+                  title: 'Backend API',
+                  desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
+                  items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
+                },
+                {
+                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                  icon: <Database className="h-7 w-7" />,
+                  title: 'Database Layer',
+                  desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
+                  items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
+                },
+                {
+                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <CloudCog className="h-7 w-7" />,
+                  title: 'Cloud & DevOps',
+                  desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
+                  items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
+                },
+                {
+                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                  icon: <ShieldCheck className="h-7 w-7" />,
+                  title: 'Security & Compliance',
+                  desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
+                  items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
+                },
+              ].map((step, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                  style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                >
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-[12px] font-bold text-white shrink-0"
+                      style={{ background: step.color }}
+                    >
+                      {step.num}
+                    </div>
+                    <div
+                      className="flex h-12 w-12 items-center justify-center rounded-full"
+                      style={{ background: step.iconBg, color: step.color }}
+                    >
+                      {step.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-[16px] font-bold mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
+                  <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
+                  <ul className="space-y-2 mt-auto">
+                    {step.items.map((item, fi) => (
+                      <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
+                        <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile: vertical timeline on left */}
+            <div className="sm:hidden relative pl-10">
+              {/* Vertical dashed line */}
+              <div className="absolute left-[19px] top-0 bottom-0" style={{ width: '2px', borderLeft: '2px dashed #CBD5E1' }} />
+              {[
+                {
+                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <Layers className="h-6 w-6" />,
+                  title: 'Frontend',
+                  desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
+                  items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
+                },
+                {
+                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                  icon: <PenTool className="h-6 w-6" />,
+                  title: 'UI Design System',
+                  desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
+                  items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
+                },
+                {
+                  num: '03', color: '#059669', iconBg: '#ECFDF5',
+                  icon: <Code2 className="h-6 w-6" />,
+                  title: 'Backend API',
+                  desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
+                  items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
+                },
+                {
+                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                  icon: <Database className="h-6 w-6" />,
+                  title: 'Database Layer',
+                  desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
+                  items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
+                },
+                {
+                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <CloudCog className="h-6 w-6" />,
+                  title: 'Cloud & DevOps',
+                  desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
+                  items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
+                },
+                {
+                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                  icon: <ShieldCheck className="h-6 w-6" />,
+                  title: 'Security & Compliance',
+                  desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
+                  items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
+                },
+              ].map((step, i) => (
+                <div key={i} className="relative mb-6 last:mb-0">
+                  {/* Number Circle on timeline */}
+                  <div
+                    className="absolute -left-10 top-0 z-10 flex h-10 w-10 items-center justify-center rounded-full text-[11px] font-bold text-white"
+                    style={{ background: step.color }}
+                  >
+                    {step.num}
+                  </div>
+                  {/* Card */}
+                  <div
+                    className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:shadow-md relative overflow-hidden"
+                    style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                  >
+                    <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div
+                        className="flex h-12 w-12 items-center justify-center rounded-full"
+                        style={{ background: step.iconBg, color: step.color }}
+                      >
+                        {step.icon}
+                      </div>
+                      <h3 className="text-[16px] font-bold" style={{ color: '#1E293B' }}>{step.title}</h3>
+                    </div>
+                    <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
+                    <ul className="space-y-2 mt-auto">
+                      {step.items.map((item, fi) => (
+                        <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
+                          <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
