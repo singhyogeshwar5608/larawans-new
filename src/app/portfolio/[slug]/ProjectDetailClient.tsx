@@ -481,8 +481,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
           </div>
 
-          {/* Feature Cards Grid */}
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+          {/* Feature Cards Grid - Desktop/Tablet */}
+          <div className="hidden sm:block mt-14 rounded-2xl p-4 sm:p-5" style={{ background: '#EEF2FF' }}>
+            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
             {project.keyFeatures.map((feat, i) => {
               const featureIcons: Record<string, any> = {
                 Shield: <Shield className="h-7 w-7" />,
@@ -519,6 +520,46 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   {/* Bottom Badge */}
                   <div className="mt-5 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
                     <CheckCircle2 className="h-3.5 w-3.5" />
+                    <span>{badges[i] || 'Featured'}</span>
+                  </div>
+                </div>
+              );
+            })}
+            </div>{/* close inner grid */}
+          </div>{/* close desktop wrapper */}
+
+          {/* Feature Cards Grid - Mobile: horizontal scrollable row */}
+          <div className="mt-10 flex gap-2 overflow-x-auto scrollbar-hide rounded-2xl p-3 sm:hidden" style={{ background: '#EEF2FF' }}>
+            {project.keyFeatures.map((feat, i) => {
+              const featureIcons: Record<string, any> = {
+                Shield: <Shield className="h-5 w-5" />,
+                Cpu: <Mic className="h-5 w-5" />,
+                Users: <BedDouble className="h-5 w-5" />,
+                Zap: <FlaskConical className="h-5 w-5" />,
+                BarChart: <BarChart className="h-5 w-5" />,
+              };
+              const IconEl = featureIcons[feat.iconName] || <Zap className="h-5 w-5" />;
+              const badges = ['HL7 FHIR Ready', 'AI Powered', 'Real-time Sync', 'Automated Sync'];
+              return (
+                <div
+                  key={i}
+                  className="flex flex-col min-w-[140px] flex-1 bg-white rounded-xl p-3 relative"
+                  style={{ border: '1px solid #E2E8F0' }}
+                >
+                  <span className="absolute top-2 right-2 text-[10px] font-bold" style={{ color: '#C4B5FD' }}>0{i + 1}</span>
+                  <div
+                    className="flex h-9 w-9 items-center justify-center rounded-full mb-2"
+                    style={{ background: '#F5F3FF', color: '#7C3AED' }}
+                  >
+                    {IconEl}
+                  </div>
+                  <h3 className="text-[11px] font-bold leading-tight" style={{ color: '#1E293B' }}>{feat.title}</h3>
+                  <div className="mt-1.5 mb-2 h-0.5 w-6 rounded-full" style={{ background: '#7C3AED' }} />
+                  <p className="text-[9px] leading-[1.5] line-clamp-2" style={{ color: '#64748B' }}>
+                    {feat.description}
+                  </p>
+                  <div className="mt-2 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[9px] font-semibold w-fit" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+                    <CheckCircle2 className="h-2.5 w-2.5" />
                     <span>{badges[i] || 'Featured'}</span>
                   </div>
                 </div>
