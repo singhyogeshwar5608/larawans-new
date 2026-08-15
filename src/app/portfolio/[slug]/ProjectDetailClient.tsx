@@ -413,7 +413,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 4-Step Technical Architecture
               </h2>
 
-              <div className="space-y-4">
+              {/* Desktop: vertical cards with light bg */}
+              <div className="hidden lg:block space-y-4 rounded-2xl p-4 sm:p-5" style={{ background: '#F8FAFC' }}>
                 {project.workflowSteps.map((wf) => (
                   <div
                     key={wf.step}
@@ -429,6 +430,25 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       <h4 className="font-display text-sm font-bold text-gray-900">{wf.title}</h4>
                       <p className="mt-1 text-xs text-slate-500 leading-relaxed">{wf.detail}</p>
                     </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile: horizontal scrollable tabs with light bg */}
+              <div className="flex gap-2 overflow-x-auto scrollbar-hide rounded-2xl p-3 lg:hidden" style={{ background: '#F8FAFC' }}>
+                {project.workflowSteps.map((wf) => (
+                  <div
+                    key={wf.step}
+                    className="flex flex-col items-center text-center min-w-[130px] flex-1 rounded-xl border border-gray-100 bg-white p-3 snap-start"
+                  >
+                    <span
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold text-white shadow-sm"
+                      style={{ background: "linear-gradient(to top right, #4f46e5, #8B5CF6)" }}
+                    >
+                      {wf.step}
+                    </span>
+                    <h4 className="mt-1.5 font-display text-[11px] font-bold text-gray-900 leading-tight">{wf.title}</h4>
+                    <p className="mt-1 text-[9px] text-slate-500 leading-tight line-clamp-3">{wf.detail}</p>
                   </div>
                 ))}
               </div>
