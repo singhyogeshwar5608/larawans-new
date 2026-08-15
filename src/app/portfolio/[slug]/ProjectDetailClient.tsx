@@ -29,6 +29,13 @@ import {
   RefreshCw,
   Layers,
   Building2,
+  Stethoscope,
+  Microscope,
+  Syringe,
+  Receipt,
+  UserCog,
+  Settings,
+  Eye,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -784,6 +791,220 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── USER ROLES & ACCESS ── */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[700px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+              <Shield className="h-3.5 w-3.5" />
+              <span>User Roles &amp; Access</span>
+            </div>
+            {/* Heading with partial color */}
+            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
+              <span style={{ color: '#111827' }}>User Roles &amp; </span>
+              <span style={{ color: '#6366F1' }}>Access</span>
+            </h2>
+            {/* Description */}
+            <p className="mt-4 text-[15px] sm:text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+              {project.title} is designed for every professional.
+              <br className="hidden sm:block" />
+              Role-based access ensures the right people have the right access.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-5 flex items-center justify-center gap-2">
+              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#9CA3AF' }} />
+            </div>
+          </div>
+
+          {/* Role Cards Grid */}
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+            {[
+              {
+                icon: <Stethoscope className="h-7 w-7" />,
+                iconBg: '#DBEAFE', iconColor: '#3B82F6',
+                title: 'Doctors', titleColor: '#2563EB',
+                desc: 'Access patient records, schedule appointments and manage treatment plans.',
+                features: ['Patient Consultation', 'Medical History', 'Prescriptions', 'Reports & Analytics'],
+                badge: 'Role-Based Access', badgeBg: '#DBEAFE', badgeColor: '#2563EB',
+              },
+              {
+                icon: <Users className="h-7 w-7" />,
+                iconBg: '#D1FAE5', iconColor: '#10B981',
+                title: 'Nurses', titleColor: '#059669',
+                desc: 'Manage patient care, monitor vitals and assist with daily operations.',
+                features: ['Patient Care', 'Vitals Monitoring', 'Medicine Administration', 'Task Management'],
+                badge: 'Role-Based Access', badgeBg: '#D1FAE5', badgeColor: '#059669',
+              },
+              {
+                icon: <Microscope className="h-7 w-7" />,
+                iconBg: '#F3E8FF', iconColor: '#8B5CF6',
+                title: 'Lab Staff', titleColor: '#7C3AED',
+                desc: 'Access lab orders, update test results and manage lab inventory.',
+                features: ['Lab Orders', 'Test Results', 'Inventory Management', 'Reports'],
+                badge: 'Role-Based Access', badgeBg: '#F3E8FF', badgeColor: '#7C3AED',
+              },
+              {
+                icon: <Pill className="h-7 w-7" />,
+                iconBg: '#FFEDD5', iconColor: '#F97316',
+                title: 'Pharmacy', titleColor: '#EA580C',
+                desc: 'Manage medicines, track stock and process prescriptions efficiently.',
+                features: ['Prescription Management', 'Inventory Tracking', 'Drug Interaction Check', 'Stock Alerts'],
+                badge: 'Role-Based Access', badgeBg: '#FFEDD5', badgeColor: '#EA580C',
+              },
+              {
+                icon: <Receipt className="h-7 w-7" />,
+                iconBg: '#CFFAFE', iconColor: '#06B6D4',
+                title: 'Billing Team', titleColor: '#0891B2',
+                desc: 'Handle billing, insurance claims and payment reconciliation.',
+                features: ['Invoice Generation', 'Payment Processing', 'Insurance Claims', 'Reports & Statements'],
+                badge: 'Role-Based Access', badgeBg: '#CFFAFE', badgeColor: '#0891B2',
+              },
+              {
+                icon: <UserCog className="h-7 w-7" />,
+                iconBg: '#FCE7F3', iconColor: '#EC4899',
+                title: 'Hospital Admin', titleColor: '#DB2777',
+                desc: 'Manage users, departments, permissions and system settings.',
+                features: ['User Management', 'Role & Permissions', 'System Settings', 'Audit Logs'],
+                badge: 'Full System Access', badgeBg: '#FCE7F3', badgeColor: '#DB2777',
+              },
+            ].map((role, i) => (
+              <div
+                key={i}
+                className="flex flex-col items-center rounded-2xl bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                style={{ border: '1px solid #F3F4F6', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+              >
+                {/* Icon Circle */}
+                <div
+                  className="flex h-16 w-16 items-center justify-center rounded-full mb-5"
+                  style={{ background: role.iconBg, color: role.iconColor }}
+                >
+                  {role.icon}
+                </div>
+                {/* Title */}
+                <h3 className="text-[18px] font-bold text-center mb-3" style={{ color: role.titleColor }}>
+                  {role.title}
+                </h3>
+                {/* Description */}
+                <p className="text-[13px] text-center leading-[1.6] mb-6 flex-1" style={{ color: '#6B7280' }}>
+                  {role.desc}
+                </p>
+                {/* Feature List */}
+                <ul className="w-full space-y-2.5 mb-6">
+                  {role.features.map((feat, fi) => (
+                    <li key={fi} className="flex items-center gap-2 text-[13px]" style={{ color: '#4B5563' }}>
+                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0" style={{ color: role.iconColor }} />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+                {/* Badge Pill */}
+                <div className="mt-auto pt-3">
+                  <span
+                    className="inline-block rounded-full px-4 py-1.5 text-[11px] font-semibold"
+                    style={{ background: role.badgeBg, color: role.badgeColor }}
+                  >
+                    {role.badge}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom Feature Banner */}
+          <div
+            className="mt-16 rounded-3xl p-8 sm:p-10 lg:p-14 relative overflow-hidden"
+            style={{ background: '#F8FAFC', border: '1px solid #F3F4F6' }}
+          >
+            {/* Left Shield SVG Illustration (desktop only) */}
+            <div className="hidden lg:block absolute left-8 xl:left-12 top-1/2 -translate-y-1/2 opacity-90">
+              <svg viewBox="0 0 100 120" fill="none" className="w-28 h-36 xl:w-32 xl:h-40 drop-shadow-lg">
+                <path d="M50 115C50 115 95 90 95 45V15L50 5L5 15V45C5 90 50 115 50 115Z" fill="#4F46E5" fillOpacity="0.1" />
+                <path d="M50 105C50 105 85 85 85 48V22L50 14L15 22V48C15 85 50 105 50 105Z" fill="#4F46E5" fillOpacity="0.2" />
+                <path d="M50 85C50 85 70 72 70 48V30L50 25L30 30V48C30 72 50 85 50 85Z" fill="#4F46E5" />
+                <path d="M50 75V55M42 63H58" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                <circle cx="10" cy="60" r="3" fill="#818CF8" />
+                <circle cx="90" cy="60" r="3" fill="#818CF8" />
+                <circle cx="50" cy="110" r="3" fill="#818CF8" />
+                <path d="M10 60 Q 50 80 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+                <path d="M10 60 Q 50 20 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+              </svg>
+            </div>
+
+            <div className="lg:pl-40 xl:pl-48">
+              {/* Bottom Header */}
+              <div className="mb-8 sm:mb-10">
+                <h2 className="text-[1.5rem] sm:text-[1.875rem] font-bold" style={{ color: '#111827' }}>
+                  Secure. Controlled. Role-Based.
+                </h2>
+                <p className="mt-3 text-[15px] leading-[1.6] max-w-2xl" style={{ color: '#6B7280' }}>
+                  Every action is controlled through role-based permissions
+                  <br className="hidden sm:block" />
+                  to ensure data security, privacy and accountability.
+                </p>
+              </div>
+
+              {/* Features Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
+                {[
+                  {
+                    icon: <UserCheck className="h-5 w-5" style={{ color: '#4F46E5' }} />,
+                    iconBg: '#EEF2FF',
+                    title: 'Role-Based Access',
+                    desc: 'Granular access control for every user role',
+                  },
+                  {
+                    icon: <ShieldCheck className="h-5 w-5" style={{ color: '#059669' }} />,
+                    iconBg: '#D1FAE5',
+                    title: 'Data Protection',
+                    desc: 'Protect sensitive data with strict permissions',
+                  },
+                  {
+                    icon: <Eye className="h-5 w-5" style={{ color: '#2563EB' }} />,
+                    iconBg: '#DBEAFE',
+                    title: 'Audit & Tracking',
+                    desc: 'Track every action for transparency',
+                  },
+                  {
+                    icon: <Settings className="h-5 w-5" style={{ color: '#EC4899' }} />,
+                    iconBg: '#FCE7F3',
+                    title: 'Easy Management',
+                    desc: 'Manage roles and permissions easily',
+                  },
+                ].map((feat, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+                      style={{ background: feat.iconBg }}
+                    >
+                      {feat.icon}
+                    </div>
+                    <div>
+                      <h4 className="text-[14px] font-bold" style={{ color: '#111827' }}>{feat.title}</h4>
+                      <p className="mt-1.5 text-[12px] leading-[1.5]" style={{ color: '#6B7280' }}>{feat.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Footer Tagline */}
+              <div className="flex items-start gap-4 pt-6" style={{ borderTop: '1px solid #F3F4F6' }}>
+                <div
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg mt-0.5"
+                  style={{ background: '#EEF2FF', color: '#4F46E5' }}
+                >
+                  <ShieldCheck className="h-5 w-5" />
+                </div>
+                <div>
+                  <h4 className="text-[16px] font-bold" style={{ color: '#312E81' }}>Secure access. Better care.</h4>
+                  <p className="mt-1 text-[14px]" style={{ color: '#6B7280' }}>Right people. Right access. Right time.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
