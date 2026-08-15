@@ -15,6 +15,12 @@ import {
   Users,
   Database,
   Sparkles,
+  Lock,
+  UserCheck,
+  FileCheck,
+  CloudCog,
+  ShieldCheck,
+  Check,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -331,6 +337,118 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* ── SECURITY & COMPLIANCE ── */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[650px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.08em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+              <Shield className="h-3.5 w-3.5" />
+              <span>Security & Compliance</span>
+            </div>
+            {/* Heading */}
+            <h2 className="mt-4 font-display text-[2.5rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight" style={{ color: '#111827' }}>
+              Security & Compliance
+            </h2>
+            {/* Description */}
+            <p className="mt-4 text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+              {project.title} is built with enterprise-grade security and follows global compliance standards to protect sensitive business and user data.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-5 flex items-center justify-center gap-2">
+              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#6366F1' }} />
+            </div>
+          </div>
+
+          {/* Feature Cards Grid */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: <Shield className="h-8 w-8" />, title: 'HIPAA Compliant', desc: 'Fully compliant with HIPAA standards to ensure the privacy and security of patient data.' },
+              { icon: <UserCheck className="h-8 w-8" />, title: 'Role-Based Access', desc: 'Granular role-based access control ensures users only access the data and features they need.' },
+              { icon: <Lock className="h-8 w-8" />, title: 'Data Encryption', desc: 'End-to-end encryption for data in transit and at rest using industry-standard encryption protocols.' },
+              { icon: <FileCheck className="h-8 w-8" />, title: 'Audit Logs', desc: 'Comprehensive audit logs track all system activities to ensure transparency and accountability.' },
+              { icon: <CloudCog className="h-8 w-8" />, title: 'Backup & Recovery', desc: 'Automated backups and disaster recovery ensure business continuity and zero data loss.' },
+              { icon: <ShieldCheck className="h-8 w-8" />, title: 'Secure Infrastructure', desc: 'Hosted on secure, certified infrastructure with 24/7 monitoring and advanced threat protection.' },
+            ].map((card, i) => (
+              <div
+                key={i}
+                className="flex items-start gap-5 rounded-2xl bg-white p-7 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_6px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300"
+                style={{ border: '1px solid #F3F4F6' }}
+              >
+                {/* Icon Circle */}
+                <div className="relative shrink-0">
+                  <div
+                    className="flex h-[72px] w-[72px] items-center justify-center rounded-full"
+                    style={{ background: '#EEF2FF', color: '#4F46E5' }}
+                  >
+                    {card.icon}
+                  </div>
+                  {/* Verification Badge */}
+                  <div
+                    className="absolute -bottom-0.5 -right-0.5 flex h-6 w-6 items-center justify-center rounded-full text-white"
+                    style={{ background: '#6366F1' }}
+                  >
+                    <Check className="h-3 w-3" strokeWidth={3} />
+                  </div>
+                </div>
+                {/* Text */}
+                <div className="pt-1">
+                  <h3 className="text-[18px] font-bold" style={{ color: '#111827' }}>{card.title}</h3>
+                  <p className="mt-3 text-[14.5px] leading-[1.6]" style={{ color: '#6B7280' }}>{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom Certification Banner */}
+          <div
+            className="mt-10 flex flex-col md:flex-row items-center gap-8 rounded-2xl p-8 sm:p-10"
+            style={{ background: '#FAF5FF' }}
+          >
+            {/* Shield Illustration */}
+            <div className="relative shrink-0">
+              <div className="flex h-24 w-24 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+                <ShieldCheck className="h-12 w-12 text-white" />
+              </div>
+              {/* Decorative dots */}
+              <div className="absolute -top-2 -left-2 h-3 w-3 rounded-full" style={{ background: '#C4B5FD' }} />
+              <div className="absolute -bottom-1 -right-3 h-2 w-2 rounded-full" style={{ background: '#DDD6FE' }} />
+              <div className="absolute top-0 -right-4 h-2.5 w-2.5 rounded-full" style={{ background: '#A78BFA' }} />
+            </div>
+
+            {/* Text */}
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-[22px] font-bold" style={{ color: '#111827' }}>
+                Your Data is Always Protected
+              </h3>
+              <p className="mt-2 text-[15px] leading-[1.6] max-w-[450px]" style={{ color: '#4B5563' }}>
+                We follow best practices and industry standards to deliver a secure, reliable, and compliant platform for your business.
+              </p>
+            </div>
+
+            {/* Certification Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-5 shrink-0">
+              {[
+                { label: 'HIPAA', sub: 'COMPLIANT', color: '#2563EB' },
+                { label: 'ISO', sub: '27001', color: '#1E40AF' },
+                { label: 'SOC 2', sub: 'TYPE II', color: '#3B82F6' },
+                { label: 'GDPR', sub: 'READY', color: '#4F46E5' },
+              ].map((cert) => (
+                <div key={cert.label} className="flex flex-col items-center gap-1">
+                  <div
+                    className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-[11px] font-bold text-white"
+                    style={{ borderColor: cert.color, background: cert.color }}
+                  >
+                    {cert.label}
+                  </div>
+                  <span className="text-[9px] font-bold tracking-wider" style={{ color: '#6B7280' }}>{cert.sub}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
