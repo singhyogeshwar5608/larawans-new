@@ -1188,8 +1188,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
           </div>
 
-          {/* Role Cards Grid */}
-          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+          {/* Role Cards Grid - Desktop/Tablet (hidden on mobile) */}
+          <div className="mt-14 hidden sm:block">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             {[
               {
                 icon: <Stethoscope className="h-7 w-7" />,
@@ -1274,6 +1275,28 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     {role.badge}
                   </span>
                 </div>
+              </div>
+            ))}
+          </div>
+          </div>
+
+          {/* Role Tabs - Mobile Only */}
+          <div className="mt-8 flex gap-2 overflow-x-auto scrollbar-hide sm:hidden pb-2">
+            {[
+              { icon: <Stethoscope className="h-4 w-4" />, title: 'Doctors', bg: '#DBEAFE', color: '#2563EB' },
+              { icon: <Users className="h-4 w-4" />, title: 'Nurses', bg: '#D1FAE5', color: '#059669' },
+              { icon: <Microscope className="h-4 w-4" />, title: 'Lab Staff', bg: '#F3E8FF', color: '#7C3AED' },
+              { icon: <Pill className="h-4 w-4" />, title: 'Pharmacy', bg: '#FFEDD5', color: '#EA580C' },
+              { icon: <Receipt className="h-4 w-4" />, title: 'Billing', bg: '#CFFAFE', color: '#0891B2' },
+              { icon: <UserCog className="h-4 w-4" />, title: 'Admin', bg: '#FCE7F3', color: '#DB2777' },
+            ].map((role, i) => (
+              <div
+                key={i}
+                className="flex shrink-0 flex-col items-center gap-1.5 rounded-xl px-4 py-3"
+                style={{ background: role.bg }}
+              >
+                <div style={{ color: role.color }}>{role.icon}</div>
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: role.color }}>{role.title}</span>
               </div>
             ))}
           </div>
