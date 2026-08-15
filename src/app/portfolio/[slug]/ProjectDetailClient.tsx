@@ -458,7 +458,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── KEY FEATURES GRID ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
             {/* Badge Pill */}
@@ -916,7 +916,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── INTEGRATIONS & CONNECTED SYSTEMS ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
             {/* Badge Pill */}
@@ -1195,7 +1195,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── USER ROLES & ACCESS ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
             {/* Badge Pill */}
@@ -1386,7 +1386,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── DEVELOPMENT JOURNEY ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
             {/* Badge Pill */}
