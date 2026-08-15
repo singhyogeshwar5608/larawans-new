@@ -1667,7 +1667,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── OTHER PROJECTS / CASE STUDIES ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
             <div>
               <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
@@ -1691,7 +1691,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               <a
                 key={op.slug}
                 href={`/portfolio/${op.slug}`}
-                className="group block rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                className="group block rounded-2xl border border-gray-100 p-6 shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300" style={{ background: '#F8FAFC' }}
               >
                 <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-600">
                   {op.category}
