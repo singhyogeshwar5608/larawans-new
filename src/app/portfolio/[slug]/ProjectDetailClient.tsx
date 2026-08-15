@@ -954,7 +954,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             <div className="hidden xl:block relative">
               {/* Dashed connector line */}
               <div className="absolute top-6 left-[8.33%] right-[8.33%]" style={{ borderTop: '2px dashed #CBD5E1' }} />
-              <div className="grid grid-cols-6 gap-5">
+              <div className="grid grid-cols-6 gap-5 items-stretch">
                 {[
                   {
                     num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
@@ -1009,7 +1009,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     </div>
                     {/* Card */}
                     <div
-                      className="mt-5 w-full rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                      className="mt-5 w-full h-full rounded-2xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
                       style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
                     >
                       {/* Bottom accent bar */}
@@ -1026,7 +1026,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       {/* Description */}
                       <p className="text-[13px] text-center leading-[1.6] mb-5" style={{ color: '#64748B' }}>{step.desc}</p>
                       {/* Checklist */}
-                      <ul className="space-y-2.5">
+                      <ul className="space-y-2.5 mt-auto">
                         {step.items.map((item, fi) => (
                           <li key={fi} className="flex items-center gap-2.5 text-[13px] font-medium" style={{ color: '#334155' }}>
                             <CheckCircle2 className="h-[18px] w-[18px] shrink-0" style={{ color: step.color }} />
@@ -1041,7 +1041,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
 
             {/* Tablet: 3-col grid (no timeline) */}
-            <div className="hidden sm:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="hidden sm:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
               {[
                 {
                   num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
@@ -1088,7 +1088,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               ].map((step, i) => (
                 <div
                   key={i}
-                  className="rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                  className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
                   style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
                 >
                   <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
@@ -1108,7 +1108,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   </div>
                   <h3 className="text-[16px] font-bold mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
                   <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
-                  <ul className="space-y-2">
+                  <ul className="space-y-2 mt-auto">
                     {step.items.map((item, fi) => (
                       <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
                         <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
@@ -1178,7 +1178,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                   </div>
                   {/* Card */}
                   <div
-                    className="rounded-2xl p-5 transition-all duration-300 hover:shadow-md relative overflow-hidden"
+                    className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:shadow-md relative overflow-hidden"
                     style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
                   >
                     <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
@@ -1192,7 +1192,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                       <h3 className="text-[16px] font-bold" style={{ color: '#1E293B' }}>{step.title}</h3>
                     </div>
                     <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 mt-auto">
                       {step.items.map((item, fi) => (
                         <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
                           <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
