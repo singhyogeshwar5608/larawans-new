@@ -2,11 +2,13 @@ import { ArrowLeft, ArrowUpRight, Sparkles } from "lucide-react";
 import { projects } from "@/lib/site-data";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/sections/footer";
+import { MobileHamburgerMenu } from "@/components/mobile-hamburger-menu";
 
 export default function PortfolioIndexPage() {
   return (
     <div className="min-h-screen bg-[#050614] text-foreground antialiased">
       <Navbar />
+      <MobileHamburgerMenu theme="dark" />
 
       <main className="relative pt-20 pb-12">
         <div className="pointer-events-none absolute inset-0 grid-pattern opacity-40" aria-hidden />
