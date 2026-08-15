@@ -40,6 +40,9 @@ import {
   PenTool,
   Code2,
   Rocket,
+  Monitor,
+  Server,
+  Infinity,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -54,6 +57,9 @@ import {
   SiPostgresql,
   SiDocker,
   SiStripe,
+  SiTailwindcss,
+  SiTypescript,
+  SiRedux,
 } from "react-icons/si";
 import { projects, type Project } from "@/lib/site-data";
 import { Navbar } from "@/components/navbar";
@@ -472,286 +478,184 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── TECH STACK BREAKDOWN ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+        <section className="mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
           {/* Section Header */}
-          <div className="text-center max-w-[700px] mx-auto">
+          <div className="text-center mb-10 sm:mb-12">
             {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
-              <Layers className="h-3.5 w-3.5" />
-              <span>Tech Stack</span>
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2" style={{ background: '#EEF2FF', border: '1px solid #E0E7FF' }}>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full text-white text-sm font-bold shadow-md" style={{ background: '#4F46E5' }}>
+                <Code2 className="h-4 w-4" />
+              </div>
+              <span className="text-sm font-semibold uppercase tracking-wide" style={{ color: '#4338CA' }}>Technology Stack</span>
             </div>
-            {/* Heading with partial color */}
-            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
+
+            {/* Main Title */}
+            <h2 className="mt-5 font-display text-[2rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold tracking-tight leading-tight">
               <span style={{ color: '#1E293B' }}>Frameworks & </span>
-              <span style={{ color: '#7C3AED' }}>Infrastructure</span>
+              <span style={{ backgroundImage: 'linear-gradient(135deg, #6366F1 0%, #A855F7 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Infrastructure</span>
             </h2>
-            {/* Description */}
-            <p className="mt-4 text-[15px] sm:text-[18px] leading-[1.6]" style={{ color: '#64748B' }}>
-              A powerful combination of modern technologies engineered for security, scalability and enterprise-grade performance.
+
+            {/* Subtitle */}
+            <p className="mt-4 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed font-medium" style={{ color: '#64748B' }}>
+              A modern, secure and scalable technology stack built to handle enterprise-level hospital operations with ease.
             </p>
+
             {/* Decorative Underline */}
-            <div className="mt-6 flex items-center justify-center gap-2">
-              <span className="block h-1 w-20 rounded-full" style={{ background: '#7C3AED' }} />
-              <span className="block h-2 w-2 rounded-full" style={{ background: '#7C3AED' }} />
+            <div className="mt-5 flex items-center justify-center gap-2">
+              <div className="h-1.5 w-24 rounded-full" style={{ background: 'linear-gradient(to right, #6366F1, #A855F7)' }} />
+              <div className="h-2 w-2 rounded-full" style={{ background: '#9333EA' }} />
             </div>
           </div>
 
-          {/* Timeline + Cards */}
-          <div className="mt-14">
-            {/* Desktop: 6-col horizontal timeline */}
-            <div className="hidden xl:block relative">
-              {/* Dashed connector line */}
-              <div className="absolute top-6 left-[8.33%] right-[8.33%]" style={{ borderTop: '2px dashed #CBD5E1' }} />
-              <div className="grid grid-cols-6 gap-5 items-stretch">
-                {[
-                  {
-                    num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
-                    icon: <Layers className="h-8 w-8" />,
-                    title: 'Frontend',
-                    desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
-                    items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
-                  },
-                  {
-                    num: '02', color: '#2563EB', iconBg: '#EFF6FF',
-                    icon: <PenTool className="h-8 w-8" />,
-                    title: 'UI Design System',
-                    desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
-                    items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
-                  },
-                  {
-                    num: '03', color: '#059669', iconBg: '#ECFDF5',
-                    icon: <Code2 className="h-8 w-8" />,
-                    title: 'Backend API',
-                    desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
-                    items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
-                  },
-                  {
-                    num: '04', color: '#EA580C', iconBg: '#FFF7ED',
-                    icon: <Database className="h-8 w-8" />,
-                    title: 'Database Layer',
-                    desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
-                    items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
-                  },
-                  {
-                    num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
-                    icon: <CloudCog className="h-8 w-8" />,
-                    title: 'Cloud & DevOps',
-                    desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
-                    items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
-                  },
-                  {
-                    num: '06', color: '#DB2777', iconBg: '#FDF2F8',
-                    icon: <ShieldCheck className="h-8 w-8" />,
-                    title: 'Security & Compliance',
-                    desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
-                    items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
-                  },
-                ].map((step, i) => (
-                  <div key={i} className="relative flex flex-col items-center">
-                    {/* Number Circle */}
-                    <div
-                      className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-[15px] font-bold text-white"
-                      style={{ background: step.color }}
-                    >
-                      {step.num}
-                    </div>
-                    {/* Card */}
-                    <div
-                      className="mt-5 w-full h-full rounded-2xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
-                      style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
-                    >
-                      {/* Bottom accent bar */}
-                      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
-                      {/* Icon Circle */}
-                      <div
-                        className="flex h-16 w-16 items-center justify-center rounded-full mx-auto mb-4"
-                        style={{ background: step.iconBg, color: step.color }}
-                      >
-                        {step.icon}
-                      </div>
-                      {/* Title */}
-                      <h3 className="text-[17px] font-bold text-center mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
-                      {/* Description */}
-                      <p className="text-[13px] text-center leading-[1.6] mb-5" style={{ color: '#64748B' }}>{step.desc}</p>
-                      {/* Checklist */}
-                      <ul className="space-y-2.5 mt-auto">
-                        {step.items.map((item, fi) => (
-                          <li key={fi} className="flex items-center gap-2.5 text-[13px] font-medium" style={{ color: '#334155' }}>
-                            <CheckCircle2 className="h-[18px] w-[18px] shrink-0" style={{ color: step.color }} />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+          {/* Cards Grid: 2-column on lg+, stacked on mobile */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+
+            {/* ── LEFT CARD: Frontend ── */}
+            <div
+              className="bg-white rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:shadow-xl"
+              style={{
+                boxShadow: '0 10px 40px -10px rgba(99, 102, 241, 0.15)',
+                borderBottom: '4px solid #6366F1',
+              }}
+            >
+              {/* Card Header */}
+              <div className="flex items-start gap-4 sm:gap-5 mb-6 sm:mb-8">
+                {/* Icon Container */}
+                <div
+                  className="flex-shrink-0 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl"
+                  style={{ background: '#EEF2FF', color: '#4F46E5' }}
+                >
+                  <Monitor className="h-6 w-6 sm:h-7 sm:w-7" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#0F172A' }}>Frontend</h3>
+                  <p className="mt-1 text-[13px] sm:text-[15px] font-medium leading-relaxed" style={{ color: '#64748B' }}>
+                    Modern, responsive and intuitive interfaces for seamless user experience.
+                  </p>
+                </div>
+              </div>
+
+              {/* Tech Items List */}
+              <div className="space-y-3 sm:space-y-4">
+                {/* Next.js 15 */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-all duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#000000' }}>
+                    <span className="text-white font-bold text-base sm:text-lg">N</span>
                   </div>
-                ))}
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Next.js 15</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>React Framework</p>
+                  </div>
+                </div>
+
+                {/* Tailwind CSS */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#ECFEFF' }}>
+                    <SiTailwindcss className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: '#06B6D4' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Tailwind CSS</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>Utility-first CSS Framework</p>
+                  </div>
+                </div>
+
+                {/* TypeScript */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#2563EB' }}>
+                    <span className="text-white font-bold text-sm sm:text-base">TS</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>TypeScript</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>Typed JavaScript</p>
+                  </div>
+                </div>
+
+                {/* Redux Toolkit */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#F3E8FF' }}>
+                    <Infinity className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: '#7C3AED' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Redux Toolkit</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>State Management</p>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Tablet: 3-col grid (no timeline) */}
-            <div className="hidden sm:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
-              {[
-                {
-                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
-                  icon: <Layers className="h-7 w-7" />,
-                  title: 'Frontend',
-                  desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
-                  items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
-                },
-                {
-                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
-                  icon: <PenTool className="h-7 w-7" />,
-                  title: 'UI Design System',
-                  desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
-                  items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
-                },
-                {
-                  num: '03', color: '#059669', iconBg: '#ECFDF5',
-                  icon: <Code2 className="h-7 w-7" />,
-                  title: 'Backend API',
-                  desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
-                  items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
-                },
-                {
-                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
-                  icon: <Database className="h-7 w-7" />,
-                  title: 'Database Layer',
-                  desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
-                  items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
-                },
-                {
-                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
-                  icon: <CloudCog className="h-7 w-7" />,
-                  title: 'Cloud & DevOps',
-                  desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
-                  items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
-                },
-                {
-                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
-                  icon: <ShieldCheck className="h-7 w-7" />,
-                  title: 'Security & Compliance',
-                  desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
-                  items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
-                },
-              ].map((step, i) => (
+            {/* ── RIGHT CARD: Backend & Infrastructure ── */}
+            <div
+              className="bg-white rounded-3xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300 hover:shadow-xl"
+              style={{
+                boxShadow: '0 10px 40px -10px rgba(99, 102, 241, 0.15)',
+                borderBottom: '4px solid #A855F7',
+              }}
+            >
+              {/* Card Header */}
+              <div className="flex items-start gap-4 sm:gap-5 mb-6 sm:mb-8">
+                {/* Icon Container */}
                 <div
-                  key={i}
-                  className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
-                  style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                  className="flex-shrink-0 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl"
+                  style={{ background: '#FAF5FF', color: '#9333EA' }}
                 >
-                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
-                  <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-[12px] font-bold text-white shrink-0"
-                      style={{ background: step.color }}
-                    >
-                      {step.num}
-                    </div>
-                    <div
-                      className="flex h-12 w-12 items-center justify-center rounded-full"
-                      style={{ background: step.iconBg, color: step.color }}
-                    >
-                      {step.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-[16px] font-bold mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
-                  <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
-                  <ul className="space-y-2 mt-auto">
-                    {step.items.map((item, fi) => (
-                      <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
-                        <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <Server className="h-6 w-6 sm:h-7 sm:w-7" />
                 </div>
-              ))}
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold" style={{ color: '#0F172A' }}>Backend & Infrastructure</h3>
+                  <p className="mt-1 text-[13px] sm:text-[15px] font-medium leading-relaxed" style={{ color: '#64748B' }}>
+                    Robust backend and cloud infrastructure ensuring performance and reliability.
+                  </p>
+                </div>
+              </div>
+
+              {/* Tech Items List */}
+              <div className="space-y-3 sm:space-y-4">
+                {/* .NET 8 Web API */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#7C3AED' }}>
+                    <span className="text-white font-bold text-[10px] sm:text-xs">.NET</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>.NET 8 Web API</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>RESTful API Framework</p>
+                  </div>
+                </div>
+
+                {/* Azure SQL Database */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#FEF2F2' }}>
+                    <Database className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: '#EF4444' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Azure SQL Database</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>Managed Cloud Database</p>
+                  </div>
+                </div>
+
+                {/* Microsoft Azure */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#EFF6FF' }}>
+                    <CloudCog className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: '#2563EB' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Microsoft Azure</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>Cloud Hosting & Services</p>
+                  </div>
+                </div>
+
+                {/* Docker */}
+                <div className="flex items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl transition-colors duration-200 hover:translate-x-0.5">
+                  <div className="flex h-11 w-11 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full" style={{ background: '#EFF6FF' }}>
+                    <SiDocker className="h-6 w-6 sm:h-7 sm:w-7" style={{ color: '#2563EB' }} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-[14px] sm:text-base" style={{ color: '#0F172A' }}>Docker</h4>
+                    <p className="text-[12px] sm:text-sm font-medium" style={{ color: '#64748B' }}>Containerization</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Mobile: vertical timeline on left */}
-            <div className="sm:hidden relative pl-10">
-              {/* Vertical dashed line */}
-              <div className="absolute left-[19px] top-0 bottom-0" style={{ width: '2px', borderLeft: '2px dashed #CBD5E1' }} />
-              {[
-                {
-                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
-                  icon: <Layers className="h-6 w-6" />,
-                  title: 'Frontend',
-                  desc: 'Modern, responsive and accessible user interface built with cutting-edge framework technology.',
-                  items: ['Server-Side Rendering', 'Static Site Generation', 'API Routes', 'Responsive Components'],
-                },
-                {
-                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
-                  icon: <PenTool className="h-6 w-6" />,
-                  title: 'UI Design System',
-                  desc: 'Utility-first CSS framework enabling rapid, consistent and accessible design system development.',
-                  items: ['Utility-First CSS', 'Custom Components', 'High-Contrast Theme', 'Design Tokens'],
-                },
-                {
-                  num: '03', color: '#059669', iconBg: '#ECFDF5',
-                  icon: <Code2 className="h-6 w-6" />,
-                  title: 'Backend API',
-                  desc: 'Enterprise-grade backend architecture built for performance, security and modular scalability.',
-                  items: ['Microservices Engine', 'RESTful API Endpoints', 'Middleware Pipeline', 'JWT Authentication'],
-                },
-                {
-                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
-                  icon: <Database className="h-6 w-6" />,
-                  title: 'Database Layer',
-                  desc: 'Encrypted, high-availability database layer ensuring data integrity and real-time synchronization.',
-                  items: ['Encryption at Rest', 'Real-Time Data Sync', 'Automated Backups', 'Query Optimization'],
-                },
-                {
-                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
-                  icon: <CloudCog className="h-6 w-6" />,
-                  title: 'Cloud & DevOps',
-                  desc: 'Scalable cloud infrastructure with automated deployment, monitoring and load balancing capabilities.',
-                  items: ['Scalable Hosting', 'Key Vault & Secrets', 'Load Balancing', 'Centralized Monitoring'],
-                },
-                {
-                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
-                  icon: <ShieldCheck className="h-6 w-6" />,
-                  title: 'Security & Compliance',
-                  desc: 'Comprehensive security framework with role-based access, audit trails and compliance standards.',
-                  items: ['Role-Based Access', 'Complete Audit Trails', 'End-to-End Encryption', 'Compliance Reports'],
-                },
-              ].map((step, i) => (
-                <div key={i} className="relative mb-6 last:mb-0">
-                  {/* Number Circle on timeline */}
-                  <div
-                    className="absolute -left-10 top-0 z-10 flex h-10 w-10 items-center justify-center rounded-full text-[11px] font-bold text-white"
-                    style={{ background: step.color }}
-                  >
-                    {step.num}
-                  </div>
-                  {/* Card */}
-                  <div
-                    className="rounded-2xl p-5 flex flex-col transition-all duration-300 hover:shadow-md relative overflow-hidden"
-                    style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
-                  >
-                    <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
-                    <div className="flex items-center gap-3 mb-3">
-                      <div
-                        className="flex h-12 w-12 items-center justify-center rounded-full"
-                        style={{ background: step.iconBg, color: step.color }}
-                      >
-                        {step.icon}
-                      </div>
-                      <h3 className="text-[16px] font-bold" style={{ color: '#1E293B' }}>{step.title}</h3>
-                    </div>
-                    <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
-                    <ul className="space-y-2 mt-auto">
-                      {step.items.map((item, fi) => (
-                        <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
-                          <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
