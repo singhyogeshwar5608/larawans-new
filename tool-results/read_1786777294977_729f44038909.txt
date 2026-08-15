@@ -1,0 +1,1088 @@
+     1→"use client";
+     2→
+     3→import { useEffect } from "react";
+     4→import {
+     5→  ArrowLeft,
+     6→  ArrowUpRight,
+     7→  CheckCircle2,
+     8→  Clock,
+     9→  Globe,
+    10→  MapPin,
+    11→  Shield,
+    12→  Zap,
+    13→  Cpu,
+    14→  BarChart,
+    15→  Users,
+    16→  Database,
+    17→  Sparkles,
+    18→  Lock,
+    19→  UserCheck,
+    20→  FileCheck,
+    21→  CloudCog,
+    22→  ShieldCheck,
+    23→  Check,
+    24→  Heart,
+    25→  FlaskConical,
+    26→  Pill,
+    27→  CreditCard,
+    28→  Link,
+    29→  RefreshCw,
+    30→  Layers,
+    31→  Building2,
+    32→  Stethoscope,
+    33→  Microscope,
+    34→  Syringe,
+    35→  Receipt,
+    36→  UserCog,
+    37→  Settings,
+    38→  Eye,
+    39→} from "lucide-react";
+    40→import {
+    41→  SiLaravel,
+    42→  SiReact,
+    43→  SiNextdotjs,
+    44→  SiFlutter,
+    45→  SiNodedotjs,
+    46→  SiPython,
+    47→  SiDotnet,
+    48→  SiFirebase,
+    49→  SiMysql,
+    50→  SiPostgresql,
+    51→  SiDocker,
+    52→  SiStripe,
+    53→} from "react-icons/si";
+    54→import { projects, type Project } from "@/lib/site-data";
+    55→import { Navbar } from "@/components/navbar";
+    56→import { Footer } from "@/components/sections/footer";
+    57→import { ProjectSimulator } from "@/components/project-simulator";
+    58→import { MagneticButton } from "@/components/magnetic-button";
+    59→
+    60→const ICON_MAP: Record<string, any> = {
+    61→  Shield,
+    62→  Zap,
+    63→  Cpu,
+    64→  BarChart,
+    65→  Users,
+    66→  Database,
+    67→};
+    68→
+    69→const TECH_ICON_MAP: Record<string, any> = {
+    70→  Laravel: SiLaravel,
+    71→  React: SiReact,
+    72→  "Next.js": SiNextdotjs,
+    73→  "Next.js 15": SiNextdotjs,
+    74→  Flutter: SiFlutter,
+    75→  "Node.js": SiNodedotjs,
+    76→  Python: SiPython,
+    77→  ".NET": SiDotnet,
+    78→  Firebase: SiFirebase,
+    79→  MySQL: SiMysql,
+    80→  PostgreSQL: SiPostgresql,
+    81→  Docker: SiDocker,
+    82→  Stripe: SiStripe,
+    83→};
+    84→
+    85→export default function ProjectDetailClient({ project }: { project: Project }) {
+    86→  const otherProjects = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+    87→
+    88→  // Remove dark class from <html> for light-themed page
+    89→  useEffect(() => {
+    90→    const html = document.documentElement;
+    91→    html.classList.remove('dark');
+    92→    document.body.style.backgroundColor = '#ffffff';
+    93→    return () => {
+    94→      html.classList.add('dark');
+    95→      document.body.style.backgroundColor = '';
+    96→    };
+    97→  }, []);
+    98→
+    99→  return (
+   100→    <div className="min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700">
+   101→      <Navbar />
+   102→
+   103→      <main className="relative pt-16 pb-12">
+   104→        {/* Background decorative blob - bottom right */}
+   105→        <div className="pointer-events-none absolute -bottom-20 -right-20 w-[600px] h-[600px] rounded-full" style={{ background: "radial-gradient(ellipse at center, #EDE9FE 0%, #EDE9FE 40%, transparent 70%)" }} aria-hidden />
+   106→        {/* Subtle top-left blob */}
+   107→        <div className="pointer-events-none absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full opacity-40" style={{ background: "radial-gradient(circle, #EEF2FF 0%, transparent 70%)" }} aria-hidden />
+   108→
+   109→        {/* ── Breadcrumb & Back Navigation ── */}
+   110→        <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-2">
+   111→          <div className="flex items-center justify-between flex-wrap gap-3 border-b border-gray-100 pb-3">
+   112→            <a
+   113→              href="/#portfolio"
+   114→              className="inline-flex items-center gap-2 rounded-xl border border-gray-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-500 transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
+   115→            >
+   116→              <ArrowLeft className="h-3.5 w-3.5 text-indigo-600" />
+   117→              <span>Back to All Work</span>
+   118→            </a>
+   119→
+   120→            <div className="flex items-center gap-2 text-xs text-gray-400">
+   121→              <a href="/" className="hover:text-indigo-600 transition-colors">
+   122→                Home
+   123→              </a>
+   124→              <span>/</span>
+   125→              <a href="/#portfolio" className="hover:text-indigo-600 transition-colors">
+   126→                Portfolio
+   127→              </a>
+   128→              <span>/</span>
+   129→              <span className="font-semibold text-indigo-600 truncate max-w-[180px] sm:max-w-none">
+   130→                {project.title}
+   131→              </span>
+   132→            </div>
+   133→          </div>
+   134→        </div>
+   135→
+   136→        {/* ── HERO SECTION ── */}
+   137→        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-10">
+   138→          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+   139→            {/* Left Header info */}
+   140→            <div className="lg:col-span-5 space-y-4">
+   141→              {/* Category Pill */}
+   142→              <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-700">
+   143→                <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
+   144→                <span>{project.category}</span>
+   145→              </div>
+   146→
+   147→              {/* Title & Tagline */}
+   148→              <h1
+   149→                className="font-display text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.15]"
+   150→                style={{
+   151→                  backgroundImage: "linear-gradient(to right, #0f172a, #1e293b, #4f46e5)",
+   152→                  WebkitBackgroundClip: "text",
+   153→                  backgroundClip: "text",
+   154→                  WebkitTextFillColor: "transparent",
+   155→                }}
+   156→              >
+   157→                {project.title}
+   158→              </h1>
+   159→
+   160→              <p className="text-base sm:text-lg text-slate-500 leading-relaxed font-normal">
+   161→                {project.description}
+   162→              </p>
+   163→
+   164→              {/* Meta information chips */}
+   165→              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
+   166→                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+   167→                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+   168→                    <Globe className="h-3 w-3 text-indigo-600" />
+   169→                    <span>Client</span>
+   170→                  </div>
+   171→                  <div className="mt-1 text-xs font-bold text-gray-900 truncate">{project.client}</div>
+   172→                </div>
+   173→
+   174→                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
+   175→                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+   176→                    <Clock className="h-3 w-3 text-indigo-600" />
+   177→                    <span>Timeline</span>
+   178→                  </div>
+   179→                  <div className="mt-1 text-xs font-bold text-gray-900">{project.duration}</div>
+   180→                </div>
+   181→
+   182→                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3 col-span-2 sm:col-span-1">
+   183→                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+   184→                    <MapPin className="h-3 w-3 text-indigo-600" />
+   185→                    <span>Location</span>
+   186→                  </div>
+   187→                  <div className="mt-1 text-xs font-bold text-gray-900">{project.location}</div>
+   188→                </div>
+   189→              </div>
+   190→
+   191→              {/* Tags */}
+   192→              <div className="flex flex-wrap gap-2 pt-2">
+   193→                {project.tags.map((tag) => (
+   194→                  <span
+   195→                    key={tag}
+   196→                    className="bg-indigo-50 text-indigo-700 rounded-lg px-3 py-1 text-xs font-semibold"
+   197→                  >
+   198→                    #{tag}
+   199→                  </span>
+   200→                ))}
+   201→              </div>
+   202→            </div>
+   203→
+   204→            {/* Right KPI Impact Cards */}
+   205→            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
+   206→              {project.impactMetrics.map((m, idx) => (
+   207→                <div
+   208→                  key={idx}
+   209→                  className="relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md transition-all duration-300 group"
+   210→                >
+   211→                  <div className="text-[10.5px] font-semibold uppercase tracking-wider text-gray-400">
+   212→                    {m.label}
+   213→                  </div>
+   214→                  <div
+   215→                    className="mt-2 font-display text-2xl sm:text-3xl font-extrabold"
+   216→                    style={{
+   217→                      backgroundImage: "linear-gradient(to right, #4f46e5, #6366f1)",
+   218→                      WebkitBackgroundClip: "text",
+   219→                      backgroundClip: "text",
+   220→                      WebkitTextFillColor: "transparent",
+   221→                    }}
+   222→                  >
+   223→                    {m.value}
+   224→                  </div>
+   225→                  <div className="mt-3 inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-700">
+   226→                    <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+   227→                    <span>{m.badge}</span>
+   228→                  </div>
+   229→                </div>
+   230→              ))}
+   231→            </div>
+   232→          </div>
+   233→
+   234→          {/* ── INTERACTIVE SIMULATOR PREVIEW SECTION ── */}
+   235→          <div className="mt-8">
+   236→            <div className="mb-4 text-center sm:text-left">
+   237→              <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
+   238→                Live Interactive Demonstration
+   239→              </span>
+   240→              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
+   241→                Project Interface Simulator
+   242→              </h2>
+   243→              <p className="mt-1 text-sm text-slate-500">
+   244→                Experience the live interface behavior in real-time across both Desktop Console and Mobile device views.
+   245→              </p>
+   246→            </div>
+   247→
+   248→            <ProjectSimulator project={project} />
+   249→          </div>
+   250→        </section>
+   251→
+   252→        {/* ── PROJECT OVERVIEW & STORY SECTION ── */}
+   253→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+   254→          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+   255→            {/* Overview Story */}
+   256→            <div className="lg:col-span-7 space-y-6">
+   257→              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600">
+   258→                Case Study Overview
+   259→              </span>
+   260→              <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
+   261→                Engineering a Resilient Solution for {project.client}
+   262→              </h2>
+   263→              <p className="text-base text-slate-500 leading-relaxed font-normal">
+   264→                {project.overview}
+   265→              </p>
+   266→
+   267→              {/* Challenges & Solutions */}
+   268→              <div className="space-y-4 pt-4">
+   269→                <h3 className="font-display text-lg font-bold text-gray-900 flex items-center gap-2">
+   270→                  <Shield className="h-5 w-5 text-indigo-600" />
+   271→                  Key Challenges & Architecture Solutions
+   272→                </h3>
+   273→
+   274→                <div className="space-y-3">
+   275→                  {project.challengesAndSolutions.map((cs, idx) => (
+   276→                    <div
+   277→                      key={idx}
+   278→                      className="rounded-xl border border-gray-100 bg-gray-50 p-4 space-y-2"
+   279→                    >
+   280→                      <div className="text-xs font-bold text-rose-600 flex items-center gap-1.5">
+   281→                        <span className="h-2 w-2 rounded-full bg-rose-500" />
+   282→                        <span>Challenge: {cs.challenge}</span>
+   283→                      </div>
+   284→                      <div className="text-xs text-slate-500 pl-3.5 border-l border-emerald-200">
+   285→                        <span className="font-semibold text-emerald-600">Solution: </span>
+   286→                        {cs.solution}
+   287→                      </div>
+   288→                    </div>
+   289→                  ))}
+   290→                </div>
+   291→              </div>
+   292→            </div>
+   293→
+   294→            {/* Workflow Pipeline */}
+   295→            <div className="lg:col-span-5 space-y-6">
+   296→              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600">
+   297→                Execution Workflow
+   298→              </span>
+   299→              <h2 className="font-display text-2xl font-bold text-gray-900">
+   300→                4-Step Technical Architecture
+   301→              </h2>
+   302→
+   303→              <div className="space-y-4">
+   304→                {project.workflowSteps.map((wf) => (
+   305→                  <div
+   306→                    key={wf.step}
+   307→                    className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-4 hover:border-indigo-200 hover:shadow-sm transition-colors"
+   308→                  >
+   309→                    <span
+   310→                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold text-white shadow-md"
+   311→                      style={{ background: "linear-gradient(to top right, #4f46e5, #8B5CF6)" }}
+   312→                    >
+   313→                      {wf.step}
+   314→                    </span>
+   315→                    <div>
+   316→                      <h4 className="font-display text-sm font-bold text-gray-900">{wf.title}</h4>
+   317→                      <p className="mt-1 text-xs text-slate-500 leading-relaxed">{wf.detail}</p>
+   318→                    </div>
+   319→                  </div>
+   320→                ))}
+   321→              </div>
+   322→            </div>
+   323→          </div>
+   324→        </section>
+   325→
+   326→        {/* ── KEY FEATURES GRID ── */}
+   327→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+   328→          <div className="mb-8">
+   329→            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
+   330→              Capabilities
+   331→            </span>
+   332→            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
+   333→              Core Platform Features
+   334→            </h2>
+   335→          </div>
+   336→
+   337→          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+   338→            {project.keyFeatures.map((feat, i) => {
+   339→              const IconComponent = ICON_MAP[feat.iconName] || Zap;
+   340→              return (
+   341→                <div
+   342→                  key={i}
+   343→                  className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300"
+   344→                >
+   345→                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 mb-4">
+   346→                    <IconComponent className="h-5 w-5" />
+   347→                  </div>
+   348→                  <h3 className="font-display text-base font-bold text-gray-900">{feat.title}</h3>
+   349→                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+   350→                    {feat.description}
+   351→                  </p>
+   352→                </div>
+   353→              );
+   354→            })}
+   355→          </div>
+   356→        </section>
+   357→
+   358→        {/* ── SECURITY & COMPLIANCE ── */}
+   359→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 my-6 rounded-3xl bg-white" style={{ boxShadow: '0 4px 30px rgba(0,0,0,0.10), 0 1px 8px rgba(0,0,0,0.06)' }}>
+   360→          {/* Section Header */}
+   361→          <div className="text-center max-w-[650px] mx-auto">
+   362→            {/* Badge Pill */}
+   363→            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.08em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+   364→              <Shield className="h-3.5 w-3.5" />
+   365→              <span>Security & Compliance</span>
+   366→            </div>
+   367→            {/* Heading */}
+   368→            <h2 className="mt-4 font-display text-[2.5rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight" style={{ color: '#111827' }}>
+   369→              Security & Compliance
+   370→            </h2>
+   371→            {/* Description */}
+   372→            <p className="mt-4 text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+   373→              {project.title} is built with enterprise-grade security and follows global compliance standards to protect sensitive business and user data.
+   374→            </p>
+   375→            {/* Decorative Underline */}
+   376→            <div className="mt-5 flex items-center justify-center gap-2">
+   377→              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+   378→              <span className="block h-2 w-2 rounded-full" style={{ background: '#6366F1' }} />
+   379→            </div>
+   380→          </div>
+   381→
+   382→          {/* Feature Cards Grid */}
+   383→          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+   384→            {[
+   385→              { icon: <Shield className="h-8 w-8" />, title: 'HIPAA Compliant', desc: 'Fully compliant with HIPAA standards to ensure the privacy and security of patient data.' },
+   386→              { icon: <UserCheck className="h-8 w-8" />, title: 'Role-Based Access', desc: 'Granular role-based access control ensures users only access the data and features they need.' },
+   387→              { icon: <Lock className="h-8 w-8" />, title: 'Data Encryption', desc: 'End-to-end encryption for data in transit and at rest using industry-standard encryption protocols.' },
+   388→              { icon: <FileCheck className="h-8 w-8" />, title: 'Audit Logs', desc: 'Comprehensive audit logs track all system activities to ensure transparency and accountability.' },
+   389→              { icon: <CloudCog className="h-8 w-8" />, title: 'Backup & Recovery', desc: 'Automated backups and disaster recovery ensure business continuity and zero data loss.' },
+   390→              { icon: <ShieldCheck className="h-8 w-8" />, title: 'Secure Infrastructure', desc: 'Hosted on secure, certified infrastructure with 24/7 monitoring and advanced threat protection.' },
+   391→            ].map((card, i) => (
+   392→              <div
+   393→                key={i}
+   394→                className="flex items-start gap-5 rounded-2xl p-7 shadow-[0_1px_3px_rgba(0,0,0,0.05),0_4px_6px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all duration-300"
+   395→                style={{ border: '1px solid #F3F4F6', background: '#F5F3FF' }}
+   396→              >
+   397→                {/* Icon Circle */}
+   398→                <div className="relative shrink-0">
+   399→                  <div
+   400→                    className="flex h-[72px] w-[72px] items-center justify-center rounded-full"
+   401→                    style={{ background: '#EEF2FF', color: '#4F46E5' }}
+   402→                  >
+   403→                    {card.icon}
+   404→                  </div>
+   405→                  {/* Verification Badge */}
+   406→                  <div
+   407→                    className="absolute -bottom-0.5 -right-0.5 flex h-6 w-6 items-center justify-center rounded-full text-white"
+   408→                    style={{ background: '#6366F1' }}
+   409→                  >
+   410→                    <Check className="h-3 w-3" strokeWidth={3} />
+   411→                  </div>
+   412→                </div>
+   413→                {/* Text */}
+   414→                <div className="pt-1">
+   415→                  <h3 className="text-[18px] font-bold" style={{ color: '#111827' }}>{card.title}</h3>
+   416→                  <p className="mt-3 text-[14.5px] leading-[1.6]" style={{ color: '#6B7280' }}>{card.desc}</p>
+   417→                </div>
+   418→              </div>
+   419→            ))}
+   420→          </div>
+   421→
+   422→          {/* Bottom Certification Banner */}
+   423→          <div
+   424→            className="mt-10 flex flex-col md:flex-row items-center gap-8 rounded-2xl p-8 sm:p-10"
+   425→            style={{ background: '#FAF5FF' }}
+   426→          >
+   427→            {/* Shield Illustration */}
+   428→            <div className="relative shrink-0">
+   429→              <div className="flex h-24 w-24 items-center justify-center rounded-2xl" style={{ background: 'linear-gradient(135deg, #6366F1, #8B5CF6)' }}>
+   430→                <ShieldCheck className="h-12 w-12 text-white" />
+   431→              </div>
+   432→              {/* Decorative dots */}
+   433→              <div className="absolute -top-2 -left-2 h-3 w-3 rounded-full" style={{ background: '#C4B5FD' }} />
+   434→              <div className="absolute -bottom-1 -right-3 h-2 w-2 rounded-full" style={{ background: '#DDD6FE' }} />
+   435→              <div className="absolute top-0 -right-4 h-2.5 w-2.5 rounded-full" style={{ background: '#A78BFA' }} />
+   436→            </div>
+   437→
+   438→            {/* Text */}
+   439→            <div className="flex-1 text-center md:text-left">
+   440→              <h3 className="text-[22px] font-bold" style={{ color: '#111827' }}>
+   441→                Your Data is Always Protected
+   442→              </h3>
+   443→              <p className="mt-2 text-[15px] leading-[1.6] max-w-[450px]" style={{ color: '#4B5563' }}>
+   444→                We follow best practices and industry standards to deliver a secure, reliable, and compliant platform for your business.
+   445→              </p>
+   446→            </div>
+   447→
+   448→            {/* Certification Badges */}
+   449→            <div className="flex flex-wrap items-center justify-center gap-5 shrink-0">
+   450→              {[
+   451→                { label: 'HIPAA', sub: 'COMPLIANT', color: '#2563EB' },
+   452→                { label: 'ISO', sub: '27001', color: '#1E40AF' },
+   453→                { label: 'SOC 2', sub: 'TYPE II', color: '#3B82F6' },
+   454→                { label: 'GDPR', sub: 'READY', color: '#4F46E5' },
+   455→              ].map((cert) => (
+   456→                <div key={cert.label} className="flex flex-col items-center gap-1">
+   457→                  <div
+   458→                    className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-[11px] font-bold text-white"
+   459→                    style={{ borderColor: cert.color, background: cert.color }}
+   460→                  >
+   461→                    {cert.label}
+   462→                  </div>
+   463→                  <span className="text-[9px] font-bold tracking-wider" style={{ color: '#6B7280' }}>{cert.sub}</span>
+   464→                </div>
+   465→              ))}
+   466→            </div>
+   467→          </div>
+   468→        </section>
+   469→
+   470→        {/* ── TECH STACK BREAKDOWN ── */}
+   471→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+   472→          <div className="mb-8">
+   473→            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
+   474→              Technology Stack
+   475→            </span>
+   476→            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
+   477→              Frameworks & Infrastructure
+   478→            </h2>
+   479→          </div>
+   480→
+   481→          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+   482→            {project.techStackDetailed.map((cat, i) => (
+   483→              <div
+   484→                key={i}
+   485→                className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm space-y-4"
+   486→              >
+   487→                <h3 className="font-display text-sm font-bold uppercase tracking-wider text-indigo-600 border-b border-gray-100 pb-3">
+   488→                  {cat.category}
+   489→                </h3>
+   490→
+   491→                <div className="space-y-3">
+   492→                  {cat.items.map((item) => {
+   493→                    const Icon = TECH_ICON_MAP[item.name] || Zap;
+   494→                    return (
+   495→                      <div key={item.name} className="flex items-center gap-3">
+   496→                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-gray-50 text-indigo-600">
+   497→                          <Icon className="h-4 w-4" />
+   498→                        </div>
+   499→                        <div>
+   500→                          <div className="text-xs font-bold text-gray-900 flex items-center gap-2">
+   501→                            <span>{item.name}</span>
+   502→                            {item.version && (
+   503→                              <span className="rounded bg-gray-100 px-1.5 py-0.5 text-[9.5px] font-mono text-slate-500">
+   504→                                {item.version}
+   505→                              </span>
+   506→                            )}
+   507→                          </div>
+   508→                          <div className="text-[11px] text-gray-400">{item.role}</div>
+   509→                        </div>
+   510→                      </div>
+   511→                    );
+   512→                  })}
+   513→                </div>
+   514→              </div>
+   515→            ))}
+   516→          </div>
+   517→        </section>
+   518→
+   519→        {/* ── INTEGRATIONS & CONNECTED SYSTEMS ── */}
+   520→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+   521→          {/* Section Header */}
+   522→          <div className="text-center max-w-[700px] mx-auto">
+   523→            {/* Badge Pill */}
+   524→            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+   525→              <Link className="h-3.5 w-3.5" />
+   526→              <span>Integrations</span>
+   527→            </div>
+   528→            {/* Heading with partial gradient */}
+   529→            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
+   530→              <span style={{ color: '#111827' }}>Integrations &amp; </span>
+   531→              <span style={{ backgroundImage: 'linear-gradient(to right, #6366F1, #818CF8)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Connected Systems</span>
+   532→            </h2>
+   533→            {/* Description */}
+   534→            <p className="mt-4 text-[15px] sm:text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+   535→              {project.title} seamlessly integrates with all critical systems to streamline workflows and improve operational efficiency.
+   536→            </p>
+   537→            {/* Decorative Underline */}
+   538→            <div className="mt-5 flex items-center justify-center gap-2">
+   539→              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+   540→              <span className="block h-2 w-2 rounded-full" style={{ background: '#6366F1' }} />
+   541→            </div>
+   542→          </div>
+   543→
+   544→          {/* Integration Cards + Central Hub Layout */}
+   545→          <div className="mt-14 relative">
+   546→            {/* Desktop: 3-col grid with center hub | Mobile: single column */}
+   547→            <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-y-8 gap-x-6 xl:gap-x-10 items-start">
+   548→
+   549→              {/* ── LEFT COLUMN (3 cards) ── */}
+   550→              <div className="flex flex-col gap-6">
+   551→                {[
+   552→                  {
+   553→                    icon: <Heart className="h-6 w-6" style={{ color: '#1D4ED8' }} />,
+   554→                    iconBg: '#DBEAFE',
+   555→                    title: 'EMR / EHR Systems',
+   556→                    desc: 'Seamless patient data synchronization with existing EMR/EHR platforms.',
+   557→                    tag: 'Real-time Sync',
+   558→                    tagBg: '#DBEAFE',
+   559→                    tagColor: '#1D4ED8',
+   560→                    dotColor: '#3B82F6',
+   561→                  },
+   562→                  {
+   563→                    icon: <FlaskConical className="h-6 w-6" style={{ color: '#047857' }} />,
+   564→                    iconBg: '#D1FAE5',
+   565→                    title: 'Laboratory Systems',
+   566→                    desc: 'Bi-directional integration with lab systems for test orders & results.',
+   567→                    tag: 'HL7 / FHIR Ready',
+   568→                    tagBg: '#D1FAE5',
+   569→                    tagColor: '#047857',
+   570→                    dotColor: '#10B981',
+   571→                  },
+   572→                  {
+   573→                    icon: <ShieldCheck className="h-6 w-6" style={{ color: '#7E22CE' }} />,
+   574→                    iconBg: '#F3E8FF',
+   575→                    title: 'Insurance & TPAs',
+   576→                    desc: 'Verify insurance, manage claims and approvals in real-time.',
+   577→                    tag: 'Secure API Integration',
+   578→                    tagBg: '#F3E8FF',
+   579→                    tagColor: '#7E22CE',
+   580→                    dotColor: '#8B5CF6',
+   581→                  },
+   582→                ].map((card, i) => (
+   583→                  <div
+   584→                    key={`l-${i}`}
+   585→                    className="flex items-start gap-4 rounded-2xl bg-white p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+   586→                    style={{
+   587→                      border: '1px solid #E2E8F0',
+   588→                      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05)',
+   589→                    }}
+   590→                  >
+   591→                    {/* Icon Box */}
+   592→                    <div
+   593→                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+   594→                      style={{ background: card.iconBg }}
+   595→                    >
+   596→                      {card.icon}
+   597→                    </div>
+   598→                    {/* Content */}
+   599→                    <div className="flex-1 min-w-0">
+   600→                      <h3 className="text-[16px] sm:text-[17px] font-bold" style={{ color: '#1E293B' }}>{card.title}</h3>
+   601→                      <p className="mt-1.5 text-[13px] sm:text-[14px] leading-[1.55]" style={{ color: '#64748B' }}>{card.desc}</p>
+   602→                      {/* Tag Pill */}
+   603→                      <span
+   604→                        className="mt-3 inline-block rounded-full px-3 py-1 text-[11px] font-semibold"
+   605→                        style={{ background: card.tagBg, color: card.tagColor }}
+   606→                      >
+   607→                        {card.tag}
+   608→                      </span>
+   609→                    </div>
+   610→                  </div>
+   611→                ))}
+   612→              </div>
+   613→
+   614→              {/* ── CENTER HUB (desktop only) ── */}
+   615→              <div className="hidden lg:flex items-center justify-center">
+   616→                <div className="relative">
+   617→                  {/* Connecting dotted lines - left side */}
+   618→                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[70%]" style={{ overflow: 'visible' }}>
+   619→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   620→                    <circle cx="0" cy="0" r="4" fill="#3B82F6" />
+   621→                  </svg>
+   622→                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[6%]" style={{ overflow: 'visible' }}>
+   623→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   624→                    <circle cx="0" cy="0" r="4" fill="#10B981" />
+   625→                  </svg>
+   626→                  <svg className="absolute top-1/2 right-full w-[40px] xl:w-[56px] h-[2px] translate-y-[58%]" style={{ overflow: 'visible' }}>
+   627→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   628→                    <circle cx="0" cy="0" r="4" fill="#8B5CF6" />
+   629→                  </svg>
+   630→                  {/* Connecting dotted lines - right side */}
+   631→                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[70%]" style={{ overflow: 'visible' }}>
+   632→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   633→                    <circle cx="100%" cy="0" r="4" fill="#F97316" />
+   634→                  </svg>
+   635→                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] -translate-y-[6%]" style={{ overflow: 'visible' }}>
+   636→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   637→                    <circle cx="100%" cy="0" r="4" fill="#6366F1" />
+   638→                  </svg>
+   639→                  <svg className="absolute top-1/2 left-full w-[40px] xl:w-[56px] h-[2px] translate-y-[58%]" style={{ overflow: 'visible' }}>
+   640→                    <line x1="0" y1="0" x2="100%" y2="0" stroke="#CBD5E1" strokeWidth="2" strokeDasharray="6,4" />
+   641→                    <circle cx="100%" cy="0" r="4" fill="#EAB308" />
+   642→                  </svg>
+   643→
+   644→                  {/* Hub Circle */}
+   645→                  <div
+   646→                    className="flex flex-col items-center justify-center w-[240px] xl:w-[280px] h-[240px] xl:h-[280px] rounded-full"
+   647→                    style={{ background: '#EEF2FF', border: '2px solid #C7D2FE' }}
+   648→                  >
+   649→                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl mb-3" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+   650→                      <Building2 className="h-7 w-7" />
+   651→                    </div>
+   652→                    <span className="text-[15px] sm:text-[16px] font-bold text-center px-4" style={{ color: '#1E293B' }}>
+   653→                      {project.title}
+   654→                    </span>
+   655→                    <span
+   656→                      className="mt-2.5 rounded-full px-3 py-1 text-[10px] font-semibold tracking-wide"
+   657→                      style={{ background: '#6366F1', color: '#FFFFFF' }}
+   658→                    >
+   659→                      Centralized &bull; Secure &bull; Connected
+   660→                    </span>
+   661→                  </div>
+   662→                </div>
+   663→              </div>
+   664→
+   665→              {/* ── RIGHT COLUMN (3 cards) ── */}
+   666→              <div className="flex flex-col gap-6">
+   667→                {[
+   668→                  {
+   669→                    icon: <Pill className="h-6 w-6" style={{ color: '#C2410C' }} />,
+   670→                    iconBg: '#FFEDD5',
+   671→                    title: 'Pharmacy Management',
+   672→                    desc: 'Real-time inventory, prescriptions and drug interaction checks.',
+   673→                    tag: 'Auto Sync',
+   674→                    tagBg: '#FFEDD5',
+   675→                    tagColor: '#C2410C',
+   676→                  },
+   677→                  {
+   678→                    icon: <CreditCard className="h-6 w-6" style={{ color: '#6D28D9' }} />,
+   679→                    iconBg: '#EDE9FE',
+   680→                    title: 'Billing & Payments',
+   681→                    desc: 'Integrated billing, invoicing and multiple payment gateways.',
+   682→                    tag: '100% Reconciled',
+   683→                    tagBg: '#EDE9FE',
+   684→                    tagColor: '#6D28D9',
+   685→                  },
+   686→                  {
+   687→                    icon: <BarChart className="h-6 w-6" style={{ color: '#A16207' }} />,
+   688→                    iconBg: '#FEF9C3',
+   689→                    title: 'Reporting & Analytics',
+   690→                    desc: 'Unified data analytics and reporting across all departments.',
+   691→                    tag: 'Real-time Insights',
+   692→                    tagBg: '#FEF9C3',
+   693→                    tagColor: '#A16207',
+   694→                  },
+   695→                ].map((card, i) => (
+   696→                  <div
+   697→                    key={`r-${i}`}
+   698→                    className="flex items-start gap-4 rounded-2xl bg-white p-5 sm:p-6 transition-all duration-300 hover:-translate-y-0.5"
+   699→                    style={{
+   700→                      border: '1px solid #E2E8F0',
+   701→                      boxShadow: '0 1px 3px 0 rgba(0,0,0,0.05), 0 4px 6px -1px rgba(0,0,0,0.05)',
+   702→                    }}
+   703→                  >
+   704→                    <div
+   705→                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+   706→                      style={{ background: card.iconBg }}
+   707→                    >
+   708→                      {card.icon}
+   709→                    </div>
+   710→                    <div className="flex-1 min-w-0">
+   711→                      <h3 className="text-[16px] sm:text-[17px] font-bold" style={{ color: '#1E293B' }}>{card.title}</h3>
+   712→                      <p className="mt-1.5 text-[13px] sm:text-[14px] leading-[1.55]" style={{ color: '#64748B' }}>{card.desc}</p>
+   713→                      <span
+   714→                        className="mt-3 inline-block rounded-full px-3 py-1 text-[11px] font-semibold"
+   715→                        style={{ background: card.tagBg, color: card.tagColor }}
+   716→                      >
+   717→                        {card.tag}
+   718→                      </span>
+   719→                    </div>
+   720→                  </div>
+   721→                ))}
+   722→              </div>
+   723→            </div>
+   724→
+   725→            {/* Mobile-only center hub (shown below cards on mobile) */}
+   726→            <div className="mt-8 flex lg:hidden justify-center">
+   727→              <div
+   728→                className="flex flex-col items-center justify-center w-[200px] h-[200px] rounded-full"
+   729→                style={{ background: '#EEF2FF', border: '2px solid #C7D2FE' }}
+   730→              >
+   731→                <div className="flex h-12 w-12 items-center justify-center rounded-2xl mb-2" style={{ background: '#EDE9FE', color: '#6366F1' }}>
+   732→                  <Building2 className="h-6 w-6" />
+   733→                </div>
+   734→                <span className="text-[14px] font-bold text-center px-4" style={{ color: '#1E293B' }}>
+   735→                  {project.title}
+   736→                </span>
+   737→                <span
+   738→                  className="mt-2 rounded-full px-3 py-1 text-[9px] font-semibold tracking-wide"
+   739→                  style={{ background: '#6366F1', color: '#FFFFFF' }}
+   740→                >
+   741→                  Centralized &bull; Secure &bull; Connected
+   742→                </span>
+   743→              </div>
+   744→            </div>
+   745→          </div>
+   746→
+   747→          {/* Bottom Feature Bar */}
+   748→          <div
+   749→            className="mt-12 rounded-2xl p-6 sm:p-8"
+   750→            style={{ background: '#F8FAFC' }}
+   751→          >
+   752→            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+   753→              {[
+   754→                {
+   755→                  icon: <Link className="h-5 w-5" style={{ color: '#3B82F6' }} />,
+   756→                  title: 'Seamless Connectivity',
+   757→                  desc: 'Connect and sync data across all hospital systems effortlessly.',
+   758→                },
+   759→                {
+   760→                  icon: <ShieldCheck className="h-5 w-5" style={{ color: '#10B981' }} />,
+   761→                  title: 'Standard Protocols',
+   762→                  desc: 'Supports HL7, FHIR and other industry-standard protocols.',
+   763→                },
+   764→                {
+   765→                  icon: <Lock className="h-5 w-5" style={{ color: '#6366F1' }} />,
+   766→                  title: 'Secure Data Exchange',
+   767→                  desc: 'Encrypted, secure and compliant data exchange between systems.',
+   768→                },
+   769→                {
+   770→                  icon: <RefreshCw className="h-5 w-5" style={{ color: '#F97316' }} />,
+   771→                  title: 'Real-time Sync',
+   772→                  desc: 'Real-time data synchronization to ensure accuracy and timely updates.',
+   773→                },
+   774→                {
+   775→                  icon: <Layers className="h-5 w-5" style={{ color: '#3B82F6' }} />,
+   776→                  title: 'Scalable Integrations',
+   777→                  desc: 'Built to scale and integrate with new systems as your hospital grows.',
+   778→                },
+   779→              ].map((feat, i) => (
+   780→                <div
+   781→                  key={i}
+   782→                  className="flex items-start gap-3 py-3 lg:py-0 px-4 lg:border-r last:lg:border-r-0"
+   783→                  style={{ borderColor: '#E2E8F0', borderRightStyle: i < 4 ? 'solid' : 'none' }}
+   784→                >
+   785→                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ background: '#EEF2FF' }}>
+   786→                    {feat.icon}
+   787→                  </div>
+   788→                  <div className="min-w-0">
+   789→                    <h4 className="text-[13px] sm:text-[14px] font-bold" style={{ color: '#1E293B' }}>{feat.title}</h4>
+   790→                    <p className="mt-1 text-[11.5px] sm:text-[12.5px] leading-[1.5]" style={{ color: '#64748B' }}>{feat.desc}</p>
+   791→                  </div>
+   792→                </div>
+   793→              ))}
+   794→            </div>
+   795→          </div>
+   796→        </section>
+   797→
+   798→        {/* ── USER ROLES & ACCESS ── */}
+   799→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 border-t border-gray-100">
+   800→          {/* Section Header */}
+   801→          <div className="text-center max-w-[700px] mx-auto">
+   802→            {/* Badge Pill */}
+   803→            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
+   804→              <Shield className="h-3.5 w-3.5" />
+   805→              <span>User Roles &amp; Access</span>
+   806→            </div>
+   807→            {/* Heading with partial color */}
+   808→            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
+   809→              <span style={{ color: '#111827' }}>User Roles &amp; </span>
+   810→              <span style={{ color: '#6366F1' }}>Access</span>
+   811→            </h2>
+   812→            {/* Description */}
+   813→            <p className="mt-4 text-[15px] sm:text-[17px] leading-[1.6]" style={{ color: '#6B7280' }}>
+   814→              {project.title} is designed for every professional.
+   815→              <br className="hidden sm:block" />
+   816→              Role-based access ensures the right people have the right access.
+   817→            </p>
+   818→            {/* Decorative Underline */}
+   819→            <div className="mt-5 flex items-center justify-center gap-2">
+   820→              <span className="block h-1 w-14 rounded-full" style={{ background: '#6366F1' }} />
+   821→              <span className="block h-2 w-2 rounded-full" style={{ background: '#9CA3AF' }} />
+   822→            </div>
+   823→          </div>
+   824→
+   825→          {/* Role Cards Grid */}
+   826→          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+   827→            {[
+   828→              {
+   829→                icon: <Stethoscope className="h-7 w-7" />,
+   830→                iconBg: '#DBEAFE', iconColor: '#3B82F6',
+   831→                title: 'Doctors', titleColor: '#2563EB',
+   832→                desc: 'Access patient records, schedule appointments and manage treatment plans.',
+   833→                features: ['Patient Consultation', 'Medical History', 'Prescriptions', 'Reports & Analytics'],
+   834→                badge: 'Role-Based Access', badgeBg: '#DBEAFE', badgeColor: '#2563EB',
+   835→              },
+   836→              {
+   837→                icon: <Users className="h-7 w-7" />,
+   838→                iconBg: '#D1FAE5', iconColor: '#10B981',
+   839→                title: 'Nurses', titleColor: '#059669',
+   840→                desc: 'Manage patient care, monitor vitals and assist with daily operations.',
+   841→                features: ['Patient Care', 'Vitals Monitoring', 'Medicine Administration', 'Task Management'],
+   842→                badge: 'Role-Based Access', badgeBg: '#D1FAE5', badgeColor: '#059669',
+   843→              },
+   844→              {
+   845→                icon: <Microscope className="h-7 w-7" />,
+   846→                iconBg: '#F3E8FF', iconColor: '#8B5CF6',
+   847→                title: 'Lab Staff', titleColor: '#7C3AED',
+   848→                desc: 'Access lab orders, update test results and manage lab inventory.',
+   849→                features: ['Lab Orders', 'Test Results', 'Inventory Management', 'Reports'],
+   850→                badge: 'Role-Based Access', badgeBg: '#F3E8FF', badgeColor: '#7C3AED',
+   851→              },
+   852→              {
+   853→                icon: <Pill className="h-7 w-7" />,
+   854→                iconBg: '#FFEDD5', iconColor: '#F97316',
+   855→                title: 'Pharmacy', titleColor: '#EA580C',
+   856→                desc: 'Manage medicines, track stock and process prescriptions efficiently.',
+   857→                features: ['Prescription Management', 'Inventory Tracking', 'Drug Interaction Check', 'Stock Alerts'],
+   858→                badge: 'Role-Based Access', badgeBg: '#FFEDD5', badgeColor: '#EA580C',
+   859→              },
+   860→              {
+   861→                icon: <Receipt className="h-7 w-7" />,
+   862→                iconBg: '#CFFAFE', iconColor: '#06B6D4',
+   863→                title: 'Billing Team', titleColor: '#0891B2',
+   864→                desc: 'Handle billing, insurance claims and payment reconciliation.',
+   865→                features: ['Invoice Generation', 'Payment Processing', 'Insurance Claims', 'Reports & Statements'],
+   866→                badge: 'Role-Based Access', badgeBg: '#CFFAFE', badgeColor: '#0891B2',
+   867→              },
+   868→              {
+   869→                icon: <UserCog className="h-7 w-7" />,
+   870→                iconBg: '#FCE7F3', iconColor: '#EC4899',
+   871→                title: 'Hospital Admin', titleColor: '#DB2777',
+   872→                desc: 'Manage users, departments, permissions and system settings.',
+   873→                features: ['User Management', 'Role & Permissions', 'System Settings', 'Audit Logs'],
+   874→                badge: 'Full System Access', badgeBg: '#FCE7F3', badgeColor: '#DB2777',
+   875→              },
+   876→            ].map((role, i) => (
+   877→              <div
+   878→                key={i}
+   879→                className="flex flex-col items-center rounded-2xl bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+   880→                style={{ border: '1px solid #F3F4F6', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+   881→              >
+   882→                {/* Icon Circle */}
+   883→                <div
+   884→                  className="flex h-16 w-16 items-center justify-center rounded-full mb-5"
+   885→                  style={{ background: role.iconBg, color: role.iconColor }}
+   886→                >
+   887→                  {role.icon}
+   888→                </div>
+   889→                {/* Title */}
+   890→                <h3 className="text-[18px] font-bold text-center mb-3" style={{ color: role.titleColor }}>
+   891→                  {role.title}
+   892→                </h3>
+   893→                {/* Description */}
+   894→                <p className="text-[13px] text-center leading-[1.6] mb-6 flex-1" style={{ color: '#6B7280' }}>
+   895→                  {role.desc}
+   896→                </p>
+   897→                {/* Feature List */}
+   898→                <ul className="w-full space-y-2.5 mb-6">
+   899→                  {role.features.map((feat, fi) => (
+   900→                    <li key={fi} className="flex items-center gap-2 text-[13px]" style={{ color: '#4B5563' }}>
+   901→                      <CheckCircle2 className="h-3.5 w-3.5 shrink-0" style={{ color: role.iconColor }} />
+   902→                      <span>{feat}</span>
+   903→                    </li>
+   904→                  ))}
+   905→                </ul>
+   906→                {/* Badge Pill */}
+   907→                <div className="mt-auto pt-3">
+   908→                  <span
+   909→                    className="inline-block rounded-full px-4 py-1.5 text-[11px] font-semibold"
+   910→                    style={{ background: role.badgeBg, color: role.badgeColor }}
+   911→                  >
+   912→                    {role.badge}
+   913→                  </span>
+   914→                </div>
+   915→              </div>
+   916→            ))}
+   917→          </div>
+   918→
+   919→          {/* Bottom Feature Banner */}
+   920→          <div
+   921→            className="mt-16 rounded-3xl p-8 sm:p-10 lg:p-14 relative overflow-hidden"
+   922→            style={{ background: '#F8FAFC', border: '1px solid #F3F4F6' }}
+   923→          >
+   924→            {/* Left Shield SVG Illustration (desktop only) */}
+   925→            <div className="hidden lg:block absolute left-8 xl:left-12 top-1/2 -translate-y-1/2 opacity-90">
+   926→              <svg viewBox="0 0 100 120" fill="none" className="w-28 h-36 xl:w-32 xl:h-40 drop-shadow-lg">
+   927→                <path d="M50 115C50 115 95 90 95 45V15L50 5L5 15V45C5 90 50 115 50 115Z" fill="#4F46E5" fillOpacity="0.1" />
+   928→                <path d="M50 105C50 105 85 85 85 48V22L50 14L15 22V48C15 85 50 105 50 105Z" fill="#4F46E5" fillOpacity="0.2" />
+   929→                <path d="M50 85C50 85 70 72 70 48V30L50 25L30 30V48C30 72 50 85 50 85Z" fill="#4F46E5" />
+   930→                <path d="M50 75V55M42 63H58" stroke="white" strokeWidth="4" strokeLinecap="round" />
+   931→                <circle cx="10" cy="60" r="3" fill="#818CF8" />
+   932→                <circle cx="90" cy="60" r="3" fill="#818CF8" />
+   933→                <circle cx="50" cy="110" r="3" fill="#818CF8" />
+   934→                <path d="M10 60 Q 50 80 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+   935→                <path d="M10 60 Q 50 20 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+   936→              </svg>
+   937→            </div>
+   938→
+   939→            <div className="lg:pl-40 xl:pl-48">
+   940→              {/* Bottom Header */}
+   941→              <div className="mb-8 sm:mb-10">
+   942→                <h2 className="text-[1.5rem] sm:text-[1.875rem] font-bold" style={{ color: '#111827' }}>
+   943→                  Secure. Controlled. Role-Based.
+   944→                </h2>
+   945→                <p className="mt-3 text-[15px] leading-[1.6] max-w-2xl" style={{ color: '#6B7280' }}>
+   946→                  Every action is controlled through role-based permissions
+   947→                  <br className="hidden sm:block" />
+   948→                  to ensure data security, privacy and accountability.
+   949→                </p>
+   950→              </div>
+   951→
+   952→              {/* Features Grid */}
+   953→              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
+   954→                {[
+   955→                  {
+   956→                    icon: <UserCheck className="h-5 w-5" style={{ color: '#4F46E5' }} />,
+   957→                    iconBg: '#EEF2FF',
+   958→                    title: 'Role-Based Access',
+   959→                    desc: 'Granular access control for every user role',
+   960→                  },
+   961→                  {
+   962→                    icon: <ShieldCheck className="h-5 w-5" style={{ color: '#059669' }} />,
+   963→                    iconBg: '#D1FAE5',
+   964→                    title: 'Data Protection',
+   965→                    desc: 'Protect sensitive data with strict permissions',
+   966→                  },
+   967→                  {
+   968→                    icon: <Eye className="h-5 w-5" style={{ color: '#2563EB' }} />,
+   969→                    iconBg: '#DBEAFE',
+   970→                    title: 'Audit & Tracking',
+   971→                    desc: 'Track every action for transparency',
+   972→                  },
+   973→                  {
+   974→                    icon: <Settings className="h-5 w-5" style={{ color: '#EC4899' }} />,
+   975→                    iconBg: '#FCE7F3',
+   976→                    title: 'Easy Management',
+   977→                    desc: 'Manage roles and permissions easily',
+   978→                  },
+   979→                ].map((feat, i) => (
+   980→                  <div key={i} className="flex items-start gap-4">
+   981→                    <div
+   982→                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
+   983→                      style={{ background: feat.iconBg }}
+   984→                    >
+   985→                      {feat.icon}
+   986→                    </div>
+   987→                    <div>
+   988→                      <h4 className="text-[14px] font-bold" style={{ color: '#111827' }}>{feat.title}</h4>
+   989→                      <p className="mt-1.5 text-[12px] leading-[1.5]" style={{ color: '#6B7280' }}>{feat.desc}</p>
+   990→                    </div>
+   991→                  </div>
+   992→                ))}
+   993→              </div>
+   994→
+   995→              {/* Footer Tagline */}
+   996→              <div className="flex items-start gap-4 pt-6" style={{ borderTop: '1px solid #F3F4F6' }}>
+   997→                <div
+   998→                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg mt-0.5"
+   999→                  style={{ background: '#EEF2FF', color: '#4F46E5' }}
+  1000→                >
+  1001→                  <ShieldCheck className="h-5 w-5" />
+  1002→                </div>
+  1003→                <div>
+  1004→                  <h4 className="text-[16px] font-bold" style={{ color: '#312E81' }}>Secure access. Better care.</h4>
+  1005→                  <p className="mt-1 text-[14px]" style={{ color: '#6B7280' }}>Right people. Right access. Right time.</p>
+  1006→                </div>
+  1007→              </div>
+  1008→            </div>
+  1009→          </div>
+  1010→        </section>
+  1011→
+  1012→        {/* ── OTHER PROJECTS / CASE STUDIES ── */}
+  1013→        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+  1014→          <div className="flex items-center justify-between flex-wrap gap-4 mb-8">
+  1015→            <div>
+  1016→              <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
+  1017→                Explore More
+  1018→              </span>
+  1019→              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
+  1020→                Related Case Studies
+  1021→              </h2>
+  1022→            </div>
+  1023→            <a
+  1024→              href="/#portfolio"
+  1025→              className="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1"
+  1026→            >
+  1027→              View All Projects
+  1028→              <ArrowUpRight className="h-4 w-4" />
+  1029→            </a>
+  1030→          </div>
+  1031→
+  1032→          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  1033→            {otherProjects.map((op) => (
+  1034→              <a
+  1035→                key={op.slug}
+  1036→                href={`/portfolio/${op.slug}`}
+  1037→                className="group block rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300"
+  1038→              >
+  1039→                <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-600">
+  1040→                  {op.category}
+  1041→                </div>
+  1042→                <h3 className="mt-2 font-display text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors flex items-center justify-between">
+  1043→                  <span>{op.title}</span>
+  1044→                  <ArrowUpRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+  1045→                </h3>
+  1046→                <p className="mt-2 text-xs text-slate-500 line-clamp-2">{op.description}</p>
+  1047→                <div className="mt-4 flex flex-wrap gap-1.5">
+  1048→                  {op.tags.map((t) => (
+  1049→                    <span
+  1050→                      key={t}
+  1051→                      className="rounded bg-indigo-50 px-2 py-0.5 text-[10px] text-indigo-700 font-semibold"
+  1052→                    >
+  1053→                      {t}
+  1054→                    </span>
+  1055→                  ))}
+  1056→                </div>
+  1057→              </a>
+  1058→            ))}
+  1059→          </div>
+  1060→        </section>
+  1061→
+  1062→        {/* ── CONSULTATION CTA ── */}
+  1063→        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-8">
+  1064→          <div
+  1065→            className="relative overflow-hidden rounded-3xl p-8 sm:p-12 text-center"
+  1066→            style={{ background: "linear-gradient(to right, #EDE9FE, #EEF2FF, #EDE9FE)" }}
+  1067→          >
+  1068→            <h2 className="font-display text-2xl sm:text-4xl font-extrabold text-gray-900">
+  1069→              Want to build a platform like {project.title}?
+  1070→            </h2>
+  1071→            <p className="mt-3 text-sm sm:text-base text-slate-500 max-w-2xl mx-auto">
+  1072→              Schedule a technical consultation with our engineering leads to review your requirements, architecture, and timeline.
+  1073→            </p>
+  1074→            <div className="mt-8 flex justify-center">
+  1075→              <MagneticButton href="/#contact" variant="neon" className="px-8 py-4 text-sm font-bold">
+  1076→                Book Architecture Call
+  1077→                <ArrowUpRight className="h-4 w-4" />
+  1078→              </MagneticButton>
+  1079→            </div>
+  1080→          </div>
+  1081→        </section>
+  1082→      </main>
+  1083→
+  1084→      <Footer />
+  1085→    </div>
+  1086→  );
+  1087→}
+  1088→

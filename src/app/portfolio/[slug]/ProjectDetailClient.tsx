@@ -937,20 +937,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
 
             <div className="lg:pl-40 xl:pl-48">
-              {/* Bottom Header */}
-              <div className="mb-8 sm:mb-10">
-                <h2 className="text-[1.5rem] sm:text-[1.875rem] font-bold" style={{ color: '#111827' }}>
-                  Secure. Controlled. Role-Based.
-                </h2>
-                <p className="mt-3 text-[15px] leading-[1.6] max-w-2xl" style={{ color: '#6B7280' }}>
-                  Every action is controlled through role-based permissions
-                  <br className="hidden sm:block" />
-                  to ensure data security, privacy and accountability.
-                </p>
-              </div>
-
               {/* Features Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-10 sm:mb-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
                 {[
                   {
                     icon: <UserCheck className="h-5 w-5" style={{ color: '#4F46E5' }} />,
@@ -969,12 +957,6 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                     iconBg: '#DBEAFE',
                     title: 'Audit & Tracking',
                     desc: 'Track every action for transparency',
-                  },
-                  {
-                    icon: <Settings className="h-5 w-5" style={{ color: '#EC4899' }} />,
-                    iconBg: '#FCE7F3',
-                    title: 'Easy Management',
-                    desc: 'Manage roles and permissions easily',
                   },
                 ].map((feat, i) => (
                   <div key={i} className="flex items-start gap-4">
