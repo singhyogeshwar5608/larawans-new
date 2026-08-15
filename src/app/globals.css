@@ -734,6 +734,11 @@ section { position: relative; }
   scrollbar-width: none !important;
 }
 
+/* Hide Navbar logo on portfolio detail page */
+.portfolio-detail-page nav a[href="/"].interactive {
+  display: none !important;
+}
+
 /* Hide Navbar's default hamburger on portfolio pages (custom hamburger used instead) */
 .portfolio-page button[aria-label="Toggle menu"] {
   display: none !important;

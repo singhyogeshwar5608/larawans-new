@@ -124,8 +124,18 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
+    <div className="portfolio-detail-page min-h-screen bg-white text-gray-900 antialiased selection:bg-indigo-100 selection:text-indigo-700 overflow-x-hidden">
       <Navbar />
+
+      {/* ── BACK TO ALL WORK (replaces logo) ── */}
+      <a
+        href="/#portfolio"
+        className="fixed top-5 left-5 z-[55] inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3.5 py-2 text-xs font-semibold shadow-md transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50 hover:shadow-lg"
+        style={{ color: '#6366F1' }}
+      >
+        <ArrowLeft className="h-3.5 w-3.5" />
+        <span>Back to All Work</span>
+      </a>
 
       {/* ── MOBILE HAMBURGER BUTTON (light theme) ── */}
       <button
@@ -219,18 +229,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         {/* Subtle top-left blob */}
         <div className="pointer-events-none absolute -top-32 -left-32 w-[400px] h-[400px] rounded-full opacity-40" style={{ background: "radial-gradient(circle, #EEF2FF 0%, transparent 70%)" }} aria-hidden />
 
-        {/* ── Breadcrumb & Back Navigation ── */}
+        {/* ── Breadcrumb ── */}
         <div className="mx-auto max-w-7xl px-4 sm:px-6 pt-2">
-          <div className="flex items-center justify-between flex-wrap gap-3 border-b border-gray-100 pb-3">
-            <a
-              href="/#portfolio"
-              className="inline-flex items-center gap-2 rounded-xl border border-gray-100 bg-white px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50 sm:text-gray-500 sm:hover:text-indigo-600"
-              style={{ color: '#6366F1' }}
-            >
-              <ArrowLeft className="h-3.5 w-3.5 text-indigo-600" />
-              <span>Back to All Work</span>
-            </a>
-
+          <div className="flex items-center justify-end flex-wrap gap-3 border-b border-gray-100 pb-3">
             <div className="hidden sm:flex items-center gap-2 text-xs text-gray-400">
               <a href="/" className="hover:text-indigo-600 transition-colors">
                 Home
