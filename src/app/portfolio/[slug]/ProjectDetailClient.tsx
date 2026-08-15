@@ -36,6 +36,10 @@ import {
   UserCog,
   Settings,
   Eye,
+  Search,
+  PenTool,
+  Code2,
+  Rocket,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -916,6 +920,291 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             ))}
           </div>
 
+        </section>
+
+        {/* ── DEVELOPMENT JOURNEY ── */}
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[700px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
+              <Rocket className="h-3.5 w-3.5" />
+              <span>Development Journey</span>
+            </div>
+            {/* Heading with partial color */}
+            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
+              <span style={{ color: '#1E293B' }}>Our </span>
+              <span style={{ color: '#7C3AED' }}>Development</span>
+              <span style={{ color: '#1E293B' }}> Journey</span>
+            </h2>
+            {/* Description */}
+            <p className="mt-4 text-[15px] sm:text-[18px] leading-[1.6]" style={{ color: '#64748B' }}>
+              A structured approach that ensures we deliver secure, scalable and high-performance solutions tailored to your needs.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <span className="block h-1 w-20 rounded-full" style={{ background: '#7C3AED' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#7C3AED' }} />
+            </div>
+          </div>
+
+          {/* Timeline + Cards */}
+          <div className="mt-14">
+            {/* Desktop: 6-col horizontal timeline */}
+            <div className="hidden xl:block relative">
+              {/* Dashed connector line */}
+              <div className="absolute top-6 left-[8.33%] right-[8.33%]" style={{ borderTop: '2px dashed #CBD5E1' }} />
+              <div className="grid grid-cols-6 gap-5">
+                {[
+                  {
+                    num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                    icon: <Search className="h-8 w-8" />,
+                    title: 'Discovery',
+                    desc: 'We understand your goals, challenges and requirements through in-depth research.',
+                    items: ['Stakeholder Interviews', 'Requirement Analysis', 'Process Study', 'Project Roadmap'],
+                  },
+                  {
+                    num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                    icon: <PenTool className="h-8 w-8" />,
+                    title: 'Architecture',
+                    desc: 'We design a robust and scalable architecture that ensures security and flexibility.',
+                    items: ['System Architecture', 'Technology Selection', 'Database Design', 'Integration Planning'],
+                  },
+                  {
+                    num: '03', color: '#059669', iconBg: '#ECFDF5',
+                    icon: <Layers className="h-8 w-8" />,
+                    title: 'UI/UX Design',
+                    desc: 'We create intuitive and engaging interfaces focused on user experience.',
+                    items: ['User Flow & Wireframes', 'UI Design', 'Prototype', 'Usability Testing'],
+                  },
+                  {
+                    num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                    icon: <Code2 className="h-8 w-8" />,
+                    title: 'Development',
+                    desc: 'Our team builds clean, secure and high-performance code using best practices.',
+                    items: ['Backend Development', 'Frontend Development', 'API Integration', 'Code Review'],
+                  },
+                  {
+                    num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                    icon: <ShieldCheck className="h-8 w-8" />,
+                    title: 'Testing',
+                    desc: 'We rigorously test every module to ensure quality, performance and security.',
+                    items: ['Functional Testing', 'Performance Testing', 'Security Testing', 'Bug Fixing'],
+                  },
+                  {
+                    num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                    icon: <Rocket className="h-8 w-8" />,
+                    title: 'Deployment',
+                    desc: 'We deploy the solution seamlessly and provide ongoing support.',
+                    items: ['Live Deployment', 'Data Migration', 'Training & Handover', 'Post-Launch Support'],
+                  },
+                ].map((step, i) => (
+                  <div key={i} className="relative flex flex-col items-center">
+                    {/* Number Circle */}
+                    <div
+                      className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full text-[15px] font-bold text-white"
+                      style={{ background: step.color }}
+                    >
+                      {step.num}
+                    </div>
+                    {/* Card */}
+                    <div
+                      className="mt-5 w-full rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                      style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                    >
+                      {/* Bottom accent bar */}
+                      <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                      {/* Icon Circle */}
+                      <div
+                        className="flex h-16 w-16 items-center justify-center rounded-full mx-auto mb-4"
+                        style={{ background: step.iconBg, color: step.color }}
+                      >
+                        {step.icon}
+                      </div>
+                      {/* Title */}
+                      <h3 className="text-[17px] font-bold text-center mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
+                      {/* Description */}
+                      <p className="text-[13px] text-center leading-[1.6] mb-5" style={{ color: '#64748B' }}>{step.desc}</p>
+                      {/* Checklist */}
+                      <ul className="space-y-2.5">
+                        {step.items.map((item, fi) => (
+                          <li key={fi} className="flex items-center gap-2.5 text-[13px] font-medium" style={{ color: '#334155' }}>
+                            <CheckCircle2 className="h-[18px] w-[18px] shrink-0" style={{ color: step.color }} />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tablet: 3-col grid (no timeline) */}
+            <div className="hidden sm:grid xl:hidden grid-cols-2 lg:grid-cols-3 gap-5">
+              {[
+                {
+                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <Search className="h-7 w-7" />,
+                  title: 'Discovery',
+                  desc: 'We understand your goals, challenges and requirements through in-depth research.',
+                  items: ['Stakeholder Interviews', 'Requirement Analysis', 'Process Study', 'Project Roadmap'],
+                },
+                {
+                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                  icon: <PenTool className="h-7 w-7" />,
+                  title: 'Architecture',
+                  desc: 'We design a robust and scalable architecture that ensures security and flexibility.',
+                  items: ['System Architecture', 'Technology Selection', 'Database Design', 'Integration Planning'],
+                },
+                {
+                  num: '03', color: '#059669', iconBg: '#ECFDF5',
+                  icon: <Layers className="h-7 w-7" />,
+                  title: 'UI/UX Design',
+                  desc: 'We create intuitive and engaging interfaces focused on user experience.',
+                  items: ['User Flow & Wireframes', 'UI Design', 'Prototype', 'Usability Testing'],
+                },
+                {
+                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                  icon: <Code2 className="h-7 w-7" />,
+                  title: 'Development',
+                  desc: 'Our team builds clean, secure and high-performance code using best practices.',
+                  items: ['Backend Development', 'Frontend Development', 'API Integration', 'Code Review'],
+                },
+                {
+                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <ShieldCheck className="h-7 w-7" />,
+                  title: 'Testing',
+                  desc: 'We rigorously test every module to ensure quality, performance and security.',
+                  items: ['Functional Testing', 'Performance Testing', 'Security Testing', 'Bug Fixing'],
+                },
+                {
+                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                  icon: <Rocket className="h-7 w-7" />,
+                  title: 'Deployment',
+                  desc: 'We deploy the solution seamlessly and provide ongoing support.',
+                  items: ['Live Deployment', 'Data Migration', 'Training & Handover', 'Post-Launch Support'],
+                },
+              ].map((step, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md relative overflow-hidden"
+                  style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                >
+                  <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                  <div className="flex items-center gap-3 mb-4">
+                    <div
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-[12px] font-bold text-white shrink-0"
+                      style={{ background: step.color }}
+                    >
+                      {step.num}
+                    </div>
+                    <div
+                      className="flex h-12 w-12 items-center justify-center rounded-full"
+                      style={{ background: step.iconBg, color: step.color }}
+                    >
+                      {step.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-[16px] font-bold mb-2" style={{ color: '#1E293B' }}>{step.title}</h3>
+                  <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
+                  <ul className="space-y-2">
+                    {step.items.map((item, fi) => (
+                      <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
+                        <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile: vertical timeline on left */}
+            <div className="sm:hidden relative pl-10">
+              {/* Vertical dashed line */}
+              <div className="absolute left-[19px] top-0 bottom-0" style={{ width: '2px', borderLeft: '2px dashed #CBD5E1' }} />
+              {[
+                {
+                  num: '01', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <Search className="h-6 w-6" />,
+                  title: 'Discovery',
+                  desc: 'We understand your goals, challenges and requirements through in-depth research.',
+                  items: ['Stakeholder Interviews', 'Requirement Analysis', 'Process Study', 'Project Roadmap'],
+                },
+                {
+                  num: '02', color: '#2563EB', iconBg: '#EFF6FF',
+                  icon: <PenTool className="h-6 w-6" />,
+                  title: 'Architecture',
+                  desc: 'We design a robust and scalable architecture that ensures security and flexibility.',
+                  items: ['System Architecture', 'Technology Selection', 'Database Design', 'Integration Planning'],
+                },
+                {
+                  num: '03', color: '#059669', iconBg: '#ECFDF5',
+                  icon: <Layers className="h-6 w-6" />,
+                  title: 'UI/UX Design',
+                  desc: 'We create intuitive and engaging interfaces focused on user experience.',
+                  items: ['User Flow & Wireframes', 'UI Design', 'Prototype', 'Usability Testing'],
+                },
+                {
+                  num: '04', color: '#EA580C', iconBg: '#FFF7ED',
+                  icon: <Code2 className="h-6 w-6" />,
+                  title: 'Development',
+                  desc: 'Our team builds clean, secure and high-performance code using best practices.',
+                  items: ['Backend Development', 'Frontend Development', 'API Integration', 'Code Review'],
+                },
+                {
+                  num: '05', color: '#7C3AED', iconBg: '#F5F3FF',
+                  icon: <ShieldCheck className="h-6 w-6" />,
+                  title: 'Testing',
+                  desc: 'We rigorously test every module to ensure quality, performance and security.',
+                  items: ['Functional Testing', 'Performance Testing', 'Security Testing', 'Bug Fixing'],
+                },
+                {
+                  num: '06', color: '#DB2777', iconBg: '#FDF2F8',
+                  icon: <Rocket className="h-6 w-6" />,
+                  title: 'Deployment',
+                  desc: 'We deploy the solution seamlessly and provide ongoing support.',
+                  items: ['Live Deployment', 'Data Migration', 'Training & Handover', 'Post-Launch Support'],
+                },
+              ].map((step, i) => (
+                <div key={i} className="relative mb-6 last:mb-0">
+                  {/* Number Circle on timeline */}
+                  <div
+                    className="absolute -left-10 top-0 z-10 flex h-10 w-10 items-center justify-center rounded-full text-[11px] font-bold text-white"
+                    style={{ background: step.color }}
+                  >
+                    {step.num}
+                  </div>
+                  {/* Card */}
+                  <div
+                    className="rounded-2xl p-5 transition-all duration-300 hover:shadow-md relative overflow-hidden"
+                    style={{ border: '1px solid #E2E8F0', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                  >
+                    <div className="absolute bottom-0 left-0 right-0 h-1" style={{ background: step.color, borderRadius: '0 0 16px 16px' }} />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div
+                        className="flex h-12 w-12 items-center justify-center rounded-full"
+                        style={{ background: step.iconBg, color: step.color }}
+                      >
+                        {step.icon}
+                      </div>
+                      <h3 className="text-[16px] font-bold" style={{ color: '#1E293B' }}>{step.title}</h3>
+                    </div>
+                    <p className="text-[12.5px] leading-[1.6] mb-4" style={{ color: '#64748B' }}>{step.desc}</p>
+                    <ul className="space-y-2">
+                      {step.items.map((item, fi) => (
+                        <li key={fi} className="flex items-center gap-2 text-[12px] font-medium" style={{ color: '#334155' }}>
+                          <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: step.color }} />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* ── OTHER PROJECTS / CASE STUDIES ── */}
