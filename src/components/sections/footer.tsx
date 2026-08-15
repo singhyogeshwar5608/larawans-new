@@ -88,9 +88,18 @@ const SOCIALS = [
 export function Footer() {
   return (
     <footer
-      className="relative mt-auto overflow-hidden border-t border-white/[0.08] bg-[#06081a]/80 backdrop-blur-xl"
-      style={{ borderRadius: "10px 10px 0 0" }}
+      className="relative mt-auto overflow-hidden border-t border-white/[0.08]"
+      style={{ borderRadius: "10px 10px 0 0", background: '#050614' }}
     >
+      {/* Hero-matching gradient overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(124,92,255,0.25) 0%, rgba(0,224,198,0.15) 45%, rgba(255,77,210,0.08) 70%, transparent 85%)",
+        }}
+      />
       {/* Glow top */}
       <div
         aria-hidden
