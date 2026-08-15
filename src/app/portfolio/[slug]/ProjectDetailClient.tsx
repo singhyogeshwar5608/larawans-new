@@ -214,32 +214,34 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             </div>
 
             {/* Right KPI Impact Cards */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {project.impactMetrics.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm hover:shadow-md transition-all duration-300 group"
-                >
-                  <div className="text-[10.5px] font-semibold uppercase tracking-wider text-gray-400">
-                    {m.label}
-                  </div>
+            <div className="lg:col-span-7">
+              <div className="flex gap-3 overflow-x-auto pb-2 sm:pb-0 sm:grid sm:grid-cols-3 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory scrollbar-hide">
+                {project.impactMetrics.map((m, idx) => (
                   <div
-                    className="mt-2 font-display text-2xl sm:text-3xl font-extrabold"
-                    style={{
-                      backgroundImage: "linear-gradient(to right, #4f46e5, #6366f1)",
-                      WebkitBackgroundClip: "text",
-                      backgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
+                    key={idx}
+                    className="relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 group min-w-[200px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink"
                   >
-                    {m.value}
+                    <div className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-wider text-gray-400">
+                      {m.label}
+                    </div>
+                    <div
+                      className="mt-1.5 sm:mt-2 font-display text-xl sm:text-3xl font-extrabold"
+                      style={{
+                        backgroundImage: "linear-gradient(to right, #4f46e5, #6366f1)",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                      }}
+                    >
+                      {m.value}
+                    </div>
+                    <div className="mt-2 sm:mt-3 inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-[10.5px] font-semibold text-emerald-700">
+                      <CheckCircle2 className="h-3 w-3 text-emerald-600" />
+                      <span>{m.badge}</span>
+                    </div>
                   </div>
-                  <div className="mt-3 inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-700">
-                    <CheckCircle2 className="h-3 w-3 text-emerald-600" />
-                    <span>{m.badge}</span>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
