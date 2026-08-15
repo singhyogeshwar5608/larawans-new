@@ -6,7 +6,7 @@ import { MobileHamburgerMenu } from "@/components/mobile-hamburger-menu";
 
 export default function PortfolioIndexPage() {
   return (
-    <div className="min-h-screen bg-[#050614] text-foreground antialiased">
+    <div className="portfolio-page min-h-screen bg-[#050614] text-foreground antialiased">
       <Navbar />
       <MobileHamburgerMenu theme="dark" />
 
