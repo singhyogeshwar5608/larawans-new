@@ -1242,24 +1242,20 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             ].map((role, i) => (
               <div
                 key={i}
-                className="flex flex-col items-center rounded-2xl bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
-                style={{ border: '1px solid #F3F4F6', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+                className="flex flex-col items-center rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
+                style={{ border: '1px solid #F3F4F6', background: role.iconBg, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
               >
                 {/* Icon Circle */}
                 <div
-                  className="flex h-16 w-16 items-center justify-center rounded-full mb-5"
-                  style={{ background: role.iconBg, color: role.iconColor }}
+                  className="flex h-16 w-16 items-center justify-center rounded-full mb-5 bg-white"
+                  style={{ color: role.iconColor, boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
                 >
                   {role.icon}
                 </div>
                 {/* Title */}
-                <h3 className="text-[18px] font-bold text-center mb-3" style={{ color: role.titleColor }}>
+                <h3 className="text-[18px] font-bold text-center mb-6" style={{ color: role.titleColor }}>
                   {role.title}
                 </h3>
-                {/* Description */}
-                <p className="text-[13px] text-center leading-[1.6] mb-6 flex-1" style={{ color: '#6B7280' }}>
-                  {role.desc}
-                </p>
                 {/* Feature List */}
                 <ul className="w-full space-y-2.5 mb-6">
                   {role.features.map((feat, fi) => (
@@ -1272,8 +1268,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 {/* Badge Pill */}
                 <div className="mt-auto pt-3">
                   <span
-                    className="inline-block rounded-full px-4 py-1.5 text-[11px] font-semibold"
-                    style={{ background: role.badgeBg, color: role.badgeColor }}
+                    className="inline-block rounded-full px-4 py-1.5 text-[11px] font-semibold bg-white"
+                    style={{ color: role.badgeColor }}
                   >
                     {role.badge}
                   </span>
