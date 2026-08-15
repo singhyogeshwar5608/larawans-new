@@ -350,13 +350,10 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           {/* ── INTERACTIVE SIMULATOR PREVIEW SECTION ── */}
           <div className="mt-8">
             <div className="mb-4 text-center sm:text-left">
-              <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
-                Live Interactive Demonstration
-              </span>
-              <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
+              <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900">
                 Project Interface Simulator
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-500 sm:block hidden">
                 Experience the live interface behavior in real-time across both Desktop Console and Mobile device views.
               </p>
             </div>
