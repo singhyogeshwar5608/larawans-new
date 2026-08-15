@@ -434,12 +434,12 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 ))}
               </div>
 
-              {/* Mobile: horizontal scrollable tabs with light bg */}
-              <div className="flex gap-2 overflow-x-auto scrollbar-hide rounded-2xl p-3 lg:hidden" style={{ background: '#F8FAFC' }}>
+              {/* Mobile: 2x2 grid tabs with light bg */}
+              <div className="grid grid-cols-2 gap-2 rounded-2xl p-3 lg:hidden" style={{ background: '#F8FAFC' }}>
                 {project.workflowSteps.map((wf) => (
                   <div
                     key={wf.step}
-                    className="flex flex-col items-center text-center min-w-[130px] flex-1 rounded-xl border border-gray-100 bg-white p-3 snap-start"
+                    className="flex flex-col items-center text-center rounded-xl border border-gray-100 bg-white p-3"
                   >
                     <span
                       className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold text-white shadow-sm"
