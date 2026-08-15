@@ -123,13 +123,14 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
           <div className="flex items-center justify-between flex-wrap gap-3 border-b border-gray-100 pb-3">
             <a
               href="/#portfolio"
-              className="inline-flex items-center gap-2 rounded-xl border border-gray-100 bg-white px-3.5 py-1.5 text-xs font-semibold text-gray-500 transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50 hover:text-indigo-600"
+              className="inline-flex items-center gap-2 rounded-xl border border-gray-100 bg-white px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 hover:border-indigo-200 hover:bg-indigo-50 sm:text-gray-500 sm:hover:text-indigo-600"
+              style={{ color: '#6366F1' }}
             >
               <ArrowLeft className="h-3.5 w-3.5 text-indigo-600" />
               <span>Back to All Work</span>
             </a>
 
-            <div className="flex items-center gap-2 text-xs text-gray-400">
+            <div className="hidden sm:flex items-center gap-2 text-xs text-gray-400">
               <a href="/" className="hover:text-indigo-600 transition-colors">
                 Home
               </a>
@@ -169,34 +170,34 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
                 {project.title}
               </h1>
 
-              <p className="text-base sm:text-lg text-slate-500 leading-relaxed font-normal">
+              <p className="text-[13px] sm:text-base sm:text-lg text-slate-500 leading-relaxed font-normal">
                 {project.description}
               </p>
 
               {/* Meta information chips */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-                    <Globe className="h-3 w-3 text-indigo-600" />
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
+                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                    <Globe className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Client</span>
                   </div>
-                  <div className="mt-1 text-xs font-bold text-gray-900 truncate">{project.client}</div>
+                  <div className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs font-bold text-gray-900 truncate">{project.client}</div>
                 </div>
 
-                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
-                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-                    <Clock className="h-3 w-3 text-indigo-600" />
+                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
+                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                    <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Timeline</span>
                   </div>
-                  <div className="mt-1 text-xs font-bold text-gray-900">{project.duration}</div>
+                  <div className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs font-bold text-gray-900">{project.duration}</div>
                 </div>
 
-                <div className="rounded-xl border border-gray-100 bg-gray-50 p-3 col-span-2 sm:col-span-1">
-                  <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-gray-400">
-                    <MapPin className="h-3 w-3 text-indigo-600" />
+                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
+                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                    <MapPin className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Location</span>
                   </div>
-                  <div className="mt-1 text-xs font-bold text-gray-900">{project.location}</div>
+                  <div className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs font-bold text-gray-900 truncate">{project.location}</div>
                 </div>
               </div>
 
