@@ -918,73 +918,102 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
           {/* Bottom Feature Banner */}
           <div
-            className="mt-16 rounded-3xl p-8 sm:p-10 lg:p-14 relative overflow-hidden"
-            style={{ background: '#F8FAFC', border: '1px solid #F3F4F6' }}
+            className="mt-16 rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden"
+            style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', boxShadow: '0 4px 24px rgba(0,0,0,0.06)' }}
           >
-            {/* Left Shield SVG Illustration (desktop only) */}
-            <div className="hidden lg:block absolute left-8 xl:left-12 top-1/2 -translate-y-1/2 opacity-90">
-              <svg viewBox="0 0 100 120" fill="none" className="w-28 h-36 xl:w-32 xl:h-40 drop-shadow-lg">
-                <path d="M50 115C50 115 95 90 95 45V15L50 5L5 15V45C5 90 50 115 50 115Z" fill="#4F46E5" fillOpacity="0.1" />
-                <path d="M50 105C50 105 85 85 85 48V22L50 14L15 22V48C15 85 50 105 50 105Z" fill="#4F46E5" fillOpacity="0.2" />
-                <path d="M50 85C50 85 70 72 70 48V30L50 25L30 30V48C30 72 50 85 50 85Z" fill="#4F46E5" />
-                <path d="M50 75V55M42 63H58" stroke="white" strokeWidth="4" strokeLinecap="round" />
-                <circle cx="10" cy="60" r="3" fill="#818CF8" />
-                <circle cx="90" cy="60" r="3" fill="#818CF8" />
-                <circle cx="50" cy="110" r="3" fill="#818CF8" />
-                <path d="M10 60 Q 50 80 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
-                <path d="M10 60 Q 50 20 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
-              </svg>
-            </div>
+            <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
 
-            <div className="lg:pl-40 xl:pl-48">
-              {/* Features Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-12">
-                {[
-                  {
-                    icon: <UserCheck className="h-5 w-5" style={{ color: '#4F46E5' }} />,
-                    iconBg: '#EEF2FF',
-                    title: 'Role-Based Access',
-                    desc: 'Granular access control for every user role',
-                  },
-                  {
-                    icon: <ShieldCheck className="h-5 w-5" style={{ color: '#059669' }} />,
-                    iconBg: '#D1FAE5',
-                    title: 'Data Protection',
-                    desc: 'Protect sensitive data with strict permissions',
-                  },
-                  {
-                    icon: <Eye className="h-5 w-5" style={{ color: '#2563EB' }} />,
-                    iconBg: '#DBEAFE',
-                    title: 'Audit & Tracking',
-                    desc: 'Track every action for transparency',
-                  },
-                ].map((feat, i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl"
-                      style={{ background: feat.iconBg }}
-                    >
-                      {feat.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-[14px] font-bold" style={{ color: '#111827' }}>{feat.title}</h4>
-                      <p className="mt-1.5 text-[12px] leading-[1.5]" style={{ color: '#6B7280' }}>{feat.desc}</p>
-                    </div>
-                  </div>
-                ))}
+              {/* ── Left: Shield Illustration + Heading ── */}
+              <div className="shrink-0 flex flex-col items-center lg:items-start gap-5 lg:w-[35%]">
+                {/* Shield SVG */}
+                <div className="relative">
+                  <svg viewBox="0 0 100 120" fill="none" className="w-24 h-30 sm:w-28 sm:h-36">
+                    <path d="M50 115C50 115 95 90 95 45V15L50 5L5 15V45C5 90 50 115 50 115Z" fill="#4F46E5" fillOpacity="0.1" />
+                    <path d="M50 105C50 105 85 85 85 48V22L50 14L15 22V48C15 85 50 105 50 105Z" fill="#4F46E5" fillOpacity="0.2" />
+                    <path d="M50 85C50 85 70 72 70 48V30L50 25L30 30V48C30 72 50 85 50 85Z" fill="#4F46E5" />
+                    <path d="M50 75V55M42 63H58" stroke="white" strokeWidth="4" strokeLinecap="round" />
+                    <circle cx="10" cy="60" r="3" fill="#818CF8" />
+                    <circle cx="90" cy="60" r="3" fill="#818CF8" />
+                    <circle cx="50" cy="110" r="3" fill="#818CF8" />
+                    <path d="M10 60 Q 50 80 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+                    <path d="M10 60 Q 50 20 90 60" stroke="#C7D2FE" strokeWidth="1" fill="none" strokeDasharray="4 4" />
+                  </svg>
+                </div>
+                <div className="text-center lg:text-left">
+                  <h2 className="text-[1.35rem] sm:text-[1.5rem] font-bold leading-[1.3]" style={{ color: '#111827' }}>
+                    Secure. Controlled.<br />Role-Based.
+                  </h2>
+                  <p className="mt-3 text-[14px] sm:text-[15px] leading-[1.6] max-w-[320px]" style={{ color: '#6B7280' }}>
+                    Every action is controlled through role-based permissions to ensure data security, privacy and accountability.
+                  </p>
+                </div>
               </div>
 
-              {/* Footer Tagline */}
-              <div className="flex items-start gap-4 pt-6" style={{ borderTop: '1px solid #F3F4F6' }}>
-                <div
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg mt-0.5"
-                  style={{ background: '#EEF2FF', color: '#4F46E5' }}
-                >
-                  <ShieldCheck className="h-5 w-5" />
+              {/* ── Right: 2×2 Feature Cards Grid ── */}
+              <div className="flex-1 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  {[
+                    {
+                      icon: <UserCheck className="h-6 w-6" style={{ color: '#7C3AED' }} />,
+                      iconBg: '#F0E6FF',
+                      title: 'Role-Based Access',
+                      desc: 'Granular access control for every user role',
+                    },
+                    {
+                      icon: <ShieldCheck className="h-6 w-6" style={{ color: '#10B981' }} />,
+                      iconBg: '#E6F9F1',
+                      title: 'Data Protection',
+                      desc: 'Protect sensitive data with strict permissions',
+                    },
+                    {
+                      icon: <Eye className="h-6 w-6" style={{ color: '#3B82F6' }} />,
+                      iconBg: '#E6F4FF',
+                      title: 'Audit & Tracking',
+                      desc: 'Track every action for transparency',
+                    },
+                    {
+                      icon: <Settings className="h-6 w-6" style={{ color: '#EC4899' }} />,
+                      iconBg: '#FFE6F0',
+                      title: 'Easy Management',
+                      desc: 'Manage roles and permissions easily',
+                    },
+                  ].map((feat, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-4 rounded-2xl p-5 transition-all duration-300 hover:-translate-y-0.5"
+                      style={{ background: '#FAFBFC' }}
+                    >
+                      {/* Icon Circle */}
+                      <div
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                        style={{ background: feat.iconBg }}
+                      >
+                        {feat.icon}
+                      </div>
+                      {/* Text */}
+                      <div className="pt-0.5">
+                        <h4 className="text-[15px] font-semibold" style={{ color: '#111827' }}>{feat.title}</h4>
+                        <p className="mt-2 text-[13px] leading-[1.5]" style={{ color: '#6B7280' }}>{feat.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <h4 className="text-[16px] font-bold" style={{ color: '#312E81' }}>Secure access. Better care.</h4>
-                  <p className="mt-1 text-[14px]" style={{ color: '#6B7280' }}>Right people. Right access. Right time.</p>
+
+                {/* Footer Tagline */}
+                <div
+                  className="mt-5 flex items-center gap-4 rounded-2xl p-5"
+                  style={{ background: '#FAFBFC' }}
+                >
+                  <div
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                    style={{ background: '#F0E6FF', color: '#7C3AED' }}
+                  >
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <h4 className="text-[15px] font-semibold" style={{ color: '#111827' }}>Secure access. Better care.</h4>
+                    <p className="mt-1 text-[13px]" style={{ color: '#6B7280' }}>Right people. Right access. Right time.</p>
+                  </div>
                 </div>
               </div>
             </div>
