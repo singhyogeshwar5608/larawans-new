@@ -43,6 +43,8 @@ import {
   Monitor,
   Server,
   Infinity,
+  Mic,
+  BedDouble,
 } from "lucide-react";
 import {
   SiLaravel,
@@ -334,34 +336,93 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── KEY FEATURES GRID ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
-          <div className="mb-8">
-            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-600">
-              Capabilities
-            </span>
-            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-gray-900">
-              Core Platform Features
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+          {/* Section Header */}
+          <div className="text-center max-w-[700px] mx-auto">
+            {/* Badge Pill */}
+            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Capabilities</span>
+            </div>
+            {/* Heading with partial gradient */}
+            <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
+              <span style={{ color: '#1E293B' }}>Core Platform </span>
+              <span style={{ backgroundImage: 'linear-gradient(135deg, #6366F1 0%, #A855F7 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Features</span>
             </h2>
+            {/* Description */}
+            <p className="mt-4 text-[15px] sm:text-[17px] leading-[1.6]" style={{ color: '#64748B' }}>
+              A comprehensive suite of features designed to streamline hospital operations, enhance patient care, and improve overall efficiency.
+            </p>
+            {/* Decorative Underline */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              <span className="block h-1 w-20 rounded-full" style={{ background: '#7C3AED' }} />
+              <span className="block h-2 w-2 rounded-full" style={{ background: '#7C3AED' }} />
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Feature Cards Grid */}
+          <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
             {project.keyFeatures.map((feat, i) => {
-              const IconComponent = ICON_MAP[feat.iconName] || Zap;
+              const featureIcons: Record<string, any> = {
+                Shield: <Shield className="h-7 w-7" />,
+                Cpu: <Mic className="h-7 w-7" />,
+                Users: <BedDouble className="h-7 w-7" />,
+                Zap: <FlaskConical className="h-7 w-7" />,
+                BarChart: <BarChart className="h-7 w-7" />,
+              };
+              const IconEl = featureIcons[feat.iconName] || <Zap className="h-7 w-7" />;
+              const badges = ['HL7 FHIR Ready', 'AI Powered', 'Real-time Sync', 'Automated Sync'];
               return (
                 <div
                   key={i}
-                  className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300"
+                  className="bg-white rounded-2xl p-6 sm:p-7 relative transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                  style={{ border: '1px solid #E2E8F0', boxShadow: '0 4px 20px -4px rgba(124, 58, 237, 0.08)' }}
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-600 mb-4">
-                    <IconComponent className="h-5 w-5" />
+                  {/* Number Badge - top right */}
+                  <span className="absolute top-5 right-5 text-[13px] font-bold" style={{ color: '#C4B5FD' }}>0{i + 1}</span>
+                  {/* Icon Circle */}
+                  <div
+                    className="flex h-14 w-14 items-center justify-center rounded-full mb-5"
+                    style={{ background: '#F5F3FF', color: '#7C3AED' }}
+                  >
+                    {IconEl}
                   </div>
-                  <h3 className="font-display text-base font-bold text-gray-900">{feat.title}</h3>
-                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">
+                  {/* Title */}
+                  <h3 className="text-[17px] sm:text-[18px] font-bold leading-tight" style={{ color: '#1E293B' }}>{feat.title}</h3>
+                  {/* Purple underline */}
+                  <div className="mt-3 mb-4 h-1 w-10 rounded-full" style={{ background: '#7C3AED' }} />
+                  {/* Description */}
+                  <p className="text-[13px] sm:text-[13.5px] leading-[1.7]" style={{ color: '#64748B' }}>
                     {feat.description}
                   </p>
+                  {/* Bottom Badge */}
+                  <div className="mt-5 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-semibold" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                    <span>{badges[i] || 'Featured'}</span>
+                  </div>
                 </div>
               );
             })}
+          </div>
+
+          {/* Bottom Benefits Bar */}
+          <div className="mt-10 rounded-2xl p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8" style={{ background: '#FAF5FF' }}>
+            {[
+              { icon: <Rocket className="h-5 w-5" />, title: 'Built for Scale', desc: 'Designed to scale with growing hospital networks.' },
+              { icon: <ShieldCheck className="h-5 w-5" />, title: 'Secure & Reliable', desc: 'Enterprise-grade security with 99.8% system uptime.' },
+              { icon: <BarChart className="h-5 w-5" />, title: 'Operational Efficiency', desc: 'Automate workflows and reduce manual tasks significantly.' },
+              { icon: <Users className="h-5 w-5" />, title: 'Better Patient Care', desc: 'Empowering healthcare teams to deliver exceptional care.' },
+            ].map((item, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: '#F5F3FF', color: '#7C3AED' }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className="text-[14px] sm:text-[15px] font-bold" style={{ color: '#1E293B' }}>{item.title}</h4>
+                  <p className="mt-1 text-[12px] sm:text-[13px] leading-[1.6]" style={{ color: '#64748B' }}>{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
