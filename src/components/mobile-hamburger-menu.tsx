@@ -105,16 +105,8 @@ export function MobileHamburgerMenu({ theme = "dark" }: MobileHamburgerMenuProps
                 className="flex items-center gap-2"
                 onClick={() => setOpen(false)}
               >
-                <div
-                  className="flex h-8 w-8 items-center justify-center rounded-lg"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #7c5cff, #00e0c6)",
-                  }}
-                >
-                  <span className="text-sm font-extrabold text-white">
-                    L
-                  </span>
+                <div className="h-8 w-8 overflow-hidden rounded-lg">
+                  <img src="/logo/logo.jpeg" alt="Larawans Digital" className="h-full w-full object-cover" />
                 </div>
                 <span
                   className="font-display text-sm font-bold"

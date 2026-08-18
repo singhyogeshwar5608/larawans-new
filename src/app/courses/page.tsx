@@ -206,6 +206,7 @@ export default function CoursesPage() {
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
   const [filterPopupOpen, setFilterPopupOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Accordion & Interactivity State
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -387,38 +388,89 @@ export default function CoursesPage() {
         .border-primary {
           border-color: var(--primary) !important;
         }
+
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        @keyframes fadeInOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
       `}</style>
 
       {/* BEGIN: Navigation */}
       <nav className="sticky top-0 z-50 bg-white shadow-sm" data-purpose="main-nav">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="grid grid-cols-[1fr_auto_1fr] items-center h-16">
             <div className="flex items-center">
-              <a className="text-primary font-bold text-xl flex items-center gap-2" href="#">
-                <span className="material-icons">school</span>
-                EduPremium
+              <a className="flex items-center gap-2" href="/">
+                <img src="/logo/logo-colored.png" alt="Larawans Digital" className="h-9 w-auto object-contain" />
               </a>
             </div>
             <div className="hidden md:flex space-x-8">
-              <a className="text-text-main font-medium hover:text-primary" href="#">Courses</a>
-              <a className="text-text-muted hover:text-primary" href="#">Mentors</a>
-              <a className="text-text-muted hover:text-primary" href="#">Success Stories</a>
-              <a className="text-text-muted hover:text-primary" href="#">Pricing</a>
-              <a className="text-text-muted hover:text-primary" href="#">About Us</a>
+              <a className="text-text-main font-medium hover:text-primary" href="/">Home</a>
+              <a className="text-text-muted hover:text-primary" href="/#services">Services</a>
             </div>
-            <div className="flex items-center space-x-4">
-              <a className="text-text-muted hover:text-primary font-medium" href="#">Log In</a>
-              <a className="bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-hover-custom transition-colors" href="#">Sign Up Free</a>
+            <div className="flex md:hidden items-center justify-end">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-lg text-text-main hover:bg-surface-variant transition-colors"
+                aria-label="Toggle menu"
+              >
+                <span className="material-icons">{mobileMenuOpen ? "close" : "menu"}</span>
+              </button>
             </div>
           </div>
         </div>
+        {mobileMenuOpen && (
+          <>
+            <div
+              className="fixed inset-0 z-[70] bg-black/40"
+              style={{ animation: "fadeInOverlay 0.3s ease forwards" }}
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <div
+              className="fixed top-0 right-0 bottom-0 z-[80] w-[280px] bg-white shadow-2xl flex flex-col"
+              style={{ animation: "slideInRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards" }}
+            >
+              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                <a href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                  <img src="/logo/logo-colored.png" alt="Larawans Digital" className="h-8 w-auto object-contain" />
+                </a>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-100"
+                  aria-label="Close menu"
+                >
+                  <span className="material-icons" style={{ fontSize: 18, color: '#4B5563' }}>close</span>
+                </button>
+              </div>
+              <div className="px-5 py-4 flex flex-col space-y-3">
+                <a
+                  href="/"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-text-main font-medium hover:text-primary py-2"
+                >
+                  Home
+                </a>
+                <a
+                  href="/#services"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-text-muted hover:text-primary py-2"
+                >
+                  Services
+                </a>
+              </div>
+            </div>
+          </>
+        )}
       </nav>
       {/* END: Navigation */}
 
       {/* BEGIN: Hero Section */}
-      <section className="hero-gradient pt-20 pb-16 text-center" data-purpose="hero">
+      <section className="hero-gradient pt-[25px] md:pt-[50px] pb-16 text-center" data-purpose="hero">
         <div className="max-w-4xl mx-auto px-4">
-          <span className="text-primary font-semibold text-sm tracking-wider uppercase mb-4 block">Master New Skills</span>
           <h1 className="text-5xl font-bold text-text-main mb-6 leading-tight">Explore Our Professional Courses</h1>
           <p className="text-text-muted text-lg mb-8 max-w-2xl mx-auto">Boost your career with expert-led courses designed for today's dynamic job market. Join thousands of successful learners.</p>
           
@@ -479,50 +531,45 @@ export default function CoursesPage() {
 
       {/* BEGIN: Stats Banner */}
       <section className="max-w-5xl mx-auto px-4 -mt-10 relative z-10" data-purpose="stats">
-        <div className="bg-white rounded-2xl shadow-lg border border-border-custom grid grid-cols-2 md:grid-cols-4 gap-8 text-center p-6">
-          <div className="flex flex-wrap md:flex-nowrap items-center justify-between gap-4 w-full">
-            {/* Stat 1 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
-                <span className="material-icons">school</span>
-              </div>
-              <div className="text-left">
-                <h3 className="text-xl font-bold text-text-main">50K+</h3>
-                <p className="text-text-muted text-xs font-medium">Happy Students</p>
-              </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          {/* Stat 1 */}
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-[#F0F7FF] border border-blue-100 p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 shrink-0">
+              <span className="material-icons">school</span>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
-            {/* Stat 2 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
-                <span className="material-icons">menu_book</span>
-              </div>
-              <div className="text-left">
-                <h3 className="text-xl font-bold text-text-main">500+</h3>
-                <p className="text-text-muted text-xs font-medium">Courses</p>
-              </div>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-text-main">50K+</h3>
+              <p className="text-text-muted text-xs font-medium">Happy Students</p>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
-            {/* Stat 3 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
-              <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 shrink-0">
-                <span className="material-icons">emoji_events</span>
-              </div>
-              <div className="text-left">
-                <h3 className="text-xl font-bold text-text-main">95%</h3>
-                <p className="text-text-muted text-xs font-medium">Satisfaction Rate</p>
-              </div>
+          </div>
+          {/* Stat 2 */}
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-emerald-50 border border-emerald-100 p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+            <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 shrink-0">
+              <span className="material-icons">menu_book</span>
             </div>
-            <div className="hidden md:block w-px h-12 bg-border-custom"></div>
-            {/* Stat 4 */}
-            <div className="flex items-center gap-4 flex-1 justify-center md:justify-start">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 shrink-0">
-                <span className="material-icons">stars</span>
-              </div>
-              <div className="text-left">
-                <h3 className="text-xl font-bold text-text-main">4.8/5</h3>
-                <p className="text-text-muted text-xs font-medium">Average Rating</p>
-              </div>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-text-main">500+</h3>
+              <p className="text-text-muted text-xs font-medium">Courses</p>
+            </div>
+          </div>
+          {/* Stat 3 */}
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-violet-50 border border-violet-100 p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+            <div className="w-12 h-12 bg-violet-100 rounded-full flex items-center justify-center text-violet-600 shrink-0">
+              <span className="material-icons">emoji_events</span>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-text-main">95%</h3>
+              <p className="text-text-muted text-xs font-medium">Satisfaction Rate</p>
+            </div>
+          </div>
+          {/* Stat 4 */}
+          <div className="flex flex-col items-center justify-center gap-2 rounded-2xl bg-orange-50 border border-orange-100 p-5 shadow-[0_4px_16px_rgba(0,0,0,0.08)]">
+            <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 shrink-0">
+              <span className="material-icons">stars</span>
+            </div>
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-text-main">4.8/5</h3>
+              <p className="text-text-muted text-xs font-medium">Average Rating</p>
             </div>
           </div>
         </div>
@@ -534,9 +581,6 @@ export default function CoursesPage() {
         <div className="max-w-[1280px] mx-auto px-6">
           {/* Section Header — Centered */}
           <div className="text-center mb-12 sm:mb-16">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider mb-5" style={{ backgroundColor: "#EDE9FE", color: "#6D28D9" }}>
-              🔥 TOP PICKS
-            </span>
             <h2 className="text-3xl sm:text-[3rem] font-extrabold mb-4" style={{ color: "#1E1B4B", letterSpacing: "-0.02em" }}>Featured Courses</h2>
             <p className="text-base sm:text-lg max-w-[650px] mx-auto leading-relaxed" style={{ color: "#64748B" }}>
               Hand-picked courses from industry leaders to accelerate your career growth.
@@ -686,7 +730,7 @@ export default function CoursesPage() {
       {/* END: Featured Courses */}
 
       {/* BEGIN: Browse By Category */}
-      <section className="py-10 sm:py-14 bg-white relative overflow-hidden" data-purpose="categories">
+      <section className="pt-[20px] pb-10 sm:pb-14 bg-white relative overflow-hidden" data-purpose="categories">
         {/* Decorative dot patterns */}
         <div className="absolute top-1/2 left-8 -translate-y-1/2 hidden lg:grid grid-cols-4 gap-3 opacity-30 pointer-events-none">
           {Array.from({ length: 16 }).map((_, i) => (
@@ -702,10 +746,6 @@ export default function CoursesPage() {
         <div className="relative max-w-[1280px] mx-auto px-6">
           {/* Section Header */}
           <div className="text-center mb-8 sm:mb-9">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-wider mb-3" style={{ backgroundColor: "#EEF2FF", color: "#6366F1", border: "1px solid #E0E7FF" }}>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" /></svg>
-              EXPLORE COURSES
-            </span>
             <h2 className="text-[1.6rem] sm:text-[2rem] lg:text-[2.25rem] font-extrabold mb-2" style={{ letterSpacing: "-0.02em" }}>
               Browse by <span style={{ color: "#7C3AED" }}>Category</span>
             </h2>
@@ -868,7 +908,7 @@ export default function CoursesPage() {
       {/* END: Browse By Category */}
 
       {/* BEGIN: All Courses (Sidebar + Grid) */}
-      <section className="py-16 sm:py-24 bg-white" data-purpose="all-courses">
+      <section className="pt-[20px] pb-16 sm:pb-24 bg-white" data-purpose="all-courses">
         <div className="max-w-7xl mx-auto px-4">
           {/* Section Header with mobile filter button */}
           <div className="flex items-center justify-between mb-8">
@@ -1436,7 +1476,7 @@ export default function CoursesPage() {
       {/* END: All Courses */}
 
       {/* BEGIN: Your Learning Journey */}
-      <section className="py-16 sm:py-20" style={{ backgroundColor: '#F8F7FF', position: 'relative', overflow: 'hidden' }}>
+      <section className="pt-[10px] pb-[20px] sm:pb-20" style={{ backgroundColor: '#F8F7FF', position: 'relative', overflow: 'hidden' }}>
         {/* Decorative dots top-left */}
         <div style={{ position: 'absolute', top: '20px', left: '20px', display: 'grid', gridTemplateColumns: 'repeat(4, 8px)', gap: '8px', opacity: 0.5 }}>
           {Array.from({ length: 16 }).map((_, i) => (
@@ -1451,16 +1491,6 @@ export default function CoursesPage() {
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px', position: 'relative', zIndex: 1 }}>
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            {/* STEP BY STEP badge */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, backgroundColor: '#FFFFFF', border: '1px solid #EEEFF5', borderRadius: 50, padding: '6px 16px', marginBottom: 16 }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 16v-2.38C4 11.5 2.97 9.5 3 8c.03-1.5.49-3 2-4s3.5-1 4.5-.5S11 5 11.5 6c.5 1.5 1 3 2.5 3s2.5-1.5 3-3c.5-1 1.5-2.5 3-3s3 0 4 .5 2 2.5 2 4c-.03 1.5-1 3.5-1 5.62V16" />
-                <path d="M20 20v-4" />
-                <path d="M4 20v-4" />
-              </svg>
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#4F46E5', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Step by Step</span>
-            </div>
-
             {/* Title */}
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
               <span style={{ color: '#111827' }}>Your </span>
@@ -1509,13 +1539,10 @@ export default function CoursesPage() {
       {/* END: Your Learning Journey */}
 
       {/* BEGIN: Popular Learning Paths */}
-      <section style={{ backgroundColor: '#F8F9FC', padding: '64px 0' }}>
+      <section style={{ backgroundColor: '#F8F9FC', padding: '14px 0 64px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 16px' }}>
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <div style={{ display: 'inline-block', backgroundColor: '#EDE9FE', color: '#7C3AED', fontSize: 12, fontWeight: 700, padding: '6px 16px', borderRadius: 50, marginBottom: 16, letterSpacing: '0.5px' }}>
-              🔥 POPULAR PATHS
-            </div>
             <h2 style={{ fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 800, lineHeight: 1.2, margin: 0 }}>
               <span style={{ color: '#111827' }}>Popular </span>
               <span style={{ color: '#7C3AED' }}>Learning Paths</span>
@@ -1527,13 +1554,15 @@ export default function CoursesPage() {
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 24 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-stretch" style={{ gap: 24 }}>
             {LEARNING_PATHS.map((path) => (
               <div key={path.title} style={{
-                backgroundColor: '#FFFFFF', borderRadius: 20,
-                boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+                backgroundColor: '#F3F4F6', borderRadius: 20,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
                 padding: 28, position: 'relative',
                 transition: 'transform 0.3s, box-shadow 0.3s',
+                display: 'flex', flexDirection: 'column',
+                height: '100%',
               }}>
                 {/* Badge top-right */}
                 <div style={{ position: 'absolute', top: 20, right: 20, fontSize: 11, fontWeight: 700, color: path.theme, textTransform: 'uppercase' as const }}>
@@ -1559,7 +1588,7 @@ export default function CoursesPage() {
                 {/* Stats Row */}
                 <div style={{ display: 'flex', gap: 20, marginTop: 20 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
                     </div>
                     <div>
@@ -1568,7 +1597,7 @@ export default function CoursesPage() {
                     </div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: path.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div style={{ width: 32, height: 32, borderRadius: '50%', backgroundColor: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={path.theme} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
                     </div>
                     <div>
@@ -1583,7 +1612,7 @@ export default function CoursesPage() {
                   {path.techs.map((tech) => (
                     <span key={tech} style={{
                       fontSize: 11, fontWeight: 600, color: path.theme,
-                      backgroundColor: path.iconBg,
+                      backgroundColor: '#FFFFFF',
                       padding: '4px 10px', borderRadius: 8,
                     }}>{tech}</span>
                   ))}
@@ -1591,7 +1620,7 @@ export default function CoursesPage() {
 
                 {/* Explore Button */}
                 <button style={{
-                  width: '100%', marginTop: 20, padding: '11px 0',
+                  width: '100%', marginTop: 'auto', padding: '11px 0',
                   border: `2px solid ${path.theme}`, borderRadius: 12,
                   backgroundColor: 'transparent', color: path.theme,
                   fontSize: 14, fontWeight: 600, cursor: 'pointer',
@@ -1622,7 +1651,7 @@ export default function CoursesPage() {
       {/* END: Popular Learning Paths */}
 
       {/* BEGIN: Skills You'll Master */}
-      <section className="py-24 bg-surface-variant text-center" data-purpose="skills">
+      <section className="pt-[10px] pb-[20px] bg-surface-variant text-center" data-purpose="skills">
         <div className="max-w-4xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-text-main mb-8">Skills You'll Master</h2>
           <div className="flex flex-wrap justify-center gap-3">
@@ -1653,15 +1682,12 @@ export default function CoursesPage() {
       {/* END: Skills You'll Master */}
 
       {/* BEGIN: Why Learn With Us Grid */}
-      <section className="py-24 bg-white relative overflow-hidden" data-purpose="features">
+      <section className="pt-[40px] pb-24 bg-white relative overflow-hidden" data-purpose="features">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mt-48 blur-3xl opacity-50 -z-10"></div>
         <div className="max-w-7xl mx-auto px-4 relative">
           
           {/* Header */}
           <div className="text-center mb-16">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-primary mb-4 tracking-widest uppercase">
-              ✨ Why Students Choose Us
-            </span>
             <h2 className="text-4xl font-bold text-text-main mb-4">Why Learn With Us</h2>
             <p className="text-text-muted text-lg max-w-2xl mx-auto mb-4">
               We're committed to providing the best learning experience that helps you grow, build skills and achieve your career goals.
@@ -1672,7 +1698,7 @@ export default function CoursesPage() {
           {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Card 01: Expert Mentors */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-blue-50 text-primary text-xs font-bold px-3 py-1 rounded-lg">01</div>
               <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-blue-500">person_outline</span>
@@ -1682,7 +1708,7 @@ export default function CoursesPage() {
               <div className="w-24 h-1.5 bg-blue-500 rounded-full mt-auto"></div>
             </div>
             {/* Card 02: Practical Projects */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-lg">02</div>
               <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-emerald-600">code</span>
@@ -1692,7 +1718,7 @@ export default function CoursesPage() {
               <div className="w-24 h-1.5 bg-emerald-500 rounded-full mt-auto"></div>
             </div>
             {/* Card 03: Industry Certificate */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-violet-50 text-violet-700 text-xs font-bold px-3 py-1 rounded-lg">03</div>
               <div className="w-16 h-16 bg-violet-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-violet-600">card_membership</span>
@@ -1702,7 +1728,7 @@ export default function CoursesPage() {
               <div className="w-24 h-1.5 bg-violet-500 rounded-full mt-auto"></div>
             </div>
             {/* Card 04: Lifetime Access */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1 rounded-lg">04</div>
               <div className="w-16 h-16 bg-orange-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-orange-500">all_inclusive</span>
@@ -1712,7 +1738,7 @@ export default function CoursesPage() {
               <div className="w-24 h-1.5 bg-orange-500 rounded-full mt-auto"></div>
             </div>
             {/* Card 05: Learning Community */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-blue-50 text-primary text-xs font-bold px-3 py-1 rounded-lg">05</div>
               <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-blue-500">groups</span>
@@ -1722,7 +1748,7 @@ export default function CoursesPage() {
               <div className="w-24 h-1.5 bg-blue-500 rounded-full mt-auto"></div>
             </div>
             {/* Card 06: Placement Support */}
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
+            <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm hover:shadow-md transition-shadow relative flex flex-col items-center text-center">
               <div className="absolute top-4 left-4 bg-pink-50 text-pink-700 text-xs font-bold px-3 py-1 rounded-lg">06</div>
               <div className="w-16 h-16 bg-pink-50 rounded-full flex items-center justify-center mb-4">
                 <span className="material-icons text-3xl text-pink-500">business_center</span>
@@ -1785,191 +1811,73 @@ export default function CoursesPage() {
       </section>
       {/* END: Secondary Stats Banner */}
 
-      {/* BEGIN: Learning Paths Section 1 */}
-      <section className="bg-white py-24" data-purpose="learning-paths">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-blue-50 text-blue-600 mb-4">
-              📚 Learning Paths
-            </span>
-            <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">Choose the perfect track tailored to your current expertise and career goals.</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-4 md:pb-0">
-            {/* Beginner Path */}
-            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
-              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
-                <span className="material-icons text-green-600 text-3xl">rocket_launch</span>
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-2">Beginner</h3>
-              <p className="text-text-muted text-sm mb-6">Foundational concepts for those starting from scratch.</p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Core Fundamentals
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Guided Projects
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Community Support
-                </li>
-              </ul>
-              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Get Started</button>
-            </div>
-
-            {/* Intermediate Path */}
-            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
-              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
-                <span className="material-icons text-blue-600 text-3xl">trending_up</span>
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-2">Intermediate</h3>
-              <p className="text-text-muted text-sm mb-6">Deep dive into specialized tools and frameworks.</p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Advanced Logic
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Real-world Case Studies
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Code Reviews
-                </li>
-              </ul>
-              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Level Up</button>
-            </div>
-
-            {/* Advanced Path */}
-            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border border-border-custom">
-              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 bg-purple-100 rounded-2xl flex items-center justify-center mb-6">
-                <span className="material-icons text-purple-600 text-3xl">psychology</span>
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-2">Advanced</h3>
-              <p className="text-text-muted text-sm mb-6">Mastery of architecture and complex systems.</p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  System Design
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Performance Tuning
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  1-on-1 Mentorship
-                </li>
-              </ul>
-              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Master Now</button>
-            </div>
-
-            {/* Most Popular Path */}
-            <div className="bg-white rounded-[20px] p-8 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group relative border-2 border-blue-100">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest">Most Popular</div>
-              <div className="absolute inset-0 rounded-[20px] bg-blue-400/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mb-6">
-                <span className="material-icons text-yellow-600 text-3xl">star</span>
-              </div>
-              <h3 className="text-xl font-bold text-text-main mb-2">Full-Stack Pro</h3>
-              <p className="text-text-muted text-sm mb-6">The complete journey from zero to industry-ready.</p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  End-to-End Mastery
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Job Placement Help
-                </li>
-                <li className="flex items-center gap-3 text-sm text-text-main">
-                  <span className="material-icons text-blue-600 text-lg">check_circle</span>
-                  Portfolio Building
-                </li>
-              </ul>
-              <button className="w-full py-3 bg-[#2563EB] text-white rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-md">Join Path</button>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* END: Learning Paths Section 1 */}
-
       {/* BEGIN: Learning Paths Section 2 */}
-      <section className="py-24 bg-white" data-purpose="learning-paths">
+      <section className="pt-[50px] pb-[30px] bg-white overflow-hidden" data-purpose="learning-paths">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider mb-4 inline-block">📚 Learning Paths</span>
             <h2 className="text-4xl font-bold text-text-main mb-4">Compare Learning Paths</h2>
-            <p className="text-text-muted text-lg max-w-3xl mx-auto">Not sure where to start? Compare our learning paths and choose the course that best matches your current skills and career goals.</p>
+            <p className="text-text-muted text-[14px] max-w-3xl mx-auto">Not sure where to start? Compare our learning paths and choose the course that best matches your current skills and career goals.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 overflow-x-auto pb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
             {/* Card 1: Beginner */}
-            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
-              <div className="text-4xl mb-6">🟢</div>
-              <h3 className="text-xl font-bold text-text-main mb-4">Beginner</h3>
-              <p className="text-text-muted text-sm mb-8">Perfect for complete beginners starting their learning journey.</p>
-              <ul className="space-y-4 mb-10 flex-grow">
+            <div className="bg-white p-4 sm:p-6 rounded-[20px] shadow-xl flex flex-col border border-border-custom">
+              <div className="text-2xl mb-3">🟢</div>
+              <h3 className="text-lg font-bold text-text-main mb-2">Beginner</h3>
+              <p className="text-text-muted text-sm mb-4">Perfect for complete beginners starting their learning journey.</p>
+              <ul className="space-y-2 mb-5 flex-grow">
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> No Prior Experience Required</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> 4 Weeks Duration</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Beginner Friendly Projects</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Community Support</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-green-500 text-sm">check_circle</span> Completion Certificate</li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Start Beginner Path</button>
+              <button className="w-full py-2.5 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Start Beginner Path</button>
             </div>
 
             {/* Card 2: Intermediate */}
-            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
-              <div className="text-4xl mb-6">🔵</div>
-              <h3 className="text-xl font-bold text-text-main mb-4">Intermediate</h3>
-              <p className="text-text-muted text-sm mb-8">Best for learners with basic knowledge who want to level up.</p>
-              <ul className="space-y-4 mb-10 flex-grow">
+            <div className="bg-white p-4 sm:p-6 rounded-[20px] shadow-xl flex flex-col border border-border-custom">
+              <div className="text-2xl mb-3">🔵</div>
+              <h3 className="text-lg font-bold text-text-main mb-2">Intermediate</h3>
+              <p className="text-text-muted text-sm mb-4">Best for learners with basic knowledge who want to level up.</p>
+              <ul className="space-y-2 mb-5 flex-grow">
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Intermediate Curriculum</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Real World Projects</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Live Sessions</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Mentor Guidance</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-blue-500 text-sm">check_circle</span> Industry Certificate</li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Explore Intermediate</button>
+              <button className="w-full py-2.5 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Explore Intermediate</button>
             </div>
 
             {/* Card 3: Advanced */}
-            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-border-custom">
-              <div className="text-4xl mb-6">🟣</div>
-              <h3 className="text-xl font-bold text-text-main mb-4">Advanced</h3>
-              <p className="text-text-muted text-sm mb-8">Designed for professionals who want to master advanced concepts.</p>
-              <ul className="space-y-4 mb-10 flex-grow">
+            <div className="bg-white p-4 sm:p-6 rounded-[20px] shadow-xl flex flex-col border border-border-custom">
+              <div className="text-2xl mb-3">🟣</div>
+              <h3 className="text-lg font-bold text-text-main mb-2">Advanced</h3>
+              <p className="text-text-muted text-sm mb-4">Designed for professionals who want to master advanced concepts.</p>
+              <ul className="space-y-2 mb-5 flex-grow">
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Advanced Curriculum</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Capstone Projects</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Career Guidance</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Placement Assistance</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-purple-500 text-sm">check_circle</span> Premium Certificate</li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Go Advanced</button>
+              <button className="w-full py-2.5 rounded-xl bg-surface-variant text-text-main font-bold hover:bg-gray-200 transition-colors">Go Advanced</button>
             </div>
 
             {/* Card 4: Most Popular */}
-            <div className="bg-white p-8 rounded-[20px] shadow-xl flex flex-col min-w-[280px] border border-primary/20">
-              <div className="text-4xl mb-6">⭐</div>
-              <h3 className="text-xl font-bold text-text-main mb-4">Most Popular</h3>
-              <p className="text-text-muted text-sm mb-8">The most recommended learning path chosen by thousands of students.</p>
-              <ul className="space-y-4 mb-10 flex-grow">
+            <div className="bg-white p-4 sm:p-6 rounded-[20px] shadow-xl flex flex-col border border-primary/20">
+              <div className="text-2xl mb-3">⭐</div>
+              <h3 className="text-lg font-bold text-text-main mb-2">Most Popular</h3>
+              <p className="text-text-muted text-sm mb-4">The most recommended learning path chosen by thousands of students.</p>
+              <ul className="space-y-2 mb-5 flex-grow">
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Balanced Curriculum</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Live Classes</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Hands-on Projects</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Mentor Support</li>
                 <li className="flex items-center gap-2 text-sm text-text-main"><span className="material-icons text-yellow-500 text-sm">check_circle</span> Certificate Included</li>
               </ul>
-              <button className="w-full py-3 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover-custom transition-colors">Explore Popular Path</button>
+              <button className="w-full py-2.5 rounded-xl bg-primary text-white font-bold hover:bg-primary-hover-custom transition-colors">Explore Popular Path</button>
             </div>
           </div>
         </div>
@@ -1977,13 +1885,13 @@ export default function CoursesPage() {
       {/* END: Learning Paths Section 2 */}
 
       {/* BEGIN: Student Success Stories */}
-      <section className="py-24" data-purpose="testimonials">
+      <section className="pt-[40px] pb-[20px]" data-purpose="testimonials">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-text-main mb-3 text-center">Student Success Stories</h2>
           <p className="text-text-muted mb-12 text-center">Hear from our community of learners.</p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+          <div className="flex md:grid md:grid-cols-3 gap-5 md:gap-8 overflow-x-auto snap-x snap-mandatory scrollbar-hide md:overflow-visible pb-2 md:pb-0">
+            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm w-[85vw] sm:w-[70vw] md:w-auto md:min-w-0 snap-start shrink-0 md:shrink md:flex-1">
               <div className="flex text-yellow-400 mb-4">
                 <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
               </div>
@@ -1997,7 +1905,7 @@ export default function CoursesPage() {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm w-[85vw] sm:w-[70vw] md:w-auto md:min-w-0 snap-start shrink-0 md:shrink md:flex-1">
               <div className="flex text-yellow-400 mb-4">
                 <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span>
               </div>
@@ -2011,7 +1919,7 @@ export default function CoursesPage() {
               </div>
             </div>
 
-            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm">
+            <div className="bg-white p-6 rounded-2xl border border-border-custom shadow-sm w-[85vw] sm:w-[70vw] md:w-auto md:min-w-0 snap-start shrink-0 md:shrink md:flex-1">
               <div className="flex text-yellow-400 mb-4">
                 <span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star</span><span className="material-icons">star_half</span>
               </div>
@@ -2030,18 +1938,15 @@ export default function CoursesPage() {
       {/* END: Student Success Stories */}
 
       {/* BEGIN: Certificate Preview */}
-      <section className="py-24 bg-white relative overflow-hidden" data-purpose="certificate-preview">
+      <section className="pt-[50px] pb-[20px] bg-white relative overflow-hidden" data-purpose="certificate-preview">
         <div className="absolute top-0 left-0 w-96 h-96 bg-blue-50 rounded-full -ml-48 -mt-48 blur-3xl opacity-50 -z-10"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-50 rounded-full -mr-48 -mb-48 blur-3xl opacity-50 -z-10"></div>
         
         <div className="max-w-7xl mx-auto px-4 relative">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-blue-50 text-primary mb-4 tracking-widest uppercase">
-              🏅 Recognized &amp; Trusted
-            </span>
             <h2 className="text-4xl font-bold text-text-main mb-4">Certificate Preview</h2>
-            <p className="text-text-muted text-lg max-w-2xl mx-auto">
+            <p className="text-text-muted text-[14px] max-w-2xl mx-auto">
               Earn an industry-recognized certificate that validates your skills and strengthens your professional profile.
             </p>
           </div>
@@ -2057,35 +1962,35 @@ export default function CoursesPage() {
             </div>
 
             {/* Right: Feature Cards (40%) */}
-            <div className="lg:col-span-5 flex flex-col gap-6">
+            <div className="lg:col-span-5 grid grid-cols-3 lg:flex lg:flex-col gap-2 lg:gap-6">
               {/* Card 1 */}
-              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">📜</span>
+              <div className="bg-white p-3 lg:p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4 text-center lg:text-left border border-border-custom">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl lg:text-2xl">📜</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-text-main mb-1">Professional Certificate</h4>
-                  <p className="text-text-muted text-sm">Receive a beautifully designed certificate that enhances your resume and LinkedIn profile.</p>
+                  <h4 className="font-bold text-text-main mb-1 text-xs lg:text-base">Professional Certificate</h4>
+                  <p className="text-text-muted text-[10px] lg:text-sm leading-tight lg:leading-normal">Receive a beautifully designed certificate that enhances your resume and LinkedIn profile.</p>
                 </div>
               </div>
               {/* Card 2 */}
-              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">🛡</span>
+              <div className="bg-white p-3 lg:p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4 text-center lg:text-left border border-border-custom">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl lg:text-2xl">🛡</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-text-main mb-1">Industry Recognized</h4>
-                  <p className="text-text-muted text-sm">Our certificates are trusted by recruiters and leading companies.</p>
+                  <h4 className="font-bold text-text-main mb-1 text-xs lg:text-base">Industry Recognized</h4>
+                  <p className="text-text-muted text-[10px] lg:text-sm leading-tight lg:leading-normal">Our certificates are trusted by recruiters and leading companies.</p>
                 </div>
               </div>
               {/* Card 3 */}
-              <div className="bg-white p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex items-start gap-4 border border-border-custom">
-                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <span className="text-2xl">🌍</span>
+              <div className="bg-white p-3 lg:p-6 rounded-[20px] shadow-sm hover:shadow-md transition-all hover:-translate-y-1 flex flex-col lg:flex-row items-center lg:items-start gap-2 lg:gap-4 text-center lg:text-left border border-border-custom">
+                <div className="w-10 h-10 lg:w-12 lg:h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl lg:text-2xl">🌍</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-text-main mb-1">Share &amp; Showcase</h4>
-                  <p className="text-text-muted text-sm">Share your certificate online and verify its authenticity instantly.</p>
+                  <h4 className="font-bold text-text-main mb-1 text-xs lg:text-base">Share &amp; Showcase</h4>
+                  <p className="text-text-muted text-[10px] lg:text-sm leading-tight lg:leading-normal">Share your certificate online and verify its authenticity instantly.</p>
                 </div>
               </div>
             </div>
@@ -2132,7 +2037,7 @@ export default function CoursesPage() {
       {/* END: Certificate Preview */}
 
       {/* BEGIN: FAQ */}
-      <section className="py-24" data-purpose="faq">
+      <section className="pt-[30px] pb-[30px]" data-purpose="faq">
         <div className="max-w-3xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-text-main mb-8 text-center">Frequently Asked Questions</h2>
           <div className="flex flex-col gap-4">
@@ -2182,9 +2087,9 @@ export default function CoursesPage() {
       {/* END: FAQ */}
 
       {/* BEGIN: Stay Updated (Newsletter) */}
-      <section className="py-12 bg-primary text-white" data-purpose="newsletter">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-bold mb-4">Stay Updated with EduPremium</h2>
+      <section className="px-4 sm:px-6" data-purpose="newsletter">
+        <div className="max-w-6xl mx-auto rounded-3xl bg-primary text-white py-12 px-4 sm:px-8 text-center">
+          <h2 className="text-2xl font-bold mb-4">Stay Updated with Larawans</h2>
           <p className="text-gray-200 mb-6">Subscribe to our newsletter to get the latest courses and offers directly to your inbox.</p>
           
           {newsletterSubscribed ? (
@@ -2209,10 +2114,10 @@ export default function CoursesPage() {
       {/* END: Stay Updated */}
 
       {/* BEGIN: Final CTA */}
-      <section className="py-24 text-center" data-purpose="cta">
+      <section className="py-[40px] text-center" data-purpose="cta">
         <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-text-main mb-6">Ready To Build Your Future?</h2>
-          <p className="text-lg text-text-muted mb-8">Join millions of learners worldwide and start advancing your skills today.</p>
+          <h2 className="text-[30px] font-bold text-text-main mb-6">Ready To Build Your Future?</h2>
+          <p className="text-[14px] text-text-muted mb-8">Join millions of learners worldwide and start advancing your skills today.</p>
           <a className="bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary-hover-custom transition-colors inline-block shadow-lg" href="#">Start Learning For Free</a>
         </div>
       </section>

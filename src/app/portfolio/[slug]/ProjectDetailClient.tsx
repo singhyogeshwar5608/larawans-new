@@ -165,8 +165,8 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             {/* Panel Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
               <a href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: 'linear-gradient(135deg, #7c5cff, #00e0c6)' }}>
-                  <span className="text-white font-extrabold text-sm">L</span>
+                <div className="h-8 w-8 overflow-hidden rounded-lg">
+                  <img src="/logo/logo.jpeg" alt="Larawans Digital" className="h-full w-full object-cover" />
                 </div>
                 <span className="font-display text-sm font-bold text-gray-900">Larawans<span style={{ color: '#00e0c6' }}>.</span></span>
               </a>
@@ -251,9 +251,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
         {/* ── HERO SECTION ── */}
         <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-6 pb-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Left Header info */}
-            <div className="lg:col-span-5 space-y-4">
+          <div className="space-y-8">
+            {/* Header info */}
+            <div className="text-center space-y-4 max-w-3xl mx-auto">
               {/* Category Pill */}
               <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-indigo-700">
                 <Sparkles className="h-3.5 w-3.5 text-indigo-600" />
@@ -278,25 +278,25 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </p>
 
               {/* Meta information chips */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
-                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
-                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2 max-w-2xl mx-auto">
+                <div className="rounded-xl border border-indigo-100 p-2 sm:p-3 text-center" style={{ background: '#EEF2FF' }}>
+                  <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     <Globe className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Client</span>
                   </div>
                   <div className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs font-bold text-gray-900 truncate">{project.client}</div>
                 </div>
 
-                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
-                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                <div className="rounded-xl border border-indigo-100 p-2 sm:p-3 text-center" style={{ background: '#EEF2FF' }}>
+                  <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     <Clock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Timeline</span>
                   </div>
                   <div className="mt-0.5 sm:mt-1 text-[10px] sm:text-xs font-bold text-gray-900">{project.duration}</div>
                 </div>
 
-                <div className="rounded-xl border border-gray-100 sm:bg-gray-50 p-2 sm:p-3" style={{ background: '#F8FAFC' }}>
-                  <div className="flex items-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+                <div className="rounded-xl border border-indigo-100 p-2 sm:p-3 text-center" style={{ background: '#EEF2FF' }}>
+                  <div className="flex items-center justify-center gap-1 sm:gap-1.5 text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-gray-400">
                     <MapPin className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-indigo-600" />
                     <span>Location</span>
                   </div>
@@ -305,7 +305,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </div>
 
               {/* Tags */}
-              <div className="flex flex-wrap gap-2 pt-2">
+              <div className="flex flex-wrap gap-2 pt-2 justify-center">
                 {project.tags.map((tag) => (
                   <span
                     key={tag}
@@ -317,13 +317,13 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               </div>
             </div>
 
-            {/* Right KPI Impact Cards */}
-            <div className="lg:col-span-7">
+            {/* KPI Impact Cards */}
+            <div>
               <div className="flex gap-3 overflow-x-auto pb-2 sm:pb-0 sm:grid sm:grid-cols-3 -mx-4 px-4 sm:mx-0 sm:px-0 snap-x snap-mandatory scrollbar-hide">
                 {project.impactMetrics.map((m, idx) => (
                   <div
                     key={idx}
-                    className="relative overflow-hidden rounded-2xl border border-gray-100 bg-white p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 group min-w-[200px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink"
+                    className="relative overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50 p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 group min-w-[200px] sm:min-w-0 snap-start flex-shrink-0 sm:flex-shrink"
                   >
                     <div className="text-[10px] sm:text-[10.5px] font-semibold uppercase tracking-wider text-gray-400">
                       {m.label}
@@ -351,11 +351,11 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
           {/* ── INTERACTIVE SIMULATOR PREVIEW SECTION ── */}
           <div className="mt-8">
-            <div className="mb-4 text-center sm:text-left">
+            <div className="mb-4 text-center">
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900">
                 Project Interface Simulator
               </h2>
-              <p className="mt-1 text-sm text-slate-500 sm:block hidden">
+              <p className="mt-1 text-sm text-slate-500">
                 Experience the live interface behavior in real-time across both Desktop Console and Mobile device views.
               </p>
             </div>
@@ -365,17 +365,14 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── PROJECT OVERVIEW & STORY SECTION ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 border-t border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[15px] pb-12 border-t border-gray-100">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
             {/* Overview Story */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600">
-                Case Study Overview
-              </span>
               <h2 className="font-display text-2xl sm:text-3xl font-bold text-gray-900 leading-tight">
                 Engineering a Resilient Solution for {project.client}
               </h2>
-              <p className="text-base text-slate-500 leading-relaxed font-normal">
+              <p className="text-sm text-slate-500 leading-relaxed font-normal">
                 {project.overview}
               </p>
 
@@ -408,9 +405,6 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
 
             {/* Workflow Pipeline */}
             <div className="lg:col-span-5 space-y-6">
-              <span className="inline-block text-xs font-semibold uppercase tracking-widest text-indigo-600">
-                Execution Workflow
-              </span>
               <h2 className="font-display text-2xl font-bold text-gray-900">
                 4-Step Technical Architecture
               </h2>
@@ -459,14 +453,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── KEY FEATURES GRID ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[15px] pb-16 sm:pb-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
-              <Sparkles className="h-3.5 w-3.5" />
-              <span>Capabilities</span>
-            </div>
             {/* Heading with partial gradient */}
             <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
               <span style={{ color: '#1E293B' }}>Core Platform </span>
@@ -591,14 +580,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── SECURITY & COMPLIANCE ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-20 my-6 rounded-3xl bg-white" style={{ boxShadow: '0 4px 30px rgba(0,0,0,0.10), 0 1px 8px rgba(0,0,0,0.06)' }}>
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[10px] pb-20 my-6 rounded-3xl bg-white" style={{ boxShadow: '0 4px 30px rgba(0,0,0,0.10), 0 1px 8px rgba(0,0,0,0.06)' }}>
           {/* Section Header */}
           <div className="text-center max-w-[650px] mx-auto">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.08em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
-              <Shield className="h-3.5 w-3.5" />
-              <span>Security & Compliance</span>
-            </div>
             {/* Heading */}
             <h2 className="mt-4 font-display text-[2.5rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight" style={{ color: '#111827' }}>
               Security & Compliance
@@ -735,17 +719,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── TECH STACK BREAKDOWN ── */}
-        <section className="mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-20 border-t border-gray-100">
+        <section className="mx-auto max-w-5xl px-4 sm:px-6 pt-[10px] pb-[30px] border-t border-gray-100">
           {/* Section Header */}
           <div className="text-center mb-10 sm:mb-12">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2" style={{ background: '#EEF2FF', border: '1px solid #E0E7FF' }}>
-              <div className="flex h-8 w-8 items-center justify-center rounded-full text-white text-sm font-bold shadow-md" style={{ background: '#4F46E5' }}>
-                <Code2 className="h-4 w-4" />
-              </div>
-              <span className="text-sm font-semibold uppercase tracking-wide" style={{ color: '#4338CA' }}>Technology Stack</span>
-            </div>
-
             {/* Main Title */}
             <h2 className="mt-5 font-display text-[2rem] sm:text-[3rem] md:text-[3.5rem] font-extrabold tracking-tight leading-tight">
               <span style={{ color: '#1E293B' }}>Frameworks & </span>
@@ -917,14 +893,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── INTEGRATIONS & CONNECTED SYSTEMS ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[10px] pb-[30px] mt-0 mb-4 sm:mb-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
-              <Link className="h-3.5 w-3.5" />
-              <span>Integrations</span>
-            </div>
             {/* Heading with partial gradient */}
             <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
               <span style={{ color: '#111827' }}>Integrations &amp; </span>
@@ -1149,7 +1120,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
             className="mt-12 rounded-2xl p-6 sm:p-8"
             style={{ background: '#F8FAFC' }}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="grid grid-cols-6 gap-4 lg:grid-cols-5 lg:gap-3">
               {[
                 {
                   icon: <Link className="h-5 w-5" style={{ color: '#3B82F6' }} />,
@@ -1179,15 +1150,15 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               ].map((feat, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 py-3 lg:py-0 px-4 lg:border-r last:lg:border-r-0"
-                  style={{ borderColor: '#E2E8F0', borderRightStyle: i < 4 ? 'solid' : 'none' }}
+                  className={`flex items-center justify-center gap-2 flex-col text-center rounded-xl p-3 lg:flex-row lg:items-start lg:text-left lg:gap-3 lg:justify-start lg:p-[5px] ${i < 2 ? 'col-span-3' : 'col-span-2'} lg:col-span-1 lg:border-r last:lg:border-r-0`}
+                  style={{ background: '#EEF2FF', borderColor: '#E2E8F0', borderRightStyle: i < 4 ? 'solid' : 'none' }}
                 >
-                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ background: '#EEF2FF' }}>
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={{ background: '#FFFFFF' }}>
                     {feat.icon}
                   </div>
                   <div className="min-w-0">
-                    <h4 className="text-[13px] sm:text-[14px] font-bold" style={{ color: '#1E293B' }}>{feat.title}</h4>
-                    <p className="mt-1 text-[11.5px] sm:text-[12.5px] leading-[1.5]" style={{ color: '#64748B' }}>{feat.desc}</p>
+                    <h4 className="text-[11px] font-bold leading-tight lg:text-[13px] sm:text-[14px]" style={{ color: '#1E293B' }}>{feat.title}</h4>
+                    <p className="mt-1 hidden text-[11.5px] sm:text-[12.5px] leading-[1.5] lg:block lg:text-[10.5px]" style={{ color: '#64748B' }}>{feat.desc}</p>
                   </div>
                 </div>
               ))}
@@ -1196,14 +1167,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── USER ROLES & ACCESS ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[10px] pb-16 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.1em]" style={{ background: '#EDE9FE', color: '#4F46E5' }}>
-              <Shield className="h-3.5 w-3.5" />
-              <span>User Roles &amp; Access</span>
-            </div>
             {/* Heading with partial color */}
             <h2 className="mt-4 font-display text-[1.75rem] sm:text-[2.5rem] font-extrabold leading-[1.15] tracking-tight">
               <span style={{ color: '#111827' }}>User Roles &amp; </span>
@@ -1278,7 +1244,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               <div
                 key={i}
                 className="flex flex-col items-center rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
-                style={{ border: '1px solid #F3F4F6', background: role.iconBg, boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
+                style={{ border: '1px solid #E0E7FF', background: '#EEF2FF', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}
               >
                 {/* Icon Circle */}
                 <div
@@ -1351,7 +1317,7 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
               <div
                 key={i}
                 className="flex shrink-0 flex-col items-center rounded-2xl px-4 py-4 w-[150px]"
-                style={{ background: role.bg, boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}
+                style={{ background: '#EEF2FF', border: '1px solid #E0E7FF', boxShadow: '0 2px 10px rgba(0,0,0,0.06)' }}
               >
                 {/* Icon */}
                 <div
@@ -1387,14 +1353,9 @@ export default function ProjectDetailClient({ project }: { project: Project }) {
         </section>
 
         {/* ── DEVELOPMENT JOURNEY ── */}
-        <section className="mx-auto max-w-7xl px-4 sm:px-6 py-16 sm:py-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
+        <section className="mx-auto max-w-7xl px-4 sm:px-6 pt-[10px] pb-16 sm:pb-20 my-4 sm:my-6 rounded-2xl bg-white shadow-lg border border-gray-100">
           {/* Section Header */}
           <div className="text-center max-w-[700px] mx-auto">
-            {/* Badge Pill */}
-            <div className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[11px] font-bold uppercase tracking-[0.08em]" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
-              <Rocket className="h-3.5 w-3.5" />
-              <span>Development Journey</span>
-            </div>
             {/* Heading with partial color */}
             <h2 className="mt-4 font-display text-[1.75rem] sm:text-[3rem] font-extrabold leading-[1.1] tracking-tight">
               <span style={{ color: '#1E293B' }}>Our </span>

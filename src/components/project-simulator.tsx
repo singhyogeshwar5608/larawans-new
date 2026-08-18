@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Monitor,
@@ -28,6 +28,28 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const desktopWrapRef = useRef<HTMLDivElement>(null);
+  const desktopContentRef = useRef<HTMLDivElement>(null);
+  const [desktopScale, setDesktopScale] = useState(1);
+  const [desktopHeight, setDesktopHeight] = useState(0);
+
+  useEffect(() => {
+    const updateScale = () => {
+      const wrap = desktopWrapRef.current;
+      const content = desktopContentRef.current;
+      if (!wrap || !content) return;
+      const wrapW = wrap.clientWidth;
+      const contentW = content.offsetWidth;
+      if (wrapW <= 0 || contentW <= 0) return;
+      const scale = Math.min(1, wrapW / contentW);
+      setDesktopScale(scale);
+      setDesktopHeight(content.offsetHeight * scale + 40);
+    };
+    updateScale();
+    window.addEventListener("resize", updateScale);
+    return () => window.removeEventListener("resize", updateScale);
+  }, [viewMode]);
+
   const ds = project.desktopSimulator;
   const ms = project.mobileSimulator;
 
@@ -41,8 +63,8 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
   return (
     <div className="w-full">
-      {/* View Switcher Controls - hidden on mobile, only desktop simulator shown */}
-      <div className="mb-6 hidden sm:flex items-center justify-between flex-wrap gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-2 backdrop-blur">
+      {/* View Switcher Controls */}
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-2 backdrop-blur">
         <div className="flex items-center gap-2">
           <button
             onClick={() => setViewMode("desktop")}
@@ -96,36 +118,42 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               transition={{ duration: 0.4 }}
               className="w-full max-w-5xl mx-auto"
             >
+              {/* Scale wrapper: keeps the full desktop layout but scales it down to fit any screen */}
+              <div ref={desktopWrapRef} className="w-full" style={{ height: desktopHeight }}>
+              <div
+                ref={desktopContentRef}
+                className="min-w-[820px]"
+                style={{ transform: `scale(${desktopScale})`, transformOrigin: 'top left', width: '820px' }}
+              >
               {/* Monitor Frame */}
-              <div className="overflow-hidden rounded-t-xl rounded-b-none border border-neutral-700/80 border-b-0 bg-[#0b0f19] shadow-2xl"
-              style={{ boxShadow: '0 25px 60px -12px rgba(0,0,0,0.7)' }}>
+              <div className="overflow-hidden rounded-xl border border-neutral-700/80 bg-[#0b0f19]">
               {/* Monitor Top Bezel */}
-              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-2 sm:px-4 py-1.5 sm:py-2.5">
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-rose-500/80" />
-                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-amber-500/80" />
-                  <span className="h-2 w-2 sm:h-3 sm:w-3 rounded-full bg-emerald-500/80" />
+              <div className="flex items-center justify-between border-b border-neutral-800 bg-[#121826] px-4 py-2.5">
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 rounded-full bg-rose-500/80" />
+                  <span className="h-3 w-3 rounded-full bg-amber-500/80" />
+                  <span className="h-3 w-3 rounded-full bg-emerald-500/80" />
                 </div>
 
                 {/* URL Bar */}
-                <div className="flex max-w-md flex-1 items-center gap-1.5 sm:gap-2 rounded-md sm:rounded-lg border border-white/10 bg-black/40 px-2 sm:px-3 py-1 sm:py-1.5 text-xs text-neutral-300 mx-1.5 sm:mx-4">
-                  <Lock className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-400 shrink-0" />
-                  <span className="truncate font-mono text-[9px] sm:text-[11px] text-neutral-300">{ds.url}</span>
-                  <RotateCw className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-neutral-500 ml-auto shrink-0 hover:text-white cursor-pointer" />
+                <div className="flex max-w-md flex-1 items-center gap-2 rounded-lg border border-white/10 bg-black/40 px-3 py-1.5 text-xs text-neutral-300 mx-4">
+                  <Lock className="h-3 w-3 text-emerald-400 shrink-0" />
+                  <span className="truncate font-mono text-[11px] text-neutral-300">{ds.url}</span>
+                  <RotateCw className="h-3 w-3 text-neutral-500 ml-auto shrink-0 hover:text-white cursor-pointer" />
                 </div>
 
-                <div className="flex items-center gap-1.5 sm:gap-2 text-neutral-400">
-                  <Bell className="h-3 w-3 sm:h-4 sm:w-4 hover:text-white cursor-pointer" />
-                  <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-white" style={{ background: 'linear-gradient(to top right, #8b5cf6, #22d3ee)' }}>
+                <div className="flex items-center gap-2 text-neutral-400">
+                  <Bell className="h-4 w-4 hover:text-white cursor-pointer" />
+                  <div className="h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style={{ background: 'linear-gradient(to top right, #8b5cf6, #22d3ee)' }}>
                     AD
                   </div>
                 </div>
               </div>
 
               {/* Console Body */}
-              <div className="grid grid-cols-1 md:grid-cols-5">
+              <div className="grid grid-cols-5">
                 {/* Sidebar */}
-                <div className="hidden md:block md:col-span-1 border-r border-neutral-800 bg-[#0f1422] p-3 space-y-4">
+                <div className="col-span-1 border-r border-neutral-800 bg-[#0f1422] p-3 space-y-4">
                   <div>
                     <div className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400 mb-1.5">
                       Platform Console
@@ -167,27 +195,27 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                 </div>
 
                 {/* Main Dashboard Workspace */}
-                <div className="col-span-1 md:col-span-4 p-1.5 sm:p-4 bg-[#0b0f19] space-y-1.5 sm:space-y-4">
+                <div className="col-span-4 p-4 bg-[#0b0f19] space-y-4">
                   {/* Top Executive Stats */}
-                  <div className="grid grid-cols-3 gap-1 sm:gap-2">
+                  <div className="grid grid-cols-3 gap-2">
                     {ds.stats.map((st, i) => (
                       <div
                         key={i}
-                        className="rounded-md sm:rounded-lg border border-white/10 bg-white/[0.03] p-1 sm:p-2.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
+                        className="rounded-lg border border-white/10 bg-white/[0.03] p-2.5 backdrop-blur hover:border-cyan-500/40 transition-colors"
                       >
-                        <div className="text-[8px] sm:text-[10px] font-medium text-neutral-400 leading-tight">{st.title}</div>
-                        <div className="mt-0.5 font-display text-xs sm:text-lg font-bold text-white">{st.val}</div>
-                        <div className="mt-0.5 inline-flex items-center gap-0.5 sm:gap-1 text-[8px] sm:text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1 sm:px-2 py-0.5 rounded-full">
-                          <Zap className="h-2 w-2 sm:h-2.5 sm:w-2.5" />
+                        <div className="text-[10px] font-medium text-neutral-400 leading-tight">{st.title}</div>
+                        <div className="mt-0.5 font-display text-lg font-bold text-white">{st.val}</div>
+                        <div className="mt-0.5 inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                          <Zap className="h-2.5 w-2.5" />
                           <span className="truncate">{st.change}</span>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  {/* Search and Action Bar - hidden on mobile to save space */}
-                  <div className="hidden sm:flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-2 pt-0.5 sm:pt-1">
-                    <div className="relative w-full sm:w-64">
+                  {/* Search and Action Bar */}
+                  <div className="flex items-center justify-between gap-2 pt-1">
+                    <div className="relative w-64">
                       <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-neutral-500" />
                       <input
                         type="text"
@@ -197,7 +225,7 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                         className="w-full rounded-lg border border-white/10 bg-black/40 pl-8 pr-3 py-1.5 text-xs text-white placeholder-neutral-500 focus:border-cyan-500 focus:outline-none"
                       />
                     </div>
-                    <div className="flex items-center gap-2 self-end sm:self-auto">
+                    <div className="flex items-center gap-2">
                       <span className="text-[11px] text-neutral-400">
                         Showing {filteredRows.length} items
                       </span>
@@ -208,27 +236,27 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                   </div>
 
                   {/* Data Table */}
-                  <div className="rounded-lg sm:rounded-xl border border-white/10 bg-black/30 max-h-[130px] sm:max-h-[200px] overflow-y-auto overflow-x-hidden">
+                  <div className="rounded-xl border border-white/10 bg-black/30 max-h-[200px] overflow-y-auto overflow-x-hidden">
                     <table className="w-full text-left" style={{ tableLayout: 'fixed' }}>
-                      <thead className="border-b border-white/10 bg-white/[0.02] text-neutral-400 text-[8px] sm:text-[11px] uppercase tracking-wider">
+                      <thead className="border-b border-white/10 bg-white/[0.02] text-neutral-400 text-[11px] uppercase tracking-wider">
                         <tr>
-                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '22%' }}>ID</th>
-                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '30%' }}>Name</th>
-                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '25%' }}>Type</th>
-                          <th className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold" style={{ width: '23%' }}>Status</th>
+                          <th className="px-3 py-2 font-semibold" style={{ width: '22%' }}>ID</th>
+                          <th className="px-3 py-2 font-semibold" style={{ width: '30%' }}>Name</th>
+                          <th className="px-3 py-2 font-semibold" style={{ width: '25%' }}>Type</th>
+                          <th className="px-3 py-2 font-semibold" style={{ width: '23%' }}>Status</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 text-neutral-200">
                         {filteredRows.map((row, idx) => (
                           <tr key={idx} className="hover:bg-white/[0.02] transition-colors">
-                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-mono text-cyan-300 font-semibold text-[9px] sm:text-xs truncate">
+                            <td className="px-3 py-2 font-mono text-cyan-300 font-semibold text-xs truncate">
                               {row.col1}
                             </td>
-                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-medium text-white text-[9px] sm:text-xs truncate">{row.col2}</td>
-                            <td className="px-1.5 sm:px-3 py-1 sm:py-2 font-semibold text-neutral-300 text-[9px] sm:text-xs truncate">{row.col3}</td>
-                            <td className="px-1.5 sm:px-3 py-1 sm:py-2">
-                              <span className="inline-flex items-center gap-0.5 sm:gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-1.5 sm:px-2.5 py-0.5 text-[8px] sm:text-[10.5px] font-semibold text-emerald-300">
-                                <CheckCircle2 className="h-2.5 w-2.5 sm:h-3 sm:w-3 text-emerald-400" />
+                            <td className="px-3 py-2 font-medium text-white text-xs truncate">{row.col2}</td>
+                            <td className="px-3 py-2 font-semibold text-neutral-300 text-xs truncate">{row.col3}</td>
+                            <td className="px-3 py-2">
+                              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10.5px] font-semibold text-emerald-300">
+                                <CheckCircle2 className="h-3 w-3 text-emerald-400" />
                                 <span className="truncate">{row.status}</span>
                               </span>
                             </td>
@@ -240,19 +268,27 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
                 </div>
               </div>{/* close console body grid */}
               {/* Monitor Chin - Bottom Bezel */}
-              <div className="flex items-center justify-center border-x border-b border-neutral-700/80 bg-[#121826] py-0.5 sm:py-1.5">
-                <div className="h-0.5 sm:h-1 w-12 sm:w-16 rounded-full bg-neutral-600/60" />
+              <div className="flex items-center justify-center border-t border-neutral-800 bg-[#121826] py-1.5">
+                <div className="h-1 w-16 rounded-full bg-neutral-600/60" />
               </div>
               </div>{/* close monitor frame */}
 
               {/* Monitor Stand Neck */}
-              <div className="hidden md:flex justify-center">
-                <div className="w-24 h-4 bg-gradient-to-b from-neutral-700 to-neutral-800" />
+              <div className="flex justify-center">
+                <div
+                  className="h-6 w-20 bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900"
+                  style={{ borderRadius: '0 0 6px 6px', boxShadow: '0 6px 16px rgba(0,0,0,0.4)' }}
+                />
               </div>
 
               {/* Monitor Base */}
-              <div className="hidden md:flex justify-center">
-                <div className="w-40 h-2 rounded-b-xl bg-gradient-to-b from-neutral-700 to-neutral-900" style={{ boxShadow: '0 8px 20px rgba(0,0,0,0.5)' }} />
+              <div className="flex justify-center">
+                <div
+                  className="h-3 w-52 rounded-full bg-gradient-to-b from-neutral-700 via-neutral-800 to-neutral-900"
+                  style={{ boxShadow: '0 10px 24px rgba(0,0,0,0.45)' }}
+                />
+              </div>
+              </div>
               </div>
             </motion.div>
           ) : (
@@ -282,9 +318,9 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
               </div>
 
               {/* Mobile Screen Body */}
-              <div className="p-4 space-y-4 bg-[#0a0d18] min-h-[480px]">
+              <div className="p-3.5 space-y-3 bg-[#0a0d18] min-h-[380px]">
                 {/* Mobile Header */}
-                <div className="flex items-center justify-between pt-2">
+                <div className="flex items-center justify-between pt-1">
                   <div>
                     <span className="text-[10px] font-semibold uppercase tracking-wider text-cyan-400">
                       Mobile App
@@ -303,13 +339,13 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
                 {/* Primary Card */}
                 <div
-                  className="rounded-2xl p-4 text-white shadow-lg relative overflow-hidden"
+                  className="rounded-2xl p-3.5 text-white shadow-lg relative overflow-hidden"
                   style={{ background: project.accent }}
                 >
                   <div className="relative z-10">
                     <span className="text-[11px] font-medium opacity-90">{ms.primaryCardTitle}</span>
-                    <div className="mt-1 font-display text-2xl font-extrabold">{ms.primaryCardVal}</div>
-                    <div className="mt-3 flex items-center gap-1.5 text-[10px] font-semibold bg-black/20 backdrop-blur w-fit px-2.5 py-1 rounded-full">
+                    <div className="mt-0.5 font-display text-2xl font-extrabold">{ms.primaryCardVal}</div>
+                    <div className="mt-2.5 flex items-center gap-1.5 text-[10px] font-semibold bg-black/20 backdrop-blur w-fit px-2.5 py-1 rounded-full">
                       <ShieldCheck className="h-3 w-3 text-emerald-300" />
                       <span>{ms.notificationBadge}</span>
                     </div>
@@ -318,12 +354,12 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
                 {/* Quick Actions */}
                 <div>
-                  <div className="text-[11px] font-semibold text-neutral-400 mb-2">Quick Actions</div>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="text-[11px] font-semibold text-neutral-400 mb-1.5">Quick Actions</div>
+                  <div className="grid grid-cols-3 gap-1.5">
                     {ms.quickActions.map((act) => (
                       <button
                         key={act}
-                        className="flex flex-col items-center justify-center gap-1 rounded-xl border border-white/10 bg-white/[0.04] p-2.5 text-[10px] font-semibold text-neutral-200 hover:bg-white/10 transition-colors"
+                        className="flex flex-col items-center justify-center gap-0.5 rounded-xl border border-white/10 bg-white/[0.04] p-2 text-[10px] font-semibold text-neutral-200 hover:bg-white/10 transition-colors"
                       >
                         <Zap className="h-3.5 w-3.5 text-cyan-400" />
                         <span className="text-center leading-tight">{act}</span>
@@ -334,17 +370,17 @@ export function ProjectSimulator({ project }: ProjectSimulatorProps) {
 
                 {/* Recent Activity */}
                 <div>
-                  <div className="flex items-center justify-between text-[11px] font-semibold text-neutral-400 mb-2">
+                  <div className="flex items-center justify-between text-[11px] font-semibold text-neutral-400 mb-1.5">
                     <span>Recent Activity</span>
                     <span className="text-cyan-400 text-[10px] hover:underline cursor-pointer">
                       View All
                     </span>
                   </div>
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     {ms.recentActivity.map((act, idx) => (
                       <div
                         key={idx}
-                        className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] p-2.5 text-xs"
+                        className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.02] p-2 text-xs"
                       >
                         <div>
                           <div className="font-semibold text-white text-[11px]">{act.title}</div>

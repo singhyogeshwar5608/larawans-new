@@ -120,19 +120,9 @@ export function Footer() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-4"
           >
-            <a href="#hero" className="group inline-flex items-center gap-2.5 interactive">
-              <div className="relative h-10 w-10 overflow-hidden rounded-xl p-[1.5px] shadow-[0_0_24px_rgba(124,92,255,0.5)]" style={{ background: 'linear-gradient(to bottom right, #7c5cff, #00e0c6)' }}>
-                <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#080a1c]">
-                  <span className="font-display text-lg font-extrabold text-gradient-aurora">L</span>
-                </div>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-display text-base font-bold tracking-tight">
-                  Larawans<span className="text-[#00e0c6]">.</span>
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-muted-foreground">
-                  Digital
-                </span>
+            <a href="#hero" className="group inline-flex items-center interactive">
+              <div className="relative h-10 w-auto">
+                <img src="/logo/logo-colored.png" alt="Larawans Digital" className="h-10 w-auto object-contain" />
               </div>
             </a>
             <p className="mt-5 max-w-sm text-[13.5px] leading-relaxed text-muted-foreground">
